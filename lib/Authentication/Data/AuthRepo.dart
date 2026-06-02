@@ -12,7 +12,7 @@ class AuthRepo extends AuthData{
   
   @override
   Future<ApiResponse> loginWithEmail(String email, String password) async {
-    Future.delayed(Duration(seconds: 1),(){ });
+   await Future.delayed(Duration(seconds: 2),(){ });
   
     if(email == "sahilbishnoi@gmail.com" && password == "12345678"){
       return ApiResponse(statusCode: 200,data: email + password);
