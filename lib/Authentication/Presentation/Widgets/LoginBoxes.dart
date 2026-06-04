@@ -3,12 +3,12 @@ import 'package:flutter/widgets.dart';
 import 'package:study_mate/fonts.dart';
 
 class LoginBox extends StatefulWidget {
-   String name;
-   IconData icon;
-   String placeholder;
-   bool isHidden;
-   TextEditingController txtController;
-   LoginBox({super.key,required this.name,required this.icon,required this.placeholder,required this.isHidden,required this.txtController});
+  final String name;
+  final IconData icon;
+  final String placeholder;
+  final bool isHidden;
+  final TextEditingController txtController;
+  const LoginBox({super.key,required this.name,required this.icon,required this.placeholder,required this.isHidden,required this.txtController});
 
   @override
   State<LoginBox> createState() => _LoginBoxState();

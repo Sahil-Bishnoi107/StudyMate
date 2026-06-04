@@ -13,8 +13,8 @@ import 'package:study_mate/fonts.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
-  TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
+ final TextEditingController email = TextEditingController();
+ final TextEditingController password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

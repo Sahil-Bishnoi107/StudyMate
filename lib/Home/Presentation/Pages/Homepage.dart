@@ -9,6 +9,7 @@ import 'package:study_mate/Home/Presentation/Widgets/profilesection.dart';
 import 'package:study_mate/Home/Presentation/Widgets/statBox.dart';
 import 'package:study_mate/Home/Presentation/Widgets/testtile.dart';
 import 'package:study_mate/Home/Presentation/Widgets/topbar.dart';
+import 'package:study_mate/fonts.dart';
 
 class Homepage extends StatelessWidget {
   const Homepage({super.key});
@@ -40,6 +41,7 @@ class Homepage extends StatelessWidget {
               ProfileSection(name: state.student.name, picUrl: state.student.pic),
               SizedBox(height: height*0.05,),
               _statSection(width, height, percentage , state.student.attemptedQuestions, state.student.rank, state.student.testsGiven.length),
+              SizedBox(height: height*0.03,),
               _testsList(height, width, state.student.testsGiven)
                         ],
                       ),
@@ -81,17 +83,17 @@ Widget _statSection(double width,double height,int percentage,int attemptedQuest
       children: [
         Row(
           children: [
-           Statbox(icon: Bootstrap.bullseye, heading: "Accuracy", stat: percentage.toString()),
+           Statbox(icon: Bootstrap.bullseye, heading: "Accuracy", stat: percentage.toString() + "%"),
            SizedBox(width: width*0.07,),
-           Statbox(icon: Bootstrap.file_earmark_arrow_down_fill, heading: "Questions", stat: attemptedQuestions.toString())
+           Statbox(icon: Bootstrap.file_earmark_arrow_down_fill, heading: "Questions", stat: attemptedQuestions.toString() + " Ques")
           ],
         ),
         SizedBox(height: height*0.025,),
         Row(
           children: [
-            Statbox(icon: Bootstrap.p_circle_fill, heading: "Tests Given", stat: testsGiven.toString()),
+            Statbox(icon: Bootstrap.p_circle_fill, heading: "Tests Given", stat: testsGiven.toString() + " Tests"),
             SizedBox(width: width*0.07,),
-            Statbox(icon: Bootstrap.trophy, heading: "Rank", stat: rank.toString())
+            Statbox(icon: Bootstrap.trophy, heading: "Rank", stat: "#" + rank.toString())
           ],
         )
       ],
@@ -100,23 +102,29 @@ Widget _statSection(double width,double height,int percentage,int attemptedQuest
 }
 
 Widget _testsList(double height,double width,List<TestGiven> tests){
-  return Column(
-    children: [ 
-      Container(
-        width: width,
-        child: Text("Recent Tests")),
-
-      Container(
-      height: height*0.4,width: width,
-      child: ListView.builder(
-        itemCount: tests.length,
-        itemBuilder: (context,index){
-          return Testtile(test: tests[index]);
-        }),
+  return Container(
+    height: height*0.4,width : width,
+    padding: EdgeInsets.symmetric(horizontal: width*0.05),
+    child: Column(
+      children: [ 
+        Container(
+          width: width,
+          child: Text("Recent Tests",style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: 18),)),
+    
+        Container(
+        height: height*0.4,width: width,
+      
+        child: ListView.builder(
+          itemCount: tests.length,
+          padding: EdgeInsets.only(top: height*0.01),
+          itemBuilder: (context,index){
+            return Testtile(test: tests[index]);
+          }),
+      ),
+      
+    
+      
+      ]
     ),
-    
-
-    
-    ]
   );
 }

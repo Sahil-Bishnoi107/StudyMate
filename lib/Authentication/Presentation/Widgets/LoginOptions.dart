@@ -3,9 +3,9 @@ import 'package:flutter/widgets.dart';
 import 'package:study_mate/fonts.dart';
 
 class LoginOption extends StatefulWidget {
-  IconData icon;
-  String type;
-  LoginOption({super.key,required this.icon,required this.type});
+ final IconData icon;
+ final String type;
+ const  LoginOption({super.key,required this.icon,required this.type});
 
   @override
   State<LoginOption> createState() => _LoginOptionState();
@@ -31,6 +31,6 @@ class _LoginOptionState extends State<LoginOption> {
           Text(widget.type,style: TextStyle(color: Colors.black,fontFamily: Fonts.nunito),)
         ],
       ),
-    );
+    ); 
   }
 }

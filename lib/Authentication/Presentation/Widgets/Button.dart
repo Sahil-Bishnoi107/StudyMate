@@ -3,10 +3,10 @@ import 'package:flutter/widgets.dart';
 import 'package:study_mate/fonts.dart';
 
 class LoginButton extends StatefulWidget {
-  String name;
-  Color bgColor;
-  Color fgColor;
-  LoginButton({super.key,required this.name,required this.bgColor,required this.fgColor});
+ final String name;
+ final Color bgColor;
+ final Color fgColor;
+ const LoginButton({super.key,required this.name,required this.bgColor,required this.fgColor});
 
   @override
   State<LoginButton> createState() => _LoginButtonState();
