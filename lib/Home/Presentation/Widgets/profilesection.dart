@@ -4,6 +4,7 @@ import 'package:study_mate/fonts.dart';
 class ProfileSection extends StatelessWidget {
  final String name;
  final String picUrl;
+
   ProfileSection({super.key,required this.name,required this.picUrl});
   String fixName(String str){
     String ans = "";

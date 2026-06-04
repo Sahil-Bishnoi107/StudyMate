@@ -21,7 +21,9 @@ class _TopbarState extends State<Topbar> {
       child: Row(
         children: [
          SizedBox(width: width*0.06,),
-         Icon(Icons.menu,size: height*0.03,),
+         GestureDetector(
+          onTap: () => Scaffold.of(context).openDrawer(),
+          child: Icon(Icons.menu,size: height*0.03,)),
          Expanded(child: Center(child: Text("Study Mate",style: TextStyle(fontFamily: Fonts.nunito,fontSize: 22,fontWeight: FontWeight.bold),))),
          SizedBox(width: width*0.2,),
         ],

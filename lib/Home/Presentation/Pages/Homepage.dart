@@ -9,6 +9,7 @@ import 'package:study_mate/Home/Presentation/Widgets/profilesection.dart';
 import 'package:study_mate/Home/Presentation/Widgets/statBox.dart';
 import 'package:study_mate/Home/Presentation/Widgets/testtile.dart';
 import 'package:study_mate/Home/Presentation/Widgets/topbar.dart';
+import 'package:study_mate/Tests/Presentation/Pages/testspage.dart';
 import 'package:study_mate/fonts.dart';
 
 class Homepage extends StatelessWidget {
@@ -21,6 +22,34 @@ class Homepage extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
+      drawer: Drawer(
+        width: width*0.5,
+        child: ListView(
+          children: [
+            DrawerHeader(
+              
+              child: Container(
+              height: height*0.1,width: width*0.01,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(width*0.03),
+                border: Border.all()
+              ),
+              child: Icon(Icons.person))),
+
+              ListTile(
+              leading: Icon(Icons.home),
+              title: const Text("Home"),
+              ),
+              ListTile(
+                leading: Icon(Bootstrap.book_fill),
+                title: const Text("Tests"),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => TestsPage())); 
+                },
+              )
+          ],
+        ),
+      ),
       body: BlocBuilder<Homebloc,Homestates>(
         builder: (context, state) {
           if(state is HomeInitial){
