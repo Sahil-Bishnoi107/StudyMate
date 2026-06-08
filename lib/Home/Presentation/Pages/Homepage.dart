@@ -9,7 +9,7 @@ import 'package:study_mate/Home/Presentation/Widgets/profilesection.dart';
 import 'package:study_mate/Home/Presentation/Widgets/statBox.dart';
 import 'package:study_mate/Home/Presentation/Widgets/testtile.dart';
 import 'package:study_mate/Home/Presentation/Widgets/topbar.dart';
-import 'package:study_mate/Tests/Presentation/Pages/testspage.dart';
+import 'package:study_mate/TestsPage/Presentation/Pages/testspage.dart';
 import 'package:study_mate/fonts.dart';
 
 class Homepage extends StatelessWidget {

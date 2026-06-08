@@ -4,6 +4,7 @@ class Question{
   String subject;
   List<String> options;
   String correctOption;
+  String? selectedOption;
   String difficulty;
 
   Question({required this.id,required this.description,required this.subject,required this.correctOption,required this.difficulty,required this.options});

@@ -1,6 +1,6 @@
-import 'package:study_mate/Home/Domain/Entities/Question.dart';
 
-class Test{
+
+class TestInfo{
   String id;
   String name;
   int totalQuestions;
@@ -8,9 +8,9 @@ class Test{
   String subject;
   int time;
   String diffiucluty;
-  Test({required this.id,required this.name,required this.totalQuestions,required this.subject,required this.status,required this.time,required this.diffiucluty});
+  TestInfo({required this.id,required this.name,required this.totalQuestions,required this.subject,required this.status,required this.time,required this.diffiucluty});
   
-    factory Test.fromJson(Map<String,dynamic> mp){
+    factory TestInfo.fromJson(Map<String,dynamic> mp){
   
     String id = mp['id'] ?? "No id found";
     String name = mp['name'] ?? "No name found";
@@ -21,6 +21,6 @@ class Test{
     String subject = mp['subject'] ?? "Unknown";
     int time = mp['time'] ?? 0;
     String diffiucluty = mp['difficulty'] ?? "easy";
-    return Test(id: id, name: name, totalQuestions: totalQuestions, subject: subject, status: status, time: time,diffiucluty: diffiucluty);
+    return TestInfo(id: id, name: name, totalQuestions: totalQuestions, subject: subject, status: status, time: time,diffiucluty: diffiucluty);
   }
 }
