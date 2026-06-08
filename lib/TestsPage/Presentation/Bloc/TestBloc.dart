@@ -5,7 +5,7 @@ import 'package:study_mate/TestsPage/Domain/entities/Test.dart';
 import 'package:study_mate/TestsPage/Presentation/Bloc/TestEvents.dart';
 import 'package:study_mate/TestsPage/Presentation/Bloc/TestStates.dart';
 
-class TestPageBloc extends Bloc<Testevents,Teststates>{
+class TestPageBloc extends Bloc<TestPageevents,TestPagestates>{
   TestPageBloc() : super(LoadingTestPageState()){
     on<TestsDataLoaded>((event, emit) async{
       ApiResponse res = await TestPageData().testPageData();

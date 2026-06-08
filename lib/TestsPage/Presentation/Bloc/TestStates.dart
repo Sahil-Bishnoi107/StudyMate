@@ -1,10 +1,10 @@
 import 'package:study_mate/TestsPage/Domain/entities/Test.dart';
 
-final class Teststates {}
+final class TestPagestates {}
 
-final class LoadingTestPageState extends Teststates{}
+final class LoadingTestPageState extends TestPagestates{}
 
-final class LoadedTestPageState extends Teststates{
+final class LoadedTestPageState extends TestPagestates{
   List<TestInfo> tests;
   List<TestInfo> filteredTests;
   List<String> filters = ["All", "Physics", "Chemistry", "Maths", "Biology", "Others"];
@@ -12,7 +12,7 @@ final class LoadedTestPageState extends Teststates{
   LoadedTestPageState({required this.tests,required this.filteredTests,required this.slectedFilter});
 }
 
-final class FailureTestPageState extends Teststates{
+final class FailureTestPageState extends TestPagestates{
   String error;
 
   FailureTestPageState({required this.error});

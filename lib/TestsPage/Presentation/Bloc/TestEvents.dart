@@ -1,8 +1,8 @@
-class Testevents {}
+class TestPageevents {}
 
-class TestsDataLoaded extends Testevents{}
+class TestsDataLoaded extends TestPageevents{}
 
-class FilterTests extends Testevents{
+class FilterTests extends TestPageevents{
   int filter;
   FilterTests({required this.filter});
 }
