@@ -27,4 +27,8 @@ class Test {
     String diffiucluty = mp['difficulty'] ?? "easy";
     return Test(id: id, name: name, totalQuestions: totalQuestions, time: time, subject: subject, diffiucluty: diffiucluty, questions: questions);
   }
+
+  Test copyWith(List<Question> ques){
+    return Test(id: id, name: name, totalQuestions: totalQuestions, time: time, subject: subject, diffiucluty: diffiucluty, questions: ques);
+  }
 }

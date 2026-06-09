@@ -23,4 +23,16 @@ class Question{
     String difficulty = mp['difficulty'] ?? "not known";
     return Question(id: id, description: description, subject: subject, correctOption: correctOption, difficulty: difficulty, options: options);
   }
+
+
+  Question selectOption(String selectedOption)
+  {
+    return Question(id: id, description: description, subject: subject, correctOption: correctOption, difficulty: difficulty, options: options)
+                   ..selectedOption = selectedOption;
+  }
+
+  Question unselectOption(){
+    return Question(id: id, description: description, subject: subject, correctOption: correctOption, difficulty: difficulty, options: options)
+                    ..selectedOption = null;
+  }
 }

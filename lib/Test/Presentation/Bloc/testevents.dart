@@ -4,19 +4,23 @@ class Testevents {}
 
 class TestLoadingComplete extends Testevents{
   String id;
-  TestLoadingComplete({required this.id});
+  String name;
+  String subject;
+  String difficulty;
+  int totalQuestions;
+  int time;
+  TestLoadingComplete({required this.id,required this.difficulty,required this.name,required this.subject,required this.time,required this.totalQuestions});
 }
 
 class TestOptionSelected extends Testevents{
-  Question ques;
-  int optionSelected;
-  TestOptionSelected({required this.ques,required this.optionSelected});
+  Question que;
+  String optionSelected;
+  TestOptionSelected({required this.que,required this.optionSelected});
 }
 
 class TestOptionCleared extends Testevents {
-  Question ques;
-  int optionSelected;
-  TestOptionCleared({required this.ques,required this.optionSelected});
+  Question que;
+  TestOptionCleared({required this.que});
 }
 
 class TestSubmittedEvent extends Testevents{

@@ -1,4 +1,6 @@
-import 'package:study_mate/Test/Presentation/Pages/test.dart';
+
+
+import 'package:study_mate/Test/Domain/Entities/test.dart';
 
 class Teststates {}
 
