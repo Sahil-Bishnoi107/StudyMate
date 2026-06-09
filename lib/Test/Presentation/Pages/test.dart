@@ -50,6 +50,7 @@ class _TestState extends State<Test> {
                  _header(height, width, state.timeLeft, state.test.name),
                  Container(color: const Color.fromRGBO(180, 180, 180, 1), height: 1, width: width,),
                  SizedBox(height: height*0.05,),
+                 _questionSection(height, width, state.test.questions, pageController)
                 
               ],
             ),

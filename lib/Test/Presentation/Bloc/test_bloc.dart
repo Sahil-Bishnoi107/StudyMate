@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_mate/Authentication/Domain/Entities/ApiResponse.dart';
 import 'package:study_mate/Home/Domain/Entities/Question.dart';
@@ -9,7 +11,10 @@ import 'package:study_mate/Test/Presentation/Bloc/teststates.dart';
 
 class TestBloc extends Bloc<Testevents,Teststates> {
   
+  Timer? _timer;
+
   TestBloc() : super(TestLoading()){
+
     on<TestLoadingComplete>((event, emit) async{
       
       ApiResponse res = await TestRepo().getQuestions(event.id);
@@ -17,7 +22,25 @@ class TestBloc extends Bloc<Testevents,Teststates> {
         emit(FailedTestLoading());
       }
       Test test = Test(id: event.id, name: event.name, totalQuestions: event.totalQuestions, time: event.time, subject: event.subject, diffiucluty: event.difficulty, questions: res.data);
-      emit(TestLoaded(test: test));
+      emit(TestLoaded(test: test,timeLeft: test.time*60));
+
+      _timer?.cancel();
+
+      _timer = Timer.periodic(const Duration(seconds: 1), (_){
+          add(TimerTicked());
+      });
+    },);
+
+
+    on<TimerTicked>((event, emit) {
+       if (state is! TestLoaded) return;
+       final mystate = state as TestLoaded;
+       if(mystate.timeLeft <= 1){
+        _timer?.cancel();
+        add(TestSubmittedEvent());
+        return;
+       }
+       emit(TestLoaded(test: mystate.test, timeLeft: mystate.timeLeft - 1));
     },);
 
 
@@ -32,7 +55,7 @@ class TestBloc extends Bloc<Testevents,Teststates> {
         return q;
       }).toList();
 
-      emit(TestLoaded(test: mystate.test.copyWith(updatedQuestions)));
+      emit(TestLoaded(test: mystate.test.copyWith(updatedQuestions),timeLeft: mystate.timeLeft));
     },);
 
 
@@ -47,7 +70,7 @@ class TestBloc extends Bloc<Testevents,Teststates> {
       }).toList();
 
       emit(
-        TestLoaded(test: mystate.test.copyWith(updatedQuestion))
+        TestLoaded(test: mystate.test.copyWith(updatedQuestion),timeLeft: mystate.timeLeft)
       );
     },);
 
@@ -66,5 +89,12 @@ class TestBloc extends Bloc<Testevents,Teststates> {
     on<TestTimeUp>((event, emit) {
        
     },);
+  }
+
+  @override
+  Future<void> close(){
+   print("TestBloc closed");
+   _timer?.cancel();
+   return super.close();
   } 
 }

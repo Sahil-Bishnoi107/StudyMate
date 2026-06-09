@@ -26,5 +26,6 @@ class TestOptionCleared extends Testevents {
 class TestSubmittedEvent extends Testevents{
 
 }
+class TimerTicked extends Testevents{}
 
 class TestTimeUp extends Testevents{}
