@@ -55,10 +55,12 @@ class _TestState extends State<Test> {
               children: [
                  _header(height, width, state.timeLeft, state.test.name),
                  SizedBox(height: height*0.01,),
-                 Container(color: const Color.fromRGBO(180, 180, 180, 1), height: 1, width: width,),
-                 SizedBox(height: height*0.02,),
+                // Container(color: const Color.fromRGBO(200, 200, 200, 0.6), height: 2, width: width,),
+               
                  _testProgress(height, width, context, state.test.questions, pageController),
-                 SizedBox(height: height*0.05,),
+                 
+                 Container(height: 2,width: width,color: const Color.fromRGBO(200, 200, 200, 0.6),),
+                 SizedBox(height: height*0.02,),
                  _questionSection(height, width, state.test.questions, pageController)
                 
               ],
@@ -86,7 +88,8 @@ Widget _header(double height,double width,int timeLeft,String testName){
 
   String seconds = (timeLeft % 60 ) < 10 ? "0${(timeLeft % 60 ).toString()}"    : (timeLeft % 60 ).toString();
   return Container(
-    height: height*0.05,width: width,
+    constraints: BoxConstraints(minHeight: height*0.05,maxHeight: height*0.1),
+    width: width,
     padding: EdgeInsets.only(left: width*0.05),
     margin: EdgeInsets.only(top: height*0.05),
     child: Row(
@@ -123,7 +126,7 @@ Widget _questionSection(double height,double width, List<Question> questions,Pag
   return Column(
     children: [
      Container(
-      height: height*0.6,width: width,
+      height: height*0.65,width: width,
       child: PageView.builder(
         controller: pageController,
         physics: NeverScrollableScrollPhysics(),
@@ -133,18 +136,20 @@ Widget _questionSection(double height,double width, List<Question> questions,Pag
         }),
      ),
 
-     Container(height: 1,width: width,color: const Color.fromRGBO(180, 180, 180, 1),),
-
+     Container(height: 2,width: width,color: const Color.fromRGBO(200, 200, 200, 0.6),),
+     SizedBox(height: height*0.01,),
      Row(
       children: [
-        GestureDetector(
-          onTap: () {
-            pageController.nextPage(duration: Duration(microseconds: 300), curve: Curves.easeOut);
-          },
-          child: queButton(height, width, false)),
+        SizedBox(width: width*0.05,),
         GestureDetector(
           onTap: () {
             pageController.previousPage(duration: Duration(microseconds: 300), curve: Curves.easeOut);
+          },
+          child: queButton(height, width, false)),
+          SizedBox(width: width*0.1,),
+        GestureDetector(
+          onTap: () {
+            pageController.nextPage(duration: Duration(microseconds: 300), curve: Curves.easeOut);
           },
           child: queButton(height, width, true))
       ],
@@ -161,20 +166,27 @@ Widget _question(double height,double width, Question question,int currQue,int t
     padding: EdgeInsets.symmetric(horizontal: width*0.05),
     child: Column(
       children: [
+
+        //header
         Row(
           children: [
             Container(
-              height: height*0.02,width: width*0.06,
-              decoration: BoxDecoration(border: Border.all(color: Colors.grey),borderRadius: BorderRadius.circular(5)),
-              child: Text("Question ${(currQue+1).toString()} of $totalQuestions",style: TextStyle(fontFamily: Fonts.nunito),),
+              height: height*0.034,width: width*0.36,
+              decoration: BoxDecoration(border: Border.all(color: const Color.fromRGBO(180, 180, 180, 0.7),width: 1.5),borderRadius: BorderRadius.circular(20)),
+              child: Center(child: Text("Question ${(currQue+1).toString()} of $totalQuestions",style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: 12),)),
             ),
-            SizedBox(width: width*0.7,),
-            Text(question.difficulty,style: TextStyle(fontFamily: Fonts.nunito),),
+            SizedBox(width: width*0.35,),
+            Expanded(child: Text(question.difficulty,style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold),)),
           ],
         ),
+        SizedBox(height: height*0.01,),
+        //Question
+        ConstrainedBox(
+          constraints: BoxConstraints(minHeight: height*0.03, maxHeight: height*0.5,minWidth: width*0.9,maxWidth: width*0.9),
+          
+          child: Text(question.description,style: TextStyle(fontFamily: Fonts.inter,fontWeight: FontWeight.bold, fontSize: 20),)),
 
-        Text(question.description,style: TextStyle(fontFamily: Fonts.nunito),),
-
+        //Options
         Container(
           height: height*0.4,
           child: ListView(
@@ -186,7 +198,7 @@ Widget _question(double height,double width, Question question,int currQue,int t
                     BlocProvider.of<TestBloc>(context).add(TestOptionSelected(que: question, optionSelected: question.options[0]));
                   }            
                 },
-                child: QuestionOption(question.options[0], height, width, question.selectedOption == question.options[0])),
+                child: QuestionOption(question.options[0], height, width, question.selectedOption == question.options[0],"A")),
           
           
               GestureDetector(
@@ -196,7 +208,7 @@ Widget _question(double height,double width, Question question,int currQue,int t
                     BlocProvider.of<TestBloc>(context).add(TestOptionSelected(que: question, optionSelected: question.options[1]));
                   } 
                 },
-                child: QuestionOption(question.options[1], height, width, question.selectedOption == question.options[1])),
+                child: QuestionOption(question.options[1], height, width, question.selectedOption == question.options[1],"B")),
           
           
               GestureDetector(
@@ -206,7 +218,7 @@ Widget _question(double height,double width, Question question,int currQue,int t
                     BlocProvider.of<TestBloc>(context).add(TestOptionSelected(que: question, optionSelected: question.options[2]));
                   } 
                 },
-                child: QuestionOption(question.options[2], height, width, question.selectedOption == question.options[2])),
+                child: QuestionOption(question.options[2], height, width, question.selectedOption == question.options[2],"C")),
           
           
               GestureDetector(
@@ -216,7 +228,7 @@ Widget _question(double height,double width, Question question,int currQue,int t
                     BlocProvider.of<TestBloc>(context).add(TestOptionSelected(que: question, optionSelected: question.options[3]));
                   } 
                 },
-                child: QuestionOption(question.options[3], height, width, question.selectedOption == question.options[3]))
+                child: QuestionOption(question.options[3], height, width, question.selectedOption == question.options[3],"D"))
             ],
           ),
         )
@@ -228,6 +240,7 @@ Widget _question(double height,double width, Question question,int currQue,int t
 
 Widget _testProgress(double height, double width,BuildContext context,List<Question> questions,PageController pageController){
   return Container(
+    
     height: height*0.05,width: width*0.9,
     child: ListView.builder(
      scrollDirection: Axis.horizontal,
@@ -238,9 +251,12 @@ Widget _testProgress(double height, double width,BuildContext context,List<Quest
           onTap: () {
             BlocProvider.of<TestBloc>(context).add(TestSubmittedEvent());
           },
-          child: Container(height: height*0.03,width: width*0.1,
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(5),color: Colors.green),
-          child: Center(child: Text("Submit"),),
+          child: Align(
+            alignment: Alignment.center,
+            child: Container(height: height*0.04,width: width*0.2,
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),color: Colors.green),
+            child: Center(child: Text("Submit",style: TextStyle(color: Colors.white,fontFamily: Fonts.nunito),),),
+            ),
           ),
         );
        }
