@@ -6,7 +6,9 @@ import 'package:study_mate/Home/Domain/Entities/Question.dart';
 import 'package:study_mate/Test/Presentation/Bloc/test_bloc.dart';
 import 'package:study_mate/Test/Presentation/Bloc/testevents.dart';
 import 'package:study_mate/Test/Presentation/Bloc/teststates.dart';
+import 'package:study_mate/Test/Presentation/Pages/test_submitted_page.dart';
 import 'package:study_mate/Test/Presentation/Widgets/question_button.dart';
+import 'package:study_mate/Test/Presentation/Widgets/question_icon.dart';
 import 'package:study_mate/Test/Presentation/Widgets/question_option.dart';
 import 'package:study_mate/fonts.dart';
 
@@ -28,7 +30,9 @@ class _TestState extends State<Test> {
       body: BlocConsumer(
 
       listener: (context, state) {
-          
+          if(state is TestSubmitted){
+            Navigator.push(context, MaterialPageRoute(builder: (context) => TestSubmittedPage()));
+          }
       },
 
 
@@ -49,6 +53,7 @@ class _TestState extends State<Test> {
               children: [
                  _header(height, width, state.timeLeft, state.test.name),
                  Container(color: const Color.fromRGBO(180, 180, 180, 1), height: 1, width: width,),
+                 _testProgress(height, width, context, state.test.questions, pageController),
                  SizedBox(height: height*0.05,),
                  _questionSection(height, width, state.test.questions, pageController)
                 
@@ -194,5 +199,36 @@ Widget _question(double height,double width, Question question,int currQue,int t
         )
       ],
     ),
+  );
+}
+
+
+Widget _testProgress(double height, double width,BuildContext context,List<Question> questions,PageController pageController){
+  return Container(
+    height: height*0.05,width: width*0.9,
+    child: ListView.builder(
+     scrollDirection: Axis.horizontal,
+     itemCount: questions.length + 1,
+     itemBuilder: (context, index) {
+       if(index == questions.length){
+        return GestureDetector(
+          onTap: () {
+            BlocProvider.of<TestBloc>(context).add(TestSubmittedEvent());
+          },
+          child: Container(height: height*0.03,width: width*0.1,
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(5),color: Colors.green),
+          child: Center(child: Text("Submit"),),
+          ),
+        );
+       }
+       return GestureDetector(
+        onTap: () {
+          pageController.animateToPage(index, duration: Duration(microseconds: 300), curve: Curves.bounceIn);
+        },
+        child: questionIcon(height, width, questions[index].selectedOption != null, index + 1));
+     },
+
+    ),
+
   );
 }
