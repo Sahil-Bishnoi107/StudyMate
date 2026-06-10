@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_mate/Authentication/Domain/Entities/ApiResponse.dart';
+import 'package:study_mate/Home/Domain/Entities/Question.dart';
 
 import 'package:study_mate/Test/Data/test_repo.dart';
 import 'package:study_mate/Test/Domain/Entities/test.dart';
@@ -78,13 +79,27 @@ class TestBloc extends Bloc<Testevents,Teststates> {
     on<TestSubmittedEvent>((event, emit) async{
       final mystate = state as TestLoaded;
       final Test test = mystate.test;
+      Map<String,int> correctQues = {};
+      Map<String,int> totalQues = {};
+      Map<String,int> skipped = {};
+      Set<String> subjs = {};
+      for(Question que in test.questions){
+        if(que.selectedOption == null){skipped[que.subject] = (skipped[que.subject] ?? 0) + 1;}
+        else if(que.correctOption == que.selectedOption){
+          correctQues[que.subject] = (correctQues[que.subject] ?? 0) + 1;
+          }
+          totalQues[que.subject] = (totalQues[que.subject] ?? 0) + 1;
+          subjs.add(que.subject);
+      }
+      List<String> subjects = subjs.toList();
+      int timeTaken = test.time*60 - mystate.timeLeft;
       emit(TestSubmitting());
       
       final res = await TestRepo().uploadTest(test);
       if(res.statusCode != 200){
         emit(FailedToSubmitTest());
       }
-      emit(TestSubmitted());
+      emit(TestSubmitted(test: test,correctQuestionsPerSubject: correctQues,questionsPerSubject: totalQues,timeTaken: timeTaken,questionsSkippedPerSubject: skipped,subjects: subjects));
     },);
 
 
@@ -99,4 +114,6 @@ class TestBloc extends Bloc<Testevents,Teststates> {
    _timer?.cancel();
    return super.close();
   } 
+
+  
 }
