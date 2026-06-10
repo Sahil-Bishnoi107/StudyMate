@@ -76,9 +76,11 @@ class TestBloc extends Bloc<Testevents,Teststates> {
 
 
     on<TestSubmittedEvent>((event, emit) async{
-      emit(TestSubmitting());
       final mystate = state as TestLoaded;
-      final res = await TestRepo().uploadTest(mystate.test);
+      final Test test = mystate.test;
+      emit(TestSubmitting());
+      
+      final res = await TestRepo().uploadTest(test);
       if(res.statusCode != 200){
         emit(FailedToSubmitTest());
       }

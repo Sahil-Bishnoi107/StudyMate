@@ -46,7 +46,20 @@ class _TestState extends State<Test> {
             ),
           );
         }
-
+        if(state is TestSubmitting){
+          return Container(
+            height: height,width: width,
+            
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height: height*0.1,),
+              LoadingAnimationWidget.halfTriangleDot(color: Colors.green, size: 50),
+              Text("Please Wait your Test is being Submitted",style: TextStyle(fontFamily: Fonts.nunito),)
+            ],
+            ),
+          );
+        }
         if(state is TestLoaded){
         return Container(
           height: height, width: width,
