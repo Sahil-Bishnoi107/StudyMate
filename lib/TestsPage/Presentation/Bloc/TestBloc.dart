@@ -7,6 +7,7 @@ import 'package:study_mate/TestsPage/Presentation/Bloc/TestStates.dart';
 
 class TestPageBloc extends Bloc<TestPageevents,TestPagestates>{
   TestPageBloc() : super(LoadingTestPageState()){
+
     on<TestsDataLoaded>((event, emit) async{
       ApiResponse res = await TestPageData().testPageData();
       if(res.statusCode != 200){emit(FailureTestPageState(error: "Could Not Load Tests"));}
@@ -16,12 +17,14 @@ class TestPageBloc extends Bloc<TestPageevents,TestPagestates>{
     on<FilterTests>((event, emit) {
       List<TestInfo> ourList = [];
       final currState = state as LoadedTestPageState;
-
-      for(var test in currState.tests){
+      if(event.filter == 0){
+        ourList = currState.tests;
+      }
+     else{ for(var test in currState.tests){
         if(test.subject.toLowerCase() == currState.filters[event.filter]){
           ourList.add(test);
         }
-      }
+      }}
       emit(LoadedTestPageState(tests: currState.tests, filteredTests: ourList,slectedFilter: event.filter));
     },);
   }

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:study_mate/Test/Presentation/Bloc/test_bloc.dart';
+import 'package:study_mate/Test/Presentation/Bloc/testevents.dart';
 import 'package:study_mate/Test/Presentation/Pages/test.dart';
 import 'package:study_mate/TestsPage/Domain/entities/Test.dart';
 import 'package:study_mate/TestsPage/Presentation/Bloc/TestBloc.dart';
@@ -17,6 +19,7 @@ class TestsPage extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: Colors.white,
       body: BlocBuilder<TestPageBloc,TestPagestates>(
         builder: (context,state){
            if(state is LoadingTestPageState){
@@ -34,13 +37,16 @@ class TestsPage extends StatelessWidget {
               );
             }
             state as LoadedTestPageState;
-            return SingleChildScrollView(
-              child: Container(
-                height: height,width: width,
+            return Container(
+              height: height,width: width,
+              child: SingleChildScrollView(
                 child: Column(
                   children: [
+                    SizedBox(height: height*0.05,),
                     _header(height, width,context),
+                    SizedBox(height: height*0.015,),
                     _filterOptions(height, width, state.filters, state.slectedFilter,context),
+                    SizedBox(height: height*0.025,),
                     _testsWidget(height, width, state.filteredTests)
                   ],
                 ),
@@ -64,8 +70,8 @@ Widget _header(double height,double width,BuildContext context){
     InkWell(
       onTap: () => Navigator.pop(context),
       child: Icon(Icons.arrow_back_ios_new)),
-    SizedBox(width: width*0.05,),
-    Text("Practice Tests")
+    SizedBox(width: width*0.25,),
+    Text("Practice Tests",style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: 18),)
     ],
   );
 }
@@ -73,8 +79,11 @@ Widget _header(double height,double width,BuildContext context){
 Widget _filterOptions(double height,double width,List<String> optionList,int selected,BuildContext context){
   return Container(
     height: height*0.05,width: width,
+    margin: EdgeInsets.only(left: width*0.05),
     child: ListView.builder(
+      scrollDirection: Axis.horizontal,
       itemCount: optionList.length,
+      padding: EdgeInsets.symmetric(vertical: height*0.007),
       itemBuilder: (context,index){
         return GestureDetector(
           onTap: () {
@@ -88,13 +97,15 @@ Widget _filterOptions(double height,double width,List<String> optionList,int sel
 
 Widget _filterBox(double height,double width,bool isSelected,String optionName){
   return Container(
-    height: height*0.02,width: width*0.06,
+    height: height*0.02,
+    padding: EdgeInsets.symmetric(horizontal: width*0.025),
+    margin: EdgeInsets.symmetric(horizontal: width*0.01),
     decoration: BoxDecoration(
       color: isSelected ? Colors.green : Colors.white,
       border: Border.all(color: Colors.green),
-      borderRadius: BorderRadius.circular(10)
+      borderRadius: BorderRadius.circular(width*0.1)
       ),
-      child: Text(optionName,style:  TextStyle(color: isSelected ? Colors.white : Colors.green, fontFamily: Fonts.nunito),),
+      child: Center(child: Text(optionName,style:  TextStyle(color: isSelected ? Colors.white : Colors.green, fontFamily: Fonts.nunito),)),
   );
 }
 
@@ -105,9 +116,13 @@ Widget _testsWidget(double height,double width,List<TestInfo> tests){
       Row(
         children: [
           SizedBox(width: width*0.05,),
-          Text("Availabe Tests"),
-          SizedBox(width: width*0.5,),
-          Container(height: height*0.02,width: width*0.04,child: Text("${tests.length} Tests"),)
+          Text("Availabe Tests",style: TextStyle(fontWeight: FontWeight.w900,fontSize: 20),),
+          SizedBox(width: width*0.35,),
+          Container(height: height*0.03,width: width*0.2,
+          margin: EdgeInsets.only(right: width*0.05),
+          padding: EdgeInsets.symmetric(vertical: height*0.005,horizontal: width*0.02),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),border: Border.all(color: Colors.blueGrey),color: const Color.fromRGBO(250, 250, 250, 1)),
+          child: Center(child: Text("${tests.length} Tests",style: TextStyle(color: Colors.blueGrey,fontFamily: Fonts.nunito,fontSize: 12,fontWeight: FontWeight.bold),)),)
         ],
       ),
       _testsList(height, width, tests)
@@ -140,62 +155,95 @@ Widget _testOption(double height,double width,TestInfo test,BuildContext context
    
   return Container(
     margin: EdgeInsets.only(bottom: height*0.03),
-    padding: EdgeInsets.symmetric(horizontal: width*0.05),
-    height: height*0.25,width: width*0.9,
+    padding: EdgeInsets.symmetric(horizontal: width*0.02),
+    height: height*0.21,width: width*0.9,
     decoration: BoxDecoration(
       border: Border.all(color: const Color.fromRGBO(180, 180, 180, 1)),
       borderRadius: BorderRadius.circular(20)
     ),
     child: Column(
       children: [
-        Row(
-          children: [
-            Container(height: height*0.1,width: width*0.15,
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
-            child: Icon(Icons.book),
-            ),
+        SizedBox(height: height*0.016,),
 
-            Container(
-              width: width*0.5,
-              height: height*0.15,
-              child: Column(
-                children: [
-                  Text(test.name),
-                  Text(test.subject)
-                ],
+        Container(
+          height: height*0.08,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              
+              Container(height: height*0.05,width: width*0.15,
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
+              child: Icon(Icons.book,size: 55,),
               ),
-            ),
+          
+             // SizedBox(width: width*0.02,),
 
-            Container(
-              height: height*0.01,width: width*0.03,
-              decoration: BoxDecoration(border: Border.all(color: difficultyIndex[test.diffiucluty.toLowerCase()] ?? Colors.black),borderRadius: BorderRadius.circular(5)),
-              child: Text(test.diffiucluty,style: TextStyle(color: difficultyIndex[test.diffiucluty.toLowerCase()] ?? Colors.black,fontFamily: Fonts.nunito),),
-            )
-          ],
+              Container(
+                width: width*0.5,
+                height: height*0.1,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ConstrainedBox(
+                      constraints: BoxConstraints(maxHeight: height*0.12,maxWidth: width*0.4,minWidth: width*0.4,minHeight: height*0.03),
+                      child: Text(test.name,style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: 17),)),
+                    ConstrainedBox(
+                      constraints: BoxConstraints(minHeight: height*0.02,minWidth: width*0.4,maxWidth: width*0.4,maxHeight: height*0.05),
+                      child: Text(test.subject,style: TextStyle(color: Colors.blueGrey,fontFamily: Fonts.nunito,fontSize: 12),))
+                  ],
+                ),
+              ),
+          
+              Expanded(
+                child: Container(
+                  height: height*0.03,
+                  padding: EdgeInsets.symmetric(horizontal: width*0.015),
+                  decoration: BoxDecoration(border: Border.all(color: difficultyIndex[test.diffiucluty.toLowerCase()] ?? Colors.black),borderRadius: BorderRadius.circular(20)),
+                  child: Center(child: Text(test.diffiucluty,style: TextStyle(color: difficultyIndex[test.diffiucluty.toLowerCase()] ?? Colors.black,fontFamily: Fonts.nunito,fontSize: 12),)),
+                ),
+              )
+            ],
+          ),
         ),
+        
 
         Row(
           children: [
-           Icon(Bootstrap.clock),
-           SizedBox(width: width*0.01,),
+            SizedBox(width: width*0.05,),
+           Icon(Bootstrap.clock,size: 20,color: Colors.green,),
+           SizedBox(width: width*0.024,),
            Container(
             width: width*0.2,
-            child: Text("${test.time} minutes",style: TextStyle(fontFamily: Fonts.nunito),)
+            child: Text("${test.time} mins",style: TextStyle(fontFamily: Fonts.nunito,color: Colors.blueGrey),)
             ),
-           Icon(Bootstrap.book),
+            SizedBox(width: width*0.06,),
+           Icon(Bootstrap.book,size: 20,color: Colors.green,),
            SizedBox(width: width*0.01,),
-           Text("${test.totalQuestions} Ques",style: TextStyle(fontFamily: Fonts.nunito),)
+           Text("${test.totalQuestions} Ques",style: TextStyle(fontFamily: Fonts.nunito,color: Colors.blueGrey),)
           ],
         ),
-
+        SizedBox(height: height*0.015,),
         Container(width: width*0.8, height: 1, color: Colors.grey,),
 
        InkWell(
-        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Test(testId: test.id))),
-         child: Container(width: width*0.8, height: height*0.1, alignment: Alignment.centerRight,
-           child: Container(height: height*0.06,width: width*0.3,
-           decoration: BoxDecoration(color: Colors.green, borderRadius: BorderRadius.circular(15)),
-           child: Text("Start Now >",style: TextStyle(color: Colors.black,fontFamily: Fonts.nunito),),
+        onTap: () { 
+          Navigator.push(context, MaterialPageRoute(builder: (context) => BlocProvider(
+          create: (context) => TestBloc()..add(
+            TestLoadingComplete(id: test.id, difficulty: test.diffiucluty, name: test.name, subject: test.subject, time: test.time, totalQuestions: test.totalQuestions)
+          ),
+          child: Test())));},
+
+         child: Container(width: width*0.8, height: height*0.06,
+           child: Row(
+             children: [
+               Text("Not Attempted Yet", style: TextStyle(color: Colors.blueGrey,fontSize: 12,fontStyle: FontStyle.italic),),
+               SizedBox(width: width*0.23,),
+               Container(height: height*0.04,
+               padding: EdgeInsets.symmetric(horizontal: width*0.04),
+               decoration: BoxDecoration(color: Colors.green, borderRadius: BorderRadius.circular(40)),
+               child: Center(child: Text("Start Now >",style: TextStyle(color: Colors.black,fontFamily: Fonts.nunito),)),
+               ),
+             ],
            ),
          ),
        )

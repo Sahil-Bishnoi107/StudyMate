@@ -6,6 +6,7 @@ import 'package:study_mate/Home/Presentation/Bloc/HomeBloc.dart';
 import 'package:study_mate/Home/Presentation/Bloc/homeEvents.dart';
 import 'package:study_mate/Test/Presentation/Bloc/test_bloc.dart';
 import 'package:study_mate/TestsPage/Presentation/Bloc/TestBloc.dart';
+import 'package:study_mate/TestsPage/Presentation/Bloc/TestEvents.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,8 +23,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(       
           create: (context) => Homebloc()..add(HomeProfileRequested(uid: "sahilbishnoi"))),
 
-        BlocProvider(create: (context) => TestPageBloc()),
-        BlocProvider(create: (context) => TestBloc())  
+        BlocProvider(create: (context) => TestPageBloc()..add(TestsDataLoaded())),
+         
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

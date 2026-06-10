@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:study_mate/Home/Domain/Entities/Question.dart';
 import 'package:study_mate/Test/Presentation/Bloc/test_bloc.dart';
@@ -13,8 +14,8 @@ import 'package:study_mate/Test/Presentation/Widgets/question_option.dart';
 import 'package:study_mate/fonts.dart';
 
 class Test extends StatefulWidget {
- final String testId;
- const Test({super.key,required this.testId});
+
+ const Test({super.key});
 
   @override
   State<Test> createState() => _TestState();
@@ -27,7 +28,8 @@ class _TestState extends State<Test> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: BlocConsumer(
+      backgroundColor: Colors.white,
+      body: BlocConsumer<TestBloc,Teststates>(
 
       listener: (context, state) {
           if(state is TestSubmitted){
@@ -46,13 +48,15 @@ class _TestState extends State<Test> {
         }
 
         if(state is TestLoaded){
-        return SingleChildScrollView(
-          child: Container(
-            height: height, width: width,
+        return Container(
+          height: height, width: width,
+          child: SingleChildScrollView(
             child: Column(
               children: [
                  _header(height, width, state.timeLeft, state.test.name),
+                 SizedBox(height: height*0.01,),
                  Container(color: const Color.fromRGBO(180, 180, 180, 1), height: 1, width: width,),
+                 SizedBox(height: height*0.02,),
                  _testProgress(height, width, context, state.test.questions, pageController),
                  SizedBox(height: height*0.05,),
                  _questionSection(height, width, state.test.questions, pageController)
@@ -78,21 +82,36 @@ class _TestState extends State<Test> {
 
 
 Widget _header(double height,double width,int timeLeft,String testName){
-  String minutes = (timeLeft / 60).toString();
-  String seconds = (timeLeft % 60).toString();
+  String minutes = (timeLeft / 60).toInt() < 10 ? "0${(timeLeft / 60).toInt().toString()}" : (timeLeft / 60).toInt().toString();
+
+  String seconds = (timeLeft % 60 ) < 10 ? "0${(timeLeft % 60 ).toString()}"    : (timeLeft % 60 ).toString();
   return Container(
-    height: height*0.1,width: width,
+    height: height*0.05,width: width,
     padding: EdgeInsets.only(left: width*0.05),
+    margin: EdgeInsets.only(top: height*0.05),
     child: Row(
     children: [
       Container(
-        width: width*0.6,
-        child: Text(testName,style: TextStyle(fontFamily: Fonts.nunito),)
+        width: width*0.65,
+        child: Text(testName,style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: 20),)
         ),
 
       Container(
-        height: height*0.02,width: width*0.06,
-        child: Text("$minutes : $seconds",style: TextStyle(color: Colors.green,fontFamily: Fonts.nunito),),
+        height: height*0.035,
+        width: width*0.25,
+        decoration: BoxDecoration(color: const Color.fromRGBO(76, 175, 80, 0.15),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Colors.green)
+        ),
+        child: Center(
+          child: Row(
+            children: [
+              SizedBox(width: width*0.02,),
+              Icon(Bootstrap.stopwatch,size: 15,color: Colors.green,fontWeight: FontWeight.bold,),
+              SizedBox(width: width*0.015,),
+              Text("$minutes : $seconds",style: TextStyle(color: Colors.green,fontFamily: Fonts.nunito,fontWeight: FontWeight.bold),),
+            ],
+          )),
         )  
 
     ],
@@ -103,7 +122,8 @@ Widget _header(double height,double width,int timeLeft,String testName){
 Widget _questionSection(double height,double width, List<Question> questions,PageController pageController){
   return Column(
     children: [
-     Container(height: height*0.6,width: width,
+     Container(
+      height: height*0.6,width: width,
       child: PageView.builder(
         controller: pageController,
         physics: NeverScrollableScrollPhysics(),
@@ -155,47 +175,50 @@ Widget _question(double height,double width, Question question,int currQue,int t
 
         Text(question.description,style: TextStyle(fontFamily: Fonts.nunito),),
 
-        ListView(
-          children: [
-            GestureDetector(
-              onTap: () {
-                if(question.selectedOption == question.options[0]){BlocProvider.of<TestBloc>(context).add(TestOptionCleared(que: question));}  
-                else{
-                  BlocProvider.of<TestBloc>(context).add(TestOptionSelected(que: question, optionSelected: question.options[0]));
-                }            
-              },
-              child: QuestionOption(question.options[0], height, width, question.selectedOption == question.options[0])),
-
-
-            GestureDetector(
-              onTap: () {
-                if(question.selectedOption == question.options[1]){BlocProvider.of<TestBloc>(context).add(TestOptionCleared(que: question));}  
-                else{
-                  BlocProvider.of<TestBloc>(context).add(TestOptionSelected(que: question, optionSelected: question.options[1]));
-                } 
-              },
-              child: QuestionOption(question.options[1], height, width, question.selectedOption == question.options[1])),
-
-
-            GestureDetector(
-              onTap: () {
-                if(question.selectedOption == question.options[2]){BlocProvider.of<TestBloc>(context).add(TestOptionCleared(que: question));}  
-                else{
-                  BlocProvider.of<TestBloc>(context).add(TestOptionSelected(que: question, optionSelected: question.options[2]));
-                } 
-              },
-              child: QuestionOption(question.options[2], height, width, question.selectedOption == question.options[2])),
-
-
-            GestureDetector(
-              onTap: () {
-                if(question.selectedOption == question.options[3]){BlocProvider.of<TestBloc>(context).add(TestOptionCleared(que: question));}  
-                else{
-                  BlocProvider.of<TestBloc>(context).add(TestOptionSelected(que: question, optionSelected: question.options[3]));
-                } 
-              },
-              child: QuestionOption(question.options[3], height, width, question.selectedOption == question.options[3]))
-          ],
+        Container(
+          height: height*0.4,
+          child: ListView(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  if(question.selectedOption == question.options[0]){BlocProvider.of<TestBloc>(context).add(TestOptionCleared(que: question));}  
+                  else{
+                    BlocProvider.of<TestBloc>(context).add(TestOptionSelected(que: question, optionSelected: question.options[0]));
+                  }            
+                },
+                child: QuestionOption(question.options[0], height, width, question.selectedOption == question.options[0])),
+          
+          
+              GestureDetector(
+                onTap: () {
+                  if(question.selectedOption == question.options[1]){BlocProvider.of<TestBloc>(context).add(TestOptionCleared(que: question));}  
+                  else{
+                    BlocProvider.of<TestBloc>(context).add(TestOptionSelected(que: question, optionSelected: question.options[1]));
+                  } 
+                },
+                child: QuestionOption(question.options[1], height, width, question.selectedOption == question.options[1])),
+          
+          
+              GestureDetector(
+                onTap: () {
+                  if(question.selectedOption == question.options[2]){BlocProvider.of<TestBloc>(context).add(TestOptionCleared(que: question));}  
+                  else{
+                    BlocProvider.of<TestBloc>(context).add(TestOptionSelected(que: question, optionSelected: question.options[2]));
+                  } 
+                },
+                child: QuestionOption(question.options[2], height, width, question.selectedOption == question.options[2])),
+          
+          
+              GestureDetector(
+                onTap: () {
+                  if(question.selectedOption == question.options[3]){BlocProvider.of<TestBloc>(context).add(TestOptionCleared(que: question));}  
+                  else{
+                    BlocProvider.of<TestBloc>(context).add(TestOptionSelected(que: question, optionSelected: question.options[3]));
+                  } 
+                },
+                child: QuestionOption(question.options[3], height, width, question.selectedOption == question.options[3]))
+            ],
+          ),
         )
       ],
     ),

@@ -2,8 +2,6 @@ class TestPageevents {}
 
 class TestsDataLoaded extends TestPageevents{
 
-
-
 }
 
 class FilterTests extends TestPageevents{
