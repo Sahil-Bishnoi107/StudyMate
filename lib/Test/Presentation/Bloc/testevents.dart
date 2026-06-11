@@ -1,4 +1,5 @@
 import 'package:study_mate/Home/Domain/Entities/Question.dart';
+import 'package:study_mate/Test/Domain/Entities/test.dart';
 
 class Testevents {}
 
@@ -29,3 +30,8 @@ class TestSubmittedEvent extends Testevents{
 class TimerTicked extends Testevents{}
 
 class TestTimeUp extends Testevents{}
+
+class RetakeTest extends Testevents{
+  Test test;
+  RetakeTest({required this.test});
+}

@@ -231,7 +231,7 @@ Widget _testOption(double height,double width,TestInfo test,BuildContext context
           create: (context) => TestBloc()..add(
             TestLoadingComplete(id: test.id, difficulty: test.diffiucluty, name: test.name, subject: test.subject, time: test.time, totalQuestions: test.totalQuestions)
           ),
-          child: Test())));},
+          child: GiveTest())));},
 
          child: Container(width: width*0.8, height: height*0.06,
            child: Row(

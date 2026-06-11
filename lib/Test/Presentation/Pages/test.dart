@@ -13,15 +13,15 @@ import 'package:study_mate/Test/Presentation/Widgets/question_icon.dart';
 import 'package:study_mate/Test/Presentation/Widgets/question_option.dart';
 import 'package:study_mate/fonts.dart';
 
-class Test extends StatefulWidget {
+class GiveTest extends StatefulWidget {
 
- const Test({super.key});
+ const GiveTest({super.key});
 
   @override
-  State<Test> createState() => _TestState();
+  State<GiveTest> createState() => _TestState();
 }
 
-class _TestState extends State<Test> {
+class _TestState extends State<GiveTest> {
   PageController pageController =  PageController();
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,9 @@ class _TestState extends State<Test> {
 
       listener: (context, state) {
           if(state is TestSubmitted){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => TestSubmittedPage()));
+            Navigator.push(context, MaterialPageRoute(builder: (_) => BlocProvider.value(
+              value: context.read<TestBloc>(),
+              child: TestSubmittedPage())));
           }
       },
 
