@@ -26,7 +26,10 @@ class TestSubmittedPage extends StatelessWidget {
       backgroundColor: Colors.white,
       body:  BlocBuilder<TestBloc,Teststates>(
         builder: (context, state) {
-          final mystate = state as TestSubmitted;
+          if(state is !TestSubmitted){
+            return SizedBox.shrink();
+          }
+          final mystate = state;
           int correctQues = 0;
           int quesSolved = 0;
           for(Question q in mystate.test.questions){
@@ -146,7 +149,7 @@ Widget _statArea(double height,double width,int marks, int total,int timeTaken,i
       children: [
         Row(
           children: [
-            StatBox(height, width, FontAwesome.arrow_down_1_9_solid, "Accuracy", (marks/total).toInt().toString(), "Impove Accuracy by prcaticing problems"),
+            StatBox(height, width, FontAwesome.arrow_down_1_9_solid, "Accuracy", "${(marks*100/total).toInt().toString()}%", "Impove Accuracy by prcaticing problems"),
             SizedBox(width: width*0.05,),
             StatBox(height, width, FontAwesome.bolt_lightning_solid, "Difficulty", difficulty, "Well Done!")
           ],
@@ -295,7 +298,7 @@ Widget _subjectBreakdown(double height,double width,Map<String,int> correctQues,
 Widget _retryButton(double height,double width,BuildContext context,Test test){
   return GestureDetector(
     onTap: () {
-      Navigator.push(context, MaterialPageRoute(
+      Navigator.pushReplacement(context, MaterialPageRoute(
         builder: (_) => BlocProvider.value(
           value: context.read<TestBloc>()..add(RetakeTest(test: test)),
           child: GiveTest(),

@@ -38,7 +38,7 @@ Widget SubjectBreakdownTile(double height,double width,int correctQues,int wrong
                 borderRadius: BorderRadius.circular(width*0.09),
                 color: const Color.fromRGBO(76, 175, 80, 0.06),
                 ),
-              child: Center(child: Text("${(correctQues*100/(correctQues + wrongQues)).toInt().toString()}%",style: TextStyle(color: Colors.green,fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: 12),)))
+              child: Center(child: Text("${(correctQues*100/((correctQues + wrongQues) != 0 ? (correctQues + wrongQues) : 1)).toInt().toString()}%",style: TextStyle(color: Colors.green,fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: 12),)))
           ],
         ),
         SizedBox(height: height*0.01,),

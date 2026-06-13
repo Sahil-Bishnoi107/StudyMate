@@ -104,11 +104,12 @@ class TestBloc extends Bloc<Testevents,Teststates> {
 
 
     on<RetakeTest>((event, emit) {
+      emit(TestLoading());
        Test test = event.test;
        for(int i = 0;i < test.questions.length;i++){
         test.questions[i].selectedOption = null;
        }
-       emit(TestLoaded(test: test, timeLeft: test.time));
+       emit(TestLoaded(test: test, timeLeft: test.time*60));
     },);
   }
 
