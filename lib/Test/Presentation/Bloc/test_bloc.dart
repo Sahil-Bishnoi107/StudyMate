@@ -111,6 +111,12 @@ class TestBloc extends Bloc<Testevents,Teststates> {
        }
        emit(TestLoaded(test: test, timeLeft: test.time*60));
     },);
+
+
+    on<LoadTestReview>((event, emit) {
+      final mystate = state as TestSubmitted;
+      emit(TestLoaded(test: mystate.test, timeLeft: 10));
+    },);
   }
 
   @override

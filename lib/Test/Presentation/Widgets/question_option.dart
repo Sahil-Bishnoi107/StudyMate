@@ -28,3 +28,32 @@ Widget QuestionOption(String option,double height,double width,bool isSelected,S
     ),
   );
 }
+
+
+Widget QuestionReviewOption(String option,double height,double width,bool isSelected,String optionNum,bool isCorrect){
+  return Container(
+    constraints: BoxConstraints(minHeight: height*0.08),
+    width: width*0.9,
+    alignment: Alignment.centerLeft,
+    padding: EdgeInsets.only(left: width*0.04),
+    margin: EdgeInsets.only(bottom: height*0.01),
+    decoration: BoxDecoration(
+      border: Border.all(color: isSelected ? (isCorrect ? Colors.green : Colors.red) : const Color.fromRGBO(200, 200, 200, 0.8),width: 1.5),
+      borderRadius: BorderRadius.circular(width*0.03)
+    ),
+    child: Row(
+      children: [
+        Container(
+          height: width*0.099,width: width*0.099,
+          decoration: BoxDecoration(
+            color: isSelected ? (isCorrect ? Colors.green : Colors.red) : const Color.fromRGBO(220, 220, 220, 0.4),
+            borderRadius: BorderRadius.circular(30),
+          ),
+          child: Center(child: Text(optionNum,style: TextStyle(fontFamily: Fonts.nunito,fontSize: 18, fontWeight: FontWeight.bold, color: isSelected ? Colors.white : Colors.blueGrey),)),
+        ),
+        SizedBox(width: width*0.02,),
+        Text(option,style: TextStyle(fontFamily: Fonts.nunito,color: isSelected ? (isCorrect ? Colors.green : Colors.red) : Colors.black),),
+      ],
+    ),
+  );
+}

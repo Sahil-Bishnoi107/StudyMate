@@ -35,3 +35,7 @@ class RetakeTest extends Testevents{
   Test test;
   RetakeTest({required this.test});
 }
+
+class LoadTestReview extends Testevents{
+
+}

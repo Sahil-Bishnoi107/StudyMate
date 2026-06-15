@@ -10,6 +10,7 @@ import 'package:study_mate/Test/Presentation/Bloc/test_bloc.dart';
 import 'package:study_mate/Test/Presentation/Bloc/testevents.dart';
 import 'package:study_mate/Test/Presentation/Bloc/teststates.dart';
 import 'package:study_mate/Test/Presentation/Pages/test.dart';
+import 'package:study_mate/Test/Presentation/Pages/test_review.dart';
 import 'package:study_mate/Test/Presentation/Widgets/question_data.dart';
 import 'package:study_mate/Test/Presentation/Widgets/stat_boc.dart';
 import 'package:study_mate/Test/Presentation/Widgets/subject_breakdown_tile.dart';
@@ -52,7 +53,7 @@ class TestSubmittedPage extends StatelessWidget {
                 SizedBox(height: height*0.02,),
                 _pieChart(height, width, mystate.test.totalQuestions, correctQues, mystate.test.totalQuestions - quesSolved),
                 SizedBox(height: height*0.05,),
-                _subjectBreakdown(height, width, mystate.correctQuestionsPerSubject, mystate.questionsPerSubject, mystate.questionsSkippedPerSubject),
+                _subjectBreakdown(height, width, mystate.correctQuestionsPerSubject, mystate.questionsPerSubject, mystate.questionsSkippedPerSubject,context),
                 SizedBox(height: height*0.03,),
                 _retryButton(height, width, context, mystate.test),
                 SizedBox(height: height*0.02,),
@@ -243,7 +244,7 @@ Widget _pieChart(double height,double width,int totalQues,int correctQues,int sk
 }
 
 
-Widget _subjectBreakdown(double height,double width,Map<String,int> correctQues, Map<String,int> totalQues,Map<String,int> skippedQues){
+Widget _subjectBreakdown(double height,double width,Map<String,int> correctQues, Map<String,int> totalQues,Map<String,int> skippedQues,BuildContext context){
   List<String> subjects = [];
   List<int> correct = [];
   List<int> total = [];
@@ -271,6 +272,14 @@ Widget _subjectBreakdown(double height,double width,Map<String,int> correctQues,
               Text("Subject Breakdown", style: TextStyle(fontFamily: Fonts.nunito,fontSize: 18,fontWeight: FontWeight.bold),),
               SizedBox(width: width*0.2,),
               GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (_) => BlocProvider.value(
+                      value: context.read<TestBloc>()..add(LoadTestReview()),
+                      child: TestReview(),
+                      )
+                    ));
+                },
                 child: Text("View All",style: TextStyle(color: Colors.green,fontWeight: FontWeight.bold,fontFamily: Fonts.inter),),
               )
             ],
