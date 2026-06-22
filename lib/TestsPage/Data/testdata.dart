@@ -18,7 +18,7 @@ class TestPageData{
       url,
       headers: {
       'Content-Type' : 'application/json',
-      'access_token' : 'bearer $accessToken'
+      'Authorization' : 'Bearer $accessToken'
       }
       );
       if(res.statusCode != 200){

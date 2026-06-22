@@ -31,4 +31,16 @@ class Test {
   Test copyWith(List<Question> ques){
     return Test(id: id, name: name, totalQuestions: totalQuestions, time: time, subject: subject, diffiucluty: diffiucluty, questions: ques);
   }
+
+  Map<String, dynamic> toJson() {
+  return {
+    'id': id,
+    'name': name,
+    'total_questions': totalQuestions,
+    'subject': subject,
+    'time': time,
+    'difficulty': diffiucluty,
+    'questions': questions.map((q) => q.toJson()).toList(),
+  };
+}
 }

@@ -12,7 +12,7 @@ class Question{
   factory Question.fromJson(Map<String,dynamic> mp){
     List<String> options = [];
     if(mp.containsKey('options')){
-      for(var x in mp['options'] as List<String>){
+      for(var x in mp['options']){
         options.add(x);
       }
     }
@@ -35,4 +35,15 @@ class Question{
     return Question(id: id, description: description, subject: subject, correctOption: correctOption, difficulty: difficulty, options: options)
                     ..selectedOption = null;
   }
+
+  Map<String, dynamic> toJson() {
+  return {
+    'id': id,
+    'description': description,
+    'subject': subject,
+    'correct_option': correctOption,
+    'difficulty': difficulty,
+    'options': options,
+  };
+}
 }

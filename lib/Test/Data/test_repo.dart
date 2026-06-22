@@ -13,20 +13,21 @@ class TestRepo {
     String baseUrl = "https://$ngrok/StudyMate/";
 
     Future<ApiResponse> getQuestions(String testId) async{
-       final url = Uri.parse("${baseUrl}Test/test_questions/$testId");
+       final url = Uri.parse("${baseUrl}Test/test-questions/$testId");
        String accessToken = await SecureTokens().getAccessToken() ?? "";
        try{
        final res = await http.get(
         url,
         headers: {
         'Content-Type' : 'application/json',
-        'access_token' : 'bearer $accessToken'
+        'Authorization' : 'Bearer $accessToken'
         });
         if(res.statusCode != 200){
-          print("could not load profile with status code ${res.statusCode}");
+          print("could not load testwith ${res.statusCode}");
           return ApiResponse(statusCode: res.statusCode);
         }
         final jsonFile = jsonDecode(res.body);
+        print(jsonFile);
         final quesData = jsonFile;
          List<Question> questions = [];
          if(quesData.containsKey('questions')){
@@ -38,7 +39,7 @@ class TestRepo {
          return ApiResponse(statusCode: 200, data: questions);
        }
        catch(e){
-        print("Could not load the homepage with exception $e");
+        print("Could not load the test with exception $e");
         return ApiResponse(statusCode: 500,error: e.toString());
        }
          
@@ -47,14 +48,14 @@ class TestRepo {
     Future<ApiResponse> uploadTest(Test test) async{
       final url = Uri.parse("${baseUrl}Test/submit-test");
       String accessToken = await SecureTokens().getAccessToken() ?? "";
-      final submit_test = jsonEncode(test);
+      final submit_test = jsonEncode(test.toJson());
 
       try{
         final res = await http.post(
           url,
           headers: {
             'Content-Type' : 'application/json',
-            'access_token' : 'bearer $accessToken'
+            'Authorization' : 'Bearer $accessToken'
           },
           body: submit_test
           );

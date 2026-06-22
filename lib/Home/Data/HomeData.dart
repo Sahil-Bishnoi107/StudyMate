@@ -15,12 +15,12 @@ class Homedata {
    final url = Uri.parse("${baseUrl}Test/user_profile");
    try{
     String accessToken = await SecureTokens().getAccessToken() ?? "";
-    
+    print("Access tone is : $accessToken");
    final res = await http.get(
     url,
     headers: {
       'Content-Type' : 'application/json',
-      'access_token' : 'bearer $accessToken'
+      'Authorization' : 'Bearer $accessToken'
     });
 
      if(res.statusCode != 200){
