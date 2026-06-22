@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:study_mate/Home/Domain/Entities/Question.dart';
+import 'package:study_mate/Home/Presentation/Pages/Homepage.dart';
 import 'package:study_mate/Test/Presentation/Bloc/test_bloc.dart';
 import 'package:study_mate/Test/Presentation/Bloc/teststates.dart';
 
@@ -82,7 +83,7 @@ Widget _header(double height,double width,String testName,BuildContext context){
     child: Row(
     children: [
       GestureDetector(
-        onTap: () => Navigator.pop(context),
+        onTap: () => Navigator.pushReplacement(context,MaterialPageRoute(builder: (_) => Homepage())),
         child: Icon(Icons.arrow_back_ios_new)),
       Container(
         width: width*0.65,

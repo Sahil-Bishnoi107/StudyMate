@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => AuthBloc()),
         BlocProvider(       
-          create: (context) => Homebloc()..add(HomeProfileRequested(uid: "sahilbishnoi"))),
+          create: (context) => Homebloc()..add(HomeProfileRequested())),
 
         BlocProvider(create: (context) => TestPageBloc()..add(TestsDataLoaded())),
          

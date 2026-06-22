@@ -1,13 +1,36 @@
+import 'dart:convert';
 import 'package:study_mate/Authentication/Domain/Entities/ApiResponse.dart';
-import 'package:study_mate/Home/Data/fakeStudent.dart';
 import 'package:study_mate/Home/Domain/Entities/student.dart';
+import 'package:http/http.dart' as http;
+import 'package:study_mate/secure_storage.dart';
+
 
 class Homedata {
-  
-  Future<ApiResponse> getStudentInfo(String uid) async{
-   await Future.delayed(Duration(seconds: 2),(){});
-   Student student = Student.fromJson(Fakestudent().student);
-   ApiResponse response = ApiResponse(statusCode: 200,data: student);
-   return response;
+  String baseUrl = "https://host/StudyMate/";
+  Future<ApiResponse> getStudentInfo() async{
+   final url = Uri.parse("${baseUrl}url");
+   try{
+    String accessToken = await SecureTokens().getAccessToken() ?? "";
+    
+   final res = await http.get(
+    url,
+    headers: {
+      'Content-Type' : 'Application/Json',
+      'access_token' : 'bearer $accessToken'
+    });
+     if(res.statusCode != 200){
+      print("could not load profile with status code ${res.statusCode}");
+      return ApiResponse(statusCode: res.statusCode);
+     }
+     final jsonFile = jsonDecode(res.body);
+     Student student = Student.fromJson(jsonFile);
+     ApiResponse response = ApiResponse(statusCode: 200,data: student);
+     return response;
+   }
+   catch(e){
+    print("Could not load the homepage with exception $e");
+    return ApiResponse(statusCode: 500,error: e.toString());
   }
+  }
+  
 }

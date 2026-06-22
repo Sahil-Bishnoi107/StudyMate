@@ -7,8 +7,8 @@ import 'package:study_mate/Home/Presentation/Bloc/homeStates.dart';
 class Homebloc extends Bloc<Homeevents,Homestates> {
    Homebloc() : super(HomeInitial()){
     on<HomeProfileRequested>((event, emit) async {
-      String uid = event.uid;
-      ApiResponse response = await Homedata().getStudentInfo(uid);
+      
+      ApiResponse response = await Homedata().getStudentInfo();
       if(response.statusCode == 200){
         emit(HomeDataRecieved(student: response.data));
         return;
