@@ -16,14 +16,14 @@ class AuthBloc extends Bloc<AuthEvent,AuthState> {
       emit(AuthFailure(message: "Please enter correct password"));
       return;
      }
-     emit(AuthSuccess(uid: response.data as String));
+     emit(AuthSuccess());
    },);
 
    on<AutoLogin>((event, emit) async {
      String token = event.refreshToken;
      ApiResponse response = await AuthRepo().autoLogin(token);
      if(response.statusCode == 200){
-      emit(AuthSuccess(uid: response.data as String));
+      emit(AuthSuccess());
       return;
      }
        emit(AuthInitial());

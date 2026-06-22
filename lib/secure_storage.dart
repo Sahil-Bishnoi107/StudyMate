@@ -6,8 +6,10 @@ class SecureTokens {
   static const String refreshTokenKey = 'refresh_token';
 
   Future<void> saveTokens(String accessToken, String refreshToken) async{
+    print("trying to save the tokens in secure storage");
      await _storage.write(key: accessTokenKey, value: accessToken);
      await _storage.write(key: refreshTokenKey, value: refreshToken);
+     print("saved the tokens in secure storage");
   }
 
   Future<String?> getAccessToken() async{

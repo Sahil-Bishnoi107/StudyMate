@@ -3,11 +3,12 @@ import 'dart:convert';
 import 'package:study_mate/Authentication/Domain/Entities/ApiResponse.dart';
 import 'package:study_mate/Authentication/Domain/Interfaces/AuthData.dart';
 import 'package:http/http.dart' as http;
+import 'package:study_mate/ngrok.dart';
 import 'package:study_mate/secure_storage.dart';
 
 class AuthRepo extends AuthData{
 
-  String baseUrl = "https://host/StudyMate/";
+  String baseUrl = "https://$ngrok/StudyMate/";
 
   @override
   Future<ApiResponse> autoLogin(String refreshToken) async {
@@ -16,28 +17,30 @@ class AuthRepo extends AuthData{
    return ApiResponse(statusCode: 404,error: "Not Implemented");
   }
   
-  
+
   @override
   Future<ApiResponse> loginWithEmail(String email, String password) async {
-   final url = Uri.parse("${baseUrl}url");
+   final url = Uri.parse("${baseUrl}Auth/login");
    
    try{
    final res = await http.post(
     url,
     headers: {
-      'Content-Type' : 'Application/Json'
+      'Content-Type' : 'application/json'
     },
-    body: {
-      jsonEncode({
+    body:   jsonEncode({
         "email" : email,
         "password" : password
       })
-    }
+    
    );
+   
    if(res.statusCode != 200){print("failed to login with code ${res.statusCode}");return ApiResponse(statusCode: res.statusCode);}
    final jsonFile = jsonDecode(res.body);
-   String access_token = jsonFile['access_token'];
-   String refresh_token = jsonFile['refresh_token'];
+   String access_token = jsonFile['access_token'] ?? "";
+   String refresh_token = jsonFile['refresh_token'] ?? "";
+   print("Access Tone : $access_token");
+   print("Refresh Tone : $refresh_token");
    await SecureTokens().saveTokens(access_token, refresh_token);
    return ApiResponse(statusCode: 200);  
    

@@ -5,20 +5,21 @@ import 'dart:convert';
 import 'package:study_mate/Authentication/Domain/Entities/ApiResponse.dart';
 import 'package:study_mate/Home/Domain/Entities/Question.dart';
 import 'package:study_mate/Test/Domain/Entities/test.dart';
+import 'package:study_mate/ngrok.dart';
 import 'package:study_mate/secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 class TestRepo {
-    String baseUrl = "https://host/StudyMate/";
+    String baseUrl = "https://$ngrok/StudyMate/";
 
     Future<ApiResponse> getQuestions(String testId) async{
-       final url = Uri.parse("${baseUrl}url");
+       final url = Uri.parse("${baseUrl}Test/test_questions/$testId");
        String accessToken = await SecureTokens().getAccessToken() ?? "";
        try{
        final res = await http.get(
         url,
         headers: {
-        'Content-Type' : 'Application/Json',
+        'Content-Type' : 'application/json',
         'access_token' : 'bearer $accessToken'
         });
         if(res.statusCode != 200){
@@ -44,7 +45,7 @@ class TestRepo {
     }
 
     Future<ApiResponse> uploadTest(Test test) async{
-      final url = Uri.parse("${baseUrl}url");
+      final url = Uri.parse("${baseUrl}Test/submit-test");
       String accessToken = await SecureTokens().getAccessToken() ?? "";
       final submit_test = jsonEncode(test);
 
@@ -52,7 +53,7 @@ class TestRepo {
         final res = await http.post(
           url,
           headers: {
-            'Content-Type' : 'Application/Json',
+            'Content-Type' : 'application/json',
             'access_token' : 'bearer $accessToken'
           },
           body: submit_test

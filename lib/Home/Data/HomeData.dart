@@ -2,27 +2,33 @@ import 'dart:convert';
 import 'package:study_mate/Authentication/Domain/Entities/ApiResponse.dart';
 import 'package:study_mate/Home/Domain/Entities/student.dart';
 import 'package:http/http.dart' as http;
+import 'package:study_mate/ngrok.dart';
 import 'package:study_mate/secure_storage.dart';
 
 
 class Homedata {
-  String baseUrl = "https://host/StudyMate/";
+  String baseUrl = "https://$ngrok/StudyMate/";
+
+
   Future<ApiResponse> getStudentInfo() async{
-   final url = Uri.parse("${baseUrl}url");
+    print("User Profile being Loaded");
+   final url = Uri.parse("${baseUrl}Test/user_profile");
    try{
     String accessToken = await SecureTokens().getAccessToken() ?? "";
     
    final res = await http.get(
     url,
     headers: {
-      'Content-Type' : 'Application/Json',
+      'Content-Type' : 'application/json',
       'access_token' : 'bearer $accessToken'
     });
+
      if(res.statusCode != 200){
       print("could not load profile with status code ${res.statusCode}");
       return ApiResponse(statusCode: res.statusCode);
      }
      final jsonFile = jsonDecode(res.body);
+     print("Loaded jsonFile of student data successfully : $jsonFile");
      Student student = Student.fromJson(jsonFile);
      ApiResponse response = ApiResponse(statusCode: 200,data: student);
      return response;

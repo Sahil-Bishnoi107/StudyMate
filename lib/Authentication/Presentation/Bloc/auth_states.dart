@@ -1,8 +1,6 @@
 class AuthState {}
 
 class AuthSuccess extends AuthState{
-  String uid;
-  AuthSuccess({required this.uid});
 }
 class AuthFailure extends AuthState{
   String message;
