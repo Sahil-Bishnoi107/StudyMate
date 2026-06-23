@@ -44,6 +44,7 @@ class Question{
     'correct_option': correctOption,
     'difficulty': difficulty,
     'options': options,
+    'selected_option' : selectedOption
   };
 }
 }

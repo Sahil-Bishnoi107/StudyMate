@@ -5,11 +5,11 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:study_mate/Home/Domain/Entities/Test.dart';
 import 'package:study_mate/Home/Presentation/Bloc/HomeBloc.dart';
 import 'package:study_mate/Home/Presentation/Bloc/homeStates.dart';
+import 'package:study_mate/Home/Presentation/Widgets/drawer.dart';
 import 'package:study_mate/Home/Presentation/Widgets/profilesection.dart';
 import 'package:study_mate/Home/Presentation/Widgets/statBox.dart';
 import 'package:study_mate/Home/Presentation/Widgets/testtile.dart';
 import 'package:study_mate/Home/Presentation/Widgets/topbar.dart';
-import 'package:study_mate/TestsPage/Presentation/Pages/testspage.dart';
 import 'package:study_mate/fonts.dart';
 
 class Homepage extends StatelessWidget {
@@ -22,34 +22,8 @@ class Homepage extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      drawer: Drawer(
-        width: width*0.5,
-        child: ListView(
-          children: [
-            DrawerHeader(
-              
-              child: Container(
-              height: height*0.1,width: width*0.01,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(width*0.03),
-                border: Border.all()
-              ),
-              child: Icon(Icons.person))),
-
-              ListTile(
-              leading: Icon(Icons.home),
-              title: const Text("Home"),
-              ),
-              ListTile(
-                leading: Icon(Bootstrap.book_fill),
-                title: const Text("Tests"),
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => TestsPage())); 
-                },
-              )
-          ],
-        ),
-      ),
+      
+      drawer: mainDrawer(height, width, context),
       body: BlocBuilder<Homebloc,Homestates>(
         builder: (context, state) {
           if(state is HomeInitial){
@@ -60,7 +34,7 @@ class Homepage extends StatelessWidget {
             );
           }
           if(state is HomeDataRecieved) {
-            int percentage = state.student.testsGiven.length != 0 ? (state.student.correctQuestions*100/state.student.attemptedQuestions).round() : 0;
+            int percentage = state.student.attemptedQuestions != 0 ? (state.student.correctQuestions*100/state.student.attemptedQuestions).round() : 0;
             return SingleChildScrollView(
               child: Column(
               children: [
@@ -71,7 +45,8 @@ class Homepage extends StatelessWidget {
               SizedBox(height: height*0.05,),
               _statSection(width, height, percentage , state.student.attemptedQuestions, state.student.rank, state.student.testsGiven.length),
               SizedBox(height: height*0.03,),
-              _testsList(height, width, state.student.testsGiven)
+              _testsList(height, width, state.student.testsGiven),
+              SizedBox(height: height*0.1,)
                         ],
                       ),
             );

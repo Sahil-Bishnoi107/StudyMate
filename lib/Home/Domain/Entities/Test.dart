@@ -24,10 +24,10 @@ class TestGiven {
     String name = mp['name'] ?? "No name found";
     int totalQuestions = mp['total_questions']  ?? 0;
     int correctQuestions = mp['correct_questions'] ?? 0;
-    String status = mp['status'] ?? "Not Known";
+    bool status = mp['status'] ?? "Not Known";
     String givenAt = mp['given_at'] ?? DateTime(2027, 3, 14, 18, 45, 22);
     String subject = mp['subject'] ?? "Unknown";
     int time = mp['time'] ?? 0;
-    return TestGiven(id: id, name: name, totalQuestions: totalQuestions, correctQuestions: correctQuestions, subject: subject, givenAt: givenAt, questions: questions, status: status, time: time);
+    return TestGiven(id: id, name: name, totalQuestions: totalQuestions, correctQuestions: correctQuestions, subject: subject, givenAt: givenAt, questions: questions, status: status ? "Passed" : "Failed", time: time);
   }
 }

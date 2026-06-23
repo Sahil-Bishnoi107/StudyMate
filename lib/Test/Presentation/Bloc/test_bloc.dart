@@ -84,6 +84,7 @@ class TestBloc extends Bloc<Testevents,Teststates> {
       Map<String,int> skipped = {};
       Set<String> subjs = {};
       for(Question que in test.questions){
+        print(que.selectedOption);
         if(que.selectedOption == null){skipped[que.subject] = (skipped[que.subject] ?? 0) + 1;}
         else if(que.correctOption == que.selectedOption){
           correctQues[que.subject] = (correctQues[que.subject] ?? 0) + 1;
