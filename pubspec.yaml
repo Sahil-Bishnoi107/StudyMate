@@ -30,6 +30,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/images/profile_pic_girl.png
 
   fonts:
     - family: Alice
@@ -88,3 +89,20 @@ flutter:
 
         - asset: assets/fonts/Inter/Inter_18pt-BlackItalic.ttf
           style: italic
+
+    - family: Outfit
+      fonts:
+        - asset: assets/fonts/Outfit/Outfit-Black.ttf
+          weight: 600
+        
+        - asset: assets/fonts/Outfit/Outfit-Bold.ttf
+          weight: 700
+
+        - asset: assets/fonts/Outfit/Outfit-Regular.ttf
+          weight: 400
+
+        - asset: assets/fonts/Outfit/Outfit-SemiBold.ttf
+          weight: 500
+
+        - asset: assets/fonts/Outfit/Outfit-Light.ttf
+          weight: 200     

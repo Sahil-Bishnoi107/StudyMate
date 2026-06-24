@@ -27,27 +27,29 @@ class ProfileSection extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Hello, ${username}",style: TextStyle(color: Colors.black,fontWeight: FontWeight.w700,fontFamily: Fonts.inter,fontSize: 30),),
-            Text("Ready for Today's Challange",style: TextStyle(fontFamily: Fonts.nunito,fontSize: 12, color: const Color.fromRGBO(170, 170, 170, 1)),)
+            Text("Hello, ${username}",style: TextStyle(color: Colors.black,fontWeight: FontWeight.w600,fontFamily: Fonts.outfit,fontSize: 30),),
+            Text("Ready for Today's Challange?",style: TextStyle(fontFamily: Fonts.nunito,fontSize: 12, color: Colors.blueGrey),)
           ],
         ),
       ),
       Container(
-        width: width*0.3,
+        width: width*0.25,
         child: Center(
           child: Container(
             width: width*0.14,height: width*0.14,
             child: Image.network(
               picUrl, 
-              width: 80,
-              height: 80,
+              width: 100,
+              height: 100,
               fit: BoxFit.cover,
               errorBuilder: (context,error,st){
                 return Container(
-                   height: 80,
-                   width: 80,
+                   height: 100,
+                   width: 100,
                    decoration: BoxDecoration(border: Border.all(color: const Color.fromRGBO(180, 180, 180, 1),width: 1),borderRadius: BorderRadius.circular(60)),
-                   child: Icon(Icons.person,size: 44,),
+                   child: Transform.scale(
+                    scale: 1.3,
+                    child: Image.asset('assets/images/profile_pic_girl.png',fit: BoxFit.cover,))
                 );
               }),
           ),

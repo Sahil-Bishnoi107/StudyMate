@@ -9,4 +9,5 @@ class Fonts {
   static const String pacifico = 'Pacifico';
   static const String lobsterTwo = 'Lobster-Two';
   static const String inter = 'Inter';
+  static const String outfit = 'OutFit';
 }

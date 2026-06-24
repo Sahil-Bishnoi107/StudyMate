@@ -27,7 +27,7 @@ class TestGiven {
     bool status = mp['status'] ?? "Not Known";
     String givenAt = mp['given_at'] ?? DateTime(2027, 3, 14, 18, 45, 22);
     String subject = mp['subject'] ?? "Unknown";
-    int time = mp['time'] ?? 0;
+    int time = mp['time'] ?? 0; 
     return TestGiven(id: id, name: name, totalQuestions: totalQuestions, correctQuestions: correctQuestions, subject: subject, givenAt: givenAt, questions: questions, status: status ? "Passed" : "Failed", time: time);
   }
 }

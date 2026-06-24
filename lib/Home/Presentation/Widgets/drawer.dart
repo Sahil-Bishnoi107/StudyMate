@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:study_mate/Home/Presentation/Pages/Homepage.dart';
 import 'package:study_mate/TestsPage/Presentation/Pages/testspage.dart';
 
 Drawer mainDrawer(double height, double width,BuildContext context){
@@ -20,6 +21,9 @@ Drawer mainDrawer(double height, double width,BuildContext context){
               ListTile(
               leading: Icon(Icons.home),
               title: const Text("Home"),
+              onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage())); 
+                },
               ),
               ListTile(
                 leading: Icon(Bootstrap.book_fill),

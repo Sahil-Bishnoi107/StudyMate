@@ -15,17 +15,18 @@ class _TopbarState extends State<Topbar> {
     double width = MediaQuery.of(context).size.width;
     return Container(
       alignment: Alignment.topCenter,
-      padding: EdgeInsets.only(top: height*0.04),
+      padding: EdgeInsets.only(top: height*0.05),
       width: width,
-      height: height*0.11,
+      height: height*0.1,
       child: Row(
         children: [
          SizedBox(width: width*0.06,),
          GestureDetector(
           onTap: () => Scaffold.of(context).openDrawer(),
-          child: Icon(Icons.menu,size: height*0.03,)),
-         Expanded(child: Center(child: Text("Study Mate",style: TextStyle(fontFamily: Fonts.nunito,fontSize: 22,fontWeight: FontWeight.bold),))),
-         SizedBox(width: width*0.2,),
+          child: Icon(Icons.menu_rounded,size: height*0.035,)),
+          SizedBox(width: width*0.07,),
+          Text("Study Mate",style: TextStyle(fontFamily: Fonts.outfit,fontSize: 21,fontWeight: FontWeight.w600),),
+         
         ],
       ),
     );
