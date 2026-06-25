@@ -27,6 +27,7 @@ class Homedata {
       print("could not load profile with status code ${res.statusCode}");
       return ApiResponse(statusCode: res.statusCode);
      }
+     
      final jsonFile = jsonDecode(res.body);
      print("Loaded jsonFile of student data successfully : $jsonFile");
      Student student = Student.fromJson(jsonFile);

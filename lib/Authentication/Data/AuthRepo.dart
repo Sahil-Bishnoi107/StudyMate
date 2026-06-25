@@ -50,4 +50,38 @@ class AuthRepo extends AuthData{
     return ApiResponse(statusCode: 500, error: e.toString());
    }
   }
+
+  
+  Future<ApiResponse> registerWithEmail(String name,String email, String password) async {
+   final url = Uri.parse("${baseUrl}Auth/register");
+   
+   try{
+   final res = await http.post(
+    url,
+    headers: {
+      'Content-Type' : 'application/json'
+    },
+    body:   jsonEncode({
+        "username" : name,
+        "email" : email,
+        "password" : password
+      })
+    
+   );
+   
+   if(res.statusCode != 200){print("failed to register with code ${res.statusCode}");return ApiResponse(statusCode: res.statusCode);}
+   final jsonFile = jsonDecode(res.body);
+   String access_token = jsonFile['access_token'] ?? "";
+   String refresh_token = jsonFile['refresh_token'] ?? "";
+   print("Access Tone : $access_token");
+   print("Refresh Tone : $refresh_token");
+   await SecureTokens().saveTokens(access_token, refresh_token);
+   return ApiResponse(statusCode: 200);  
+   
+   }
+   catch(e){
+    print("Failed to login with the given exception : $e");
+    return ApiResponse(statusCode: 500, error: e.toString());
+   }
+  }
 }

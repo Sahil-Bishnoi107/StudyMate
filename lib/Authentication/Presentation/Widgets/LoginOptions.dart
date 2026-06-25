@@ -5,7 +5,8 @@ import 'package:study_mate/fonts.dart';
 class LoginOption extends StatefulWidget {
  final IconData icon;
  final String type;
- const  LoginOption({super.key,required this.icon,required this.type});
+ final double size;
+ const  LoginOption({super.key,required this.icon,required this.type,required this.size});
 
   @override
   State<LoginOption> createState() => _LoginOptionState();
@@ -20,13 +21,13 @@ class _LoginOptionState extends State<LoginOption> {
       width: width*0.37,
       padding: EdgeInsets.symmetric(horizontal: width*0.032,vertical: height*0.013),
       decoration: BoxDecoration(
-        border: Border.all(color: const Color.fromRGBO(226, 229, 233, 1),width: 1.5),
+        border: Border.all(color: const Color.fromRGBO(220,220,220,0.7),width: 1.5),
         borderRadius: BorderRadius.circular(height*0.012)
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(widget.icon),
+          Icon(widget.icon,size: widget.size,),
           SizedBox(width: 10,),
           Text(widget.type,style: TextStyle(color: Colors.black,fontFamily: Fonts.nunito),)
         ],

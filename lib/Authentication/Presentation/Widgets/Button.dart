@@ -6,7 +6,8 @@ class LoginButton extends StatefulWidget {
  final String name;
  final Color bgColor;
  final Color fgColor;
- const LoginButton({super.key,required this.name,required this.bgColor,required this.fgColor});
+ final double? additinalWidth;
+ const LoginButton({super.key,required this.name,required this.bgColor,required this.fgColor,this.additinalWidth});
 
   @override
   State<LoginButton> createState() => _LoginButtonState();
@@ -18,10 +19,10 @@ class _LoginButtonState extends State<LoginButton> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Container(
-      height: height*0.06, width: width*0.8,
-      decoration: BoxDecoration(color: const Color.fromRGBO(29, 200, 86, 1),borderRadius: BorderRadius.circular(height*0.015)),
+      height: height*0.06, width: width*0.8 + (widget.additinalWidth ?? 0),
+      decoration: BoxDecoration(color: Colors.green,borderRadius: BorderRadius.circular(height*0.01)),
       child: Center(
-        child: Text(widget.name,style: TextStyle(color: widget.fgColor,fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: 18),),
+        child: Text(widget.name,style: TextStyle(color: widget.fgColor,fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: 18),),
       ),
     );
   }

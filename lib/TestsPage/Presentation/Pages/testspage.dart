@@ -154,7 +154,7 @@ Widget _testsList(double height,double width,List<TestInfo> tests){
 
 Widget _testOption(double height,double width,TestInfo test,BuildContext context,IconData icon){
  const Color greenColor = Colors.green;
- test.diffiucluty = "hard";
+ 
   Map<String,Color> difficultyIndex = {
     "hard" : Color.fromRGBO(255, 8, 0, 1),
     "medium" : const Color.fromRGBO(255, 193, 7, 1),

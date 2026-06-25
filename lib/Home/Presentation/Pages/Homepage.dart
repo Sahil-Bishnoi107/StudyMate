@@ -54,6 +54,8 @@ class Homepage extends StatelessWidget {
               _chart(height, width, data),
               SizedBox(height: height*0.03,),
               _testsList(height, width, state.student.testsGiven),
+              SizedBox(height: height*0.02,),
+              _bottomCard(height, width),
               SizedBox(height: height*0.1,)
                         ],
                       ),
@@ -115,25 +117,31 @@ Widget _statSection(double width,double height,int percentage,int attemptedQuest
 
 Widget _testsList(double height,double width,List<TestGiven> tests){
   return Container(
-    height: height*0.56,width : width,
+    constraints: BoxConstraints(minHeight: height*0.1, maxHeight : height*0.56),
     padding: EdgeInsets.symmetric(horizontal: width*0.05),
     child: Column(
+      mainAxisSize: MainAxisSize.min,
       children: [ 
         Container(
           width: width,
           child: Text("Recent Tests",style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: 18),)),
           SizedBox(height: height*0.01,),
     
-        Container(
-        height: height*0.5,width: width,
+        (tests.isNotEmpty) ? 
+         Container(
+        constraints: BoxConstraints(minHeight: height*0.1, maxHeight : height*0.5),
       
-        child: ListView.builder(
+        child:   ListView.builder(
           itemCount: tests.length,
+          shrinkWrap: true,
           padding: EdgeInsets.only(top: height*0.01),
           itemBuilder: (context,index){
             return Testtile(test: tests[index]);
           }),
-      ),  
+      )  :  
+     SizedBox(
+      height: height*0.1,width: width,
+      child: Center(child: Text("You haven't given any test yet",style: TextStyle(fontFamily: Fonts.nunito),))),
       ]
     ),
   );
@@ -177,5 +185,29 @@ Widget _chart(double height, double width, List<int> data){
         ],
       ),
     ),
+  );
+}
+
+
+Widget _bottomCard(double height,double width){
+  return Container(
+   height: height*0.18,width: width*0.9,
+   padding: EdgeInsets.only(left: width*0.07,right: width*0.07),
+   decoration: BoxDecoration(color: Colors.green,borderRadius: BorderRadius.circular(20)),
+   child: Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      SizedBox(height: height*0.02,),
+      Text("Unlock Pro Analytics",style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.bold,fontSize: 18),),
+     // SizedBox(height: height*0.005,),
+      Text("Get Personalized Study Plans and deep dive into your test performance",style: TextStyle(fontFamily: Fonts.nunito,fontSize: 12),),
+      SizedBox(height: height*0.015,),
+      Container(
+        height: height*0.05,width: width*0.75,
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: Colors.white),
+        child: Center(child: Text("Go Premium Now",style: TextStyle(color: Colors.green,fontFamily: Fonts.outfit,fontWeight: FontWeight.bold,fontSize: 15),)),
+      )
+    ],
+   ),
   );
 }
