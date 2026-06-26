@@ -11,22 +11,29 @@
 ## 📱 Application Flow & Previews
 
 <p align="center">
-  <img src="assets/appUi/Onboarding.jpeg" width="21%" alt="Onboarding Screen">&nbsp;&nbsp;
-  <img src="assets/appUi/login.jpeg" width="21%" alt="Login Page">&nbsp;&nbsp;
-  <img src="assets/appUi/Register.jpeg" width="21%" alt="Register Page">&nbsp;&nbsp;
-  <img src="assets/appUi/Homepage.jpeg" width="21%" alt="Homepage">
-  <br><br>
-
-  <img src="assets/appUi/TestList.jpeg" width="21%" alt="Tests List Page">&nbsp;&nbsp;
-  <img src="assets/appUi/Test1.jpeg" width="21%" alt="Test Page">&nbsp;&nbsp;
-  <img src="assets/appUi/Test2.jpeg" width="21%" alt="Submit Page">&nbsp;&nbsp;
-  <img src="assets/appUi/WrongAnswer.jpeg" width="21%" alt="Wrong Answer Page">
-  <br><br>
-
-  <img src="assets/appUi/Analytics.jpeg" width="21%" alt="Analytics Page">&nbsp;&nbsp;
-  <img src="assets/appUi/Homepage2.jpeg" width="21%" alt="Homepage">&nbsp;&nbsp;
-  <img src="assets/appUi/PrevTests.jpeg" width="21%" alt="Previous Tests Page">&nbsp;&nbsp;
-  <img src="assets/appUi/Result.jpeg" width="21%" alt="Result Page">
+  <table>
+    <!-- Row 1: Core Authentication & Entry -->
+    <tr>
+      <td align="center"><img src="assets/appUi/Onboarding.jpeg" width="100%" alt="Onboarding Screen"><br><sub><b>Onboarding</b></sub></td>
+      <td align="center"><img src="assets/appUi/login.jpeg" width="100%" alt="Login Page"><br><sub><b>Login</b></sub></td>
+      <td align="center"><img src="assets/appUi/Register.jpeg" width="100%" alt="Register Page"><br><sub><b>Register</b></sub></td>
+      <td align="center"><img src="assets/appUi/Homepage.jpeg" width="100%" alt="Homepage"><br><sub><b>Homepage</b></sub></td>
+    </tr>
+    <!-- Row 2: Examination Engine Flow -->
+    <tr>
+      <td align="center"><img src="assets/appUi/TestList.jpeg" width="100%" alt="Tests List Page"><br><sub><b>Tests List</b></sub></td>
+      <td align="center"><img src="assets/appUi/Test1.jpeg" width="100%" alt="Test Page"><br><sub><b>Test Session</b></sub></td>
+      <td align="center"><img src="assets/appUi/Test2.jpeg" width="100%" alt="Submit Page"><br><sub><b>Review & Submit</b></sub></td>
+      <td align="center"><img src="assets/appUi/WrongAnswer.jpeg" width="100%" alt="Wrong Answer Page"><br><sub><b>Error Review</b></sub></td>
+    </tr>
+    <!-- Row 3: Metrics, Analytics & Results -->
+    <tr>
+      <td align="center"><img src="assets/appUi/Analytics.jpeg" width="100%" alt="Analytics Page"><br><sub><b>Performance Analytics</b></sub></td>
+      <td align="center"><img src="assets/appUi/Homepage2.jpeg" width="100%" alt="Homepage"><br><sub><b>Updated Dashboard</b></sub></td>
+      <td align="center"><img src="assets/appUi/PrevTests.jpeg" width="100%" alt="Previous Tests Page"><br><sub><b>History Logs</b></sub></td>
+      <td align="center"><img src="assets/appUi/Result.jpeg" width="100%" alt="Result Page"><br><sub><b>Scorecard</b></sub></td>
+    </tr>
+  </table>
 </p>
 
 > **Note:** Update the `src` paths above with your actual GitHub issue links or relative asset paths.
