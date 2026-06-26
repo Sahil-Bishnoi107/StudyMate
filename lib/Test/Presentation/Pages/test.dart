@@ -177,7 +177,8 @@ Widget _questionSection(double height,double width, List<Question> questions,Pag
 
 
 Widget _question(double height,double width, Question question,int currQue,int totalQuestions,BuildContext context){
- 
+ late String difficulty;
+ if(question.difficulty.length > 2)difficulty = question.difficulty[0].toUpperCase() + question.difficulty.substring(1);
   return Container(
     width: width,height: height*0.6,
     padding: EdgeInsets.symmetric(horizontal: width*0.05),
@@ -192,8 +193,14 @@ Widget _question(double height,double width, Question question,int currQue,int t
               decoration: BoxDecoration(border: Border.all(color: const Color.fromRGBO(180, 180, 180, 0.7),width: 1.5),borderRadius: BorderRadius.circular(20)),
               child: Center(child: Text("Question ${(currQue+1).toString()} of $totalQuestions",style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: 12),)),
             ),
-            SizedBox(width: width*0.35,),
-            Expanded(child: Text(question.difficulty,style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold),)),
+            SizedBox(width: width*0.32,),
+            Expanded(child: Row(
+              children: [
+                Icon(Bootstrap.exclamation_circle,size: 15,),
+                SizedBox(width: 3,),
+                Text(difficulty,style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold),),
+              ],
+            )),
           ],
         ),
         SizedBox(height: height*0.01,),
