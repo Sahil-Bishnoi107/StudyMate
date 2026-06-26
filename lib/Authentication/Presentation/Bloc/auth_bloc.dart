@@ -3,6 +3,7 @@ import 'package:study_mate/Authentication/Data/AuthRepo.dart';
 import 'package:study_mate/Authentication/Domain/Entities/ApiResponse.dart';
 import 'package:study_mate/Authentication/Presentation/Bloc/auth_events.dart';
 import 'package:study_mate/Authentication/Presentation/Bloc/auth_states.dart';
+import 'package:study_mate/secure_storage.dart';
 
 class AuthBloc extends Bloc<AuthEvent,AuthState> {
   AuthBloc() : super(AuthAutoInitial()) {
@@ -20,7 +21,12 @@ class AuthBloc extends Bloc<AuthEvent,AuthState> {
    },);
 
    on<AutoLogin>((event, emit) async {
-     String token = event.refreshToken;
+     String? token = await SecureTokens().getRefreshToken();
+     token = null;
+     if(token == null){
+      emit(NewUserState());
+      return;
+     }
      ApiResponse response = await AuthRepo().autoLogin(token);
      if(response.statusCode == 200){
       emit(AuthSuccess());

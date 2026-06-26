@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:study_mate/Authentication/Presentation/Bloc/auth_bloc.dart';
 import 'package:study_mate/Authentication/Presentation/Bloc/auth_events.dart';
 import 'package:study_mate/Authentication/Presentation/Bloc/auth_states.dart';
@@ -56,7 +55,7 @@ class LoginPage extends StatelessWidget {
             
             children: [
               SizedBox(height: height*0.05,),
-              _header(height,width),
+              _header(height,width,context),
               SizedBox(height: height*0.015,),
               Container(height: 1.8,width: width,color: const Color.fromRGBO(220, 220, 220, 0.5),),
               SizedBox(height: height*0.01,),
@@ -129,12 +128,14 @@ Widget _middleText(double height,double width){
 
 
 
-Widget _header(double height, double width){
+Widget _header(double height, double width,BuildContext context){
   return SizedBox(width: width,height: height*0.03,
   child: Row(
     children: [
       SizedBox(width: width*0.02,),
-      Icon(Icons.arrow_back_ios,size: 22,),
+      InkWell(
+        onTap: () => Navigator.pop(context),
+        child: Icon(Icons.arrow_back_ios,size: 22,)),
       SizedBox(width: width*0.03,),
       Text("Sign In",style: TextStyle(fontFamily: Fonts.outfit,fontSize: 18),)
     ],

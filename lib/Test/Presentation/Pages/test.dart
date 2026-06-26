@@ -8,6 +8,7 @@ import 'package:study_mate/Test/Presentation/Bloc/test_bloc.dart';
 import 'package:study_mate/Test/Presentation/Bloc/testevents.dart';
 import 'package:study_mate/Test/Presentation/Bloc/teststates.dart';
 import 'package:study_mate/Test/Presentation/Pages/test_submitted_page.dart';
+import 'package:study_mate/Test/Presentation/Widgets/fixedTextWidget.dart';
 import 'package:study_mate/Test/Presentation/Widgets/question_button.dart';
 import 'package:study_mate/Test/Presentation/Widgets/question_icon.dart';
 import 'package:study_mate/Test/Presentation/Widgets/question_option.dart';
@@ -200,7 +201,7 @@ Widget _question(double height,double width, Question question,int currQue,int t
         ConstrainedBox(
           constraints: BoxConstraints(minHeight: height*0.03, maxHeight: height*0.5,minWidth: width*0.9,maxWidth: width*0.9),
           
-          child: Text(question.description,style: TextStyle(fontFamily: Fonts.inter,fontWeight: FontWeight.bold, fontSize: 20),)),
+          child: MixedMathText(text: question.description, textStyle: TextStyle(fontFamily: Fonts.inter,fontWeight: FontWeight.bold, fontSize: 20),)),
 
         //Options
         Container(

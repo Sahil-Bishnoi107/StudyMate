@@ -5,7 +5,6 @@ import 'package:study_mate/Authentication/Presentation/Bloc/regirster_bloc.dart'
 import 'package:study_mate/Authentication/Presentation/Pages/AutoLoginPage.dart';
 import 'package:study_mate/Home/Presentation/Bloc/HomeBloc.dart';
 import 'package:study_mate/Home/Presentation/Bloc/homeEvents.dart';
-import 'package:study_mate/Test/Presentation/Bloc/test_bloc.dart';
 import 'package:study_mate/TestsPage/Presentation/Bloc/TestBloc.dart';
 import 'package:study_mate/TestsPage/Presentation/Bloc/TestEvents.dart';
 

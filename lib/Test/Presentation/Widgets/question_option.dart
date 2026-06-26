@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:study_mate/Test/Presentation/Widgets/fixedTextWidget.dart';
 import 'package:study_mate/fonts.dart';
 
 Widget QuestionOption(String option,double height,double width,bool isSelected,String optionNum){
@@ -23,7 +24,7 @@ Widget QuestionOption(String option,double height,double width,bool isSelected,S
           child: Center(child: Text(optionNum,style: TextStyle(fontFamily: Fonts.nunito,fontSize: 18, fontWeight: FontWeight.bold, color: isSelected ? Colors.white : Colors.blueGrey),)),
         ),
         SizedBox(width: width*0.02,),
-        Text(option,style: TextStyle(fontFamily: Fonts.nunito,color: isSelected ? Colors.green : Colors.black),),
+        Expanded(child: MixedMathText(text:  option,textStyle: TextStyle(fontFamily: Fonts.nunito,color: isSelected ? Colors.green : Colors.black),)),
       ],
     ),
   );

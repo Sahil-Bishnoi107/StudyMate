@@ -5,6 +5,7 @@ import 'package:study_mate/Authentication/Presentation/Bloc/auth_bloc.dart';
 import 'package:study_mate/Authentication/Presentation/Bloc/auth_events.dart';
 import 'package:study_mate/Authentication/Presentation/Bloc/auth_states.dart';
 import 'package:study_mate/Authentication/Presentation/Pages/LoginPage.dart';
+import 'package:study_mate/Authentication/Presentation/Pages/onboarding_page.dart';
 import 'package:study_mate/Home/Presentation/Pages/Homepage.dart';
 
 class Autologinpage extends StatefulWidget {
@@ -36,6 +37,9 @@ class _AutologinpageState extends State<Autologinpage> {
         }
         if(state is AuthSuccess){
           Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage()));
+        }
+        if(state is NewUserState){
+          Navigator.push(context, MaterialPageRoute(builder: (context) => OnboardingPage()));
         }
       },
       child: Scaffold(

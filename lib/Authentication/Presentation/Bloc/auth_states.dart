@@ -10,4 +10,6 @@ class AuthLoading extends AuthState{}
 class AuthInitial extends AuthState{}
 class AuthAutoInitial extends AuthState{}
 
+class NewUserState extends AuthState {}
+
 
