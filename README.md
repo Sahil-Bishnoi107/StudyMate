@@ -11,22 +11,22 @@
 ## 📱 Application Flow & Previews
 
 <p align="center">
-  <img src="assets/appUi/Onboarding.jpeg" width="22%" alt="Onboarding Screen">
-  <img src="assets/appUi/login.jpeg" width="22%" alt="Login Page">
-  <img src="assets/appUi/Register.jpeg" width="22%" alt="Register Page">
-  <img src="assets/appUi/Homepage.jpeg" width="22%" alt="Homepage">
-</p>
-<p align="center">
-  <img src="assets/appUi/TestList.jpeg" width="22%" alt="Tests List Page">
-  <img src="assets/appUi/Test1.jpeg" width="22%" alt="Test Page">
-  <img src="assets/appUi/Test2.jpeg" width="22%" alt="Submit Page">
-  <img src="assets/appUi/WrongAnswer.jpeg" width="22%" alt="Submit Page">
-</p>
-<p align="center">
-  <img src="assets/appUi/Analytics.jpeg" width="22%" alt="Tests List Page">
-  <img src="assets/appUi/Homepage2.jpeg" width="22%" alt="Test Page">
-  <img src="assets/appUi/PrevTests.jpeg" width="22%" alt="Submit Page">
-  <img src="assets/appUi/Result.jpeg" width="22%" alt="Submit Page">
+  <img src="assets/appUi/Onboarding.jpeg" width="21%" alt="Onboarding Screen">&nbsp;&nbsp;
+  <img src="assets/appUi/login.jpeg" width="21%" alt="Login Page">&nbsp;&nbsp;
+  <img src="assets/appUi/Register.jpeg" width="21%" alt="Register Page">&nbsp;&nbsp;
+  <img src="assets/appUi/Homepage.jpeg" width="21%" alt="Homepage">
+  <br><br>
+
+  <img src="assets/appUi/TestList.jpeg" width="21%" alt="Tests List Page">&nbsp;&nbsp;
+  <img src="assets/appUi/Test1.jpeg" width="21%" alt="Test Page">&nbsp;&nbsp;
+  <img src="assets/appUi/Test2.jpeg" width="21%" alt="Submit Page">&nbsp;&nbsp;
+  <img src="assets/appUi/WrongAnswer.jpeg" width="21%" alt="Wrong Answer Page">
+  <br><br>
+
+  <img src="assets/appUi/Analytics.jpeg" width="21%" alt="Analytics Page">&nbsp;&nbsp;
+  <img src="assets/appUi/Homepage2.jpeg" width="21%" alt="Homepage">&nbsp;&nbsp;
+  <img src="assets/appUi/PrevTests.jpeg" width="21%" alt="Previous Tests Page">&nbsp;&nbsp;
+  <img src="assets/appUi/Result.jpeg" width="21%" alt="Result Page">
 </p>
 
 > **Note:** Update the `src` paths above with your actual GitHub issue links or relative asset paths.
