@@ -12,21 +12,21 @@
 
 <p align="center">
   <img src="assets/appUi/Onboarding.jpeg" width="22%" alt="Onboarding Screen">
-  <img src="assets/appUi/login.png" width="22%" alt="Login Page">
-  <img src="assets/appUi/register.png" width="22%" alt="Register Page">
-  <img src="assets/appUi/Homepage.png" width="22%" alt="Homepage">
+  <img src="assets/appUi/login.jpeg" width="22%" alt="Login Page">
+  <img src="assets/appUi/Register.jpeg" width="22%" alt="Register Page">
+  <img src="assets/appUi/Homepage.jpeg" width="22%" alt="Homepage">
 </p>
 <p align="center">
-  <img src="assets/appUi/TestList.png" width="22%" alt="Tests List Page">
-  <img src="assets/appUi/Test1.png" width="22%" alt="Test Page">
-  <img src="assets/appUi/Test2.png" width="22%" alt="Submit Page">
-  <img src="assets/appUi/WrongAnswer.png" width="22%" alt="Submit Page">
+  <img src="assets/appUi/TestList.jpeg" width="22%" alt="Tests List Page">
+  <img src="assets/appUi/Test1.jpeg" width="22%" alt="Test Page">
+  <img src="assets/appUi/Test2.jpeg" width="22%" alt="Submit Page">
+  <img src="assets/appUi/WrongAnswer.jpeg" width="22%" alt="Submit Page">
 </p>
 <p align="center">
-  <img src="assets/appUi/Analytics.png" width="22%" alt="Tests List Page">
-  <img src="assets/appUi/Homepage2.png" width="22%" alt="Test Page">
-  <img src="assets/appUi/PrevTests.png" width="22%" alt="Submit Page">
-  <img src="assets/appUi/Result.png" width="22%" alt="Submit Page">
+  <img src="assets/appUi/Analytics.jpeg" width="22%" alt="Tests List Page">
+  <img src="assets/appUi/Homepage2.jpeg" width="22%" alt="Test Page">
+  <img src="assets/appUi/PrevTests.jpeg" width="22%" alt="Submit Page">
+  <img src="assets/appUi/Result.jpeg" width="22%" alt="Submit Page">
 </p>
 
 > **Note:** Update the `src` paths above with your actual GitHub issue links or relative asset paths.
