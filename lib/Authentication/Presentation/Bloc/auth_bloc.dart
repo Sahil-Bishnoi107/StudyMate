@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:study_mate/Authentication/Data/AuthRepo.dart';
 import 'package:study_mate/Authentication/Domain/Entities/ApiResponse.dart';
 import 'package:study_mate/Authentication/Presentation/Bloc/auth_events.dart';
@@ -14,7 +15,7 @@ class AuthBloc extends Bloc<AuthEvent,AuthState> {
      final password = event.password;
      ApiResponse response = await AuthRepo().loginWithEmail(email, password);
      if(response.statusCode != 200){
-      emit(AuthFailure(message: "Please enter correct password"));
+      emit(AuthFailure(message: "Login Failed"));
       return;
      }
      emit(AuthSuccess());
@@ -33,6 +34,18 @@ class AuthBloc extends Bloc<AuthEvent,AuthState> {
       return;
      }
        emit(AuthInitial());
+   },);
+
+   on<GoogleLoginStarted> ((event, emit) async{
+     final GoogleSignIn signIn = GoogleSignIn.instance;
+     await signIn.initialize();
+     final account = await signIn.authenticate();
+     ApiResponse response =  await AuthRepo().GoogleSignin(account);
+     if(response.statusCode != 200){
+      emit(AuthFailure(message: response.error ?? "Google Sign In Failed"));
+      return;
+     }
+     emit(AuthSuccess());
    },);
   }
   

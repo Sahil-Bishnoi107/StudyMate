@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:study_mate/Authentication/Domain/Entities/ApiResponse.dart';
 import 'package:study_mate/Authentication/Domain/Interfaces/AuthData.dart';
 import 'package:http/http.dart' as http;
@@ -83,5 +84,31 @@ class AuthRepo extends AuthData{
     print("Failed to login with the given exception : $e");
     return ApiResponse(statusCode: 500, error: e.toString());
    }
+  }
+
+  Future<ApiResponse> GoogleSignin() async{
+    final GoogleSignIn signIn = GoogleSignIn.instance;
+
+    await signIn.initialize();
+
+    final account = await signIn.authenticate();
+    
+    final auth = account.authentication;
+    
+    final idToken = auth.idToken;
+    print("Google idToke is : $idToken");
+
+    final url = Uri.parse("${baseUrl}Auth/google_login");
+    final res = await http.post(url, headers: {'Content-Type' : 'application/json' }, body: {
+      'id_token' : idToken
+    });
+    if(res.statusCode != 200){print("failed to signin from backend with code ${res.statusCode}");return ApiResponse(statusCode: res.statusCode);}
+   final jsonFile = jsonDecode(res.body);
+   String access_token = jsonFile['access_token'] ?? "";
+   String refresh_token = jsonFile['refresh_token'] ?? "";
+   print("Access Tone : $access_token");
+   print("Refresh Tone : $refresh_token");
+   await SecureTokens().saveTokens(access_token, refresh_token);
+   return ApiResponse(statusCode: 200); 
   }
 }

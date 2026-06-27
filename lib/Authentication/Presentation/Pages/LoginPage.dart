@@ -71,8 +71,17 @@ class LoginPage extends StatelessWidget {
               SizedBox(height: height*0.04,),
               _middleText(height, width),
               SizedBox(height: height*0.04,),
+              //Social Login Buttons 
               Row(mainAxisAlignment: MainAxisAlignment.center,
-                children: [LoginOption(icon: FontAwesome.google_brand, type: "Google",size: 22,), SizedBox(width: width*0.06,),LoginOption(icon: FontAwesome.github_brand, type: "GitHub",size: 25,)],),
+                children: [
+                InkWell(
+                  onTap: () {
+                    BlocProvider.of<AuthBloc>(context).add(GoogleLoginStarted());
+                  },
+                  child: LoginOption(icon: FontAwesome.google_brand, type: "Google",size: 22,)), 
+                SizedBox(width: width*0.06,),
+                LoginOption(icon: FontAwesome.github_brand, type: "GitHub",size: 25,)],),
+
                 SizedBox(height: height*0.04,),
               _createAccount(height, width,context)  
             ],
