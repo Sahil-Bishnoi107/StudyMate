@@ -37,9 +37,11 @@ class AuthBloc extends Bloc<AuthEvent,AuthState> {
    },);
 
    on<GoogleLoginStarted> ((event, emit) async{
+    const String googleClientId = "708380993884-drr1pe57o46dp8qveea4ceuoinc6ndt0.apps.googleusercontent.com";
      final GoogleSignIn signIn = GoogleSignIn.instance;
-     await signIn.initialize();
+     await signIn.initialize(serverClientId: googleClientId);
      final account = await signIn.authenticate();
+     emit(AuthLoading());
      ApiResponse response =  await AuthRepo().GoogleSignin(account);
      if(response.statusCode != 200){
       emit(AuthFailure(message: response.error ?? "Google Sign In Failed"));

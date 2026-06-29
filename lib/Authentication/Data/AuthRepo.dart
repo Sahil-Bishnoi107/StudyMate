@@ -86,22 +86,17 @@ class AuthRepo extends AuthData{
    }
   }
 
-  Future<ApiResponse> GoogleSignin() async{
-    final GoogleSignIn signIn = GoogleSignIn.instance;
-
-    await signIn.initialize();
-
-    final account = await signIn.authenticate();
-    
+  Future<ApiResponse> GoogleSignin(GoogleSignInAccount account) async{
     final auth = account.authentication;
     
     final idToken = auth.idToken;
     print("Google idToke is : $idToken");
 
     final url = Uri.parse("${baseUrl}Auth/google_login");
-    final res = await http.post(url, headers: {'Content-Type' : 'application/json' }, body: {
+    final res = await http.post(url, headers: {'Content-Type' : 'application/json' }, body:
+    jsonEncode({
       'id_token' : idToken
-    });
+    }) );
     if(res.statusCode != 200){print("failed to signin from backend with code ${res.statusCode}");return ApiResponse(statusCode: res.statusCode);}
    final jsonFile = jsonDecode(res.body);
    String access_token = jsonFile['access_token'] ?? "";
