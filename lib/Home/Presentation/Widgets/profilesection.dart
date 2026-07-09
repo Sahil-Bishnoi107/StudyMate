@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:study_mate/Home/Presentation/Widgets/logo.dart';
 import 'package:study_mate/fonts.dart';
 
 class ProfileSection extends StatelessWidget {
@@ -18,7 +17,7 @@ class ProfileSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String username = fixName(name);
-    double height = MediaQuery.of(context).size.height;
+ //   double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Row(
       children: [

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:study_mate/Authentication/Domain/Entities/ApiResponse.dart';
 
 import 'package:study_mate/TestsPage/Domain/entities/Test.dart';
@@ -8,6 +9,8 @@ import 'package:study_mate/ngrok.dart';
 import 'package:study_mate/secure_storage.dart';
 
 class TestPageData{
+  final Dio dio;
+  TestPageData(this.dio);
   String baseUrl = "https://$ngrok/StudyMate/";
 
   Future<ApiResponse> testPageData() async{

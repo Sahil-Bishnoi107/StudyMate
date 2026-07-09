@@ -13,12 +13,13 @@ import 'package:study_mate/Test/Presentation/Bloc/teststates.dart';
 class TestBloc extends Bloc<Testevents,Teststates> {
   
   Timer? _timer;
+  final TestRepo testRepo;
 
-  TestBloc() : super(TestLoading()){
+  TestBloc(this.testRepo) : super(TestLoading()){
 
     on<TestLoadingComplete>((event, emit) async{
       
-      ApiResponse res = await TestRepo().getQuestions(event.id);
+      ApiResponse res = await testRepo.getQuestions(event.id);
       if(res.statusCode != 200){
         emit(FailedTestLoading());
       }
@@ -96,7 +97,7 @@ class TestBloc extends Bloc<Testevents,Teststates> {
       int timeTaken = test.time*60 - mystate.timeLeft;
       emit(TestSubmitting());
       
-      final res = await TestRepo().uploadTest(test);
+      final res = await testRepo.uploadTest(test);
       if(res.statusCode != 200){
         emit(FailedToSubmitTest());
       }

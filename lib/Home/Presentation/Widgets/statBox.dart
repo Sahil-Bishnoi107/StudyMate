@@ -12,7 +12,7 @@ class Statbox extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Material(
-      elevation: 0.1,
+      elevation: 0.3,
       borderRadius: BorderRadius.circular(10),
       color: Colors.white,
       child: Container(

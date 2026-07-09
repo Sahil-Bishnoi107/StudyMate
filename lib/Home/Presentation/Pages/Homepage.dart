@@ -35,7 +35,7 @@ class Homepage extends StatelessWidget {
             );
           }
           if(state is HomeDataRecieved) {
-            List<int> data = [40,50,65,55,80,90,70];
+            List<int> data = [0,0,0,0,0,0,0];
             for(int i = 0; i < state.student.testsGiven.length;i++){
               if(i == 7)break;
               data[6-i] = (state.student.testsGiven[i].correctQuestions*100/state.student.testsGiven[i].totalQuestions).toInt();

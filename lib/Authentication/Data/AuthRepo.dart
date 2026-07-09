@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:study_mate/Authentication/Domain/Entities/ApiResponse.dart';
 import 'package:study_mate/Authentication/Domain/Interfaces/AuthData.dart';
@@ -8,6 +9,9 @@ import 'package:study_mate/ngrok.dart';
 import 'package:study_mate/secure_storage.dart';
 
 class AuthRepo extends AuthData{
+  final Dio dio;
+
+  AuthRepo(this.dio);
 
   String baseUrl = "https://$ngrok/StudyMate/";
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:study_mate/DependancyInjections.dart/service_locator.dart';
 import 'package:study_mate/Home/Presentation/Widgets/drawer.dart';
 import 'package:study_mate/Test/Presentation/Bloc/test_bloc.dart';
 import 'package:study_mate/Test/Presentation/Bloc/testevents.dart';
@@ -256,7 +257,7 @@ Widget _testOption(double height,double width,TestInfo test,BuildContext context
              InkWell(
               onTap: () { 
           Navigator.push(context, MaterialPageRoute(builder: (context) => BlocProvider(
-          create: (context) => TestBloc()..add(
+          create: (context) => sl<TestBloc>()..add(
             TestLoadingComplete(id: test.id, difficulty: test.diffiucluty, name: test.name, subject: test.subject, time: test.time, totalQuestions: test.totalQuestions)
           ),
           child: GiveTest())));},

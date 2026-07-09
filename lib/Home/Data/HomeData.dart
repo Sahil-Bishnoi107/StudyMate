@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:dio/dio.dart';
 import 'package:study_mate/Authentication/Domain/Entities/ApiResponse.dart';
 import 'package:study_mate/Home/Domain/Entities/student.dart';
 import 'package:http/http.dart' as http;
@@ -7,6 +8,9 @@ import 'package:study_mate/secure_storage.dart';
 
 
 class Homedata {
+  final Dio dio;
+  Homedata(this.dio);
+
   String baseUrl = "https://$ngrok/StudyMate/";
 
 

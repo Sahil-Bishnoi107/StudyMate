@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:study_mate/Authentication/Domain/Entities/ApiResponse.dart';
 import 'package:study_mate/Home/Domain/Entities/Question.dart';
 import 'package:study_mate/Test/Domain/Entities/test.dart';
@@ -10,6 +11,8 @@ import 'package:study_mate/secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 class TestRepo {
+    final Dio dio;
+    TestRepo(this.dio);
     String baseUrl = "https://$ngrok/StudyMate/";
 
     Future<ApiResponse> getQuestions(String testId) async{
