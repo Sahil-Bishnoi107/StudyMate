@@ -1,8 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:study_mate/DependancyInjections.dart/service_locator.dart';
 import 'package:study_mate/Networking/auth_interceptor.dart';
 import 'package:study_mate/Networking/logging_interceptors.dart';
+import 'package:study_mate/Networking/refresh_token_interceptor.dart';
 import 'package:study_mate/Networking/retry_interceptor.dart';
 import 'package:study_mate/ngrok.dart';
+import 'package:study_mate/secure_storage.dart';
 
 class DioClient {
   late final Dio dio;
@@ -10,7 +13,7 @@ class DioClient {
   DioClient(){
     dio = Dio(
       BaseOptions(
-        baseUrl: "https://$ngrok",
+        baseUrl: "https://$ngrok/StudyMate",
         connectTimeout: const Duration(seconds: 10),
         contentType: "application/json",
         responseType: ResponseType.json,
@@ -18,9 +21,12 @@ class DioClient {
         receiveTimeout: const Duration(seconds: 10)
         )
       );
-    dio.interceptors.add(LoggingInterceptors());
-    dio.interceptors.add(AuthInterceptor());
-    dio.interceptors.add(RetryInterceptor());
+
+
+      dio.interceptors.add(AuthInterceptor());
+      dio.interceptors.add(LoggingInterceptors());
+      dio.interceptors.add(RefreshTokenInterceptor(dio, sl<SecureTokens>()));
+      dio.interceptors.add(RetryInterceptor());
     
   }
 }

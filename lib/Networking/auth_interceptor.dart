@@ -12,5 +12,6 @@ class AuthInterceptor extends Interceptor {
     else{
       print("Access Token is missing");
     }
+    handler.next(options);
   }
 }

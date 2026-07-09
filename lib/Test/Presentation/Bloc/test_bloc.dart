@@ -36,6 +36,7 @@ class TestBloc extends Bloc<Testevents,Teststates> {
 
     on<TimerTicked>((event, emit) {
        if (state is! TestLoaded) return;
+       
        final mystate = state as TestLoaded;
        if(mystate.timeLeft <= 1){
         _timer?.cancel();
@@ -77,8 +78,14 @@ class TestBloc extends Bloc<Testevents,Teststates> {
     },);
 
 
+  
+
+
     on<TestSubmittedEvent>((event, emit) async{
       final mystate = state as TestLoaded;
+
+      _timer?.cancel();
+
       final Test test = mystate.test;
       Map<String,int> correctQues = {};
       Map<String,int> totalQues = {};
@@ -117,7 +124,35 @@ class TestBloc extends Bloc<Testevents,Teststates> {
 
     on<LoadTestReview>((event, emit) {
       final mystate = state as TestSubmitted;
-      emit(TestLoaded(test: mystate.test, timeLeft: 10));
+      emit(TestLoaded(test: mystate.test, timeLeft: mystate.test.time*60));
+    },);
+
+
+      on<ReviewToSubmitPageEvent> ((event, emit) {
+            final mystate = state as TestLoaded;
+
+      _timer?.cancel();
+
+      final Test test = mystate.test;
+      Map<String,int> correctQues = {};
+      Map<String,int> totalQues = {};
+      Map<String,int> skipped = {};
+      Set<String> subjs = {};
+      for(Question que in test.questions){
+        print(que.selectedOption);
+        if(que.selectedOption == null){skipped[que.subject] = (skipped[que.subject] ?? 0) + 1;}
+        else if(que.correctOption == que.selectedOption){
+          correctQues[que.subject] = (correctQues[que.subject] ?? 0) + 1;
+          }
+          totalQues[que.subject] = (totalQues[que.subject] ?? 0) + 1;
+          subjs.add(que.subject);
+      }
+      List<String> subjects = subjs.toList();
+      int timeTaken = test.time*60 - mystate.timeLeft;
+      
+      emit(TestSubmitting());
+      
+      emit(TestSubmitted(test: test,correctQuestionsPerSubject: correctQues,questionsPerSubject: totalQues,timeTaken: timeTaken,questionsSkippedPerSubject: skipped,subjects: subjects));
     },);
   }
 

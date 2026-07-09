@@ -39,3 +39,5 @@ class RetakeTest extends Testevents{
 class LoadTestReview extends Testevents{
 
 }
+
+class ReviewToSubmitPageEvent extends Testevents{}

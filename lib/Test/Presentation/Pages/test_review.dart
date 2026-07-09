@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:study_mate/Home/Domain/Entities/Question.dart';
-import 'package:study_mate/Home/Presentation/Pages/Homepage.dart';
+
 import 'package:study_mate/Test/Presentation/Bloc/test_bloc.dart';
+import 'package:study_mate/Test/Presentation/Bloc/testevents.dart';
 import 'package:study_mate/Test/Presentation/Bloc/teststates.dart';
+import 'package:study_mate/Test/Presentation/Pages/test_submitted_page.dart';
 
 import 'package:study_mate/Test/Presentation/Widgets/question_button.dart';
 import 'package:study_mate/Test/Presentation/Widgets/question_icon.dart';
@@ -30,9 +31,6 @@ class _TestState extends State<TestReview> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: BlocBuilder<TestBloc,Teststates>(
-
-      
-
 
       builder: (context, state) {
        
@@ -83,7 +81,15 @@ Widget _header(double height,double width,String testName,BuildContext context){
     child: Row(
     children: [
       GestureDetector(
-        onTap: () => Navigator.pushReplacement(context,MaterialPageRoute(builder: (_) => Homepage())),
+        onTap: ()  {
+         Navigator.push(context, MaterialPageRoute(
+                    builder: (_) => BlocProvider.value(
+                      value: context.read<TestBloc>()..add(ReviewToSubmitPageEvent()),
+                      child: TestSubmittedPage(),
+                      )
+                    )
+                    );
+        },
         child: Icon(Icons.arrow_back_ios_new)),
       Container(
         width: width*0.65,

@@ -1,34 +1,28 @@
-import 'dart:convert';
+
 
 import 'package:dio/dio.dart';
 import 'package:study_mate/Authentication/Domain/Entities/ApiResponse.dart';
 
 import 'package:study_mate/TestsPage/Domain/entities/Test.dart';
-import 'package:http/http.dart' as http;
-import 'package:study_mate/ngrok.dart';
-import 'package:study_mate/secure_storage.dart';
+
+
+
 
 class TestPageData{
   final Dio dio;
   TestPageData(this.dio);
-  String baseUrl = "https://$ngrok/StudyMate/";
 
   Future<ApiResponse> testPageData() async{
-   final url = Uri.parse("${baseUrl}Test/all-tests");
-   String accessToken = await SecureTokens().getAccessToken() ?? "";
+
+   
    try{
-    final res = await http.get(
-      url,
-      headers: {
-      'Content-Type' : 'application/json',
-      'Authorization' : 'Bearer $accessToken'
-      }
-      );
+
+      final res = await dio.get("/Test/all-tests");
       if(res.statusCode != 200){
       print("could not load profile with status code ${res.statusCode}");
-      return ApiResponse(statusCode: res.statusCode);
+      return ApiResponse(statusCode: res.statusCode ?? 0);
      }
-     final mp = jsonDecode(res.body);
+     final mp = res.data;
      List<TestInfo> tests = [];
    
 

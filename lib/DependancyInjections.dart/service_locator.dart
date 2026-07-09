@@ -10,11 +10,15 @@ import 'package:study_mate/Test/Data/test_repo.dart';
 import 'package:study_mate/Test/Presentation/Bloc/test_bloc.dart';
 import 'package:study_mate/TestsPage/Data/testdata.dart';
 import 'package:study_mate/TestsPage/Presentation/Bloc/TestBloc.dart';
+import 'package:study_mate/secure_storage.dart';
 
 final sl = GetIt.instance;
 
 Future<void> setup()async {
   sl.registerLazySingleton<Dio>(() => DioClient().dio);
+
+
+  sl.registerLazySingleton<SecureTokens>(() => SecureTokens());
 
   sl.registerLazySingleton<AuthRepo>(() => AuthRepo(sl<Dio>()));
   sl.registerLazySingleton<Homedata>(() => Homedata(sl<Dio>()));

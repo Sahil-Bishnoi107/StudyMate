@@ -1,35 +1,30 @@
 
 
-import 'dart:convert';
+
 
 import 'package:dio/dio.dart';
 import 'package:study_mate/Authentication/Domain/Entities/ApiResponse.dart';
 import 'package:study_mate/Home/Domain/Entities/Question.dart';
 import 'package:study_mate/Test/Domain/Entities/test.dart';
-import 'package:study_mate/ngrok.dart';
-import 'package:study_mate/secure_storage.dart';
-import 'package:http/http.dart' as http;
+
+
 
 class TestRepo {
     final Dio dio;
     TestRepo(this.dio);
-    String baseUrl = "https://$ngrok/StudyMate/";
+  
 
     Future<ApiResponse> getQuestions(String testId) async{
-       final url = Uri.parse("${baseUrl}Test/test-questions/$testId");
-       String accessToken = await SecureTokens().getAccessToken() ?? "";
+    
+       
        try{
-       final res = await http.get(
-        url,
-        headers: {
-        'Content-Type' : 'application/json',
-        'Authorization' : 'Bearer $accessToken'
-        });
+
+        final res = await dio.get("/Test/test-questions/$testId");
         if(res.statusCode != 200){
           print("could not load testwith ${res.statusCode}");
-          return ApiResponse(statusCode: res.statusCode);
+          return ApiResponse(statusCode: res.statusCode ?? 0);
         }
-        final jsonFile = jsonDecode(res.body);
+        final jsonFile = res.data;
         print(jsonFile);
         final quesData = jsonFile;
          List<Question> questions = [];
@@ -49,22 +44,12 @@ class TestRepo {
     }
 
     Future<ApiResponse> uploadTest(Test test) async{
-      final url = Uri.parse("${baseUrl}Test/submit-test");
-      String accessToken = await SecureTokens().getAccessToken() ?? "";
-      final submit_test = jsonEncode(test.toJson());
-      print(submit_test);
       try{
-        final res = await http.post(
-          url,
-          headers: {
-            'Content-Type' : 'application/json',
-            'Authorization' : 'Bearer $accessToken'
-          },
-          body: submit_test
-          );
+       
+          final res = await dio.post("/Test/submit-test",data: test.toJson());
           if(res.statusCode != 200){
             print("could not submit code ${res.statusCode}");
-            return ApiResponse(statusCode: res.statusCode);
+            return ApiResponse(statusCode: res.statusCode ?? 0);
           }
           return ApiResponse(statusCode: 200);
       }
