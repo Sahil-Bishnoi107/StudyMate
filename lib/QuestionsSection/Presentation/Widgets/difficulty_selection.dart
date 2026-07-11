@@ -5,6 +5,7 @@ import 'package:study_mate/QuestionsSection/Domain/QuestionFilters.dart';
 import 'package:study_mate/QuestionsSection/Presentation/Bloc/QuestionsBloc.dart';
 import 'package:study_mate/QuestionsSection/Presentation/Bloc/QuestionsEvents.dart';
 import 'package:study_mate/QuestionsSection/Presentation/Bloc/QuestionsStates.dart';
+import 'package:study_mate/fonts.dart';
 
 class CustomOverlayWidget extends StatefulWidget {
   
@@ -17,13 +18,13 @@ class CustomOverlayWidget extends StatefulWidget {
 class _CustomOverlayWidgetState extends State<CustomOverlayWidget> {
   final LayerLink _layerLink = LayerLink();   // this is a ref to the widget so dropdown moves with teh text of whatever
 
-  OverlayEntry? _overlayEntry;
+  OverlayEntry? _overlayEntry;    // this is our overlay object
   
-  bool get _isOpen => _overlayEntry != null;
+  bool get _isOpen => _overlayEntry != null;     // we decide open or close from the fact that overlay is null or not
 
   void _showOverlay(){
-    _overlayEntry = _createOverlay();
-    Overlay.of(context).insert(_overlayEntry!);
+    _overlayEntry = _createOverlay();   // _createOverlay is written below
+    Overlay.of(context).insert(_overlayEntry!);    // basically puts the overlay on top of scaffold
   }
 
   void _removeOverlay(){
@@ -45,30 +46,37 @@ class _CustomOverlayWidgetState extends State<CustomOverlayWidget> {
           Positioned.fill(
               child: GestureDetector(
                 behavior: HitTestBehavior.translucent,
-                onTap: _removeOverlay,
+                onTap: () {
+                  setState(() {
+                    _removeOverlay();
+                  });
+                },
               ),
             ),
 
             CompositedTransformFollower(
               link: _layerLink,
               showWhenUnlinked: false,
-              offset: const Offset(0, 50),
+              offset:  Offset(0, height*0.055),
               child: Material(
-                elevation: 5,
+                elevation: 0.4,
                 color: Colors.white,
+                
                 child: SizedBox(
-                  height: height*0.1, width: width*0.8,
+                  height: height*0.15, width: width*0.8,
                   child: BlocBuilder<Questionsbloc,Questionsstates>(
                     builder: (context, state) {
                       List<Option> difficulties = [];
                       if(state is QuestionsInitialState){difficulties = state.filters.difficulty;}
                       return ListView.builder(
+                        padding: EdgeInsets.all(0),
                         itemCount: difficulties.length,
                         itemBuilder: (context, index) => GestureDetector(
                           onTap: () {
-                            BlocProvider.of<Questionsbloc>(context).add(FilterSelectEvent(filterNumber: 3, selectedIndex: index));
+                            print("clicked");
+                            BlocProvider.of<Questionsbloc>(context).add(FilterSelectEvent(filterNumber: 2, selectedIndex: index));
                           },
-                          child: _difficultyOption(height, width, difficulties[index])) ,
+                          child: _difficultyOption(height, width, difficulties[index],index != difficulties.length-1), ) ,
                         );
                     }
                   ),
@@ -94,7 +102,9 @@ class _CustomOverlayWidgetState extends State<CustomOverlayWidget> {
 
       child: GestureDetector(
         onTap: () {
-          _toggle();
+         setState(() {
+           _toggle();
+         }); 
         },
         child: Container(
           height: height*0.06, width: width*0.8,
@@ -105,17 +115,22 @@ class _CustomOverlayWidgetState extends State<CustomOverlayWidget> {
             ),
             child: Row(
               children: [
-                Icon(Bootstrap.bullseye),
-                SizedBox(width: width*0.02,),
+                SizedBox(width: width*0.025,),
+                Icon(Bootstrap.bullseye,color: Colors.green,),
+                SizedBox(width: width*0.032,),
                 SizedBox( width: width*0.6,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("LEVEL"),
-                      Text("Mixed (Recommended)")
+                      SizedBox(height: height*0.01,),
+                      SizedBox(
+                        height: height*0.015,
+                        child: Text("LEVEL",style: TextStyle(fontFamily: Fonts.nunito,fontSize: 12,fontWeight: FontWeight.bold),)),
+                      Text("Mixed (Recommended)",style: TextStyle(fontFamily: Fonts.outfit,fontSize: 14,fontWeight: FontWeight.w600),)
                     ],
                   ),
                 ),
-               Icon(_isOpen ? Icons.keyboard_arrow_up_outlined : Icons.arrow_downward_outlined)
+               Icon(_isOpen ? Icons.keyboard_arrow_up_outlined : Icons.keyboard_arrow_down_outlined)
               ],
             ),
         ),
@@ -126,15 +141,24 @@ class _CustomOverlayWidgetState extends State<CustomOverlayWidget> {
 
 
 
-Widget _difficultyOption(double height, double width,Option option){
+Widget _difficultyOption(double height, double width,Option option, bool draw){
   return SizedBox(
     height: height*0.05,width: width*0.8,
-    child: Row(
-      children: [
-        SizedBox(width: width*0.05,),
-        SizedBox(width: width*0.6, child: Text(option.filterName),),
-        option.isSelected ? Icon(Icons.check) : SizedBox.shrink()
-      ],
+    child: Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Row(
+            children: [
+              SizedBox(width: width*0.05,),
+              SizedBox(width: width*0.65, child: Text(option.filterName.toUpperCase()),),
+              if(option.isSelected) Icon(Icons.check) 
+            ],
+          ),
+          SizedBox(height: height*0.012,),
+         if(draw) Container(height: 1,width: width*0.8,color: const Color.fromRGBO(220, 220, 220, 0.8),)
+        ],
+      ),
     ),
   );
 }

@@ -18,24 +18,24 @@ class Questionsbloc extends Bloc<Questionsevents,Questionsstates> {
 
 
   void _onFilterSelectEvent(FilterSelectEvent event, Emitter<Questionsstates> emit){
-           if(state is! QuestionsInitialState){return;}
+           if(state is! QuestionsInitialState){print("State in not correct for picking filters");return;}
       final st = state as QuestionsInitialState;
       Questionfilters filters = st.filters;
 
       if(event.filterNumber == 0){
         bool isSelected =filters.subjects[event.selectedIndex].isSelected ;
         if(isSelected) {filters.subjects[event.selectedIndex].unselect();}
-        else{filters.subjects[event.selectedIndex].unselect();}
+        else{filters.subjects[event.selectedIndex].select();}
         }
       if(event.filterNumber == 1){
         bool isSelected =filters.examType[event.selectedIndex].isSelected ;
         if(isSelected) {filters.examType[event.selectedIndex].unselect();}
-        else{filters.examType[event.selectedIndex].unselect();}
+        else{filters.examType[event.selectedIndex].select();}
         }
        if(event.filterNumber == 2){
         bool isSelected = filters.difficulty[event.selectedIndex].isSelected ;
         if(isSelected) {filters.difficulty[event.selectedIndex].unselect();}
-        else{filters.difficulty[event.selectedIndex].unselect();}
+        else{filters.difficulty[event.selectedIndex].select();}
         }
        
         emit(QuestionsInitialState(filters: filters));
@@ -43,8 +43,9 @@ class Questionsbloc extends Bloc<Questionsevents,Questionsstates> {
 
   void _onSearchQuestions(SearchQuestions event, Emitter<Questionsstates> emit) async{
     Questionfilters questionfilters;
+    List<Collection> collections = [];
     if(state is QuestionsInitialState){final st = state as QuestionsInitialState; questionfilters = st.filters;}
-    else {final st = state as LoadQuestionsState; questionfilters = st.filters;}
+    else {final st = state as LoadQuestionsState; questionfilters = st.filters; collections = st.collections;}
 
     emit(FetchingQuestionsState());
     List<String> subjects = []; List<String> exams = []; List<String> difficulties = [];
@@ -65,7 +66,7 @@ class Questionsbloc extends Bloc<Questionsevents,Questionsstates> {
       return;
     }
     
-    List<Collection> collections = [];
+    
     if(state is QuestionsInitialState){
     ApiResponse collectionsRes = await questionsRepo.LoadMyCollections();
     if(collectionsRes.statusCode != 200){
@@ -75,9 +76,6 @@ class Questionsbloc extends Bloc<Questionsevents,Questionsstates> {
     }
     collections = collectionsRes.data;
     }
-
-
-    else{final st = state as LoadQuestionsState; collections = st.collections;}
     emit(LoadQuestionsState(collections: collections, filters: questionfilters, questions: quesRes.data, currInd: 0));
       
   }
