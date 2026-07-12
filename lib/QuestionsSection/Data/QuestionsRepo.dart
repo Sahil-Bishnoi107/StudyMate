@@ -34,7 +34,7 @@ class QuestionsRepo {
 
   Future<ApiResponse> CreateCollection(String collectionName, int iconIndex) async{
      try{
-      var res = await dio.post("Questions/create-collection", data: {'collection_name' : collectionName, 'icon_index' : iconIndex});
+      var res = await dio.post("/Questions/create-collection", data: {'collection_name' : collectionName, 'icon_index' : iconIndex});
       if(res.statusCode != 200){return ApiResponse(statusCode: res.statusCode ?? 500 , error: "Api call failed");}
       return ApiResponse(statusCode: 200);
      }
@@ -45,7 +45,7 @@ class QuestionsRepo {
 
   Future<ApiResponse> AddCollection(String collectionId, String questionId) async{
     try{
-      var res = await dio.post("Questions/add-question-to-collection", data: {'collection_id' : collectionId, 'question_id' : questionId});
+      var res = await dio.post("/Questions/add-question-to-collection", data: {'collection_id' : collectionId, 'question_id' : questionId});
        if(res.statusCode != 200){return ApiResponse(statusCode: res.statusCode ?? 500 , error: "Api call failed");}
       return ApiResponse(statusCode: 200);
      }
@@ -58,7 +58,7 @@ class QuestionsRepo {
     List<Collection> collections = [];
 
     try{
-      var res = await dio.get("Questions/my-collections");
+      var res = await dio.get("/Questions/my-collections");
       if(res.statusCode != 200){return ApiResponse(statusCode: res.statusCode ?? 500);}
 
       if(res.data.containsKey('collections')){
@@ -78,11 +78,11 @@ class QuestionsRepo {
   Future<ApiResponse> LoadCollectionQuestions(String collectionId)async {
    List<Question> questions = [];
    try{
-    var res = await dio.get("Questions/collection-questions", queryParameters: {'collection_id' : collectionId});
+    var res = await dio.get("/Questions/collection-questions", queryParameters: {'collectionId' : collectionId});
     if(res.statusCode != 200){return ApiResponse(statusCode: res.statusCode ?? 500);}
 
     final jsonFile = res.data;
-    if(jsonFile.continsKey('collection_questions')){
+    if(jsonFile.containsKey('collection_questions')){
         for(var que in jsonFile['collection_questions']){
           questions.add(Question.fromJson(que));
         }
@@ -92,5 +92,18 @@ class QuestionsRepo {
    catch(e){
     return ApiResponse(statusCode: 500, error: "Collection Questions not fetched due to exception : $e");
    }
+  }
+
+  Future<ApiResponse> SumbitQuestion(Question que) async{
+    try{
+    Map<String,dynamic> q = que.toJson();
+
+    final res = await dio.post("/Questions/submit-question", data: q);
+    if(res.statusCode != 200){return ApiResponse(statusCode: res.statusCode ?? 500);}
+    return ApiResponse(statusCode: 200);
+    }
+    catch(e){
+      throw new Exception("could not submit question");
+    }
   }
 }

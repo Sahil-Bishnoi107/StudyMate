@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:study_mate/Home/Presentation/Pages/Homepage.dart';
 import 'package:study_mate/QuestionsSection/Presentation/Pages/FiltersPage.dart';
+import 'package:study_mate/QuestionsSection/Presentation/Pages/MyQuestion.dart';
 import 'package:study_mate/TestsPage/Presentation/Pages/testspage.dart';
 
 Drawer mainDrawer(double height, double width,BuildContext context){
@@ -37,6 +38,11 @@ Drawer mainDrawer(double height, double width,BuildContext context){
                 leading: Icon(Bootstrap.question),
                 title: const Text("Questions"),
                 onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => FiltersPage())),
+              ),
+              ListTile(
+                leading: Icon(Bootstrap.bookmark),
+                title: const Text("My Questions"),
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => MyQuestion())),
               )
           ],
         ),

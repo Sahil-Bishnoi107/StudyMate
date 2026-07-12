@@ -24,3 +24,8 @@ class QuestionFetchFailed extends Questionsstates{
 }
 
 class FetchingQuestionsState extends Questionsstates{}
+
+class QuestionSubmitFailedState extends Questionsstates {
+  final String error;
+  QuestionSubmitFailedState(this.error);
+}

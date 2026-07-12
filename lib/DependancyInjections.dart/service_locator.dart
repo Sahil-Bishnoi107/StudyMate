@@ -7,6 +7,7 @@ import 'package:study_mate/Home/Data/HomeData.dart';
 import 'package:study_mate/Home/Presentation/Bloc/HomeBloc.dart';
 import 'package:study_mate/Networking/dio_client.dart';
 import 'package:study_mate/QuestionsSection/Data/QuestionsRepo.dart';
+import 'package:study_mate/QuestionsSection/Presentation/Bloc/MyQuestionsBloc/MyQuestionsBloc.dart';
 import 'package:study_mate/QuestionsSection/Presentation/Bloc/QuestionsBloc.dart';
 import 'package:study_mate/Test/Data/test_repo.dart';
 import 'package:study_mate/Test/Presentation/Bloc/test_bloc.dart';
@@ -35,4 +36,5 @@ Future<void> setup()async {
   sl.registerLazySingleton<TestPageBloc>(() => TestPageBloc(sl<TestPageData>()));
   sl.registerLazySingleton<TestBloc>(() => TestBloc(sl<TestRepo>()));
   sl.registerLazySingleton<Questionsbloc>(() => Questionsbloc(sl<QuestionsRepo>()));
+  sl.registerLazySingleton<MyQuestionsBloc>(() => MyQuestionsBloc(sl<QuestionsRepo>()));
 }

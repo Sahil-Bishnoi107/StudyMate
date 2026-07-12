@@ -25,6 +25,7 @@ class AuthRepo extends AuthData{
 
   @override
   Future<ApiResponse> loginWithEmail(String email, String password) async {
+    print("${baseUrl}Auth/login");
    final url = Uri.parse("${baseUrl}Auth/login");
    
    try{

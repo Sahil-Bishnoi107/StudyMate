@@ -12,3 +12,7 @@ class AnswerQuestion extends Questionsevents {
   String option;
   AnswerQuestion({required this.option});
 }
+
+class ResetFiltersEvent extends Questionsevents {}
+
+class NextQuestionEvent extends Questionsevents {}

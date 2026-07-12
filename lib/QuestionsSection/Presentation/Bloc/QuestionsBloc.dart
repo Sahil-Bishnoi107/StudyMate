@@ -13,7 +13,11 @@ class Questionsbloc extends Bloc<Questionsevents,Questionsstates> {
 
     on<FilterSelectEvent>(_onFilterSelectEvent);
     on<SearchQuestions> (_onSearchQuestions);
+    on<ResetFiltersEvent>(_onResetFilters);
+    on<NextQuestionEvent>(_onNextQuestion);
+    on<AnswerQuestion>(_onAnswerQuestion);
   }
+
 
 
 
@@ -44,7 +48,8 @@ class Questionsbloc extends Bloc<Questionsevents,Questionsstates> {
   void _onSearchQuestions(SearchQuestions event, Emitter<Questionsstates> emit) async{
     Questionfilters questionfilters;
     List<Collection> collections = [];
-    if(state is QuestionsInitialState){final st = state as QuestionsInitialState; questionfilters = st.filters;}
+    bool loadCollections = false;
+    if(state is QuestionsInitialState){final st = state as QuestionsInitialState; questionfilters = st.filters; loadCollections = true;}
     else {final st = state as LoadQuestionsState; questionfilters = st.filters; collections = st.collections;}
 
     emit(FetchingQuestionsState());
@@ -67,7 +72,7 @@ class Questionsbloc extends Bloc<Questionsevents,Questionsstates> {
     }
     
     
-    if(state is QuestionsInitialState){
+    if(loadCollections){
     ApiResponse collectionsRes = await questionsRepo.LoadMyCollections();
     if(collectionsRes.statusCode != 200){
       emit(QuestionFetchFailed("Collections could not be loaded from API"));
@@ -78,5 +83,48 @@ class Questionsbloc extends Bloc<Questionsevents,Questionsstates> {
     }
     emit(LoadQuestionsState(collections: collections, filters: questionfilters, questions: quesRes.data, currInd: 0));
       
+  }
+
+  void _onResetFilters(ResetFiltersEvent event, Emitter<Questionsstates> emit) {
+    emit(QuestionsInitialState(filters: Questionfilters.initalize()));
+  }
+
+  void _onNextQuestion(NextQuestionEvent event, Emitter<Questionsstates> emit) {
+    if (state is LoadQuestionsState) {
+      final st = state as LoadQuestionsState;
+      if (st.currInd < st.questions.length - 1) {
+        emit(LoadQuestionsState(
+            collections: st.collections,
+            filters: st.filters,
+            questions: st.questions,
+            currInd: st.currInd + 1));
+      } else {
+        add(SearchQuestions());
+      }
+    }
+  }
+
+  void _onAnswerQuestion(AnswerQuestion event, Emitter<Questionsstates> emit) async {
+    if (state is LoadQuestionsState) {
+      final st = state as LoadQuestionsState;
+      try {
+        ApiResponse res = await questionsRepo.SumbitQuestion(st.questions[st.currInd]);
+        if (res.statusCode != 200) {
+          emit(QuestionSubmitFailedState("Failed to submit question."));
+          emit(LoadQuestionsState(
+              collections: st.collections,
+              filters: st.filters,
+              questions: st.questions,
+              currInd: st.currInd));
+        }
+      } catch (e) {
+        emit(QuestionSubmitFailedState("Failed to submit question."));
+        emit(LoadQuestionsState(
+            collections: st.collections,
+            filters: st.filters,
+            questions: st.questions,
+            currInd: st.currInd));
+      }
+    }
   }
 }
