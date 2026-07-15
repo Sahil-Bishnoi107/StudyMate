@@ -45,20 +45,7 @@ class _MyContestsPageState extends State<MyContestsPage> {
       ),
       body: Column(
         children: [
-          // Filter Tabs
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: width * 0.05, vertical: 10),
-            child: Row(
-              children: [
-                _buildFilterTab("All", 0),
-                SizedBox(width: 10),
-                _buildFilterTab("Rated", 1),
-                SizedBox(width: 10),
-                _buildFilterTab("Practice", 2),
-              ],
-            ),
-          ),
-          
+         
           Container(height: 1, width: width, color: Colors.grey.withOpacity(0.2)),
 
           Expanded(

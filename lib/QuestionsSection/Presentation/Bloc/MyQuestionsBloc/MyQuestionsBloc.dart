@@ -1,8 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_mate/Authentication/Domain/Entities/ApiResponse.dart';
-import 'package:study_mate/Home/Domain/Entities/Question.dart';
 import 'package:study_mate/QuestionsSection/Data/QuestionsRepo.dart';
-import 'package:study_mate/QuestionsSection/Domain/Collection.dart';
 import 'package:study_mate/QuestionsSection/Presentation/Bloc/MyQuestionsBloc/MyQuestionsEvents.dart';
 import 'package:study_mate/QuestionsSection/Presentation/Bloc/MyQuestionsBloc/MyQuestionsStates.dart';
 

@@ -24,6 +24,7 @@ dependencies:
   google_sign_in: ^7.2.0
   get_it: ^9.2.1
   dio: ^5.10.0
+  lottie: ^3.3.3
 
 dev_dependencies:
   flutter_test:
@@ -38,6 +39,7 @@ flutter:
     - assets/images/
     - assets/images/profile_pic_girl.png
     - assets/images/priscilla-du-preez-XkKCui44iM0-unsplash.jpg
+    - assets/animations/check_animation.json
 
   fonts:
     - family: Alice

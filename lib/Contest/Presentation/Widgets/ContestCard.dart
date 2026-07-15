@@ -81,7 +81,7 @@ class ContestCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Text(
-                      contest.subject,
+                      contest.subject.toUpperCase(),
                       style: TextStyle(
                         color: Colors.green,
                         fontSize: 10,
@@ -136,28 +136,29 @@ class ContestCard extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.grey.withOpacity(0.05),
               borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: const Color.fromRGBO(220, 220, 220, 0.5),width: 1)
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   children: [
-                    Icon(Bootstrap.question_circle, size: 14, color: Colors.grey),
+                    Icon(Bootstrap.question_circle, size: 14, color: Colors.black),
                     SizedBox(width: 5),
                     Text(
                       "${contest.marksPerQuestion * 10} Questions", // placeholder if we don't know total questions
-                      style: TextStyle(color: Colors.grey[700], fontSize: 12, fontFamily: Fonts.nunito),
+                      style: TextStyle(color: Colors.black, fontSize: 12, fontFamily: Fonts.nunito),
                     ),
                   ],
                 ),
-                Container(width: 1, height: 15, color: Colors.grey.withOpacity(0.3)),
+                Container(width: 1, height: 15, color: Colors.black),
                 Row(
                   children: [
-                    Icon(Bootstrap.people, size: 14, color: Colors.grey),
+                    Icon(Bootstrap.people, size: 14, color: Colors.black),
                     SizedBox(width: 5),
                     Text(
                       "${contest.participants > 1000 ? '${(contest.participants/1000).toStringAsFixed(1)}k' : contest.participants} Joined",
-                      style: TextStyle(color: Colors.grey[700], fontSize: 12, fontFamily: Fonts.nunito),
+                      style: TextStyle(color: Colors.black, fontSize: 12, fontFamily: Fonts.nunito),
                     ),
                   ],
                 ),
@@ -170,11 +171,12 @@ class ContestCard extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Icon(Bootstrap.stopwatch, size: 14, color: Colors.grey),
+                  SizedBox(width: 5,),
+                  Icon(Bootstrap.stopwatch, size: 14, color: Colors.black),
                   SizedBox(width: 5),
                   Text(
                     "Duration: ${contest.duration} mins",
-                    style: TextStyle(color: Colors.grey[700], fontSize: 12, fontFamily: Fonts.nunito),
+                    style: TextStyle(color: Colors.black, fontSize: 12, fontFamily: Fonts.nunito),
                   ),
                 ],
               ),
@@ -184,7 +186,7 @@ class ContestCard extends StatelessWidget {
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                     decoration: BoxDecoration(
-                      color: isUpcoming ? Colors.orange : Colors.green,
+                      color: isUpcoming ? Colors.blueGrey : Colors.green,
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Row(

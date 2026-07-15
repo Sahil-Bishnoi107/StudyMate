@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:study_mate/Contest/Presentation/Bloc/ContestPageBloc.dart';
 import 'package:study_mate/Contest/Presentation/Bloc/ContestPageEvents.dart';
 import 'package:study_mate/Contest/Presentation/Bloc/ContestPageStates.dart';
@@ -21,12 +22,11 @@ class ContestPage extends StatefulWidget {
 }
 
 class _ContestPageState extends State<ContestPage> {
-  final TextEditingController _searchController = TextEditingController();
+  final TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    // Load data initially
     BlocProvider.of<ContestPageBloc>(context).add(LoadContestPageData());
   }
 
@@ -37,139 +37,30 @@ class _ContestPageState extends State<ContestPage> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: Row(
-          children: [
-            Container(
-              padding: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Icon(Bootstrap.lightning_fill, color: Colors.white, size: 16),
-            ),
-            SizedBox(width: 10),
-            Text("Contests", style: TextStyle(color: Colors.black, fontFamily: Fonts.inter, fontWeight: FontWeight.bold)),
-          ],
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Bootstrap.three_dots_vertical, color: Colors.black),
-            onPressed: () {},
-          )
-        ],
-      ),
+
       body: BlocBuilder<ContestPageBloc, ContestPagestates>(
         builder: (context, state) {
           if (state is LoadingContestListState) {
             return Center(child: LoadingAnimationWidget.beat(color: Colors.green, size: 50));
           } else if (state is SuccessContestPageState) {
-            return RefreshIndicator(
-              onRefresh: () async {
-                BlocProvider.of<ContestPageBloc>(context).add(RefreshContestDataEvent());
-              },
-              child: ListView(
-                padding: EdgeInsets.zero,
-                children: [
-                  // Search Bar
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: width * 0.05, vertical: 10),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey.withOpacity(0.05),
-                        borderRadius: BorderRadius.circular(15),
-                        border: Border.all(color: Colors.grey.withOpacity(0.2)),
-                      ),
-                      child: TextField(
-                        controller: _searchController,
-                        onChanged: (val) {
-                          BlocProvider.of<ContestPageBloc>(context).add(SearchContestEvent(query: val));
-                        },
-                        decoration: InputDecoration(
-                          hintText: "Search contests...",
-                          hintStyle: TextStyle(color: Colors.grey, fontFamily: Fonts.nunito),
-                          prefixIcon: Icon(Bootstrap.search, color: Colors.grey, size: 18),
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(vertical: 15),
-                        ),
-                      ),
-                    ),
-                  ),
+            return ListView(
+              padding: EdgeInsets.zero,
+              children: [
+                SizedBox(height: height*0.025,),
+                _appBar(height, width, context),
+                Container(height: 1.5,width: width,color: const Color.fromRGBO(220, 220, 220, 0.7),),
+                SizedBox(height: height*0.01,),
+                _searchBar(height, width, searchController, context),
+               
+                _statSection(height, width, context, state.rating.rating, state.rating.contestsGiven),
+                
+                _activeContestsHeader(height, width, context),
 
-                  // Stats Cards
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: width * 0.05, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        _buildStatCard(
-                          width * 0.42,
-                          "MY CONTESTS",
-                          "12",
-                          "3 ongoing", // We'd realistically compute this from list
-                          Bootstrap.clock_history,
-                          onTap: () {
-                            Navigator.push(context, MaterialPageRoute(
-                              builder: (_) => BlocProvider<MyContestBloc>(
-                                create: (context) => MyContestBloc(sl<ContestRepo>()),
-                                child: MyContestsPage(),
-                              )
-                            ));
-                          }
-                        ),
-                        _buildStatCard(
-                          width * 0.42,
-                          "MY RATING",
-                          state.rating.rating.toString(), // Use actual rating
-                          "Global Top 5%",
-                          Bootstrap.trophy,
-                          isRating: true,
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  // Active Contests Section Header
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: width * 0.05, vertical: 15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Active Contests",
-                          style: TextStyle(fontFamily: Fonts.inter, fontWeight: FontWeight.bold, fontSize: 18),
-                        ),
-                        Container(
-                          width: 8,
-                          height: 8,
-                          decoration: BoxDecoration(
-                            color: Colors.green,
-                            shape: BoxShape.circle,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
+                _filters(height, width, state.selectedFilter, context),
+             
 
                   // Filters
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: width * 0.05),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Row(
-                        children: [
-                          _buildFilterButton("Current", 0, state.selectedFilter, width),
-                          _buildFilterButton("Upcoming", 1, state.selectedFilter, width),
-                          _buildFilterButton("Ended", 2, state.selectedFilter, width),
-                        ],
-                      ),
-                    ),
-                  ),
+                 
                   
                   SizedBox(height: 10),
 
@@ -192,10 +83,9 @@ class _ContestPageState extends State<ContestPage> {
                       );
                     }).toList(),
                   
-                  SizedBox(height: 30),
+                  SizedBox(height: 100),
                 ],
-              ),
-            );
+              );
           }
           return Center(child: Text("Failed to load data.", style: TextStyle(color: Colors.red)));
         },
@@ -203,16 +93,83 @@ class _ContestPageState extends State<ContestPage> {
     );
   }
 
-  Widget _buildStatCard(double width, String title, String value, String subtitle, IconData icon, {bool isRating = false, VoidCallback? onTap}) {
+
+
+
+}
+
+
+Widget _searchBar(double height,double width, TextEditingController searchController, BuildContext context){
+  return  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: width * 0.05, vertical: 10),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey.withOpacity(0.01),
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(color: const Color.fromRGBO(220, 220, 220, 0.75),width: 1.25),
+                      ),
+                      child: TextField(
+                        controller: searchController,
+                        onChanged: (val) {
+                          BlocProvider.of<ContestPageBloc>(context).add(SearchContestEvent(query: val));
+                        },
+                        decoration: InputDecoration(
+                          hintText: "Search contests...",
+                          hintStyle: TextStyle(color: Colors.grey, fontFamily: Fonts.nunito),
+                          prefixIcon: Icon(Bootstrap.search, color: Colors.black, size: 18),
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.symmetric(vertical: 10),
+                        ),
+                      ),
+                    ),
+                  );
+}
+
+
+Widget _appBar(double height,double width,BuildContext context){
+  return Container(
+        height: height*0.06,
+        width: width, 
+        child: Row(
+          children: [
+            SizedBox(width: 10,),
+            IconButton(icon: Icon(Icons.arrow_back_ios_sharp, color: Colors.black), onPressed: () => Navigator.pop(context)),
+            Text("Contests", style: TextStyle(color: Colors.black, fontFamily: Fonts.outfit, fontWeight: FontWeight.w400,fontSize: 22)),
+          ],
+        ),
+        
+      );
+}
+
+
+Widget _statSection(double height, double width,BuildContext context,int rating,int contestsGiven){
+  return Padding(
+                    padding: EdgeInsets.symmetric(horizontal: width * 0.05, vertical: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        _buildStatCard(width * 0.42, "MY CONTESTS", contestsGiven.toString(), "3 ongoing", Bootstrap.clock_history, 
+                         onTap: () { Navigator.push(context, MaterialPageRoute(builder: (_) => BlocProvider<MyContestBloc>(create: (context) => MyContestBloc(sl<ContestRepo>()), child: MyContestsPage()))); }),
+
+                        _buildStatCard(width * 0.42, "MY RATING", rating.toString(), "Global Top 5%", Bootstrap.trophy, isRating: true),
+                      ],
+                    ),
+                  );
+}
+
+
+
+
+    Widget _buildStatCard(double width, String title, String value, String subtitle, IconData icon, {bool isRating = false, VoidCallback? onTap}) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
       width: width,
-      padding: EdgeInsets.all(15),
+      padding: EdgeInsets.symmetric(horizontal: 15,vertical: 10),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Colors.grey.withOpacity(0.2)),
+        border: Border.all(color: const Color.fromRGBO(220, 220, 220, 0.7),width: 1.5),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -220,7 +177,14 @@ class _ContestPageState extends State<ContestPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Icon(icon, color: Colors.green, size: 20),
+              Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: const Color.fromRGBO(76, 175, 80, 0.05),
+                  borderRadius: BorderRadius.circular(20)
+                ),
+                child: Icon(icon, color: Colors.green, size: 20)),
+
               if (isRating)
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
@@ -238,7 +202,7 @@ class _ContestPageState extends State<ContestPage> {
                 )
             ],
           ),
-          SizedBox(height: 15),
+          SizedBox(height: 8),
           Text(
             value,
             style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, fontFamily: Fonts.inter),
@@ -269,7 +233,49 @@ class _ContestPageState extends State<ContestPage> {
     );
   }
 
-  Widget _buildFilterButton(String text, int index, int selectedIndex, double screenWidth) {
+
+  Widget _activeContestsHeader(double height,double width,BuildContext context){
+    return    Padding(
+                    padding: EdgeInsets.symmetric(horizontal: width * 0.05, vertical: 5),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Active Contests",
+                          style: TextStyle(fontFamily: Fonts.outfit, fontWeight: FontWeight.w600, fontSize: 18),
+                        ),
+                       
+                        IconButton(icon: Icon(Icons.refresh, color: Colors.black), onPressed: () => BlocProvider.of<ContestPageBloc>(context).add(RefreshContestDataEvent())),
+                      ],
+                    ),
+                  );
+  }
+
+
+  Widget _filters(double height,double width,int selectedFilter,BuildContext context)
+  {
+    return  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: width * 0.05),
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 2),
+                      decoration: BoxDecoration(
+                        color: const Color.fromRGBO(220, 220, 220, 0.05),
+                        borderRadius: BorderRadius.circular(50),
+                        border: Border.all(color: const Color.fromRGBO(220, 220, 220, 0.6),width: 1.5)
+                      ),
+                      child: Row(
+                        children: [
+                          _buildFilterButton("Current", 0, selectedFilter, width,context),
+                          _buildFilterButton("Upcoming", 1, selectedFilter, width,context),
+                          _buildFilterButton("Ended", 2, selectedFilter, width,context),
+                        ],
+                      ),
+                    ),
+                  );
+  }
+
+
+    Widget _buildFilterButton(String text, int index, int selectedIndex, double screenWidth,BuildContext context) {
     bool isSelected = index == selectedIndex;
     return Expanded(
       child: GestureDetector(
@@ -278,9 +284,10 @@ class _ContestPageState extends State<ContestPage> {
         },
         child: Container(
           padding: EdgeInsets.symmetric(vertical: 10),
+          margin: EdgeInsets.symmetric(vertical: 2),
           decoration: BoxDecoration(
             color: isSelected ? Colors.green : Colors.transparent,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(50),
           ),
           child: Center(
             child: Text(
@@ -297,4 +304,3 @@ class _ContestPageState extends State<ContestPage> {
       ),
     );
   }
-}

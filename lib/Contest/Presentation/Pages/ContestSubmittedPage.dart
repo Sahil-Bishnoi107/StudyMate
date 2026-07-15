@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:study_mate/Home/Presentation/Pages/Homepage.dart';
 import 'package:study_mate/fonts.dart';
+import 'package:lottie/lottie.dart';
 
 class ContestSubmittedPage extends StatelessWidget {
   const ContestSubmittedPage({Key? key}) : super(key: key);
@@ -16,13 +17,11 @@ class ContestSubmittedPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              padding: EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: Colors.green.withOpacity(0.1),
-                shape: BoxShape.circle,
-              ),
-              child: Icon(Bootstrap.check_circle_fill, color: Colors.green, size: 80),
+            Lottie.asset(
+              'assets/animations/check_animation.json',
+              width: 200,
+              height: 200,
+              repeat: false,
             ),
             SizedBox(height: 30),
             Text(
@@ -57,11 +56,11 @@ class ContestSubmittedPage extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 15),
                 decoration: BoxDecoration(
                   color: Colors.green,
-                  borderRadius: BorderRadius.circular(25),
+                  borderRadius: BorderRadius.circular(50),
                 ),
                 child: Center(
                   child: Text(
-                    "Back to Contests",
+                    "Back to HomePage",
                     style: TextStyle(
                       color: Colors.white,
                       fontFamily: Fonts.inter,
