@@ -8,6 +8,7 @@ import 'package:study_mate/Home/Presentation/Bloc/HomeBloc.dart';
 import 'package:study_mate/QuestionsSection/Presentation/Bloc/MyQuestionsBloc/MyQuestionsBloc.dart';
 import 'package:study_mate/QuestionsSection/Presentation/Bloc/QuestionsBloc.dart';
 import 'package:study_mate/TestsPage/Presentation/Bloc/TestBloc.dart';
+import 'package:study_mate/Contest/Presentation/Bloc/ContestPageBloc.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,7 +28,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => sl<RegisterBloc>()),
         BlocProvider(create: (context) => sl<TestPageBloc>()),
         BlocProvider(create: (context) => sl<Questionsbloc>()),
-        BlocProvider(create: (context) => sl<MyQuestionsBloc>())
+        BlocProvider(create: (context) => sl<MyQuestionsBloc>()),
+        BlocProvider(create: (context) => sl<ContestPageBloc>())
          
       ],
       child: MaterialApp(
