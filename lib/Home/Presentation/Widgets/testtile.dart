@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
-import 'package:study_mate/Home/Domain/Entities/Test.dart';
+import 'package:study_mate/Profile/Domain/Test.dart';
 import 'package:study_mate/fonts.dart';
 
 class Testtile extends StatelessWidget {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+
 import 'package:study_mate/Contest/Presentation/Bloc/ContestPageBloc.dart';
 import 'package:study_mate/Contest/Presentation/Bloc/ContestPageEvents.dart';
 import 'package:study_mate/Contest/Presentation/Bloc/ContestPageStates.dart';

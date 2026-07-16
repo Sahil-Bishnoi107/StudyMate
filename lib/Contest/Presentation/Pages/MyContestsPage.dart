@@ -17,7 +17,6 @@ class MyContestsPage extends StatefulWidget {
 }
 
 class _MyContestsPageState extends State<MyContestsPage> {
-  int _selectedFilter = 0; // 0: All, 1: Rated, 2: Practice
 
   @override
   void initState() {
@@ -39,9 +38,7 @@ class _MyContestsPageState extends State<MyContestsPage> {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text("My Contests", style: TextStyle(color: Colors.black, fontFamily: Fonts.inter, fontSize: 18, fontWeight: FontWeight.bold)),
-        actions: [
-          IconButton(icon: Icon(Bootstrap.three_dots_vertical, color: Colors.black), onPressed: () {})
-        ],
+        
       ),
       body: Column(
         children: [
@@ -110,31 +107,5 @@ class _MyContestsPageState extends State<MyContestsPage> {
     );
   }
 
-  Widget _buildFilterTab(String title, int index) {
-    bool isSelected = _selectedFilter == index;
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          _selectedFilter = index;
-        });
-      },
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-        decoration: BoxDecoration(
-          color: isSelected ? Colors.green : Colors.transparent,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: isSelected ? Colors.green : Colors.grey.withOpacity(0.3)),
-        ),
-        child: Text(
-          title,
-          style: TextStyle(
-            color: isSelected ? Colors.white : Colors.grey[600],
-            fontSize: 12,
-            fontFamily: Fonts.nunito,
-            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-          ),
-        ),
-      ),
-    );
-  }
+
 }

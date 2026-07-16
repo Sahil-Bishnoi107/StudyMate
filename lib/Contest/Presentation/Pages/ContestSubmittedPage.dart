@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:icons_plus/icons_plus.dart';
 import 'package:study_mate/Home/Presentation/Pages/Homepage.dart';
 import 'package:study_mate/fonts.dart';
 import 'package:lottie/lottie.dart';
