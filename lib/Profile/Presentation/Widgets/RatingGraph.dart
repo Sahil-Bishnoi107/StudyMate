@@ -38,7 +38,7 @@ class RatingGraph extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: const Color(0xFFF0FAEF), // Very light green background
+        color: Colors.white,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
@@ -50,20 +50,30 @@ class RatingGraph extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Rating Progression",
-                    style: TextStyle(
-                      fontFamily: Fonts.outfit,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
+                  Text.rich(
+                    TextSpan(
+                      children: const [
+                        TextSpan(
+                          text: "Rating ",
+                          style: TextStyle(color: Colors.green),
+                        ),
+                        TextSpan(
+                          text: "Progression",
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ],
+                      style: TextStyle(
+                        fontFamily: Fonts.outfit,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   Text(
                     "Performance trend over contests",
                     style: TextStyle(
-                      fontFamily: Fonts.nunito,
-                      fontSize: 12,
+                      fontFamily: Fonts.outfit,
+                      fontSize: 10,
                       color: Colors.grey[600],
                     ),
                   ),
@@ -98,9 +108,9 @@ class RatingGraph extends StatelessWidget {
                 lineBarsData: [
                   LineChartBarData(
                     spots: spots,
-                    isCurved: true,
+                    isCurved: false,
                     color: Colors.green,
-                    barWidth: 3,
+                    barWidth: 1.5,
                     isStrokeCapRound: true,
                     dotData: FlDotData(
                       show: true,

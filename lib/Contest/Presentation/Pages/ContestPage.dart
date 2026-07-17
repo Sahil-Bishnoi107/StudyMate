@@ -43,28 +43,27 @@ class _ContestPageState extends State<ContestPage> {
           if (state is LoadingContestListState) {
             return Center(child: LoadingAnimationWidget.beat(color: Colors.green, size: 50));
           } else if (state is SuccessContestPageState) {
-            return ListView(
-              padding: EdgeInsets.zero,
+            return Column(
+            
               children: [
-                SizedBox(height: height*0.025,),
+                SizedBox(height: height*0.05,),
                 _appBar(height, width, context),
-                Container(height: 1.5,width: width,color: const Color.fromRGBO(220, 220, 220, 0.7),),
-                SizedBox(height: height*0.01,),
-                _searchBar(height, width, searchController, context),
+                Container(height: 1,width: width,color: const Color.fromRGBO(220, 220, 220, 0.8),),
+                Expanded(child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+
+                      SizedBox(height: height*0.01,),
+                      _searchBar(height, width, searchController, context),
                
-                _statSection(height, width, context, state.rating.rating, state.rating.contestsGiven),
+                      _statSection(height, width, context, state.rating.rating, state.rating.contestsGiven),
                 
-                _activeContestsHeader(height, width, context),
+                      _activeContestsHeader(height, width, context),
 
-                _filters(height, width, state.selectedFilter, context),
-             
+                      _filters(height, width, state.selectedFilter, context),
+                       SizedBox(height: 10),
 
-                  // Filters
                  
-                  
-                  SizedBox(height: 10),
-
-                  // Contest List
                   if (state.filteredList.isEmpty)
                     Container(
                       height: height * 0.3,
@@ -84,6 +83,9 @@ class _ContestPageState extends State<ContestPage> {
                     }).toList(),
                   
                   SizedBox(height: 100),
+                  ],),
+                )),
+                
                 ],
               );
           }
@@ -128,13 +130,13 @@ Widget _searchBar(double height,double width, TextEditingController searchContro
 
 Widget _appBar(double height,double width,BuildContext context){
   return Container(
-        height: height*0.06,
+        height: height*0.05,
         width: width, 
         child: Row(
           children: [
-            SizedBox(width: 10,),
+            SizedBox(width: 5,),
             IconButton(icon: Icon(Icons.arrow_back_ios_sharp, color: Colors.black), onPressed: () => Navigator.pop(context)),
-            Text("Contests", style: TextStyle(color: Colors.black, fontFamily: Fonts.outfit, fontWeight: FontWeight.w400,fontSize: 22)),
+            Text("Contests", style: TextStyle(color: Colors.black, fontFamily: Fonts.outfit, fontWeight: FontWeight.w700,fontSize: 18)),
           ],
         ),
         

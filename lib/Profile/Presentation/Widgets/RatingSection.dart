@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:study_mate/Contest/Domain/MyContest.dart';
 import 'package:study_mate/Profile/Domain/student.dart';
 import 'package:study_mate/fonts.dart';
-import 'package:icons_plus/icons_plus.dart';
 
 class RatingSection extends StatelessWidget {
   final Student student;
   final List<MyContest> contests;
-
-  const RatingSection({Key? key, required this.student, required this.contests}) : super(key: key);
+  final double height;
+  final double width;
+  const RatingSection({Key? key, required this.student, required this.contests, required this.height,required this.width}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // Sort contests by start time ascending to calculate rating progression
+   
     final sortedContests = List<MyContest>.from(contests)..sort((a, b) => a.startTime.compareTo(b.startTime));
     
     int currentRating = 1500;
@@ -34,157 +35,75 @@ class RatingSection extends StatelessWidget {
     int ratingGain = currentRating - previousRating;
     bool isPositive = ratingGain >= 0;
 
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.05),
-                spreadRadius: 2,
-                blurRadius: 10,
-                offset: const Offset(0, 4),
-              ),
-            ],
-            border: Border.all(color: Colors.grey.withOpacity(0.2)),
-          ),
-          child: Column(
+    return Container(
+      height: height*0.15, width: width*0.55,
+      margin: EdgeInsets.only(top: height*0.04,left: width*0.05),
+     // color: Colors.amber,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "CURRENT RATING",
-                        style: TextStyle(
-                          fontFamily: Fonts.nunito,
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey[500],
-                          letterSpacing: 1.2,
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.baseline,
-                        textBaseline: TextBaseline.alphabetic,
-                        children: [
-                          Text(
-                            currentRating.toString(),
-                            style: TextStyle(
-                              fontFamily: Fonts.outfit,
-                              fontSize: 42,
-                              fontWeight: FontWeight.bold,
-                              color: isPositive ? Colors.green[700] : Colors.red[700],
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                            decoration: BoxDecoration(
-                              color: isPositive ? Colors.green.withOpacity(0.1) : Colors.red.withOpacity(0.1),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  isPositive ? Bootstrap.graph_up_arrow : Bootstrap.graph_down_arrow,
-                                  color: isPositive ? Colors.green : Colors.red,
-                                  size: 14,
-                                ),
-                                const SizedBox(width: 4),
-                                Text(
-                                  "${isPositive ? '+' : ''}$ratingGain",
-                                  style: TextStyle(
-                                    fontFamily: Fonts.nunito,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    color: isPositive ? Colors.green : Colors.red,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 5),
-                      Text(
-                        "Previous rating (5 contests ago): $previousRating",
-                        style: TextStyle(
-                          fontFamily: Fonts.nunito,
-                          fontSize: 12,
-                          color: Colors.grey[600],
-                        ),
-                      ),
-                    ],
+                  Text(
+                    "Current",
+                    style: TextStyle(fontFamily: Fonts.outfit,fontSize: 24,fontWeight: FontWeight.w600,color: Colors.green, ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: isPositive ? Colors.green.withOpacity(0.05) : Colors.red.withOpacity(0.05),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      isPositive ? Bootstrap.trophy_fill : Bootstrap.award_fill,
-                      color: isPositive ? Colors.green : Colors.red,
-                      size: 32,
-                    ),
-                  )
+                  Text(
+                    " Rating",
+                    style: TextStyle(fontFamily: Fonts.outfit,fontSize: 24,fontWeight: FontWeight.w600,color: Colors.black, ),
+                  ),
+                  SizedBox(width: 5,),
+                  if(ratingGain > 0) Icon(LucideIcons.trendingUp400Dir,color: Colors.green,),
+                  if(ratingGain < 0) Icon(LucideIcons.trendingUp400Dir,color: Colors.red,)
                 ],
               ),
-              const SizedBox(height: 20),
-              Divider(color: Colors.grey.withOpacity(0.2)),
-              const SizedBox(height: 15),
+
+              
+
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.baseline,
+                textBaseline: TextBaseline.alphabetic,
                 children: [
-                  _buildStatItem("GLOBAL RANK", "#${student.rank}", Bootstrap.globe),
-                  Container(height: 40, width: 1, color: Colors.grey.withOpacity(0.2)),
-                  _buildStatItem("TESTS GIVEN", "${student.testsGiven.length}", Bootstrap.journal_check),
+                  Text(
+                    currentRating.toString(),
+                    style: TextStyle(
+                      fontFamily: Fonts.outfit,
+                      fontSize: 32,
+                      fontWeight: FontWeight.w600,
+                      color:  Colors.black
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Text(
+                    "${isPositive ? '+' : ''}$ratingGain",
+                    style: TextStyle(
+                      fontFamily: Fonts.nunito,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: isPositive ? Colors.green : Colors.red,
+                    ),
+                  ),
                 ],
+              ),
+             
+              Text(
+                "Progression Over Last 5 Contests",
+                style: TextStyle(
+                  fontFamily: Fonts.outfit,
+                  fontSize: 10,
+                  color: const Color.fromRGBO(110, 110, 110, 1),
+                ),
               ),
             ],
           ),
-        ),
-      ],
+          
+        ],
+      ),
     );
   }
 
-  Widget _buildStatItem(String label, String value, IconData icon) {
-    return Row(
-      children: [
-        Icon(icon, color: Colors.grey[600], size: 20),
-        const SizedBox(width: 10),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              label,
-              style: TextStyle(
-                fontFamily: Fonts.nunito,
-                fontSize: 10,
-                fontWeight: FontWeight.bold,
-                color: Colors.grey[500],
-                letterSpacing: 1.1,
-              ),
-            ),
-            Text(
-              value,
-              style: TextStyle(
-                fontFamily: Fonts.outfit,
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: Colors.black87,
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
+
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:icons_plus/icons_plus.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:study_mate/ContactUs/Presentation/Pages/AboutUs.dart';
 import 'package:study_mate/Contest/Presentation/Pages/ContestPage.dart';
@@ -33,14 +32,12 @@ class _HomepageState extends State<Homepage> {
           Container(color: const Color.fromRGBO(220, 220, 220, 0.8),height: 1,width: width,),
           Expanded(
             child: SingleChildScrollView(
-              child: Column(
+              child: Column( 
                 children: [
-                  SizedBox(height: height*0.02,),
+              SizedBox(height: height*0.02,),
               _header(height, width),
-                       // Container(height: 1,width: width*0.9,color: const Color.fromRGBO(220, 220, 220, 0.8)),
               SizedBox(height: height*0.01,),
               _aboutSection(height, width,context),
-                      //  Container(height: 1,width: width*0.9,color: const Color.fromRGBO(220, 220, 220, 0.8)),
               SizedBox(height: height*0.01,),
               GestureDetector( onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ContestPage())),
                 child: _card(height, width, LucideIcons.swords300, "Challenge yourself with timed mock contests designed to simulate real exam pressure. Track your rating, climb the leaderboard, analyze your performance, and see how you compare with other aspirants.",

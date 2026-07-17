@@ -4,8 +4,9 @@ import 'package:study_mate/fonts.dart';
 
 class ContestHistorySection extends StatelessWidget {
   final List<MyContest> contests;
+  final double width;
 
-  const ContestHistorySection({Key? key, required this.contests}) : super(key: key);
+  const ContestHistorySection({Key? key, required this.contests,required this.width}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,35 +16,50 @@ class ContestHistorySection extends StatelessWidget {
 
     final sortedContests = List<MyContest>.from(contests)..sort((a, b) => b.startTime.compareTo(a.startTime));
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Icon(Icons.history, color: Colors.green),
-            const SizedBox(width: 8),
-            Text(
-              "Contest History",
-              style: TextStyle(
-                fontFamily: Fonts.outfit,
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
+    return Padding(
+      padding: EdgeInsetsGeometry.symmetric(horizontal: width*0.05),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(Icons.history, color: Colors.black),
+              const SizedBox(width: 8),
+              Text(
+                "Contest",
+                style: TextStyle(
+                  fontFamily: Fonts.outfit,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 18,
+                  color: Colors.black
+                ),
               ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 15),
-        ListView.separated(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: sortedContests.length,
-          separatorBuilder: (context, index) => const SizedBox(height: 15),
-          itemBuilder: (context, index) {
-            final contest = sortedContests[index];
-            return _buildContestCard(contest);
-          },
-        ),
-      ],
+              Text(
+                " History",
+                style: TextStyle(
+                  fontFamily: Fonts.outfit,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 18,
+                  color: Colors.green
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10,),
+          ListView.separated(
+            padding: EdgeInsets.all(0),
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: sortedContests.length,
+            separatorBuilder: (context, index) => const SizedBox(height: 5),
+            itemBuilder: (context, index) {
+              final contest = sortedContests[index];
+             if(contest.rank > 0) {return  _buildContestCard(contest);}
+             else{return SizedBox.shrink();}
+            },
+          ),
+        ],
+      ),
     );
   }
 
@@ -95,7 +111,7 @@ class ContestHistorySection extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Text(
-                  "${isPositive ? '+' : ''}${contest.ratingChnage}",
+                  "${isPositive ? '+' : '-'}${contest.ratingChnage}",
                   style: TextStyle(
                     color: isPositive ? Colors.green : Colors.red,
                     fontSize: 10,
@@ -110,7 +126,7 @@ class ContestHistorySection extends StatelessWidget {
             contest.contestName,
             style: TextStyle(
               fontFamily: Fonts.outfit,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w600,
               fontSize: 14,
             ),
           ),

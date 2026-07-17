@@ -4,40 +4,43 @@ import 'package:study_mate/fonts.dart';
 
 class ProfileTopSection extends StatelessWidget {
   final Student student;
+  final double height;
+  final double width;
 
-  const ProfileTopSection({Key? key, required this.student}) : super(key: key);
+  const ProfileTopSection({Key? key, required this.student,required this.height,required this.width}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        CircleAvatar(
-          radius: 50,
-          backgroundColor: Colors.grey[200],
-          backgroundImage: student.pic.isNotEmpty
-              ? NetworkImage(student.pic)
-              : const AssetImage('assets/images/profile_pic_girl.png') as ImageProvider,
-          onBackgroundImageError: (exception, stackTrace) {},
-        ),
-        SizedBox(height: 15),
-        Text(
-          student.name,
-          style: TextStyle(
-            fontFamily: Fonts.outfit,
-            fontWeight: FontWeight.bold,
-            fontSize: 24,
+    return Container(
+      height: height*0.18,width: width*0.4,
+      margin: EdgeInsets.only(top: height*0.01),
+    
+      child: Column(
+        children: [
+          CircleAvatar(
+            radius: 50,
+            backgroundColor: Colors.white,
+            backgroundImage: const AssetImage('assets/avatar_images/man.png') as ImageProvider,
+            onBackgroundImageError: (exception, stackTrace) {},
           ),
-        ),
-        SizedBox(height: 5),
-        Text(
-          "JEE Aspirant • Class 12",
-          style: TextStyle(
-            fontFamily: Fonts.nunito,
-            color: Colors.grey[600],
-            fontSize: 14,
+          SizedBox(height: 5),
+          SizedBox(width: width*0.35,
+            child: Center(
+              child: Text(
+                student.name  ,
+                style: TextStyle(
+                  fontFamily: Fonts.outfit,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
+                  fontSize: 20,
+                ),
+              ),
+            ),
           ),
-        ),
-      ],
+          
+          
+        ],
+      ),
     );
   }
 }

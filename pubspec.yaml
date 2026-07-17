@@ -40,6 +40,7 @@ flutter:
     - assets/images/profile_pic_girl.png
     - assets/images/priscilla-du-preez-XkKCui44iM0-unsplash.jpg
     - assets/animations/check_animation.json
+    - assets/avatar_images/man.png
 
   fonts:
     - family: Alice

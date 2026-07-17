@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:icons_plus/icons_plus.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:study_mate/ContactUs/Presentation/Pages/AboutUs.dart';
 import 'package:study_mate/Contest/Presentation/Pages/ContestPage.dart';
