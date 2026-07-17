@@ -44,7 +44,7 @@ class _ContestReviewPageState extends State<ContestReviewPage> {
           : Column(
               children: [
                 _buildTestProgress(height, width),
-                Container(height: 2, width: width, color: const Color.fromRGBO(200, 200, 200, 0.6)),
+                Container(height: 1.5, width: width, color: const Color.fromRGBO(220, 220, 220, 0.8)),
                 SizedBox(height: height * 0.02),
                 _buildQuestionSection(height, width),
               ],
@@ -70,18 +70,20 @@ class _ContestReviewPageState extends State<ContestReviewPage> {
             onTap: () {
               pageController.animateToPage(index, duration: Duration(milliseconds: 300), curve: Curves.bounceIn);
             },
-            child: Container(
-              height: height * 0.04,
-              width: height * 0.04,
-              margin: EdgeInsets.only(right: width * 0.03),
-              decoration: BoxDecoration(
-                color: iconColor,
-                borderRadius: BorderRadius.circular(width * 0.1),
-              ),
-              child: Center(
-                child: Text(
-                  "${index + 1}",
-                  style: TextStyle(fontFamily: Fonts.nunito, fontWeight: FontWeight.bold, color: Colors.white),
+            child: Center(
+              child: Container(
+                height: height * 0.035,
+                width: height * 0.035,
+                margin: EdgeInsets.only(right: width * 0.03),
+                decoration: BoxDecoration(
+                  color: iconColor,
+                  borderRadius: BorderRadius.circular(width * 0.1),
+                ),
+                child: Center(
+                  child: Text(
+                    "${index + 1}",
+                    style: TextStyle(fontFamily: Fonts.nunito, fontWeight: FontWeight.bold, color: Colors.white),
+                  ),
                 ),
               ),
             ),

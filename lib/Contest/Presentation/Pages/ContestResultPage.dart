@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:study_mate/Contest/Domain/MyContest.dart';
 import 'package:study_mate/Contest/Presentation/Bloc/MyContestBloc.dart';
 import 'package:study_mate/Contest/Presentation/Bloc/MyContestStates.dart';
 import 'package:study_mate/Contest/Presentation/Pages/ContestReviewPage.dart';
+import 'package:study_mate/Contest/Presentation/Pages/MyContestsPage.dart';
 import 'package:study_mate/Test/Presentation/Widgets/question_data.dart';
 import 'package:study_mate/fonts.dart';
 
@@ -22,15 +24,6 @@ class ContestResultPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(Bootstrap.chevron_left, color: Colors.black),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: Text("Contest Result", style: TextStyle(color: Colors.black, fontFamily: Fonts.inter, fontSize: 18, fontWeight: FontWeight.bold)),
-      ),
       body: BlocBuilder<MyContestBloc, MyContestStates>(
         builder: (context, state) {
           if (state is ContestResultLoading || state is MyContestInitial || state is MyContestLoading || state is MyContestLoaded) {
@@ -54,10 +47,18 @@ class ContestResultPage extends StatelessWidget {
               if (q.isCorrect) correctPerSub[q.subject] = (correctPerSub[q.subject] ?? 0) + 1;
             }
 
-            return SingleChildScrollView(
-              child: Column(
-                children: [
-                  SizedBox(height: 10),
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(height: height*0.05,),
+                _appBar(height, width, context),
+                Container(height: 1,color: const Color.fromRGBO(220, 220, 220, 0.8),width: width,),
+            
+            
+                Expanded(child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                     SizedBox(height: 10),
                   _buildSummarySection(width, height, state, correctQues, totalQues),
                   SizedBox(height: 30),
                   _buildPieChart(height, width, totalQues, correctQues, skippedQues, wrongQues),
@@ -65,9 +66,12 @@ class ContestResultPage extends StatelessWidget {
                   _buildSubjectBreakdown(height, width, totalPerSub, correctPerSub),
                   SizedBox(height: 40),
                   _buildReviewButton(width, context, state),
-                  SizedBox(height: 40),
-                ],
-              ),
+                  SizedBox(height: height*0.1),
+                    ],
+                  ),
+                ))
+                
+              ],
             );
           }
           return Container();
@@ -77,48 +81,34 @@ class ContestResultPage extends StatelessWidget {
   }
 
   Widget _buildSummarySection(double width, double height, ContestResultLoaded state, int correct, int total) {
-    int ratingChange = state.result.newRating - state.result.prevRating;
+    
     return Container(
-      width: width * 0.9,
-      padding: EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.green.withOpacity(0.05),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.green.withOpacity(0.2)),
-      ),
+      margin: EdgeInsets.symmetric(horizontal: width*0.05),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _buildStatCol("SCORE", state.result.score.toString(), Colors.black),
-              Container(width: 1, height: 40, color: Colors.grey.withOpacity(0.3)),
-              _buildStatCol("RANK", "#${state.result.rank}", Colors.orange),
-              Container(width: 1, height: 40, color: Colors.grey.withOpacity(0.3)),
-              _buildStatCol("RATING", "${ratingChange >= 0 ? '+' : ''}$ratingChange", ratingChange >= 0 ? Colors.green : Colors.red),
+              Text("Rating",style: TextStyle(color: Colors.green,fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: 25),),
+              Text(" Change",style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: 25),)
             ],
           ),
-          SizedBox(height: 20),
-          Container(height: 1, color: Colors.grey.withOpacity(0.2)),
-          SizedBox(height: 20),
+
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Column(
-                children: [
-                  Text("PREV RATING", style: TextStyle(color: Colors.grey[600], fontSize: 10, fontWeight: FontWeight.bold, fontFamily: Fonts.nunito)),
-                  SizedBox(height: 5),
-                  Text("${state.result.prevRating}", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, fontFamily: Fonts.inter)),
-                ],
-              ),
-              Icon(Bootstrap.arrow_right, color: Colors.grey),
-              Column(
-                children: [
-                  Text("NEW RATING", style: TextStyle(color: Colors.grey[600], fontSize: 10, fontWeight: FontWeight.bold, fontFamily: Fonts.nunito)),
-                  SizedBox(height: 5),
-                  Text("${state.result.newRating}", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.green, fontFamily: Fonts.inter)),
-                ],
-              )
+              Text(state.result.prevRating.toString(),style: TextStyle(color: Colors.black,fontFamily: Fonts.outfit,fontWeight: FontWeight.w400,fontSize: 40)),
+              SizedBox(width: width*0.05,),
+              Icon(Icons.arrow_forward,size:20,color: Colors.blueGrey,),
+              SizedBox(width: width*0.05,),
+              Text(state.result.newRating.toString(),style: TextStyle(color: Colors.green,fontFamily: Fonts.outfit,fontWeight: FontWeight.w400,fontSize: 40))
+            ],
+          ),
+          SizedBox(height: height*0.02,),
+          Row(
+            children: [
+              Expanded(child: _buildStatCol("Score", "${state.result.score}", Colors.green, height, width, Bootstrap.file_code)),
+              Expanded(child: _buildStatCol("Rank", "${state.result.rank}", Colors.blue, height, width, LucideIcons.swords400Dir)),
+              Expanded(child: _buildStatCol("Time", "${state.result.duration}", Colors.orange, height, width, Bootstrap.stopwatch)),
             ],
           )
         ],
@@ -126,12 +116,23 @@ class ContestResultPage extends StatelessWidget {
     );
   }
 
-  Widget _buildStatCol(String title, String val, Color color) {
-    return Column(
+  Widget _buildStatCol(String title, String val, Color color,double height,double width,IconData icon) {
+    return Row(
       children: [
-        Text(title, style: TextStyle(color: Colors.grey[600], fontSize: 10, fontWeight: FontWeight.bold, fontFamily: Fonts.nunito)),
-        SizedBox(height: 8),
-        Text(val, style: TextStyle(color: color, fontSize: 24, fontWeight: FontWeight.bold, fontFamily: Fonts.inter)),
+       Container(
+        padding: EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: color.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(10)
+        ),
+        child: Icon(icon,color: color,size: 20,)),
+        SizedBox(width: 5,),
+        Column(
+          children: [
+            Text(title, style: TextStyle(color: const Color.fromRGBO(110, 110, 110, 1),fontFamily: Fonts.outfit,fontWeight: FontWeight.w400,fontSize: 10),),
+            Text(val,style: TextStyle(color: Colors.black,fontFamily: Fonts.outfit,fontWeight: FontWeight.w600),)
+          ],
+        )
       ],
     );
   }
@@ -143,9 +144,14 @@ class ContestResultPage extends StatelessWidget {
         children: [
           Align(
             alignment: Alignment.centerLeft,
-            child: Text("Accuracy Analytics", style: TextStyle(fontFamily: Fonts.inter, fontWeight: FontWeight.bold, fontSize: 18)),
+            child: Row(
+              children: [
+                Text("Accuracy", style: TextStyle(fontFamily: Fonts.outfit, fontWeight: FontWeight.w600, fontSize: 22)),
+                Text(" Analytics", style: TextStyle(fontFamily: Fonts.outfit, fontWeight: FontWeight.w600, fontSize: 22,color: Colors.green)),
+              ],
+            ),
           ),
-          SizedBox(height: 30),
+          SizedBox(height: 10),
           Stack(
             alignment: Alignment.center,
             children: [
@@ -154,11 +160,11 @@ class ContestResultPage extends StatelessWidget {
                 child: PieChart(
                   PieChartData(
                     sectionsSpace: 0,
-                    centerSpaceRadius: 60,
+                    centerSpaceRadius: 70,
                     sections: [
-                      PieChartSectionData(value: correctQues.toDouble(), color: Colors.green, radius: 20, title: ''),
-                      PieChartSectionData(value: wrongQues.toDouble(), color: Colors.red, radius: 20, title: ''),
-                      PieChartSectionData(value: skippedQues.toDouble(), color: Colors.grey, radius: 20, title: ''),
+                      PieChartSectionData(value: correctQues.toDouble(), color: Colors.green, radius: 15, title: ''),
+                      PieChartSectionData(value: wrongQues.toDouble(), color: Colors.red, radius: 15, title: ''),
+                      PieChartSectionData(value: skippedQues.toDouble(), color: Colors.grey, radius: 15, title: ''),
                     ]
                   )
                 ),
@@ -194,7 +200,12 @@ class ContestResultPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Subject Breakdown", style: TextStyle(fontFamily: Fonts.inter, fontWeight: FontWeight.bold, fontSize: 18)),
+          Row(
+            children: [
+              Text("Subject ", style: TextStyle(fontFamily: Fonts.outfit, fontWeight: FontWeight.w600, fontSize: 22,color: Colors.green)),
+              Text("Breakdown", style: TextStyle(fontFamily: Fonts.outfit, fontWeight: FontWeight.w600, fontSize: 22)),
+            ],
+          ),
           SizedBox(height: 20),
           ...totalPerSub.keys.map((sub) {
             int tot = totalPerSub[sub]!;
@@ -209,7 +220,7 @@ class ContestResultPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(sub, style: TextStyle(fontFamily: Fonts.nunito, fontWeight: FontWeight.bold, fontSize: 14)),
-                      Text("$cor / $tot", style: TextStyle(fontFamily: Fonts.nunito, color: Colors.grey[600], fontSize: 12)),
+                      Text("$cor / $tot", style: TextStyle(fontFamily: Fonts.nunito, color: Colors.black, fontSize: 12)),
                     ],
                   ),
                   SizedBox(height: 8),
@@ -217,7 +228,7 @@ class ContestResultPage extends StatelessWidget {
                     value: percent,
                     backgroundColor: Colors.grey.withOpacity(0.2),
                     color: Colors.green,
-                    minHeight: 8,
+                    minHeight: 4,
                     borderRadius: BorderRadius.circular(4),
                   )
                 ],
@@ -238,8 +249,8 @@ class ContestResultPage extends StatelessWidget {
         width: width * 0.9,
         padding: EdgeInsets.symmetric(vertical: 15),
         decoration: BoxDecoration(
-          color: Colors.black,
-          borderRadius: BorderRadius.circular(25),
+          color: Colors.green,
+          borderRadius: BorderRadius.circular(50),
         ),
         child: Center(
           child: Text("Review Questions", style: TextStyle(color: Colors.white, fontFamily: Fonts.inter, fontWeight: FontWeight.bold, fontSize: 16)),
@@ -247,4 +258,22 @@ class ContestResultPage extends StatelessWidget {
       ),
     );
   }
+}
+
+
+Widget _appBar(double height,double width,BuildContext context){
+  return SizedBox(
+    height: height*0.05,
+    child: Row(
+      children: [
+        SizedBox(width: width*0.05,),
+        InkWell(
+          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => MyContestsPage())),
+          child: Icon(Bootstrap.chevron_left)),
+        SizedBox(width: width*0.05,),
+        Text("Contest Result",style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: 18),)
+    
+      ],
+    ),
+  );
 }

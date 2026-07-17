@@ -6,6 +6,7 @@ class MyContest {
   String difficulty;
   int status;
   String subject;
+  int totalQuestions;
   int participants;
   int negativeMarking;
   int marksPerQuestion;
@@ -26,7 +27,8 @@ class MyContest {
     required this.marksPerQuestion,
     required this.rank,
     required this.ratingChnage,
-    required this.correctQuestions
+    required this.correctQuestions,
+    required this.totalQuestions
   });
 
   factory MyContest.fromJson(Map<String, dynamic> json) {
@@ -43,7 +45,8 @@ class MyContest {
       marksPerQuestion: json["marks_per_question"],
       correctQuestions: json["correct_questions"],
       rank: json["rank"],
-      ratingChnage: json["rating_change"]
+      ratingChnage: json["rating_change"],
+      totalQuestions: json['question_number']
     );
   }
 
@@ -61,7 +64,8 @@ class MyContest {
       "marks_per_question": marksPerQuestion,
       "rank" : rank,
       "rating_change" : ratingChnage,
-      "correct_questions" : correctQuestions
+      "correct_questions" : correctQuestions,
+      "question_number" : totalQuestions
     };
   }
 }

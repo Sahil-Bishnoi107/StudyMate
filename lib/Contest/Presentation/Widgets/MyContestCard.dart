@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:study_mate/Contest/Domain/MyContest.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:study_mate/fonts.dart';
@@ -61,13 +62,13 @@ class MyContestCard extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Expanded(
+                        Flexible(
                           child: Text(
                             contest.contestName,
                             style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: Fonts.inter,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: Fonts.outfit,
                             ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -80,7 +81,7 @@ class MyContestCard extends StatelessWidget {
                     SizedBox(height: 5),
                     Row(
                       children: [
-                        Icon(Bootstrap.calendar, size: 12, color: Colors.grey),
+                        Icon(LucideIcons.calendar, size: 15, color: Colors.grey),
                         SizedBox(width: 5),
                         Text(
                           "${contest.startTime.day} ${_getMonth(contest.startTime.month)}, ${contest.startTime.year}",
@@ -96,6 +97,7 @@ class MyContestCard extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: _getDifficultyColor(contest.difficulty).withOpacity(0.1),
                   borderRadius: BorderRadius.circular(15),
+                  border: Border.all(color: _getDifficultyColor(contest.difficulty).withOpacity(0.3),)
                 ),
                 child: Text(
                   contest.difficulty.toUpperCase(),
@@ -114,11 +116,11 @@ class MyContestCard extends StatelessWidget {
           // Pills: Subject, Questions, Participants
           Row(
             children: [
-              _buildPill(Bootstrap.book, contest.subject, Colors.green),
+              Expanded(child: _buildPill(LucideIcons.book, contest.subject, Colors.green)),
               SizedBox(width: 10),
-              _buildPill(Bootstrap.clock, "${contest.duration} Qs", Colors.green), // UI says Qs but duration might be mapped or questions
+              Expanded(child: _buildPill(Bootstrap.stopwatch, "${contest.duration} mins", Colors.green)), // UI says Qs but duration might be mapped or questions
               SizedBox(width: 10),
-              _buildPill(Bootstrap.people, "${contest.participants}", Colors.green),
+              Expanded(child: _buildPill(Bootstrap.people, "${contest.participants}", Colors.green)),
             ],
           ),
           SizedBox(height: 15),
@@ -127,8 +129,9 @@ class MyContestCard extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Colors.grey.withOpacity(0.05),
+              color: Colors.grey.withOpacity(0.03),
               borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: Colors.grey.withOpacity(0.3))
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -143,7 +146,7 @@ class MyContestCard extends StatelessWidget {
                         Icon(Bootstrap.trophy, color: Colors.orange, size: 14),
                         SizedBox(width: 5),
                         Text(
-                          "#${contest.rank}",
+                       contest.rank > 0 ?   "#${contest.rank}" : " -",
                           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, fontFamily: Fonts.inter),
                         )
                       ],
@@ -156,25 +159,26 @@ class MyContestCard extends StatelessWidget {
                   children: [
                     Text("RATING", style: TextStyle(color: Colors.grey[600], fontSize: 9, fontWeight: FontWeight.bold, fontFamily: Fonts.nunito)),
                     SizedBox(height: 5),
-                    Row(
+                    contest.rank > 0 ? 
+                     Row(
                       children: [
                         Icon(
-                          contest.ratingChnage >= 0 ? Bootstrap.graph_up_arrow : Bootstrap.graph_down_arrow, 
+                          contest.ratingChnage >= 0 ? LucideIcons.trendingUp: LucideIcons.trendingDown, 
                           color: contest.ratingChnage >= 0 ? Colors.green : Colors.red, 
                           size: 14
                         ),
                         SizedBox(width: 5),
                         Text(
-                          "${contest.ratingChnage >= 0 ? '+' : ''}${contest.ratingChnage}",
+                          "${contest.ratingChnage >= 0 ? '+' : '-'}${contest.ratingChnage}",
                           style: TextStyle(
                             fontSize: 16, 
-                            fontWeight: FontWeight.bold, 
+                            fontWeight: FontWeight.w600, 
                             color: contest.ratingChnage >= 0 ? Colors.green : Colors.red,
-                            fontFamily: Fonts.inter
+                            fontFamily: Fonts.outfit
                           ),
                         )
                       ],
-                    )
+                    ) :  Text("    -",style: TextStyle(fontFamily: Fonts.outfit, fontWeight: FontWeight.w600),)
                   ],
                 ),
               ],
@@ -192,15 +196,20 @@ class MyContestCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text("Correct", style: TextStyle(color: Colors.grey[600], fontSize: 10, fontFamily: Fonts.nunito)),
-                      Text("${contest.correctQuestions}/${contest.marksPerQuestion * 10}", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, fontFamily: Fonts.inter)), // placeholder for total qs
+                      Text(contest.rank > 0 ? "${contest.correctQuestions}/${contest.totalQuestions}" : "     -", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, fontFamily: Fonts.inter)), // placeholder for total qs
                     ],
                   ),
-                  SizedBox(width: 20),
+                  SizedBox(width: width*0.25),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text("Accuracy", style: TextStyle(color: Colors.grey[600], fontSize: 10, fontFamily: Fonts.nunito)),
-                      Text("84%", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, fontFamily: Fonts.inter)), // Placeholder accuracy calculation
+                      Text(
+                        contest.rank > 0 ?
+                        (contest.totalQuestions != 0 ? "${(contest.correctQuestions*100/contest.totalQuestions).toInt().toString()}%" : "0%")
+                        : "      -"
+                        ,  
+                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, fontFamily: Fonts.inter)), 
                     ],
                   )
                 ],
@@ -261,20 +270,20 @@ class MyContestCard extends StatelessWidget {
     );
   }
 
-  Widget _buildPill(IconData icon, String text, Color color) {
+  Widget _buildPill(IconData icon, String text,  Color color) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.05),
+       
         borderRadius: BorderRadius.circular(5),
       ),
       child: Row(
         children: [
-          Icon(icon, size: 10, color: color),
+          Icon(icon, size: 12, color: color),
           SizedBox(width: 4),
           Text(
             text,
-            style: TextStyle(color: color, fontSize: 10, fontFamily: Fonts.nunito),
+            style: TextStyle(color: Colors.black, fontSize: 11, fontFamily: Fonts.outfit),
           )
         ],
       ),

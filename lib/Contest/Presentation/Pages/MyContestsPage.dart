@@ -57,8 +57,7 @@ class _MyContestsPageState extends State<MyContestsPage> {
                 }
                 
                 if (state is MyContestLoaded) {
-                  // Currently not implementing deep filtering for Rated/Practice as model doesn't explicitly specify, 
-                  // but we map it if we had the field. For now showing all.
+                 
                   var list = state.myContests;
                   
                   return Column(
@@ -75,16 +74,26 @@ class _MyContestsPageState extends State<MyContestsPage> {
                         child: list.isEmpty ? 
                         Center(child: Text("No contests found.", style: TextStyle(fontFamily: Fonts.nunito, color: Colors.grey))) :
                         ListView.builder(
+                          padding: EdgeInsets.all(0),
                           itemCount: list.length,
                           itemBuilder: (context, index) {
                             return MyContestCard(
+                              
                               contest: list[index],
                               onViewResult: () {
+                                 final myContestBloc = context.read<MyContestBloc>();
+
+  
+                                 myContestBloc.add(
+                                 LoadContestResultEvent(
+                                 contestId: list[index].contestId,
+                                  ),
+                                );
                                 Navigator.push(
                                   context, 
                                   MaterialPageRoute(
                                     builder: (_) => BlocProvider.value(
-                                      value: context.read<MyContestBloc>()..add(LoadContestResultEvent(contestId: list[index].contestId)),
+                                      value: myContestBloc,
                                       child: ContestResultPage(contest: list[index]),
                                     )
                                   )

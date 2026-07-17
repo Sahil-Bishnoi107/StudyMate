@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:study_mate/Authentication/Data/AuthRepo.dart';
 import 'package:study_mate/Authentication/Presentation/Bloc/auth_bloc.dart';
 import 'package:study_mate/Authentication/Presentation/Bloc/regirster_bloc.dart';
+import 'package:study_mate/Contest/Presentation/Bloc/MyContestBloc.dart';
 import 'package:study_mate/Home/Data/HomeData.dart';
 import 'package:study_mate/Home/Presentation/Bloc/HomeBloc.dart';
 import 'package:study_mate/Networking/dio_client.dart';
@@ -34,6 +35,7 @@ Future<void> setup()async {
   sl.registerLazySingleton<QuestionsRepo>(() => QuestionsRepo(sl<Dio>()));
   sl.registerLazySingleton<ContestRepo>(() => ContestRepo(sl<Dio>()));
   sl.registerLazySingleton<ProfileRepo>(() => ProfileRepo(sl<Dio>()));
+  
   // what this means is that whenevr someone asks for the object in <object> give them the object () => object, so whenever we need AuthBloc it recivers the bloc created from here and so on
 
   sl.registerLazySingleton<AuthBloc>(() => AuthBloc(sl<AuthRepo>()));
@@ -45,4 +47,5 @@ Future<void> setup()async {
   sl.registerLazySingleton<MyQuestionsBloc>(() => MyQuestionsBloc(sl<QuestionsRepo>()));
   sl.registerLazySingleton<ContestPageBloc>(() => ContestPageBloc(sl<ContestRepo>()));
   sl.registerLazySingleton<Profilebloc>(() => Profilebloc(sl<ProfileRepo>())); 
+  sl.registerLazySingleton<MyContestBloc>(() => MyContestBloc(sl<ContestRepo>()));
 }
