@@ -1,294 +1,241 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:study_mate/Home/Presentation/Widgets/drawer.dart';
-import 'package:study_mate/QuestionsSection/Presentation/Pages/FiltersPage.dart';
-import 'package:study_mate/fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:study_mate/ContactUs/Presentation/Pages/AboutUs.dart';
 import 'package:study_mate/Contest/Presentation/Pages/ContestPage.dart';
-import 'package:study_mate/QuestionsSection/Presentation/Bloc/QuestionsBloc.dart';
-import 'package:study_mate/QuestionsSection/Data/QuestionsRepo.dart';
-import 'package:study_mate/Contest/Presentation/Bloc/ContestPageBloc.dart';
-import 'package:study_mate/Contest/Data/ContestRepo.dart';
-import 'package:study_mate/DependancyInjections.dart/service_locator.dart';
+import 'package:study_mate/Home/Presentation/Widgets/drawer.dart';
+import 'package:study_mate/Notifications/Presentation/Pages/NotificationPage.dart';
+import 'package:study_mate/QuestionsSection/Presentation/Pages/FiltersPage.dart';
+import 'package:study_mate/Subscriptions/Presentation/Pages/SubscriptionsPage.dart';
+import 'package:study_mate/fonts.dart';
 
-class Homepage extends StatelessWidget {
+class Homepage extends StatefulWidget {
   const Homepage({super.key});
 
+  @override
+  State<Homepage> createState() => _HomepageState();
+}
+
+class _HomepageState extends State<Homepage> {
+   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-
     return Scaffold(
-      backgroundColor: const Color(0xFFFAFAFA),
+      backgroundColor: Colors.white,
+      key: _scaffoldKey,
       drawer: mainDrawer(height, width, context),
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.black),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications_none, color: Colors.black),
-            onPressed: () {},
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildHeroSection(),
-            const SizedBox(height: 40),
-            _buildActionCards(context),
-            const SizedBox(height: 30),
-            _buildPremiumCard(),
-            const SizedBox(height: 50),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildHeroSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Hello! 👋",
-          style: TextStyle(
-            fontFamily: Fonts.nunito,
-            fontSize: 16,
-            color: Colors.grey[600],
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 10),
-        RichText(
-          text: TextSpan(
-            style: TextStyle(
-              fontFamily: Fonts.outfit,
-              fontSize: 36,
-              height: 1.2,
-              color: Colors.black87,
-            ),
-            children: [
-              const TextSpan(
-                text: "Master your ",
-                style: TextStyle(fontWeight: FontWeight.w300),
-              ),
-              const TextSpan(
-                text: "Concepts.\n",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              const TextSpan(
-                text: "Conquer the ",
-                style: TextStyle(fontWeight: FontWeight.w300),
-              ),
-              TextSpan(
-                text: "Exams.",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.green[700],
-                ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 15),
-        Text(
-          "Consistency is what transforms average into excellence.",
-          style: TextStyle(
-            fontFamily: Fonts.nunito,
-            fontSize: 14,
-            color: Colors.grey[500],
-            fontStyle: FontStyle.italic,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildActionCards(BuildContext context) {
-    return Column(
-      children: [
-        _buildNavCard(
-          context: context,
-          title: "Start Practicing",
-          subtitle: "Sharpen your skills question by question",
-          icon: Bootstrap.journal_code,
-          color: Colors.blue,
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => BlocProvider<Questionsbloc>(
-                  create: (context) => Questionsbloc(sl<QuestionsRepo>()),
-                  child: const FiltersPage(),
-                ),
-              ),
-            );
-          },
-        ),
-        const SizedBox(height: 20),
-        _buildNavCard(
-          context: context,
-          title: "Join Contests",
-          subtitle: "Compete with peers and check your rank",
-          icon: Bootstrap.trophy,
-          color: Colors.orange,
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => BlocProvider<ContestPageBloc>(
-                  create: (context) => ContestPageBloc(sl<ContestRepo>()),
-                  child: const ContestPage(),
-                ),
-              ),
-            );
-          },
-        ),
-      ],
-    );
-  }
-
-  Widget _buildNavCard({
-    required BuildContext context,
-    required String title,
-    required String subtitle,
-    required IconData icon,
-    required MaterialColor color,
-    required VoidCallback onTap,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: Colors.grey.withOpacity(0.1)),
-          boxShadow: [
-            BoxShadow(
-              color: color.withOpacity(0.05),
-              blurRadius: 15,
-              spreadRadius: 5,
-              offset: const Offset(0, 5),
-            ),
-          ],
-        ),
-        child: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(15),
-              decoration: BoxDecoration(
-                color: color.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Icon(icon, color: color, size: 28),
-            ),
-            const SizedBox(width: 20),
-            Expanded(
+      body: Column(
+        children: [
+          SizedBox(height: height*0.05,),
+          _appBar(height, width, _scaffoldKey,context),
+          Container(color: const Color.fromRGBO(220, 220, 220, 0.8),height: 1,width: width,),
+          Expanded(
+            child: SingleChildScrollView(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    title,
-                    style: TextStyle(
-                      fontFamily: Fonts.outfit,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    subtitle,
-                    style: TextStyle(
-                      fontFamily: Fonts.nunito,
-                      fontSize: 12,
-                      color: Colors.grey[600],
-                    ),
-                  ),
+                  SizedBox(height: height*0.02,),
+              _header(height, width),
+                       // Container(height: 1,width: width*0.9,color: const Color.fromRGBO(220, 220, 220, 0.8)),
+              SizedBox(height: height*0.01,),
+              _aboutSection(height, width,context),
+                      //  Container(height: 1,width: width*0.9,color: const Color.fromRGBO(220, 220, 220, 0.8)),
+              SizedBox(height: height*0.01,),
+              GestureDetector( onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ContestPage())),
+                child: _card(height, width, LucideIcons.swords300, "Challenge yourself with timed mock contests designed to simulate real exam pressure. Track your rating, climb the leaderboard, analyze your performance, and see how you compare with other aspirants.",
+                 "Ready to", "Compete?",40),
+              ),
+               SizedBox(height: height*0.02,),
+              GestureDetector( onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => FiltersPage())),
+                child: _card(height, width, LucideIcons.gauge300, "Strengthen your concepts one question at a time. Solve curated problems across Physics, Chemistry, and Mathematics, learn from your mistakes, and build confidence through consistent practice.",
+                 "Practice", "Without Limits",40),
+              ),
+               SizedBox(height: height*0.02,),
+               _card(height, width, LucideIcons.chartColumn300, "Analyze your performance with detailed analytics and identify your strengths and weaknesses.",
+               "Track Your", "Progress",40),
+               SizedBox(height: height*0.02,),
+               _premiumCard(height, width,context),
+               SizedBox(height: height*0.1,)
                 ],
               ),
             ),
-            Icon(Icons.arrow_forward_ios, color: Colors.grey[400], size: 16),
-          ],
-        ),
+          )
+          
+          
+        ],
       ),
     );
   }
+}
 
-  Widget _buildPremiumCard() {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(25),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Colors.green[700]!, Colors.green[500]!],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.green.withOpacity(0.3),
-            blurRadius: 20,
-            spreadRadius: 2,
-            offset: const Offset(0, 8),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+Widget _appBar(double height, double width,GlobalKey<ScaffoldState> key,BuildContext context){
+ return Container(
+  height: height*0.05,width: width,
+  child: Row(
+    children: [
+      SizedBox(width: width*0.05,),
+      InkWell(
+        onTap: () => key.currentState?.openDrawer(),
+        child: Icon(Icons.menu_sharp,size: 30,)),
+      SizedBox(width: width*0.05,),
+      Expanded(child: Text("StudyMate",style: TextStyle(fontFamily: Fonts.outfit,fontSize: 18,fontWeight: FontWeight.w600),)),
+      InkWell(
+        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => Notificationpage())),
+        child: Icon(Icons.notifications_none_sharp)),
+      SizedBox(width: width*0.05,)
+    ],
+  ),
+ );
+}
+
+Widget _header(double height,double width){
+  return Container(
+
+    height: height*0.2,width: width,
+    padding: EdgeInsets.symmetric(horizontal: width*0.05),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        SizedBox( height: height*0.045,
+          child: Text("Master",style: TextStyle(color: Colors.black, fontFamily: Fonts.outfit,fontSize: 40,fontWeight: FontWeight.w600),)),
+        SizedBox(height: height*0.045,
+          child: Text("Your",style: TextStyle(color: Colors.green, fontFamily: Fonts.outfit,fontSize: 40,fontWeight: FontWeight.w600),)),
+        SizedBox(height: height*0.045,
+          child: Row(
             children: [
-              const Icon(Bootstrap.stars, color: Colors.yellowAccent, size: 24),
-              const SizedBox(width: 10),
-              Text(
-                "Upgrade to Premium",
-                style: TextStyle(
-                  fontFamily: Fonts.outfit,
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
+              Text("Potential",style: TextStyle(color: Colors.black, fontFamily: Fonts.outfit,fontSize: 40,fontWeight: FontWeight.w600),),
+              Text(".",style: TextStyle(color: Colors.green, fontFamily: Fonts.outfit,fontSize: 40,fontWeight: FontWeight.w600),)
             ],
           ),
-          const SizedBox(height: 15),
-          Text(
-            "Unlock advanced analytics, unlimited practice, AI insights and much more.",
-            style: TextStyle(
-              fontFamily: Fonts.nunito,
-              fontSize: 14,
-              color: Colors.white.withOpacity(0.9),
-              height: 1.4,
-            ),
-          ),
-          const SizedBox(height: 25),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.2),
-              borderRadius: BorderRadius.circular(30),
-              border: Border.all(color: Colors.white.withOpacity(0.5)),
-            ),
-            child: const Text(
-              "Coming Soon",
-              style: TextStyle(
-                fontFamily: Fonts.outfit,
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ),
-          ),
+        ),
+        SizedBox(height: 10,),
+        SizedBox(
+          height: height*0.018,
+          child: Text("Where Preperation meets progress",style: TextStyle(color: const Color.fromRGBO(110, 110, 110, 1), fontFamily: Fonts.nunito,fontSize: 10),)),
+        SizedBox(
+          height: height*0.02,
+          child: Text("The Journey to AIR begins here",style: TextStyle(color: const Color.fromRGBO(110, 110, 110, 1), fontFamily: Fonts.nunito,fontSize: 10),)),
+      ],
+    ),
+  );
+}
+
+Widget _aboutSection(double height, double width,BuildContext context){
+  return Container(
+    height: height*0.18,
+    padding: EdgeInsets.symmetric(horizontal: width*0.05),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+      SizedBox(height: height*0.032,child: Text("Preparing The Future",style: TextStyle(color: Colors.black,fontFamily: Fonts.outfit,fontSize: 24,fontWeight: FontWeight.w600),)),
+      Row(
+        children: [
+          Text("Engineers ",style: TextStyle(color: Colors.green,fontFamily: Fonts.outfit,fontSize: 24,fontWeight: FontWeight.w600),),
+          Text("And",style: TextStyle(color: Colors.black,fontFamily: Fonts.outfit,fontSize: 24,fontWeight: FontWeight.w600),),
+          Text(" Doctors.",style: TextStyle(color: Colors.green,fontFamily: Fonts.outfit,fontSize: 24,fontWeight: FontWeight.w600),),
         ],
       ),
-    );
-  }
+      SizedBox(height: height*0.005,),
+      Text("We offer comprehensive JEE and NEET coaching with experienced teachers, concept-focused classes, regular practice sessions, mock examinations, and continuous academic support to help every student reach their full potential. To be a part of our real life classes click here",
+      style: TextStyle(fontFamily: Fonts.outfit,color: Colors.black,fontSize: 10),
+      ),
+      Row(
+        children: [
+          GestureDetector(
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => Aboutus())),
+            child: Text("Contact Us", style: TextStyle(color: Colors.green,fontFamily: Fonts.outfit,fontSize: 11),)),
+          Icon(Icons.arrow_forward_ios_sharp,size: 10,color: Colors.green,)
+        ],
+      )
+    ],),
+  );
+}
+
+Widget _card(double height, double width,IconData icon,String text,String header1,String header2,int iconSize){
+  return Container(
+    height: height*0.1,
+    margin: EdgeInsets.symmetric(horizontal: width*0.05),
+    decoration: BoxDecoration(
+      border: Border.all(color: const Color.fromRGBO(220, 220, 220, 0.8)),
+      borderRadius: BorderRadius.circular(10)
+    ),
+    child: Row(
+      children: [
+       SizedBox(width: width*0.03,),
+
+       Container(height: height*0.08,width: height*0.08, 
+       decoration: BoxDecoration(
+        border: Border.all(color: const Color.fromRGBO(76, 175, 80, 0.75)),
+        borderRadius: BorderRadius.circular(10)
+        ),
+        child: Icon(icon,size: iconSize.toDouble(),color: Colors.green,),
+       ),
+
+
+       SizedBox(width: width*0.035,),
+       Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: height*0.006,),
+          Row(children: [
+            Text(header1,style: TextStyle(fontFamily: Fonts.outfit,color: Colors.black,fontWeight: FontWeight.w600),),
+            Text( " " + header2,style: TextStyle(fontFamily: Fonts.outfit,color: Colors.green,fontWeight: FontWeight.w600),)
+          ],),
+          //SizedBox(height: height*0.01,),
+          SizedBox(
+            width: width*0.6,
+            child: Text(text,style: TextStyle(fontFamily: Fonts.outfit, color: const Color.fromRGBO(110, 110, 110, 1),fontSize: 8),))
+        ],
+       ),
+
+       SizedBox(width: width*0.01,),
+      // Icon(Icons.arrow_forward_ios,size: 30,color: Colors.green,)
+      ],
+    ),
+  );
+}
+
+
+Widget _premiumCard(double height, double width,BuildContext context){
+  return Container(
+    height: height*0.15,
+    margin: EdgeInsets.symmetric(horizontal: width*0.05),
+    padding: EdgeInsets.symmetric(horizontal: width*0.05),
+    decoration: BoxDecoration(
+      border: Border.all(color: const Color.fromRGBO(220, 220, 220, 0.8)),
+      borderRadius: BorderRadius.circular(10)
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+       children: [
+        SizedBox(height: height*0.01,),
+        Row(
+          children: [
+            Text("Go ",style: TextStyle(color: Colors.black, fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: 20),),
+             Text("Beyond ",style: TextStyle(color: Colors.green, fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: 20),),
+              Text("Practice",style: TextStyle(color: Colors.black, fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: 20),),
+               Text(".",style: TextStyle(color: Colors.green, fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: 20),),
+          ],
+        ),
+        Text("Premium gives you everything you need to study smarter, improve faster, and stay ahead of the competition.",
+        style: TextStyle(color: Colors.black, fontSize: 10,fontFamily: Fonts.outfit),
+        ),
+        SizedBox(height: height*0.01,),
+        InkWell(
+          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => Subscriptionspage())),
+          child: Container(
+            height: height*0.045,width: width*0.8,
+            
+            decoration: BoxDecoration(
+              color: Colors.green,
+              borderRadius: BorderRadius.circular(50)
+            ),
+            child: Center(child: Text("Explore Subscriptions",style: TextStyle(color: Colors.white,fontFamily: Fonts.outfit,fontSize: 14,fontWeight: FontWeight.w600),),),
+          ),
+        )
+       ],
+    ),
+  );
 }

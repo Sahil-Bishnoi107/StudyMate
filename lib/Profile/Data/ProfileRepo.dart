@@ -54,7 +54,7 @@ class ProfileRepo{
       var res = await dio.get("/Questions/my-practice-questions");
       if(res.statusCode != 200){return ApiResponse(statusCode: res.statusCode ?? 500);}
       List<PracticeUserQuestion> questions = [];
-      List<Map<String,dynamic>> json = res.data;
+      List<dynamic> json = res.data;
       for(var v in json){
         questions.add(PracticeUserQuestion.fromJson(v));
       }
