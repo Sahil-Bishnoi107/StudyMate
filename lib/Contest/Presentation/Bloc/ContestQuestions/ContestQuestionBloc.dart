@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_mate/Contest/Data/ContestRepo.dart';
 import 'package:study_mate/Contest/Domain/Contest.dart';
 import 'package:study_mate/Contest/Domain/ContestQuestion.dart';
-import 'package:study_mate/Contest/Presentation/Bloc/ContestQuestionEvents.dart';
-import 'package:study_mate/Contest/Presentation/Bloc/ContestQuestionStates.dart';
+import 'package:study_mate/Contest/Presentation/Bloc/ContestQuestions/ContestQuestionEvents.dart';
+import 'package:study_mate/Contest/Presentation/Bloc/ContestQuestions/ContestQuestionStates.dart';
 
 class ContestQuestionBloc extends Bloc<ContestQuestionEvents, ContestQuestionStates> {
   final ContestRepo contestRepo;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:study_mate/Home/Domain/Entities/Question.dart';
 import 'package:study_mate/QuestionsSection/Presentation/Bloc/MyQuestionsBloc/MyQuestionsBloc.dart';
 import 'package:study_mate/QuestionsSection/Presentation/Bloc/MyQuestionsBloc/MyQuestionsStates.dart';
@@ -47,16 +48,21 @@ class _QuestionReviewPageState extends State<QuestionReviewPage> {
 
             Question currentQuestion = state.collectionQuestions[currentIndex];
 
-            return SingleChildScrollView(
-              child: Column(
-                children: [
-                  _header(height, width, context),
-                  SizedBox(height: height * 0.01),
-                  Container(height: 2, width: width, color: const Color.fromRGBO(200, 200, 200, 0.6)),
-                  SizedBox(height: height * 0.02),
-                  _questionSection(height, width, currentQuestion, currentIndex, state.collectionQuestions.length),
-                ],
-              ),
+            return Column(
+              children: [
+                _header(height, width, context),
+                
+                Container(height: 1, width: width, color: const Color.fromRGBO(200, 200, 200, 0.6)),
+                Expanded(child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      SizedBox(height: height * 0.02),
+                _questionSection(height, width, currentQuestion, currentIndex, state.collectionQuestions.length),
+                    ],
+                  ),
+                ))
+               
+              ],
             );
           }
           return Center(child: Text("Error loading questions"));
@@ -77,17 +83,12 @@ class _QuestionReviewPageState extends State<QuestionReviewPage> {
           Row(
             children: [
               IconButton(
-                icon: Icon(Icons.arrow_back_ios, size: 20),
+                icon: Icon(LucideIcons.chevronLeft, size: 25),
                 onPressed: () {
                   Navigator.pop(context);
                 },
               ),
-              IconButton(
-                icon: Icon(Bootstrap.house, size: 20),
-                onPressed: () {
-                  Navigator.of(context).popUntil((route) => route.isFirst);
-                },
-              ),
+              Text("My Questions",style: TextStyle(fontFamily: Fonts.outfit,fontSize: 18,fontWeight: FontWeight.w600),)
             ],
           ),
         ],

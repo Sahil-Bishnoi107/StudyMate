@@ -24,3 +24,5 @@ class SubmitQuestionEvent extends Questionsevents{
   String Subject;
   SubmitQuestionEvent({required this.id,required this.Subject,required this.difficulty,required this.isTrue});
 }
+
+class UpdateCollectionsEvent extends Questionsevents{}

@@ -5,10 +5,10 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:study_mate/Contest/Domain/MyContest.dart';
-import 'package:study_mate/Contest/Presentation/Bloc/MyContestBloc.dart';
-import 'package:study_mate/Contest/Presentation/Bloc/MyContestStates.dart';
+import 'package:study_mate/Contest/Presentation/Bloc/MyContest/MyContestStates.dart';
+import 'package:study_mate/Contest/Presentation/Bloc/MyContestResult/MyContestResultBloc.dart';
+import 'package:study_mate/Contest/Presentation/Bloc/MyContestResult/MyContestResultState.dart';
 import 'package:study_mate/Contest/Presentation/Pages/ContestReviewPage.dart';
-import 'package:study_mate/Contest/Presentation/Pages/MyContestsPage.dart';
 import 'package:study_mate/Test/Presentation/Widgets/question_data.dart';
 import 'package:study_mate/fonts.dart';
 
@@ -24,9 +24,9 @@ class ContestResultPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: BlocBuilder<MyContestBloc, MyContestStates>(
+      body: BlocBuilder<MyContestResultBloc, MyContestResultState>(
         builder: (context, state) {
-          if (state is ContestResultLoading || state is MyContestInitial || state is MyContestLoading || state is MyContestLoaded) {
+          if (state is ContestResultLoading || state is InitialMyContestResultState ||  state is MyContestLoaded) {
             return Center(child: LoadingAnimationWidget.beat(color: Colors.green, size: 50));
           }
           if (state is ContestResultError) {
@@ -268,7 +268,7 @@ Widget _appBar(double height,double width,BuildContext context){
       children: [
         SizedBox(width: width*0.05,),
         InkWell(
-          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => MyContestsPage())),
+          onTap: () => Navigator.pop(context),
           child: Icon(Bootstrap.chevron_left)),
         SizedBox(width: width*0.05,),
         Text("Contest Result",style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: 18),)

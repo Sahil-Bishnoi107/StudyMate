@@ -3,12 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
-import 'package:study_mate/Contest/Presentation/Bloc/ContestPageBloc.dart';
-import 'package:study_mate/Contest/Presentation/Bloc/ContestPageEvents.dart';
-import 'package:study_mate/Contest/Presentation/Bloc/ContestPageStates.dart';
+import 'package:study_mate/Contest/Presentation/Bloc/ContestPage/ContestPageBloc.dart';
+import 'package:study_mate/Contest/Presentation/Bloc/ContestPage/ContestPageEvents.dart';
+
+import 'package:study_mate/Contest/Presentation/Bloc/ContestPage/ContestPageStates.dart';
 import 'package:study_mate/Contest/Presentation/Pages/ContestOnboardingPage.dart';
 import 'package:study_mate/Contest/Presentation/Widgets/ContestCard.dart';
-import 'package:study_mate/Contest/Presentation/Bloc/MyContestBloc.dart';
+import 'package:study_mate/Contest/Presentation/Bloc/MyContest/MyContestBloc.dart';
 import 'package:study_mate/Contest/Presentation/Pages/MyContestsPage.dart';
 import 'package:study_mate/DependancyInjections.dart/service_locator.dart';
 import 'package:study_mate/Contest/Data/ContestRepo.dart';

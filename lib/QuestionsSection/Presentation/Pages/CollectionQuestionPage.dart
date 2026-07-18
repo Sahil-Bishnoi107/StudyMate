@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:study_mate/Home/Domain/Entities/Question.dart';
 import 'package:study_mate/QuestionsSection/Domain/Collection.dart';
 import 'package:study_mate/QuestionsSection/Presentation/Bloc/MyQuestionsBloc/MyQuestionsBloc.dart';
@@ -24,37 +25,43 @@ class CollectionQuestionPage extends StatelessWidget {
           if (state is MyQuestionsLoadedState) {
             List<Question> questions = state.collectionQuestions;
             
-            return SafeArea(
-              child: Stack(
-                children: [
-                  SingleChildScrollView(
-                    padding: EdgeInsets.only(bottom: height * 0.12),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _header(height, width, context),
-                        SizedBox(height: height * 0.02),
-                        _statsBar(height, width, questions.length),
-                        SizedBox(height: height * 0.03),
-                        _recentQuestionsHeader(width),
-                        SizedBox(height: height * 0.02),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: width * 0.05),
-                          child: Column(
-                            children: questions.map((q) => _questionCard(height, width, q, context)).toList(),
-                          ),
-                        ),
-                      ],
+            return Stack(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: height*0.042,),
+                    _header(height, width, context),
+                    Container(color: const Color.fromRGBO(220, 220, 220, 0.8),height: 1,width: width,),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            SizedBox(height: height * 0.02),
+                            _statsBar(height, width, questions.length),
+                            SizedBox(height: height * 0.03),
+                            _recentQuestionsHeader(width),
+                            SizedBox(height: height * 0.02),
+                            Padding(
+                      padding: EdgeInsets.symmetric(horizontal: width * 0.05),
+                      child: Column(
+                        children: questions.map((q) => _questionCard(height, width, q, context)).toList(),
+                      ),
                     ),
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    child: _startPracticeButton(height, width, context, questions),
-                  ),
-                ],
-              ),
+                          ],
+                        ),
+                      ),
+                    )
+                    
+                  ],
+                ),
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: _startPracticeButton(height, width, context, questions),
+                ),
+              ],
             );
           }
           return Center(child: Text("Error loading questions"));
@@ -64,28 +71,25 @@ class CollectionQuestionPage extends StatelessWidget {
   }
 
   Widget _header(double height, double width, BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: width * 0.03, vertical: height * 0.01),
+    return SizedBox(
+     height: height*0.05,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+       
         children: [
           Row(
             children: [
               IconButton(
-                icon: Icon(Icons.arrow_back_ios, size: 20, color: Colors.black),
+                icon: Icon(LucideIcons.chevronLeft, size: 20, color: Colors.black),
                 onPressed: () => Navigator.pop(context),
               ),
               SizedBox(width: 5),
               Text(
                 collection.collectionname,
-                style: TextStyle(fontFamily: Fonts.inter, fontSize: 18, fontWeight: FontWeight.bold),
+                style: TextStyle(fontFamily: Fonts.outfit, fontSize: 18, fontWeight: FontWeight.w600),
               ),
             ],
           ),
-          IconButton(
-            icon: Icon(Icons.search, size: 24, color: Colors.green),
-            onPressed: () {},
-          ),
+          
         ],
       ),
     );
@@ -104,7 +108,7 @@ class CollectionQuestionPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text("TOTAL QUESTIONS", style: TextStyle(fontFamily: Fonts.nunito, fontSize: 10, fontWeight: FontWeight.bold, color: Colors.grey[600])),
-              Text("$totalQuestions Questions", style: TextStyle(fontFamily: Fonts.inter, fontSize: 14, fontWeight: FontWeight.bold)),
+              Text("$totalQuestions Questions", style: TextStyle(fontFamily: Fonts.outfit, fontSize: 15, fontWeight: FontWeight.w600)),
             ],
           ),
           Spacer(),
@@ -112,7 +116,7 @@ class CollectionQuestionPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text("LAST ACTIVITY", style: TextStyle(fontFamily: Fonts.nunito, fontSize: 10, fontWeight: FontWeight.bold, color: Colors.grey[600])),
-              Text("Today", style: TextStyle(fontFamily: Fonts.inter, fontSize: 14, fontWeight: FontWeight.bold)),
+              Text("         -", style: TextStyle(fontFamily: Fonts.outfit, fontSize: 15, fontWeight: FontWeight.w600)),
             ],
           ),
           SizedBox(width: width * 0.04),
@@ -129,7 +133,7 @@ class CollectionQuestionPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text("RECENT QUESTIONS", style: TextStyle(fontFamily: Fonts.nunito, fontWeight: FontWeight.bold, color: Colors.grey[600], letterSpacing: 1.2, fontSize: 12)),
-          Text("Filter All", style: TextStyle(fontFamily: Fonts.nunito, fontWeight: FontWeight.bold, color: Colors.green, fontSize: 12)),
+        //  Text("Filter All", style: TextStyle(fontFamily: Fonts.nunito, fontWeight: FontWeight.bold, color: Colors.green, fontSize: 12)),
         ],
       ),
     );

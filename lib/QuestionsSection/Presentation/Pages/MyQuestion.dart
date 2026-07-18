@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:icons_plus/icons_plus.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:study_mate/QuestionsSection/Domain/Collection.dart';
@@ -281,7 +280,7 @@ class _MyQuestionState extends State<MyQuestion> {
         ).add(LoadCollectionQuestionsEvent(col.collectionId));
       },
       child: Container(
-        margin: EdgeInsets.only(bottom: height * 0.02),
+        margin: EdgeInsets.only(bottom: height * 0.01),
         padding: EdgeInsets.all(15),
         decoration: BoxDecoration(
           color: Colors.white,

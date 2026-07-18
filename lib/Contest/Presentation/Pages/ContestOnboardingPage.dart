@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:study_mate/Contest/Data/ContestRepo.dart';
 import 'package:study_mate/Contest/Domain/Contest.dart';
-import 'package:study_mate/Contest/Presentation/Bloc/ContestQuestionBloc.dart';
+import 'package:study_mate/Contest/Presentation/Bloc/ContestQuestions/ContestQuestionBloc.dart';
 import 'package:study_mate/Contest/Presentation/Pages/ContestQuestionPage.dart';
 import 'package:study_mate/DependancyInjections.dart/service_locator.dart';
 import 'package:study_mate/fonts.dart';

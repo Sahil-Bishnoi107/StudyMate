@@ -452,6 +452,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
     Navigator.pop(context);
     if (res.statusCode == 200) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Question Saved"), backgroundColor: Colors.green,behavior: SnackBarBehavior.floating,),);
+
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Question Not Saved"), backgroundColor: Colors.red,behavior: SnackBarBehavior.floating,));
     }
@@ -532,6 +533,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
       var res = await repo.CreateCollection(newCollectionName, selectedIconIndex);
       if (res.statusCode == 200) {
         Navigator.pop(context);
+        BlocProvider.of<Questionsbloc>(context).add(UpdateCollectionsEvent());
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Collection Created"), backgroundColor: Colors.green));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Failed to create collection"), backgroundColor: Colors.red));

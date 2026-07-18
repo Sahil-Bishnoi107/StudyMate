@@ -50,41 +50,45 @@ class LoginPage extends StatelessWidget {
         body: Container(
           width: width,
           padding: EdgeInsets.symmetric(horizontal: width*0.05),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            
-            children: [
-              SizedBox(height: height*0.05,),
-              _header(height,width,context),
-              SizedBox(height: height*0.015,),
-              Container(height: 1.8,width: width,color: const Color.fromRGBO(220, 220, 220, 0.5),),
-              SizedBox(height: height*0.01,),
-              topLogin(height, width),
-              SizedBox(height: height*0.05,),
-              LoginBox(name: "Email", icon: Bootstrap.at, placeholder: "name@gmail.com",  isHidden: false, txtController: email ,size: 28,hideText: false,),
-              SizedBox(height: height*0.02,),
-              LoginBox(name: "Password", icon: Bootstrap.shield_lock, placeholder: "password", isHidden: true, txtController: password,size: 23,additionalGap: 10,hideText: true,),
-              SizedBox(height: height*0.04,),
-              GestureDetector(
-                onTap: () => BlocProvider.of<AuthBloc>(context).add(AuthLoginStart(email: email.text, password: password.text)),
-                child: LoginButton(name: "Sign In", bgColor: Colors.green, fgColor: Colors.black)),
-              SizedBox(height: height*0.04,),
-              _middleText(height, width),
-              SizedBox(height: height*0.04,),
-              //Social Login Buttons 
-              Row(mainAxisAlignment: MainAxisAlignment.center,
+          child: SafeArea(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                
                 children: [
-                InkWell(
-                  onTap: () {
-                    BlocProvider.of<AuthBloc>(context).add(GoogleLoginStarted());
-                  },
-                  child: LoginOption(icon: FontAwesome.google_brand, type: "Google",size: 22,)), 
-                SizedBox(width: width*0.06,),
-                LoginOption(icon: FontAwesome.github_brand, type: "GitHub",size: 25,)],),
-
-                SizedBox(height: height*0.04,),
-              _createAccount(height, width,context)  
-            ],
+                  
+                  _header(height,width,context),
+                  
+                  Container(height: 1.8,width: width,color: const Color.fromRGBO(220, 220, 220, 0.5),),
+                  const SizedBox(height: 10,),
+                  topLogin(height, width),
+                  SizedBox(height: height*0.05,),
+                  LoginBox(name: "Email", icon: Bootstrap.at, placeholder: "name@gmail.com",  isHidden: false, txtController: email ,size: 28,hideText: false,),
+                  SizedBox(height: height*0.02,),
+                  LoginBox(name: "Password", icon: Bootstrap.shield_lock, placeholder: "password", isHidden: true, txtController: password,size: 23,additionalGap: 10,hideText: true,),
+                  SizedBox(height: height*0.04,),
+                  GestureDetector(
+                    onTap: () => BlocProvider.of<AuthBloc>(context).add(AuthLoginStart(email: email.text, password: password.text)),
+                    child: LoginButton(name: "Sign In", bgColor: Colors.green, fgColor: Colors.black)),
+                  SizedBox(height: height*0.04,),
+                  _middleText(height, width),
+                  SizedBox(height: height*0.04,),
+                  //Social Login Buttons 
+                  Row(mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                    InkWell(
+                      onTap: () {
+                        BlocProvider.of<AuthBloc>(context).add(GoogleLoginStarted());
+                      },
+                      child: LoginOption(icon: FontAwesome.google_brand, type: "Google",size: 22,)), 
+                    SizedBox(width: width*0.06,),
+                    LoginOption(icon: FontAwesome.github_brand, type: "GitHub",size: 25,)],),
+              
+                    SizedBox(height: height*0.04,),
+                  _createAccount(height, width,context)  
+                ],
+              ),
+            ),
           ),
         ),
       );}
@@ -138,13 +142,13 @@ Widget _middleText(double height,double width){
 
 
 Widget _header(double height, double width,BuildContext context){
-  return SizedBox(width: width,height: height*0.03,
+  return SizedBox(width: width,height: height*0.05,
   child: Row(
     children: [
-      SizedBox(width: width*0.02,),
+      
       InkWell(
         onTap: () => Navigator.pop(context),
-        child: Icon(Icons.arrow_back_ios,size: 22,)),
+        child: Icon(LucideIcons.chevronLeft300Dir,size: 30,)),
       SizedBox(width: width*0.03,),
       Text("Sign In",style: TextStyle(fontFamily: Fonts.outfit,fontSize: 18),)
     ],

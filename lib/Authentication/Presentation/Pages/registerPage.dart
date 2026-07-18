@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:study_mate/Authentication/Presentation/Bloc/regirster_bloc.dart';
 import 'package:study_mate/Authentication/Presentation/Bloc/register_events.dart';
 import 'package:study_mate/Authentication/Presentation/Bloc/register_states.dart';
@@ -43,27 +44,31 @@ class Registerpage extends StatelessWidget {
         builder: (context, state) {
        return  Padding(
           padding: EdgeInsetsGeometry.only(left: width*0.05),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: height*0.05,),
-                _header(height, width, context),
-                _line(height, width),
-                _intro(height, width),
-                _registerForm(height, width, name, email, password, confirmPassword,(state is PasswordMismatchState)),
-                SizedBox(height: height*0.05,),
-                InkWell(
-                  onTap: () {
-                    BlocProvider.of<RegisterBloc>(context).add(AttemptedRegisterEvent(name: name.text, email:  email.text, password: password.text, confirmPassword: confirmPassword.text));
-                  },
-                  child: LoginButton(name: "Sign Up", bgColor: Colors.green, fgColor: Colors.black,additinalWidth: width*0.1,)),
-                SizedBox(height: height*0.03,),
-                _middleText(height, width),
-                SizedBox(height: height*0.03,),
-                _socialLogin(height, width),
-                SizedBox(height: height*0.1,)
-              ],
+          child: SafeArea(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                 // SizedBox(height: height*0.05,),
+                  _header(height, width, context),
+                  const SizedBox(height: 3,),
+                  _line(height, width),
+                  const SizedBox(height: 10,),
+                  _intro(height, width),
+                  _registerForm(height, width, name, email, password, confirmPassword,(state is PasswordMismatchState)),
+                  SizedBox(height: height*0.05,),
+                  InkWell(
+                    onTap: () {
+                      BlocProvider.of<RegisterBloc>(context).add(AttemptedRegisterEvent(name: name.text, email:  email.text, password: password.text, confirmPassword: confirmPassword.text));
+                    },
+                    child: LoginButton(name: "Sign Up", bgColor: Colors.green, fgColor: Colors.black,additinalWidth: width*0.1,)),
+                  SizedBox(height: height*0.03,),
+                  _middleText(height, width),
+                  SizedBox(height: height*0.03,),
+                  _socialLogin(height, width),
+                  SizedBox(height: height*0.1,)
+                ],
+              ),
             ),
           ),
         );
@@ -76,15 +81,18 @@ class Registerpage extends StatelessWidget {
 
 
 Widget _header(double height, double width,BuildContext context){
-  return Row(
-    children: [
-      SizedBox(width: width*0.02,),
-      InkWell(
-        onTap: () => Navigator.pop(context),
-        child: Icon(Icons.arrow_back_ios,size: 20,)),
-      SizedBox(width: width*0.03,),
-      Text("Create Account",style: TextStyle(fontFamily: Fonts.outfit,fontSize: 16,fontWeight: FontWeight.w400),)
-    ],
+  return SizedBox(
+    height: height*0.05,
+    child: Row(
+      children: [
+       
+        InkWell(
+          onTap: () => Navigator.pop(context),
+          child: Icon(LucideIcons.chevronLeft300Dir,size: 30,)),
+        SizedBox(width: width*0.03,),
+        Text("Create Account",style: TextStyle(fontFamily: Fonts.outfit,fontSize: 16,fontWeight: FontWeight.w400),)
+      ],
+    ),
   );
 }
 
@@ -92,7 +100,7 @@ Widget _header(double height, double width,BuildContext context){
 Widget _line(double height,double width){
   return Container(
     height: 2,width: width*0.9,
-    margin: EdgeInsets.symmetric(vertical: height*0.02),
+  
     color: const Color.fromRGBO(220, 220, 220, 0.6),
   );
 }

@@ -160,7 +160,7 @@ Widget _commonStatSection(double height, double width,int rank,int questions,int
         children: [
           Expanded(child: _commonStat(height, width, LucideIcons.notepadText400Dir, "Tests", tests.toString())),
           
-          Expanded(child: _commonStat(height, width, LucideIcons.sword, "Contests", contests.toString()))
+          Expanded(child: _commonStat(height, width, LucideIcons.swords400Dir, "Contests", contests.toString()))
         ],
       )
     ],

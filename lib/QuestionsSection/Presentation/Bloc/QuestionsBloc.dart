@@ -18,6 +18,7 @@ class Questionsbloc extends Bloc<Questionsevents,Questionsstates> {
     on<NextQuestionEvent>(_onNextQuestion);
     on<AnswerQuestion>(_onAnswerQuestion);
     on<SubmitQuestionEvent>(_submitQuestion);
+    on<UpdateCollectionsEvent>(_onUpdateCollectionsEvent);
   }
 
 
@@ -54,7 +55,7 @@ class Questionsbloc extends Bloc<Questionsevents,Questionsstates> {
     if(state is QuestionsInitialState){final st = state as QuestionsInitialState; questionfilters = st.filters; loadCollections = true;}
     else {final st = state as LoadQuestionsState; questionfilters = st.filters; collections = st.collections;}
 
-    emit(FetchingQuestionsState());
+    if(loadCollections){emit(FetchingQuestionsState());}
     List<String> subjects = []; List<String> exams = []; List<String> difficulties = [];
     for(Option op in questionfilters.subjects){if(op.isSelected){subjects.add(op.filterName);}}
     for(Option op in questionfilters.difficulty){if(op.isSelected){difficulties.add(op.filterName);}}
@@ -133,5 +134,14 @@ class Questionsbloc extends Bloc<Questionsevents,Questionsstates> {
   void _submitQuestion(SubmitQuestionEvent event , Emitter<Questionsstates> emit)async{
     Submitpracticequestion que =  Submitpracticequestion(Id: event.id, Subject: event.Subject, difficulty: event.difficulty, isCorrect: event.isTrue);
      await questionsRepo.SaveQuestion(que);
+  }
+
+  void _onUpdateCollectionsEvent(UpdateCollectionsEvent event, Emitter<Questionsstates> emit)async{
+    var res = await questionsRepo.LoadMyCollections();
+    if(res.statusCode != 200)return;
+    if(state is! LoadQuestionsState)return;
+    final mystate = state as LoadQuestionsState;
+    List<Collection> cols = res.data;
+    emit(LoadQuestionsState(collections: cols, filters: mystate.filters, questions: mystate.questions, currInd: mystate.currInd));
   }
 }

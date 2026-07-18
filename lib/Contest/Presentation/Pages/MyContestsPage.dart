@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:study_mate/Contest/Presentation/Bloc/MyContestBloc.dart';
-import 'package:study_mate/Contest/Presentation/Bloc/MyContestEvents.dart';
-import 'package:study_mate/Contest/Presentation/Bloc/MyContestStates.dart';
+import 'package:study_mate/Contest/Data/ContestRepo.dart';
+import 'package:study_mate/Contest/Presentation/Bloc/MyContest/MyContestBloc.dart';
+import 'package:study_mate/Contest/Presentation/Bloc/MyContest/MyContestEvents.dart';
+import 'package:study_mate/Contest/Presentation/Bloc/MyContest/MyContestStates.dart';
+import 'package:study_mate/Contest/Presentation/Bloc/MyContestResult/MyContestResultBloc.dart';
+import 'package:study_mate/Contest/Presentation/Bloc/MyContestResult/MyContestResultEvents.dart';
 import 'package:study_mate/Contest/Presentation/Pages/ContestResultPage.dart';
 import 'package:study_mate/Contest/Presentation/Widgets/MyContestCard.dart';
+import 'package:study_mate/DependancyInjections.dart/service_locator.dart';
 import 'package:study_mate/fonts.dart';
 
 class MyContestsPage extends StatefulWidget {
@@ -81,19 +85,11 @@ class _MyContestsPageState extends State<MyContestsPage> {
                               
                               contest: list[index],
                               onViewResult: () {
-                                 final myContestBloc = context.read<MyContestBloc>();
-
-  
-                                 myContestBloc.add(
-                                 LoadContestResultEvent(
-                                 contestId: list[index].contestId,
-                                  ),
-                                );
                                 Navigator.push(
                                   context, 
                                   MaterialPageRoute(
-                                    builder: (_) => BlocProvider.value(
-                                      value: myContestBloc,
+                                    builder: (_) => BlocProvider(
+                                      create: (context) => MyContestResultBloc(sl<ContestRepo>())..add(LoadContestResultEvent(contestId: list[index].contestId)),
                                       child: ContestResultPage(contest: list[index]),
                                     )
                                   )

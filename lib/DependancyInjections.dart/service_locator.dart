@@ -3,7 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:study_mate/Authentication/Data/AuthRepo.dart';
 import 'package:study_mate/Authentication/Presentation/Bloc/auth_bloc.dart';
 import 'package:study_mate/Authentication/Presentation/Bloc/regirster_bloc.dart';
-import 'package:study_mate/Contest/Presentation/Bloc/MyContestBloc.dart';
+import 'package:study_mate/Contest/Presentation/Bloc/MyContest/MyContestBloc.dart';
 import 'package:study_mate/Home/Data/HomeData.dart';
 import 'package:study_mate/Home/Presentation/Bloc/HomeBloc.dart';
 import 'package:study_mate/Networking/dio_client.dart';
@@ -18,7 +18,7 @@ import 'package:study_mate/TestsPage/Data/testdata.dart';
 import 'package:study_mate/TestsPage/Presentation/Bloc/TestBloc.dart';
 import 'package:study_mate/secure_storage.dart';
 import 'package:study_mate/Contest/Data/ContestRepo.dart';
-import 'package:study_mate/Contest/Presentation/Bloc/ContestPageBloc.dart';
+import 'package:study_mate/Contest/Presentation/Bloc/ContestPage/ContestPageBloc.dart';
 
 final sl = GetIt.instance;
 

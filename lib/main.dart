@@ -3,14 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_mate/Authentication/Presentation/Bloc/auth_bloc.dart';
 import 'package:study_mate/Authentication/Presentation/Bloc/regirster_bloc.dart';
 import 'package:study_mate/Authentication/Presentation/Pages/AutoLoginPage.dart';
-import 'package:study_mate/Contest/Presentation/Bloc/MyContestBloc.dart';
+import 'package:study_mate/Contest/Presentation/Bloc/MyContest/MyContestBloc.dart';
 import 'package:study_mate/DependancyInjections.dart/service_locator.dart';
 import 'package:study_mate/Home/Presentation/Bloc/HomeBloc.dart';
 import 'package:study_mate/Profile/Presentation/Bloc/ProfileBloc.dart';
 import 'package:study_mate/QuestionsSection/Presentation/Bloc/MyQuestionsBloc/MyQuestionsBloc.dart';
 import 'package:study_mate/QuestionsSection/Presentation/Bloc/QuestionsBloc.dart';
 import 'package:study_mate/TestsPage/Presentation/Bloc/TestBloc.dart';
-import 'package:study_mate/Contest/Presentation/Bloc/ContestPageBloc.dart';
+import 'package:study_mate/Contest/Presentation/Bloc/ContestPage/ContestPageBloc.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
