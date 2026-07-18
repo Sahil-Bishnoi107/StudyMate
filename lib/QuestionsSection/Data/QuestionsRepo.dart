@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:study_mate/Authentication/Domain/Entities/ApiResponse.dart';
 import 'package:study_mate/Home/Domain/Entities/Question.dart';
 import 'package:study_mate/QuestionsSection/Domain/Collection.dart';
+import 'package:study_mate/QuestionsSection/Domain/SubmitPracticeQuestion.dart';
 
 class QuestionsRepo {
   final Dio dio;
@@ -106,4 +107,19 @@ class QuestionsRepo {
       throw new Exception("could not submit question");
     }
   }
+
+  Future<void> SaveQuestion(Submitpracticequestion que)async {
+    try{
+     var res =  await dio.post("/Questions/save-question", data: que.toJson());
+     if(res.statusCode != 200){print("Question Could not be saved");}
+     else{
+      print("Question Saved");
+     }
+    }
+    catch(e){
+      print("Question could not be saved due to exception $e");
+    }
+  }
+
+
 }

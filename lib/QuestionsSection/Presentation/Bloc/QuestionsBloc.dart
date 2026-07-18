@@ -3,6 +3,7 @@ import 'package:study_mate/Authentication/Domain/Entities/ApiResponse.dart';
 import 'package:study_mate/QuestionsSection/Data/QuestionsRepo.dart';
 import 'package:study_mate/QuestionsSection/Domain/Collection.dart';
 import 'package:study_mate/QuestionsSection/Domain/QuestionFilters.dart';
+import 'package:study_mate/QuestionsSection/Domain/SubmitPracticeQuestion.dart';
 
 import 'package:study_mate/QuestionsSection/Presentation/Bloc/QuestionsEvents.dart';
 import 'package:study_mate/QuestionsSection/Presentation/Bloc/QuestionsStates.dart';
@@ -16,6 +17,7 @@ class Questionsbloc extends Bloc<Questionsevents,Questionsstates> {
     on<ResetFiltersEvent>(_onResetFilters);
     on<NextQuestionEvent>(_onNextQuestion);
     on<AnswerQuestion>(_onAnswerQuestion);
+    on<SubmitQuestionEvent>(_submitQuestion);
   }
 
 
@@ -126,5 +128,10 @@ class Questionsbloc extends Bloc<Questionsevents,Questionsstates> {
             currInd: st.currInd));
       }
     }
+  }
+
+  void _submitQuestion(SubmitQuestionEvent event , Emitter<Questionsstates> emit)async{
+    Submitpracticequestion que =  Submitpracticequestion(Id: event.id, Subject: event.Subject, difficulty: event.difficulty, isCorrect: event.isTrue);
+     await questionsRepo.SaveQuestion(que);
   }
 }

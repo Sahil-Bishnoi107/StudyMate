@@ -16,3 +16,11 @@ class AnswerQuestion extends Questionsevents {
 class ResetFiltersEvent extends Questionsevents {}
 
 class NextQuestionEvent extends Questionsevents {}
+
+class SubmitQuestionEvent extends Questionsevents{
+  bool isTrue;
+  String id;
+  String difficulty;
+  String Subject;
+  SubmitQuestionEvent({required this.id,required this.Subject,required this.difficulty,required this.isTrue});
+}
