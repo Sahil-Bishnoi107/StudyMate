@@ -7,6 +7,7 @@ import 'package:study_mate/Notifications/Presentation/Pages/NotificationPage.dar
 import 'package:study_mate/QuestionsSection/Presentation/Pages/FiltersPage.dart';
 import 'package:study_mate/Subscriptions/Presentation/Pages/SubscriptionsPage.dart';
 import 'package:study_mate/fonts.dart';
+import 'package:study_mate/Home/Presentation/Widgets/animated_texts.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -96,24 +97,24 @@ Widget _header(double height,double width){
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         SizedBox( height: height*0.045,
-          child: Text("Master",style: TextStyle(color: Colors.black, fontFamily: Fonts.outfit,fontSize: 40,fontWeight: FontWeight.w600),)),
+          child: TypingText(text: "Master",style: TextStyle(color: Colors.black, fontFamily: Fonts.outfit,fontSize: 40,fontWeight: FontWeight.w600),)),
         SizedBox(height: height*0.045,
-          child: Text("Your",style: TextStyle(color: Colors.green, fontFamily: Fonts.outfit,fontSize: 40,fontWeight: FontWeight.w600),)),
+          child: TypingText(text: "Your",style: TextStyle(color: Colors.green, fontFamily: Fonts.outfit,fontSize: 40,fontWeight: FontWeight.w600), delay: const Duration(milliseconds: 315),)),
         SizedBox(height: height*0.045,
           child: Row(
             children: [
-              Text("Potential",style: TextStyle(color: Colors.black, fontFamily: Fonts.outfit,fontSize: 40,fontWeight: FontWeight.w600),),
-              Text(".",style: TextStyle(color: Colors.green, fontFamily: Fonts.outfit,fontSize: 40,fontWeight: FontWeight.w600),)
+              TypingText(text: "Potential",style: TextStyle(color: Colors.black, fontFamily: Fonts.outfit,fontSize: 40,fontWeight: FontWeight.w600), delay: const Duration(milliseconds: 540),),
+              TypingText(text: ".",style: TextStyle(color: Colors.green, fontFamily: Fonts.outfit,fontSize: 40,fontWeight: FontWeight.w600), delay: const Duration(milliseconds: 900),)
             ],
           ),
         ),
         SizedBox(height: 10,),
         SizedBox(
           height: height*0.018,
-          child: Text("Where Preperation meets progress",style: TextStyle(color: const Color.fromRGBO(110, 110, 110, 1), fontFamily: Fonts.nunito,fontSize: 10),)),
+          child: ScrambleText(text: "Where Preperation meets progress",style: TextStyle(color: const Color.fromRGBO(110, 110, 110, 1), fontFamily: Fonts.nunito,fontSize: 10), delay: const Duration(milliseconds: 1000), duration: const Duration(milliseconds: 1000),)),
         SizedBox(
           height: height*0.02,
-          child: Text("The Journey to AIR begins here",style: TextStyle(color: const Color.fromRGBO(110, 110, 110, 1), fontFamily: Fonts.nunito,fontSize: 10),)),
+          child: ScrambleText(text: "The Journey to AIR begins here",style: TextStyle(color: const Color.fromRGBO(110, 110, 110, 1), fontFamily: Fonts.nunito,fontSize: 10), delay: const Duration(milliseconds: 1000), duration: const Duration(milliseconds: 1000),)),
       ],
     ),
   );
@@ -126,17 +127,26 @@ Widget _aboutSection(double height, double width,BuildContext context){
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-      SizedBox(height: height*0.032,child: Text("Preparing The Future",style: TextStyle(color: Colors.black,fontFamily: Fonts.outfit,fontSize: 24,fontWeight: FontWeight.w600),)),
+      SizedBox(height: height*0.032,
+        child: TypingText(
+          text: "Preparing The Future",
+          style: TextStyle(color: Colors.black,fontFamily: Fonts.outfit,fontSize: 24,fontWeight: FontWeight.w600),
+          delay: const Duration(milliseconds: 1200),
+          charDuration: const Duration(milliseconds: 15),
+        )),
       Row(
         children: [
-          Text("Engineers ",style: TextStyle(color: Colors.green,fontFamily: Fonts.outfit,fontSize: 24,fontWeight: FontWeight.w600),),
-          Text("And",style: TextStyle(color: Colors.black,fontFamily: Fonts.outfit,fontSize: 24,fontWeight: FontWeight.w600),),
-          Text(" Doctors.",style: TextStyle(color: Colors.green,fontFamily: Fonts.outfit,fontSize: 24,fontWeight: FontWeight.w600),),
+          TypingText(text: "Engineers ",style: TextStyle(color: Colors.green,fontFamily: Fonts.outfit,fontSize: 24,fontWeight: FontWeight.w600), delay: const Duration(milliseconds: 1500), charDuration: const Duration(milliseconds: 15),),
+          TypingText(text: "And",style: TextStyle(color: Colors.black,fontFamily: Fonts.outfit,fontSize: 24,fontWeight: FontWeight.w600), delay: const Duration(milliseconds: 1650), charDuration: const Duration(milliseconds: 15),),
+          TypingText(text: " Doctors.",style: TextStyle(color: Colors.green,fontFamily: Fonts.outfit,fontSize: 24,fontWeight: FontWeight.w600), delay: const Duration(milliseconds: 1695), charDuration: const Duration(milliseconds: 15),),
         ],
       ),
       SizedBox(height: height*0.005,),
-      Text("We offer comprehensive JEE and NEET coaching with experienced teachers, concept-focused classes, regular practice sessions, mock examinations, and continuous academic support to help every student reach their full potential. To be a part of our real life classes click here",
-      style: TextStyle(fontFamily: Fonts.outfit,color: Colors.black,fontSize: 10),
+      TypingText(
+        text: "We offer comprehensive JEE and NEET coaching with experienced teachers, concept-focused classes, regular practice sessions, mock examinations, and continuous academic support to help every student reach their full potential. To be a part of our real life classes click here",
+        style: TextStyle(fontFamily: Fonts.outfit,color: Colors.black,fontSize: 10),
+        delay: const Duration(milliseconds: 1830),
+        charDuration: const Duration(milliseconds: 5),
       ),
       Row(
         children: [

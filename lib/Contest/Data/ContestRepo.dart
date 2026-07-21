@@ -152,7 +152,7 @@ class ContestRepo{
     }
     return ApiResponse(statusCode: 200, data: myContests);
     }
-    catch(e){
+    catch(e){ 
       print("Failed to load contests with exception : $e");
       return ApiResponse(statusCode: 500);
     }

@@ -145,7 +145,6 @@ Widget _header(double height, double width,BuildContext context){
   return SizedBox(width: width,height: height*0.05,
   child: Row(
     children: [
-      
       InkWell(
         onTap: () => Navigator.pop(context),
         child: Icon(LucideIcons.chevronLeft300Dir,size: 30,)),
