@@ -4,7 +4,7 @@ import 'package:study_mate/fonts.dart';
 import 'package:lottie/lottie.dart';
 
 class ContestSubmittedPage extends StatelessWidget {
-  const ContestSubmittedPage({Key? key}) : super(key: key);
+  const ContestSubmittedPage({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -16,7 +16,7 @@ import 'package:study_mate/Contest/Data/ContestRepo.dart';
 import 'package:study_mate/fonts.dart';
 
 class ContestPage extends StatefulWidget {
-  const ContestPage({Key? key}) : super(key: key);
+  const ContestPage({super.key});
 
   @override
   State<ContestPage> createState() => _ContestPageState();
@@ -66,7 +66,7 @@ class _ContestPageState extends State<ContestPage> {
 
                  
                   if (state.filteredList.isEmpty)
-                    Container(
+                    SizedBox(
                       height: height * 0.3,
                       child: Center(
                         child: Text("No contests found.", style: TextStyle(fontFamily: Fonts.nunito, color: Colors.grey)),
@@ -81,7 +81,7 @@ class _ContestPageState extends State<ContestPage> {
                           Navigator.push(context, MaterialPageRoute(builder: (_) => ContestOnboardingPage(contest: contest)));
                         },
                       );
-                    }).toList(),
+                    }),
                   
                   SizedBox(height: 100),
                   ],),
@@ -130,7 +130,7 @@ Widget _searchBar(double height,double width, TextEditingController searchContro
 
 
 Widget _appBar(double height,double width,BuildContext context){
-  return Container(
+  return SizedBox(
         height: height*0.05,
         width: width, 
         child: Row(

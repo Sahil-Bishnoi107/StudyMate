@@ -9,10 +9,10 @@ class MyContestCard extends StatelessWidget {
   final VoidCallback? onViewResult;
 
   const MyContestCard({
-    Key? key,
+    super.key,
     required this.contest,
     this.onViewResult,
-  }) : super(key: key);
+  });
 
   Color _getDifficultyColor(String difficulty) {
     switch (difficulty.toLowerCase()) {

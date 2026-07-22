@@ -15,7 +15,7 @@ import 'package:study_mate/fonts.dart';
 class ContestResultPage extends StatelessWidget {
   final MyContest contest;
   
-  const ContestResultPage({Key? key, required this.contest}) : super(key: key);
+  const ContestResultPage({super.key, required this.contest});
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +138,7 @@ class ContestResultPage extends StatelessWidget {
   }
 
   Widget _buildPieChart(double height, double width, int totalQues, int correctQues, int skippedQues, int wrongQues) {
-    return Container(
+    return SizedBox(
       width: width * 0.9,
       child: Column(
         children: [
@@ -155,7 +155,7 @@ class ContestResultPage extends StatelessWidget {
           Stack(
             alignment: Alignment.center,
             children: [
-              Container(
+              SizedBox(
                 height: height * 0.2,
                 child: PieChart(
                   PieChartData(
@@ -195,7 +195,7 @@ class ContestResultPage extends StatelessWidget {
   }
 
   Widget _buildSubjectBreakdown(double height, double width, Map<String, int> totalPerSub, Map<String, int> correctPerSub) {
-    return Container(
+    return SizedBox(
       width: width * 0.9,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -234,7 +234,7 @@ class ContestResultPage extends StatelessWidget {
                 ],
               ),
             );
-          }).toList()
+          })
         ],
       ),
     );

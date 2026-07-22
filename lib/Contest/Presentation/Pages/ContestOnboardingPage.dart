@@ -11,7 +11,7 @@ import 'package:study_mate/fonts.dart';
 class ContestOnboardingPage extends StatelessWidget {
   final Contest contest;
 
-  const ContestOnboardingPage({Key? key, required this.contest}) : super(key: key);
+  const ContestOnboardingPage({super.key, required this.contest});
 
   @override
   Widget build(BuildContext context) {

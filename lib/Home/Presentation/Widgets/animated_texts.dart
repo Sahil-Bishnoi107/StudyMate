@@ -10,13 +10,13 @@ class TypingText extends StatefulWidget {
   final VoidCallback? onComplete;
 
   const TypingText({
-    Key? key,
+    super.key,
     required this.text,
     required this.style,
     this.delay = Duration.zero,
     this.charDuration = const Duration(milliseconds: 45),
     this.onComplete,
-  }) : super(key: key);
+  });
 
   @override
   State<TypingText> createState() => _TypingTextState();
@@ -92,12 +92,12 @@ class ScrambleText extends StatefulWidget {
   final Duration duration;
 
   const ScrambleText({
-    Key? key,
+    super.key,
     required this.text,
     required this.style,
     this.delay = Duration.zero,
     this.duration = const Duration(milliseconds: 1000),
-  }) : super(key: key);
+  });
 
   @override
   State<ScrambleText> createState() => _ScrambleTextState();

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:study_mate/fonts.dart';
 
 class LoginOption extends StatefulWidget {

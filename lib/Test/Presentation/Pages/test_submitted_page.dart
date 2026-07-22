@@ -39,7 +39,7 @@ class TestSubmittedPage extends StatelessWidget {
              quesSolved++;
           }
           return SingleChildScrollView(
-            child: Container(
+            child: SizedBox(
             width: width,
             child: Column(
               children: [
@@ -126,7 +126,7 @@ Widget _scoreArea(double height,double width,int marks,int total){
         SizedBox(height: height*0.02),
         Container(height: 1.5,width: width*0.75,color: const Color.fromRGBO(255, 255, 255, 0.5),),
         SizedBox(height: height*0.03),
-        Container(height: height*0.1,width: width*0.5,
+        SizedBox(height: height*0.1,width: width*0.5,
         child: Column(
           children: [
             Text("Excellent Work Champ!",style: TextStyle(fontFamily: Fonts.nunito,fontSize: 18,fontWeight: FontWeight.bold),),
@@ -144,7 +144,7 @@ Widget _statArea(double height,double width,int marks, int total,int timeTaken,i
   String avgTime = (quesSolved/ (timeTaken)).toStringAsFixed(2);
   String mins = (timeTaken/60).toInt().toString();
   String secs = (timeTaken % 60) < 10 ? "0${(timeTaken % 60).toString()}" : (timeTaken % 60).toString(); 
-  return Container(
+  return SizedBox(
     height: height*0.3, width: width*0.9,
     child: Column(
       children: [
@@ -170,15 +170,15 @@ Widget _statArea(double height,double width,int marks, int total,int timeTaken,i
 
 
 Widget _pieChart(double height,double width,int totalQues,int correctQues,int skippedQues){
-  return Container(
+  return SizedBox(
     height: height*0.3,width: width*0.8,
     child: Column(
       children: [
-        Container(
+        SizedBox(
           height: height*0.03,width: width*0.8,
           child: Text("Performance Summary",style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: 18),),
         ),
-        Container(
+        SizedBox(
           height: height*0.03,width: width*0.8,
           child: Text("Breakdown By Subject",style: TextStyle(fontFamily: Fonts.nunito,fontSize: 12,color: Colors.blueGrey),),
         ),
@@ -190,7 +190,7 @@ Widget _pieChart(double height,double width,int totalQues,int correctQues,int sk
               child: Text("${(correctQues*100/(totalQues)).toInt().toString()}%",
               style: TextStyle(fontWeight: FontWeight.bold,fontFamily: Fonts.inter,fontSize: 20,color: const Color.fromRGBO(70, 70, 70, 1)))
               ),
-            Container(
+            SizedBox(
               height: height*0.1,width: width*0.8,
               child: PieChart(
                 PieChartData(
@@ -226,7 +226,7 @@ Widget _pieChart(double height,double width,int totalQues,int correctQues,int sk
           ],
         ),
          SizedBox(height: height*0.05,),
-        Container(
+        SizedBox(
           width: width*0.7,
           child: Row(
             spacing: width*0.13,
@@ -259,11 +259,11 @@ Widget _subjectBreakdown(double height,double width,Map<String,int> correctQues,
      wrong.add(incorrect);
   }
 
-  return Container(
+  return SizedBox(
     height: height*0.56,width: width*0.9,
     child: Column(
       children: [
-        Container(
+        SizedBox(
           height: height*0.04,width: width*0.9,
           child: Row(
             children: [

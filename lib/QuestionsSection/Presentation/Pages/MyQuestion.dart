@@ -173,7 +173,7 @@ class _MyQuestionState extends State<MyQuestion> {
                       SizedBox(height: height * 0.02),
                       ...filteredCollections
                           .map((col) => _collectionTile(height, width, col))
-                          .toList(),
+                          ,
                       SizedBox(height: height * 0.03),
                       _createCollectionButton(height, width),
                       SizedBox(height: height * 0.1), // padding at bottom

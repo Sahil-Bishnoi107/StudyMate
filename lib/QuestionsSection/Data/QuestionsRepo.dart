@@ -104,7 +104,7 @@ class QuestionsRepo {
     return ApiResponse(statusCode: 200);
     }
     catch(e){
-      throw new Exception("could not submit question");
+      throw Exception("could not submit question");
     }
   }
 

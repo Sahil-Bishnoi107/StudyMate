@@ -14,7 +14,7 @@ import 'package:study_mate/DependancyInjections.dart/service_locator.dart';
 import 'package:study_mate/fonts.dart';
 
 class MyContestsPage extends StatefulWidget {
-  const MyContestsPage({Key? key}) : super(key: key);
+  const MyContestsPage({super.key});
 
   @override
   State<MyContestsPage> createState() => _MyContestsPageState();

@@ -19,6 +19,8 @@ import 'package:study_mate/TestsPage/Presentation/Bloc/TestBloc.dart';
 import 'package:study_mate/secure_storage.dart';
 import 'package:study_mate/Contest/Data/ContestRepo.dart';
 import 'package:study_mate/Contest/Presentation/Bloc/ContestPage/ContestPageBloc.dart';
+import 'package:study_mate/Settings/Data/SettingsRepo.dart';
+import 'package:study_mate/Settings/Presentation/Bloc/SettingsBloc.dart';
 
 final sl = GetIt.instance;
 
@@ -35,6 +37,7 @@ Future<void> setup()async {
   sl.registerLazySingleton<QuestionsRepo>(() => QuestionsRepo(sl<Dio>()));
   sl.registerLazySingleton<ContestRepo>(() => ContestRepo(sl<Dio>()));
   sl.registerLazySingleton<ProfileRepo>(() => ProfileRepo(sl<Dio>()));
+  sl.registerLazySingleton<SettingsRepo>(() => SettingsRepo(sl<Dio>()));
   
   // what this means is that whenevr someone asks for the object in <object> give them the object () => object, so whenever we need AuthBloc it recivers the bloc created from here and so on
 
@@ -48,4 +51,5 @@ Future<void> setup()async {
   sl.registerLazySingleton<ContestPageBloc>(() => ContestPageBloc(sl<ContestRepo>()));
   sl.registerLazySingleton<Profilebloc>(() => Profilebloc(sl<ProfileRepo>())); 
   sl.registerLazySingleton<MyContestBloc>(() => MyContestBloc(sl<ContestRepo>()));
+  sl.registerLazySingleton<SettingsBloc>(() => SettingsBloc(sl<SettingsRepo>()));
 }

@@ -7,7 +7,7 @@ import 'package:study_mate/fonts.dart';
 class QuestionStatsSection extends StatelessWidget {
   final List<PracticeUserQuestion> questions;
 
-  const QuestionStatsSection({Key? key, required this.questions}) : super(key: key);
+  const QuestionStatsSection({super.key, required this.questions});
 
   @override
   Widget build(BuildContext context) {

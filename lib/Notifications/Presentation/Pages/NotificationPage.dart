@@ -10,7 +10,7 @@ class Notificationpage extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          Container(height:height,width: width,
+          SizedBox(height:height,width: width,
            child: Center(child: Text("Notifications page is under development"),),)
         ],
       ),

@@ -15,7 +15,7 @@ class _LecturespageState extends State<Lecturespage> {
     return Scaffold(
       body: Column(
         children: [
-          Container(height:height,width: width,
+          SizedBox(height:height,width: width,
            child: Center(child: Text("Video Lectures Will be available soon"),),)
         ],
       ),

@@ -7,7 +7,7 @@ class RecentTestsSection extends StatefulWidget {
   final List<TestGiven> tests;
   final double width;
   
-  RecentTestsSection({Key? key, required this.tests, required this.width}) : super(key: key);
+  const RecentTestsSection({super.key, required this.tests, required this.width});
 
   @override 
   State<RecentTestsSection> createState() => _RecentTestsSectionState();

@@ -51,7 +51,7 @@ class _TestState extends State<GiveTest> {
         }
 
         if(state is TestSubmitting){
-          return Container( 
+          return SizedBox( 
             height: height,width: width,
             
             child: Column(
@@ -65,7 +65,7 @@ class _TestState extends State<GiveTest> {
           );
         }
         if(state is TestLoaded){
-        return Container(
+        return SizedBox(
           height: height, width: width,
           child: SingleChildScrollView(
             child: Column(
@@ -111,7 +111,7 @@ Widget _header(double height,double width,int timeLeft,String testName){
     margin: EdgeInsets.only(top: height*0.05),
     child: Row(
     children: [
-      Container(
+      SizedBox(
         width: width*0.65,
         child: Text(testName,style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: 20),)
         ),
@@ -142,7 +142,7 @@ Widget _header(double height,double width,int timeLeft,String testName){
 Widget _questionSection(double height,double width, List<Question> questions,PageController pageController){
   return Column(
     children: [
-     Container(
+     SizedBox(
       height: height*0.65,width: width,
       child: PageView.builder(
         controller: pageController,
@@ -211,7 +211,7 @@ Widget _question(double height,double width, Question question,int currQue,int t
           child: MixedMathText(text: question.description, textStyle: TextStyle(fontFamily: Fonts.inter,fontWeight: FontWeight.bold, fontSize: 20),)),
 
         //Options
-        Container(
+        SizedBox(
           height: height*0.4,
           child: ListView(
             children: [
@@ -263,7 +263,7 @@ Widget _question(double height,double width, Question question,int currQue,int t
 
 
 Widget _testProgress(double height, double width,BuildContext context,List<Question> questions,PageController pageController){
-  return Container(
+  return SizedBox(
     
     height: height*0.05,width: width*0.9,
     child: ListView.builder(

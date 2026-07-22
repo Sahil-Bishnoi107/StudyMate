@@ -15,7 +15,7 @@ import 'package:study_mate/Test/Presentation/Widgets/question_option.dart';
 import 'package:study_mate/fonts.dart';
 
 class ContestQuestionPage extends StatefulWidget {
-  const ContestQuestionPage({Key? key}) : super(key: key);
+  const ContestQuestionPage({super.key});
 
   @override
   State<ContestQuestionPage> createState() => _ContestQuestionPageState();
@@ -135,7 +135,7 @@ class _ContestQuestionPageState extends State<ContestQuestionPage> {
       margin: EdgeInsets.only(top: height * 0.05),
       child: Row(
         children: [
-          Container(
+          SizedBox(
             width: width * 0.65,
             child: Text(
               contestName,
@@ -170,7 +170,7 @@ class _ContestQuestionPageState extends State<ContestQuestionPage> {
   }
 
   Widget _buildTestProgress(double height, double width, List<ContestQuestion> questions) {
-    return Container(
+    return SizedBox(
       height: height * 0.05,
       width: width * 0.9,
       child: ListView.builder(
@@ -214,7 +214,7 @@ class _ContestQuestionPageState extends State<ContestQuestionPage> {
 
     return Column(
       children: [
-        Container(
+        SizedBox(
           height: height * 0.65,
           width: width,
           child: PageView.builder(
@@ -307,7 +307,7 @@ class _ContestQuestionPageState extends State<ContestQuestionPage> {
               textStyle: TextStyle(fontFamily: Fonts.inter, fontWeight: FontWeight.bold, fontSize: 20),
             ),
           ),
-          Container(
+          SizedBox(
             height: height * 0.4,
             child: ListView(
               children: [

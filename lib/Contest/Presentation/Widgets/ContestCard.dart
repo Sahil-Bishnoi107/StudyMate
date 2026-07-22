@@ -9,11 +9,11 @@ class ContestCard extends StatelessWidget {
   final VoidCallback onJoin;
 
   const ContestCard({
-    Key? key,
+    super.key,
     required this.contest,
     required this.currentTime,
     required this.onJoin,
-  }) : super(key: key);
+  });
 
   String _getTimeLeftText() {
     // 0: Current, 1: Upcoming, 2: Ended

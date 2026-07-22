@@ -68,7 +68,7 @@ class _HomepageState extends State<Homepage> {
 }
 
 Widget _appBar(double height, double width,GlobalKey<ScaffoldState> key,BuildContext context){
- return Container(
+ return SizedBox(
   height: height*0.05,width: width,
   child: Row(
     children: [
@@ -128,25 +128,22 @@ Widget _aboutSection(double height, double width,BuildContext context){
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
       SizedBox(height: height*0.032,
-        child: TypingText(
-          text: "Preparing The Future",
-          style: TextStyle(color: Colors.black,fontFamily: Fonts.outfit,fontSize: 24,fontWeight: FontWeight.w600),
-          delay: const Duration(milliseconds: 1200),
-          charDuration: const Duration(milliseconds: 15),
+        child: Text(
+           "Preparing The Future",
+          style: TextStyle(color: Colors.black,fontFamily: Fonts.outfit,fontSize: 24,fontWeight: FontWeight.w600)
         )),
       Row(
         children: [
-          TypingText(text: "Engineers ",style: TextStyle(color: Colors.green,fontFamily: Fonts.outfit,fontSize: 24,fontWeight: FontWeight.w600), delay: const Duration(milliseconds: 1500), charDuration: const Duration(milliseconds: 15),),
-          TypingText(text: "And",style: TextStyle(color: Colors.black,fontFamily: Fonts.outfit,fontSize: 24,fontWeight: FontWeight.w600), delay: const Duration(milliseconds: 1650), charDuration: const Duration(milliseconds: 15),),
-          TypingText(text: " Doctors.",style: TextStyle(color: Colors.green,fontFamily: Fonts.outfit,fontSize: 24,fontWeight: FontWeight.w600), delay: const Duration(milliseconds: 1695), charDuration: const Duration(milliseconds: 15),),
+          Text( "Engineers ",style: TextStyle(color: Colors.green,fontFamily: Fonts.outfit,fontSize: 24,fontWeight: FontWeight.w600)),
+          Text( "And",style: TextStyle(color: Colors.black,fontFamily: Fonts.outfit,fontSize: 24,fontWeight: FontWeight.w600)),
+          Text( " Doctors.",style: TextStyle(color: Colors.green,fontFamily: Fonts.outfit,fontSize: 24,fontWeight: FontWeight.w600)),
         ],
       ),
       SizedBox(height: height*0.005,),
-      TypingText(
-        text: "We offer comprehensive JEE and NEET coaching with experienced teachers, concept-focused classes, regular practice sessions, mock examinations, and continuous academic support to help every student reach their full potential. To be a part of our real life classes click here",
+      Text(
+       "We offer comprehensive JEE and NEET coaching with experienced teachers, concept-focused classes, regular practice sessions, mock examinations, and continuous academic support to help every student reach their full potential. To be a part of our real life classes click here",
         style: TextStyle(fontFamily: Fonts.outfit,color: Colors.black,fontSize: 10),
-        delay: const Duration(milliseconds: 1830),
-        charDuration: const Duration(milliseconds: 5),
+
       ),
       Row(
         children: [
@@ -188,7 +185,7 @@ Widget _card(double height, double width,IconData icon,String text,String header
           SizedBox(height: height*0.006,),
           Row(children: [
             Text(header1,style: TextStyle(fontFamily: Fonts.outfit,color: Colors.black,fontWeight: FontWeight.w600),),
-            Text( " " + header2,style: TextStyle(fontFamily: Fonts.outfit,color: Colors.green,fontWeight: FontWeight.w600),)
+            Text( " $header2",style: TextStyle(fontFamily: Fonts.outfit,color: Colors.green,fontWeight: FontWeight.w600),)
           ],),
           //SizedBox(height: height*0.01,),
           SizedBox(

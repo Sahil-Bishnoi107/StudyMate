@@ -8,7 +8,7 @@ import 'package:study_mate/fonts.dart';
 
 class ContestReviewPage extends StatefulWidget {
   final List<ContestResultQuestion> questions;
-  const ContestReviewPage({Key? key, required this.questions}) : super(key: key);
+  const ContestReviewPage({super.key, required this.questions});
 
   @override
   State<ContestReviewPage> createState() => _ContestReviewPageState();
@@ -53,7 +53,7 @@ class _ContestReviewPageState extends State<ContestReviewPage> {
   }
 
   Widget _buildTestProgress(double height, double width) {
-    return Container(
+    return SizedBox(
       height: height * 0.05,
       width: width * 0.9,
       child: ListView.builder(
@@ -96,7 +96,7 @@ class _ContestReviewPageState extends State<ContestReviewPage> {
   Widget _buildQuestionSection(double height, double width) {
     return Column(
       children: [
-        Container(
+        SizedBox(
           height: height * 0.65,
           width: width,
           child: PageView.builder(
@@ -186,7 +186,7 @@ class _ContestReviewPageState extends State<ContestReviewPage> {
               textStyle: TextStyle(fontFamily: Fonts.inter, fontWeight: FontWeight.bold, fontSize: 20),
             ),
           ),
-          Container(
+          SizedBox(
             height: height * 0.4,
             child: ListView(
               children: [

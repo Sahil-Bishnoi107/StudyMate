@@ -7,11 +7,11 @@ class MixedMathText extends StatelessWidget {
   final double mathFontSize;
 
   const MixedMathText({
-    Key? key,
+    super.key,
     required this.text,
     this.textStyle,
     this.mathFontSize = 16.0,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

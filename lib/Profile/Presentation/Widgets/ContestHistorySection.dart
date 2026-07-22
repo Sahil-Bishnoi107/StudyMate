@@ -6,7 +6,7 @@ class ContestHistorySection extends StatelessWidget {
   final List<MyContest> contests;
   final double width;
 
-  const ContestHistorySection({Key? key, required this.contests,required this.width}) : super(key: key);
+  const ContestHistorySection({super.key, required this.contests,required this.width});
 
   @override
   Widget build(BuildContext context) {

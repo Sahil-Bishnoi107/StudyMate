@@ -13,7 +13,7 @@ class _SubscriptionspageState extends State<Subscriptionspage> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: Container(
+      body: SizedBox(
         height: height,width: width,
         child: Center(child: Text("Subscriptions are coming soon."),),
       ),

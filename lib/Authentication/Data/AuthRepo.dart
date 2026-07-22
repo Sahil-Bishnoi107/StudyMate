@@ -43,11 +43,11 @@ class AuthRepo extends AuthData{
    
    if(res.statusCode != 200){print("failed to login with code ${res.statusCode}");return ApiResponse(statusCode: res.statusCode);}
    final jsonFile = jsonDecode(res.body);
-   String access_token = jsonFile['access_token'] ?? "";
-   String refresh_token = jsonFile['refresh_token'] ?? "";
-   print("Access Tone : $access_token");
-   print("Refresh Tone : $refresh_token");
-   await SecureTokens().saveTokens(access_token, refresh_token);
+   String accessToken = jsonFile['access_token'] ?? "";
+   String refreshToken = jsonFile['refresh_token'] ?? "";
+   print("Access Tone : $accessToken");
+   print("Refresh Tone : $refreshToken");
+   await SecureTokens().saveTokens(accessToken, refreshToken);
    return ApiResponse(statusCode: 200);  
    
    }
@@ -77,11 +77,11 @@ class AuthRepo extends AuthData{
    
    if(res.statusCode != 200){print("failed to register with code ${res.statusCode}");return ApiResponse(statusCode: res.statusCode);}
    final jsonFile = jsonDecode(res.body);
-   String access_token = jsonFile['access_token'] ?? "";
-   String refresh_token = jsonFile['refresh_token'] ?? "";
-   print("Access Tone : $access_token");
-   print("Refresh Tone : $refresh_token");
-   await SecureTokens().saveTokens(access_token, refresh_token);
+   String accessToken = jsonFile['access_token'] ?? "";
+   String refreshToken = jsonFile['refresh_token'] ?? "";
+   print("Access Tone : $accessToken");
+   print("Refresh Tone : $refreshToken");
+   await SecureTokens().saveTokens(accessToken, refreshToken);
    return ApiResponse(statusCode: 200);  
    
    }
@@ -104,11 +104,11 @@ class AuthRepo extends AuthData{
     }) );
     if(res.statusCode != 200){print("failed to signin from backend with code ${res.statusCode}");return ApiResponse(statusCode: res.statusCode);}
    final jsonFile = jsonDecode(res.body);
-   String access_token = jsonFile['access_token'] ?? "";
-   String refresh_token = jsonFile['refresh_token'] ?? "";
-   print("Access Tone : $access_token");
-   print("Refresh Tone : $refresh_token");
-   await SecureTokens().saveTokens(access_token, refresh_token);
+   String accessToken = jsonFile['access_token'] ?? "";
+   String refreshToken = jsonFile['refresh_token'] ?? "";
+   print("Access Tone : $accessToken");
+   print("Refresh Tone : $refreshToken");
+   await SecureTokens().saveTokens(accessToken, refreshToken);
    return ApiResponse(statusCode: 200); 
   }
 }

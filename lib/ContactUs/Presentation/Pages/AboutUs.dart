@@ -10,7 +10,7 @@ class Aboutus extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          Container(height:height,width: width, child: Center(child: Text("About uS PAGE WILL BE AVAILABLE SOON."),),)
+          SizedBox(height:height,width: width, child: Center(child: Text("About uS PAGE WILL BE AVAILABLE SOON."),),)
         ],
       ),
     );

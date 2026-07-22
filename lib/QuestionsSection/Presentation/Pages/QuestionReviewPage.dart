@@ -160,7 +160,7 @@ class _QuestionReviewPageState extends State<QuestionReviewPage> {
   }
 
   Widget _optionsList(double height, double width, Question question) {
-    return Container(
+    return SizedBox(
       height: height * 0.45,
       child: ListView.builder(
         physics: NeverScrollableScrollPhysics(),

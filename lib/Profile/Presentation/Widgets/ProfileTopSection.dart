@@ -7,7 +7,7 @@ class ProfileTopSection extends StatelessWidget {
   final double height;
   final double width;
 
-  const ProfileTopSection({Key? key, required this.student,required this.height,required this.width}) : super(key: key);
+  const ProfileTopSection({super.key, required this.student,required this.height,required this.width});
 
   @override
   Widget build(BuildContext context) {

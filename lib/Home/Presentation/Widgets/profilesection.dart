@@ -5,7 +5,7 @@ class ProfileSection extends StatelessWidget {
  final String name;
  final String picUrl;
 
-  ProfileSection({super.key,required this.name,required this.picUrl});
+  const ProfileSection({super.key,required this.name,required this.picUrl});
   String fixName(String str){
     String ans = "";
     for(int i = 0;i < str.length;i++){
@@ -27,15 +27,15 @@ class ProfileSection extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Hello, ${username}",style: TextStyle(color: Colors.black,fontWeight: FontWeight.w600,fontFamily: Fonts.outfit,fontSize: 30),),
+            Text("Hello, $username",style: TextStyle(color: Colors.black,fontWeight: FontWeight.w600,fontFamily: Fonts.outfit,fontSize: 30),),
             Text("Ready for Today's Challange?",style: TextStyle(fontFamily: Fonts.nunito,fontSize: 12, color: Colors.blueGrey),)
           ],
         ),
       ),
-      Container(
+      SizedBox(
         width: width*0.25,
         child: Center(
-          child: Container(
+          child: SizedBox(
             width: width*0.14,height: width*0.14,
             child: Image.network(
               picUrl, 

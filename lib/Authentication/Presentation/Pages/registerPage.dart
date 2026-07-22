@@ -106,7 +106,7 @@ Widget _line(double height,double width){
 }
 
 Widget _intro(double height, double width){
-  return Container(
+  return SizedBox(
     height: height*0.16,width: width*0.6,
    // margin: EdgeInsets.only(left: width*0.05),
     child: Column(
@@ -141,7 +141,7 @@ Widget _registerForm(double height,double width,TextEditingController name,TextE
 }
 
 Widget _middleText(double height,double width){
-  return Container(
+  return SizedBox(
     width: width,
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,

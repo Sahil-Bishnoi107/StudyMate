@@ -235,7 +235,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
   }
 
   Widget _optionsList(double height, double width, Question question) {
-    return Container(
+    return SizedBox(
       height: height * 0.45,
       child: ListView.builder(
         physics: NeverScrollableScrollPhysics(),
@@ -411,7 +411,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(col.collectionname, style: TextStyle(fontFamily: Fonts.nunito, fontSize: 13)),
-                      Text("$que",style: TextStyle(color: const Color.fromRGBO(110, 110, 110, 1), fontFamily: Fonts.outfit, fontSize: 10),)
+                      Text(que,style: TextStyle(color: const Color.fromRGBO(110, 110, 110, 1), fontFamily: Fonts.outfit, fontSize: 10),)
                     ],
                   ),
                   

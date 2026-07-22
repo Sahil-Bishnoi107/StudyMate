@@ -40,7 +40,7 @@ class TestsPage extends StatelessWidget {
               );
             }
             state as LoadedTestPageState;
-            return Container(
+            return SizedBox(
               height: height,width: width,
               child: SingleChildScrollView(
                 child: Column(
@@ -101,14 +101,14 @@ Widget _filterOptions(double height,double width,List<String> optionList,int sel
 }
 
 Widget _filterBox(double height,double width,bool isSelected,String optionName){
- const Color grey_color = const Color.fromRGBO(200, 200, 200, 0.8);
+ const Color greyColor = Color.fromRGBO(200, 200, 200, 0.8);
   return Container(
     height: height*0.03,
     padding: EdgeInsets.symmetric(horizontal: width*0.035),
     margin: EdgeInsets.symmetric(horizontal: width*0.01),
     decoration: BoxDecoration(
       color: isSelected ? Colors.green : const Color.fromRGBO(252, 252, 252, 1),
-      border: Border.all(color: isSelected ? Colors.green : grey_color),
+      border: Border.all(color: isSelected ? Colors.green : greyColor),
       borderRadius: BorderRadius.circular(width*0.1)
       ),
       child: Center(child: Text(optionName,style:  TextStyle(color: isSelected ? Colors.black : Colors.blueGrey, fontFamily: Fonts.nunito),)),
@@ -140,7 +140,7 @@ Widget _testsWidget(double height,double width,List<TestInfo> tests){
 
 Widget _testsList(double height,double width,List<TestInfo> tests){
   List<IconData> icons = [Bootstrap.journal_check,Bootstrap.patch_check_fill,FontAwesome.brain_solid,FontAwesome.graduation_cap_solid,FontAwesome.clipboard_check_solid];
-  return Container(
+  return SizedBox(
   width: width*0.9,
   child: ListView.builder(
     shrinkWrap: true,
@@ -185,7 +185,7 @@ Widget _testOption(double height,double width,TestInfo test,BuildContext context
       children: [
         SizedBox(height: height*0.016,),
 
-        Container(
+        SizedBox(
           height: height*0.08,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -198,7 +198,7 @@ Widget _testOption(double height,double width,TestInfo test,BuildContext context
           
               SizedBox(width: width*0.01,),
 
-              Container(
+              SizedBox(
                 width: width*0.5,
                 height: height*0.1,
                 child: Column(
@@ -234,7 +234,7 @@ Widget _testOption(double height,double width,TestInfo test,BuildContext context
             SizedBox(width: width*0.05,),
            Icon(FontAwesome.clock,size: 20,color: greenColor,),
            SizedBox(width: width*0.024,),
-           Container(
+           SizedBox(
             width: width*0.2,
             child: Text("${test.time} mins",style: TextStyle(fontFamily: Fonts.nunito,color: Colors.blueGrey),)
             ),
@@ -247,7 +247,7 @@ Widget _testOption(double height,double width,TestInfo test,BuildContext context
         SizedBox(height: height*0.015,),
         Container(width: width*0.8, height: 1.5, color: const Color.fromRGBO(220, 220, 220, 0.5),),
          SizedBox(height: height*0.005,),
-       Container(width: width*0.8, height: height*0.06,
+       SizedBox(width: width*0.8, height: height*0.06,
          child: Row(
            children: [
             SizedBox(width: width*0.025,),

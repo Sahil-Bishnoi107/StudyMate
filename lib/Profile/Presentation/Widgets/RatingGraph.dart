@@ -6,7 +6,7 @@ import 'package:study_mate/fonts.dart';
 class RatingGraph extends StatelessWidget {
   final List<MyContest> contests;
 
-  const RatingGraph({Key? key, required this.contests}) : super(key: key);
+  const RatingGraph({super.key, required this.contests});
 
   @override
   Widget build(BuildContext context) {

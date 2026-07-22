@@ -116,7 +116,7 @@ Widget topLogin(double height,double width){
 }
 
 Widget _middleText(double height,double width){
-  return Container(
+  return SizedBox(
     width: width,
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,

@@ -9,7 +9,7 @@ class RatingSection extends StatelessWidget {
   final List<MyContest> contests;
   final double height;
   final double width;
-  const RatingSection({Key? key, required this.student, required this.contests, required this.height,required this.width}) : super(key: key);
+  const RatingSection({super.key, required this.student, required this.contests, required this.height,required this.width});
 
   @override
   Widget build(BuildContext context) {

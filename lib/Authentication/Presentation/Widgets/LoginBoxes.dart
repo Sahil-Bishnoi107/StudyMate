@@ -27,7 +27,7 @@ class _LoginBoxState extends State<LoginBox> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     bool? error = widget.error;
-    return Container(
+    return SizedBox(
       width: width*0.8 + (widget.extraWidth ?? 0),
       
       child: Column(
@@ -50,7 +50,7 @@ class _LoginBoxState extends State<LoginBox> {
               Icon(widget.icon,color: Colors.black,size: widget.size,),
               SizedBox(width: widget.additionalGap ?? 0,),
               SizedBox(width: width*0.016,),
-              Container(
+              SizedBox(
                 width: width*0.65 + (widget.extraWidth ?? 0),
                 child: TextField(            
                   controller: widget.txtController,

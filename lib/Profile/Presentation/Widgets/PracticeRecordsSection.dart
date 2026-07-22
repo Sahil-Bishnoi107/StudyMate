@@ -6,7 +6,7 @@ import 'package:icons_plus/icons_plus.dart';
 class PracticeRecordsSection extends StatelessWidget {
   final List<PracticeUserQuestion> questions;
 
-  const PracticeRecordsSection({Key? key, required this.questions}) : super(key: key);
+  const PracticeRecordsSection({super.key, required this.questions});
 
   @override
   Widget build(BuildContext context) {

@@ -19,7 +19,7 @@ Widget SubjectBreakdownTile(double height,double width,int correctQues,int wrong
 
         Row(
           children: [
-            Container(
+            SizedBox(
               height: height*0.06,width: width*0.65,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
