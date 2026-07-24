@@ -15,23 +15,23 @@
     <!-- Row 1: Core Authentication & Entry -->
     <tr>
       <td align="center"><img src="assets/appUi/Onboarding.jpeg" width="100%" alt="Onboarding Screen"><br><sub><b>Onboarding</b></sub></td>
-      <td align="center"><img src="assets/appUi/login.jpeg" width="100%" alt="Login Page"><br><sub><b>Login</b></sub></td>
-      <td align="center"><img src="assets/appUi/Register.jpeg" width="100%" alt="Register Page"><br><sub><b>Register</b></sub></td>
-      <td align="center"><img src="assets/appUi/Homepage.jpeg" width="100%" alt="Homepage"><br><sub><b>Homepage</b></sub></td>
+      <td align="center"><img src="assets/appUi/Register.jpeg" width="100%" alt="Login Page"><br><sub><b>Login</b></sub></td>
+      <td align="center"><img src="assets/appUi/Homepage.jpeg" width="100%" alt="Register Page"><br><sub><b>Register</b></sub></td>
+      <td align="center"><img src="assets/appUi/Profile2.jpeg" width="100%" alt="Homepage"><br><sub><b>Homepage</b></sub></td>
     </tr>
     <!-- Row 2: Examination Engine Flow -->
     <tr>
-      <td align="center"><img src="assets/appUi/TestList.jpeg" width="100%" alt="Tests List Page"><br><sub><b>Tests List</b></sub></td>
-      <td align="center"><img src="assets/appUi/Test1.jpeg" width="100%" alt="Test Page"><br><sub><b>Test Session</b></sub></td>
-      <td align="center"><img src="assets/appUi/Test2.jpeg" width="100%" alt="Submit Page"><br><sub><b>Review & Submit</b></sub></td>
-      <td align="center"><img src="assets/appUi/WrongAnswer.jpeg" width="100%" alt="Wrong Answer Page"><br><sub><b>Error Review</b></sub></td>
+      <td align="center"><img src="assets/appUi/ProgressionChart.jpeg" width="100%" alt="Tests List Page"><br><sub><b>Tests List</b></sub></td>
+      <td align="center"><img src="assets/appUi/QuestionBreakdown.jpeg" width="100%" alt="Test Page"><br><sub><b>Test Session</b></sub></td>
+      <td align="center"><img src="assets/appUi/h.jpeg" width="100%" alt="Submit Page"><br><sub><b>Review & Submit</b></sub></td>
+      <td align="center"><img src="assets/appUi/TestList.jpeg" width="100%" alt="Wrong Answer Page"><br><sub><b>Error Review</b></sub></td>
     </tr>
     <!-- Row 3: Metrics, Analytics & Results -->
     <tr>
-      <td align="center"><img src="assets/appUi/Analytics.jpeg" width="100%" alt="Analytics Page"><br><sub><b>Performance Analytics</b></sub></td>
-      <td align="center"><img src="assets/appUi/Homepage2.jpeg" width="100%" alt="Homepage"><br><sub><b>Updated Dashboard</b></sub></td>
-      <td align="center"><img src="assets/appUi/PrevTests.jpeg" width="100%" alt="Previous Tests Page"><br><sub><b>History Logs</b></sub></td>
-      <td align="center"><img src="assets/appUi/Result.jpeg" width="100%" alt="Result Page"><br><sub><b>Scorecard</b></sub></td>
+      <td align="center"><img src="assets/appUi/CollectionList.jpeg" width="100%" alt="Analytics Page"><br><sub><b>Performance Analytics</b></sub></td>
+      <td align="center"><img src="assets/appUi/Filters.jpeg" width="100%" alt="Homepage"><br><sub><b>Updated Dashboard</b></sub></td>
+      <td align="center"><img src="assets/appUi/SaveCollection.jpeg" width="100%" alt="Previous Tests Page"><br><sub><b>History Logs</b></sub></td>
+      <td align="center"><img src="assets/appUi/ContestList.jpeg" width="100%" alt="Result Page"><br><sub><b>Scorecard</b></sub></td>
     </tr>
   </table>
 </p>
