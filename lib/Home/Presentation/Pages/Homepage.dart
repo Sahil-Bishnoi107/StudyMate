@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:study_mate/ContactUs/Presentation/Pages/AboutUs.dart';
@@ -68,6 +70,7 @@ class _HomepageState extends State<Homepage> {
 }
 
 Widget _appBar(double height, double width,GlobalKey<ScaffoldState> key,BuildContext context){
+  
  return SizedBox(
   height: height*0.05,width: width,
   child: Row(
@@ -88,6 +91,7 @@ Widget _appBar(double height, double width,GlobalKey<ScaffoldState> key,BuildCon
 }
 
 Widget _header(double height,double width){
+final scale = (min(width, height) / 435).clamp(0.8, 1.2); 
   return Container(
 
     height: height*0.2,width: width,
@@ -97,14 +101,14 @@ Widget _header(double height,double width){
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         SizedBox( height: height*0.045,
-          child: TypingText(text: "Master",style: TextStyle(color: Colors.black, fontFamily: Fonts.outfit,fontSize: 40,fontWeight: FontWeight.w600),)),
+          child: TypingText(text: "Master",style: TextStyle(color: Colors.black, fontFamily: Fonts.outfit,fontSize: 40*scale,fontWeight: FontWeight.w600),)),
         SizedBox(height: height*0.045,
-          child: TypingText(text: "Your",style: TextStyle(color: Colors.green, fontFamily: Fonts.outfit,fontSize: 40,fontWeight: FontWeight.w600), delay: const Duration(milliseconds: 315),)),
+          child: TypingText(text: "Your",style: TextStyle(color: Colors.green, fontFamily: Fonts.outfit,fontSize: 40*scale,fontWeight: FontWeight.w600), delay: const Duration(milliseconds: 315),)),
         SizedBox(height: height*0.045,
           child: Row(
             children: [
-              TypingText(text: "Potential",style: TextStyle(color: Colors.black, fontFamily: Fonts.outfit,fontSize: 40,fontWeight: FontWeight.w600), delay: const Duration(milliseconds: 540),),
-              TypingText(text: ".",style: TextStyle(color: Colors.green, fontFamily: Fonts.outfit,fontSize: 40,fontWeight: FontWeight.w600), delay: const Duration(milliseconds: 900),)
+              TypingText(text: "Potential",style: TextStyle(color: Colors.black, fontFamily: Fonts.outfit,fontSize: 40*scale,fontWeight: FontWeight.w600), delay: const Duration(milliseconds: 540),),
+              TypingText(text: ".",style: TextStyle(color: Colors.green, fontFamily: Fonts.outfit,fontSize: 40*scale,fontWeight: FontWeight.w600), delay: const Duration(milliseconds: 900),)
             ],
           ),
         ),
@@ -114,7 +118,7 @@ Widget _header(double height,double width){
           child: ScrambleText(text: "Where Preperation meets progress",style: TextStyle(color: const Color.fromRGBO(110, 110, 110, 1), fontFamily: Fonts.nunito,fontSize: 10), delay: const Duration(milliseconds: 1000), duration: const Duration(milliseconds: 1000),)),
         SizedBox(
           height: height*0.02,
-          child: ScrambleText(text: "The Journey to AIR begins here",style: TextStyle(color: const Color.fromRGBO(110, 110, 110, 1), fontFamily: Fonts.nunito,fontSize: 10), delay: const Duration(milliseconds: 1000), duration: const Duration(milliseconds: 1000),)),
+          child: ScrambleText(text: "The Journey to AIR begins here",style: TextStyle(color: const Color.fromRGBO(110, 110, 110, 1), fontFamily: Fonts.nunito,fontSize: 10), delay: const Duration(milliseconds: 2000), duration: const Duration(milliseconds: 1000),)),
       ],
     ),
   );

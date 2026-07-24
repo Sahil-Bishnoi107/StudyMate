@@ -37,19 +37,38 @@ class AuthBloc extends Bloc<AuthEvent,AuthState> {
        emit(AuthInitial());
    },);
 
-   on<GoogleLoginStarted> ((event, emit) async{
-    const String googleClientId = "708380993884-drr1pe57o46dp8qveea4ceuoinc6ndt0.apps.googleusercontent.com";
-     final GoogleSignIn signIn = GoogleSignIn.instance;
-     await signIn.initialize(serverClientId: googleClientId);
-     final account = await signIn.authenticate();
-     emit(AuthLoading());
-     ApiResponse response =  await authRepo.GoogleSignin(account);
-     if(response.statusCode != 200){
-      emit(AuthFailure(message: response.error ?? "Google Sign In Failed"));
+   on<GoogleLoginStarted>((event, emit) async {
+   const String googleClientId ="708380993884-drr1pe57o46dp8qveea4ceuoinc6ndt0.apps.googleusercontent.com";
+  // const String googleClientId =   "708380993884-hftlp2la6vi3tcalldhoii2epm5r5qjn.apps.googleusercontent.com";   both are fine
+
+  try {
+    final GoogleSignIn signIn = GoogleSignIn.instance;
+
+    await signIn.initialize(serverClientId: googleClientId);
+
+    final account = await signIn.authenticate();
+
+    emit(AuthLoading());
+
+    ApiResponse response = await authRepo.GoogleSignin(account);
+
+    if (response.statusCode != 200) {
+      emit(AuthFailure(
+        message: response.error ?? "Google Sign In Failed",
+      ));
       return;
-     }
-     emit(AuthSuccess());
-   },);
+    }
+
+    emit(AuthSuccess());
+  } catch (e, st) {
+    print("Google Sign-In Exception: $e");
+    print("Stack Trace:\n$st");
+
+    emit(AuthFailure(
+      message: e.toString(),
+    ));
+  }
+});
   }
   
 }

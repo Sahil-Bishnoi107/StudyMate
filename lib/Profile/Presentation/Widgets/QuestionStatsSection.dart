@@ -107,14 +107,13 @@ class QuestionStatsSection extends StatelessWidget {
       int n = subjectQuestions.length;
 
       for (int sec = 0; sec < totalSections; sec++) {
-        int startIdx = (sec * n / totalSections).floor();
         int endIdx = ((sec + 1) * n / totalSections).floor();
         
-        var sectionQs = subjectQuestions.sublist(startIdx, endIdx);
+        var cumulativeQs = subjectQuestions.sublist(0, endIdx);
         double accuracy = 0.0;
-        if (sectionQs.isNotEmpty) {
-          int correctCount = sectionQs.where((q) => q.isCorrect).length;
-          accuracy = (correctCount / sectionQs.length) * 100;
+        if (cumulativeQs.isNotEmpty) {
+          int correctCount = cumulativeQs.where((q) => q.isCorrect).length;
+          accuracy = (correctCount / cumulativeQs.length) * 100;
         }
 
         spots.add(FlSpot(sec.toDouble(), accuracy));

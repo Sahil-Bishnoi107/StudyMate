@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
@@ -131,15 +133,16 @@ Widget _headerSection(double height, double width, Student student,List<MyContes
 }
 
 Widget _graphHeader(double height, double width){
+  final scale = (min(width, height) / 435).clamp(0.8, 1.2); 
   return Container(
     height: height*0.04,width: width,
     margin: EdgeInsets.symmetric(horizontal: width*0.05),
     child: Row(
       children: [
-      Text("Your",style: TextStyle(color: Colors.black,fontFamily: Fonts.outfit,fontSize: 20,fontWeight: FontWeight.w600),),
-      Text(" Progress ",style: TextStyle(color: Colors.green,fontFamily: Fonts.outfit,fontSize: 20,fontWeight: FontWeight.w600),),
-      Text("So Far",style: TextStyle(color: Colors.black,fontFamily: Fonts.outfit,fontSize: 20,fontWeight: FontWeight.w600),),
-      Text(".",style: TextStyle(color: Colors.green,fontFamily: Fonts.outfit,fontSize: 20,fontWeight: FontWeight.w600),)
+      Text("Your",style: TextStyle(color: Colors.black,fontFamily: Fonts.outfit,fontSize: 20*scale,fontWeight: FontWeight.w600),),
+      Text(" Progress ",style: TextStyle(color: Colors.green,fontFamily: Fonts.outfit,fontSize: 20*scale,fontWeight: FontWeight.w600),),
+      Text("So Far",style: TextStyle(color: Colors.black,fontFamily: Fonts.outfit,fontSize: 20*scale,fontWeight: FontWeight.w600),),
+      Text(".",style: TextStyle(color: Colors.green,fontFamily: Fonts.outfit,fontSize: 20*scale,fontWeight: FontWeight.w600),)
       ],
     ),
   );
