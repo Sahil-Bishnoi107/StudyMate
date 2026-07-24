@@ -16,7 +16,7 @@
     <tr>
       <td align="center"><img src="assets/appUi/Onboarding.jpeg" width="100%" alt="Onboarding Screen"><br><sub><b>Onboarding</b></sub></td>
       <td align="center"><img src="assets/appUi/Register.jpeg" width="100%" alt="Login Page"><br><sub><b>Login</b></sub></td>
-      <td align="center"><img src="assets/appUi/Homepage.jpeg width="100%" alt="Register Page"><br><sub><b>Register</b></sub></td>
+      <td align="center"><img src="assets/appUi/Homepage.jpeg" width="100%" alt="Register Page"><br><sub><b>Register</b></sub></td>
       <td align="center"><img src="assets/appUi/Profile2.jpeg" width="100%" alt="Homepage"><br><sub><b>Homepage</b></sub></td>
     </tr>
     <!-- Row 2: Examination Engine Flow -->
