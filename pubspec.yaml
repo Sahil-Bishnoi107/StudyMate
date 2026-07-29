@@ -27,6 +27,8 @@ dependencies:
   lottie: ^3.3.3
   visibility_detector: ^0.4.0+2
   flutter_launcher_icons: ^0.14.4
+  timeago: ^3.7.1
+  intl: ^0.20.3
 
 dev_dependencies:
   flutter_test:
