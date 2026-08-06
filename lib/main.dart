@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:media_kit/media_kit.dart';
 import 'package:study_mate/Authentication/Presentation/Bloc/auth_bloc.dart';
 import 'package:study_mate/Authentication/Presentation/Bloc/regirster_bloc.dart';
 import 'package:study_mate/Authentication/Presentation/Pages/AutoLoginPage.dart';
@@ -13,9 +14,11 @@ import 'package:study_mate/QuestionsSection/Presentation/Bloc/QuestionsBloc.dart
 import 'package:study_mate/TestsPage/Presentation/Bloc/TestBloc.dart';
 import 'package:study_mate/Contest/Presentation/Bloc/ContestPage/ContestPageBloc.dart';
 import 'package:study_mate/Settings/Presentation/Bloc/SettingsBloc.dart';
+import 'package:study_mate/Lectures/Presentation/Bloc/LecturesPage/LecturesPageBloc.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
+  MediaKit.ensureInitialized();
   await setup();
   runApp(const MyApp());
 }
@@ -37,6 +40,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => sl<Profilebloc>()),
         BlocProvider(create: (context) => sl<MyContestBloc>()),
         BlocProvider(create: (context) => sl<SettingsBloc>()),
+        BlocProvider(create: (context) => sl<LecturesPageBloc>()),
         BlocProvider(create: (context) => sl<NotificationBloc>())
          
       ],
