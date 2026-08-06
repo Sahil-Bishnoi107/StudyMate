@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:study_mate/Home/Domain/Entities/Question.dart';
+import 'package:study_mate/LoadingScreen/LoadingAnimations.dart';
 import 'package:study_mate/QuestionsSection/Data/QuestionsRepo.dart';
 import 'package:study_mate/QuestionsSection/Domain/Collection.dart';
 import 'package:study_mate/QuestionsSection/Presentation/Bloc/QuestionsBloc.dart';
@@ -67,7 +67,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
         builder: (context, state) {
           if (state is FetchingQuestionsState) {
             return Center(
-              child: LoadingAnimationWidget.beat(color: Colors.green, size: 50),
+              child: LoadingLogo(),
             );
           }
 

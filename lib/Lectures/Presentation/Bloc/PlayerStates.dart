@@ -14,13 +14,17 @@ class PlayerBlocState extends Equatable {
   final double playbackSpeed;
   final VideoQuality quality;
   final String? currentVideo;
+  final bool showConnectionPrompt;
+  final bool connectionPromptShown;
 
   const PlayerBlocState({
     this.controlsVisible = true,
     this.fullscreen = false,
     this.playbackSpeed = 1.0,
-    this.quality = VideoQuality.auto,
+    this.quality = VideoQuality.p1080,
     this.currentVideo,
+    this.showConnectionPrompt = false,
+    this.connectionPromptShown = false,
   });
 
   PlayerBlocState copyWith({
@@ -29,6 +33,8 @@ class PlayerBlocState extends Equatable {
     double? playbackSpeed,
     VideoQuality? quality,
     String? currentVideo,
+    bool? showConnectionPrompt,
+    bool? connectionPromptShown,
   }) {
     return PlayerBlocState(
       controlsVisible: controlsVisible ?? this.controlsVisible,
@@ -36,6 +42,8 @@ class PlayerBlocState extends Equatable {
       playbackSpeed: playbackSpeed ?? this.playbackSpeed,
       quality: quality ?? this.quality,
       currentVideo: currentVideo ?? this.currentVideo,
+      showConnectionPrompt: showConnectionPrompt ?? this.showConnectionPrompt,
+      connectionPromptShown: connectionPromptShown ?? this.connectionPromptShown,
     );
   }
 
@@ -46,5 +54,7 @@ class PlayerBlocState extends Equatable {
         playbackSpeed,
         quality,
         currentVideo,
+        showConnectionPrompt,
+        connectionPromptShown,
       ];
 }

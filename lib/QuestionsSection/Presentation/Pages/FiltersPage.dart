@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:study_mate/LoadingScreen/LoadingAnimations.dart';
+
 import 'package:study_mate/QuestionsSection/Presentation/Bloc/QuestionsBloc.dart';
 import 'package:study_mate/QuestionsSection/Presentation/Bloc/QuestionsEvents.dart';
 import 'package:study_mate/QuestionsSection/Presentation/Bloc/QuestionsStates.dart';
@@ -44,8 +45,9 @@ class _FiltersPageState extends State<FiltersPage> {
       builder: (context, state) {
         if(state is FetchingQuestionsState){
           return Scaffold(
+            backgroundColor: Colors.white,
             body: Center(
-             child: LoadingAnimationWidget.flickr(leftDotColor: Colors.green,rightDotColor: Colors.yellow,size: 50),
+             child: LoadingLogo(),
             ),
           );
         }

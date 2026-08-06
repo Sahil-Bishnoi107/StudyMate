@@ -53,7 +53,7 @@ class _DoubleTapOverlayState extends State<DoubleTapOverlay> {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = context.read<PlayerBloc>();
+   
     final controlsVisible = context.select((PlayerBloc b) => b.state.controlsVisible);
 
     return Stack(

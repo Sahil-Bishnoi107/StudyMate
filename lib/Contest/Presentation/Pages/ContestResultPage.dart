@@ -2,13 +2,13 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:study_mate/Contest/Domain/MyContest.dart';
 import 'package:study_mate/Contest/Presentation/Bloc/MyContest/MyContestStates.dart';
 import 'package:study_mate/Contest/Presentation/Bloc/MyContestResult/MyContestResultBloc.dart';
 import 'package:study_mate/Contest/Presentation/Bloc/MyContestResult/MyContestResultState.dart';
 import 'package:study_mate/Contest/Presentation/Pages/ContestReviewPage.dart';
+import 'package:study_mate/LoadingScreen/LoadingAnimations.dart';
 import 'package:study_mate/Test/Presentation/Widgets/question_data.dart';
 import 'package:study_mate/fonts.dart';
 
@@ -27,7 +27,7 @@ class ContestResultPage extends StatelessWidget {
       body: BlocBuilder<MyContestResultBloc, MyContestResultState>(
         builder: (context, state) {
           if (state is ContestResultLoading || state is InitialMyContestResultState ||  state is MyContestLoaded) {
-            return Center(child: LoadingAnimationWidget.beat(color: Colors.green, size: 50));
+            return Center(child: LoadingLogo());
           }
           if (state is ContestResultError) {
             return Center(child: Text(state.message, style: TextStyle(color: Colors.red)));

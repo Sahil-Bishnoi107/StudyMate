@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:study_mate/LoadingScreen/LoadingAnimations.dart';
 import 'package:study_mate/QuestionsSection/Domain/Collection.dart';
 import 'package:study_mate/QuestionsSection/Presentation/Bloc/MyQuestionsBloc/MyQuestionsBloc.dart';
 import 'package:study_mate/QuestionsSection/Presentation/Bloc/MyQuestionsBloc/MyQuestionsEvents.dart';
@@ -95,7 +95,7 @@ class _MyQuestionState extends State<MyQuestion> {
           if (state is MyQuestionsInitialState ||
               state is MyQuestionsLoadingState) {
             return Center(
-              child: LoadingAnimationWidget.beat(color: Colors.green, size: 50),
+              child: LoadingLogo(),
             );
           }
 

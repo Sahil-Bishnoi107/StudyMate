@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:study_mate/LoadingScreen/LoadingAnimations.dart';
 import 'package:study_mate/Notifications/Domain/Notification.dart';
 import 'package:study_mate/Notifications/Presentation/Bloc/NotificationBloc.dart';
 import 'package:study_mate/Notifications/Presentation/Bloc/NotificationEvents.dart';
@@ -42,7 +42,7 @@ class _NotificationpageState extends State<Notificationpage> {
                 if(state is LoadingNotificationState){
                   return SizedBox(
                     height: height*0.8,width: width,
-                    child: Center(child: LoadingAnimationWidget.beat(color: Colors.green, size: 50)),
+                    child: Center(child: LoadingLogo()),
                   );
                 }
 

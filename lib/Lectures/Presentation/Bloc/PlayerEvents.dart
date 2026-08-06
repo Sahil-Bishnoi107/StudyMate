@@ -47,3 +47,14 @@ class ChangeQuality extends PlayerEvent {
 class EnterFullscreen extends PlayerEvent {}
 
 class ExitFullscreen extends PlayerEvent {}
+
+class BufferingStateChanged extends PlayerEvent {
+  final bool isBuffering;
+  BufferingStateChanged(this.isBuffering);
+}
+
+class ShowConnectionPrompt extends PlayerEvent {}
+
+class AcceptConnectionPrompt extends PlayerEvent {}
+
+class DismissConnectionPrompt extends PlayerEvent {}

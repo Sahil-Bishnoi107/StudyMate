@@ -5,12 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:study_mate/Contest/Domain/MyContest.dart';
 import 'package:study_mate/Home/Presentation/Widgets/drawer.dart';
+import 'package:study_mate/LoadingScreen/LoadingAnimations.dart';
 import 'package:study_mate/Notifications/Presentation/Pages/NotificationPage.dart';
 import 'package:study_mate/Profile/Domain/student.dart';
 import 'package:study_mate/Profile/Presentation/Bloc/ProfileBloc.dart';
 import 'package:study_mate/Profile/Presentation/Bloc/ProfileEvents.dart';
 import 'package:study_mate/Profile/Presentation/Bloc/ProfileStates.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:study_mate/fonts.dart';
 
 import 'package:study_mate/Profile/Presentation/Widgets/ProfileTopSection.dart';
@@ -46,7 +46,7 @@ class _ProfilePageState extends State<ProfilePage> {
         builder: (context, state) {
           if (state is InitialProfileState || state is LoadingProfileState) {
             return Center(
-              child: LoadingAnimationWidget.beat(color: Colors.green, size: 50),
+              child: LoadingLogo(),
             );
           } else if (state is LoadedProfileState) {
             return RefreshIndicator(

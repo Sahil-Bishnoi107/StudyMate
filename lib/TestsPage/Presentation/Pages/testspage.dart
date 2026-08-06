@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:study_mate/DependancyInjections.dart/service_locator.dart';
 import 'package:study_mate/Home/Presentation/Widgets/drawer.dart';
+import 'package:study_mate/LoadingScreen/LoadingAnimations.dart';
 import 'package:study_mate/Test/Presentation/Bloc/test_bloc.dart';
 import 'package:study_mate/Test/Presentation/Bloc/testevents.dart';
 import 'package:study_mate/Test/Presentation/Pages/test.dart';
@@ -28,7 +28,7 @@ class TestsPage extends StatelessWidget {
            if(state is LoadingTestPageState){
             return Container(
               child: Center(
-                child: LoadingAnimationWidget.hexagonDots(color: Colors.greenAccent, size: 50),
+                child: LoadingLogo(),
               ),
             );
            }

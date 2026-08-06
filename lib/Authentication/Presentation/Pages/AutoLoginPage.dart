@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:study_mate/Authentication/Presentation/Bloc/auth_bloc.dart';
 import 'package:study_mate/Authentication/Presentation/Bloc/auth_events.dart';
 import 'package:study_mate/Authentication/Presentation/Bloc/auth_states.dart';
 import 'package:study_mate/Authentication/Presentation/Pages/LoginPage.dart';
 import 'package:study_mate/Authentication/Presentation/Pages/onboarding_page.dart';
 import 'package:study_mate/Home/Presentation/Pages/Homepage.dart';
+import 'package:study_mate/LoadingScreen/LoadingAnimations.dart';
 
 class Autologinpage extends StatefulWidget {
   const Autologinpage({super.key});
@@ -46,7 +46,7 @@ class _AutologinpageState extends State<Autologinpage> {
         body: Container(
           color: Colors.black,
           height: height,width: width,
-          child: Center(child: LoadingAnimationWidget.beat(color: Colors.white, size: 50))),
+          child: Center(child: LoadingLogo())),
       ),
     );
   }

@@ -57,7 +57,37 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
       },
       child: Scaffold(
         backgroundColor: Colors.black,
-        body: BlocBuilder<PlayerBloc, PlayerBlocState>(
+        body: BlocConsumer<PlayerBloc, PlayerBlocState>(
+          listenWhen: (previous, current) =>
+              !previous.showConnectionPrompt && current.showConnectionPrompt,
+          listener: (context, state) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Row(
+                  children: [
+                    const Expanded(
+                      child: Text("Your connection seems slow. Switch to Auto quality?"),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                        context.read<PlayerBloc>().add(DismissConnectionPrompt());
+                      },
+                      child: const Text("Cancel", style: TextStyle(color: Colors.white)),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                        context.read<PlayerBloc>().add(AcceptConnectionPrompt());
+                      },
+                      child: const Text("Switch", style: TextStyle(color: Colors.white)),
+                    ),
+                  ],
+                ),
+                duration: const Duration(seconds: 10),
+              ),
+            );
+          },
           builder: (context, state) {
             return Stack(
               fit: StackFit.expand,

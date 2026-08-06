@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:study_mate/Lectures/Presentation/Bloc/LecturesPage/LecturesPageBloc.dart';
 import 'package:study_mate/Lectures/Presentation/Bloc/LecturesPage/LecturesPageEvents.dart';
 import 'package:study_mate/Lectures/Presentation/Bloc/LecturesPage/LecturesPageStates.dart';
@@ -9,6 +9,7 @@ import 'package:study_mate/Lectures/Presentation/Bloc/PlayerEvents.dart';
 import 'package:study_mate/Lectures/Presentation/Pages/VideoPlayerPage.dart';
 import 'package:study_mate/Lectures/Presentation/Widgets/LectureCard.dart';
 import 'package:study_mate/Lectures/Services/MediaKitService.dart';
+import 'package:study_mate/LoadingScreen/LoadingAnimations.dart';
 import 'package:study_mate/fonts.dart';
 
 class Lecturespage extends StatefulWidget {
@@ -35,7 +36,7 @@ class _LecturespageState extends State<Lecturespage> {
       body: BlocBuilder<LecturesPageBloc, LecturesPageStates>(
         builder: (context, state) {
           if (state is LoadingLecturesState) {
-            return Center(child: LoadingAnimationWidget.beat(color: Colors.green, size: 50));
+            return Center(child: LoadingLogo());
           } else if (state is ErrorLecturesState) {
             return Center(
               child: Text(
@@ -107,7 +108,7 @@ class _LecturespageState extends State<Lecturespage> {
         children: [
           SizedBox(width: 5),
           IconButton(
-            icon: Icon(Icons.arrow_back_ios_sharp, color: Colors.black),
+            icon: Icon(LucideIcons.chevronLeft, color: Colors.black),
             onPressed: () => Navigator.pop(context),
           ),
           Text(
@@ -115,7 +116,7 @@ class _LecturespageState extends State<Lecturespage> {
             style: TextStyle(
               color: Colors.black,
               fontFamily: Fonts.outfit,
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w600,
               fontSize: 18,
             ),
           ),

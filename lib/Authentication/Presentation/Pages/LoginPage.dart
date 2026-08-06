@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:study_mate/Authentication/Presentation/Bloc/auth_bloc.dart';
 import 'package:study_mate/Authentication/Presentation/Bloc/auth_events.dart';
@@ -11,6 +10,7 @@ import 'package:study_mate/Authentication/Presentation/Widgets/Button.dart';
 import 'package:study_mate/Authentication/Presentation/Widgets/LoginBoxes.dart';
 import 'package:study_mate/Authentication/Presentation/Widgets/LoginOptions.dart';
 import 'package:study_mate/Home/Presentation/Pages/Homepage.dart';
+import 'package:study_mate/LoadingScreen/LoadingAnimations.dart';
 import 'package:study_mate/fonts.dart';
 
 class LoginPage extends StatelessWidget {
@@ -39,7 +39,7 @@ class LoginPage extends StatelessWidget {
               height: height,width: width,
               color: Colors.white,
               child: Center(
-                child: LoadingAnimationWidget.inkDrop(color: Colors.green, size: 50),
+                child: LoadingLogo()
               ),
              ),
           );

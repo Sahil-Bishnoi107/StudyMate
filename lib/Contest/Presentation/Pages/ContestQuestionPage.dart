@@ -2,12 +2,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:study_mate/Contest/Domain/ContestQuestion.dart';
 import 'package:study_mate/Contest/Presentation/Bloc/ContestQuestions/ContestQuestionBloc.dart';
 import 'package:study_mate/Contest/Presentation/Bloc/ContestQuestions/ContestQuestionEvents.dart';
 import 'package:study_mate/Contest/Presentation/Bloc/ContestQuestions/ContestQuestionStates.dart';
 import 'package:study_mate/Contest/Presentation/Pages/ContestSubmittedPage.dart';
+import 'package:study_mate/LoadingScreen/LoadingAnimations.dart';
 import 'package:study_mate/Test/Presentation/Widgets/fixedTextWidget.dart';
 import 'package:study_mate/Test/Presentation/Widgets/question_button.dart';
 import 'package:study_mate/Test/Presentation/Widgets/question_icon.dart';
@@ -87,7 +87,7 @@ class _ContestQuestionPageState extends State<ContestQuestionPage> {
         },
         builder: (context, state) {
           if (state is ContestQuestionLoading || state is ContestQuestionInitial) {
-            return Center(child: LoadingAnimationWidget.beat(color: Colors.green, size: 50));
+            return Center(child: LoadingLogo());
           }
 
           if (state is ContestQuestionSubmitting) {
@@ -95,7 +95,7 @@ class _ContestQuestionPageState extends State<ContestQuestionPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  LoadingAnimationWidget.halfTriangleDot(color: Colors.green, size: 50),
+                  LoadingLogo(),
                   SizedBox(height: 20),
                   Text("Please wait, your Contest is being submitted...", style: TextStyle(fontFamily: Fonts.nunito)),
                 ],

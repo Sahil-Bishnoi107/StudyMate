@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:study_mate/Home/Domain/Entities/Question.dart';
+import 'package:study_mate/LoadingScreen/LoadingAnimations.dart';
 import 'package:study_mate/Test/Presentation/Bloc/test_bloc.dart';
 import 'package:study_mate/Test/Presentation/Bloc/testevents.dart';
 import 'package:study_mate/Test/Presentation/Bloc/teststates.dart';
@@ -45,7 +45,7 @@ class _TestState extends State<GiveTest> {
         if(state is TestLoading){
           return Container(
             child: Center(
-              child: LoadingAnimationWidget.beat(color: Colors.green, size: 50),
+              child: LoadingLogo(),
             ),
           );
         }
@@ -58,7 +58,7 @@ class _TestState extends State<GiveTest> {
               mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(height: height*0.1,),
-              LoadingAnimationWidget.halfTriangleDot(color: Colors.green, size: 50),
+              LoadingLogo(),
               Text("Please Wait your Test is being Submitted",style: TextStyle(fontFamily: Fonts.nunito),)
             ],
             ),

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_mate/Lectures/Presentation/Bloc/PlayerEvents.dart';
 import 'package:study_mate/Lectures/Presentation/Bloc/PlayerStates.dart';
@@ -6,6 +7,8 @@ import '../../Services/MediaKitService.dart';
 
 class PlayerBloc extends Bloc<PlayerEvent, PlayerBlocState> {
   final MediaKitService mediaKit;
+  StreamSubscription<bool>? _bufferingSubscription;
+  Timer? _bufferingTimer;
 
   PlayerBloc(this.mediaKit) : super(const PlayerBlocState()) {
     on<OpenVideo>(_openVideo);
@@ -21,17 +24,36 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerBlocState> {
     on<ChangeQuality>(_quality);
     on<EnterFullscreen>(_enterFullscreen);
     on<ExitFullscreen>(_exitFullscreen);
+    on<BufferingStateChanged>(_onBufferingChanged);
+    on<ShowConnectionPrompt>(_showConnectionPrompt);
+    on<AcceptConnectionPrompt>(_acceptConnectionPrompt);
+    on<DismissConnectionPrompt>(_dismissConnectionPrompt);
+
+    _bufferingSubscription = mediaKit.player.stream.buffering.listen((isBuffering) {
+      add(BufferingStateChanged(isBuffering));
+    });
   }
 
   Future<void> _openVideo(
     OpenVideo event,
     Emitter<PlayerBlocState> emit,
   ) async {
-    await mediaKit.open(event.url);
+    final uri = Uri.parse(event.url);
+    final segments = List<String>.from(uri.pathSegments);
+    if (segments.isNotEmpty) {
+      segments.removeLast();
+    }
+    segments.addAll(["1080", "index.m3u8"]);
+    final targetUrl = uri.replace(pathSegments: segments).toString();
+
+    await mediaKit.open(targetUrl);
 
     emit(
       state.copyWith(
         currentVideo: event.url,
+        quality: VideoQuality.p1080,
+        showConnectionPrompt: false,
+        connectionPromptShown: false,
       ),
     );
   }
@@ -206,8 +228,50 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerBlocState> {
     );
   }
 
+  void _onBufferingChanged(
+    BufferingStateChanged event,
+    Emitter<PlayerBlocState> emit,
+  ) {
+    if (event.isBuffering) {
+      if (state.quality == VideoQuality.p1080 && !state.connectionPromptShown) {
+        _bufferingTimer?.cancel();
+        _bufferingTimer = Timer(const Duration(seconds: 3), () {
+          add(ShowConnectionPrompt());
+        });
+      }
+    } else {
+      _bufferingTimer?.cancel();
+    }
+  }
+
+  void _showConnectionPrompt(
+    ShowConnectionPrompt event,
+    Emitter<PlayerBlocState> emit,
+  ) {
+    if (state.quality == VideoQuality.p1080 && !state.connectionPromptShown) {
+      emit(state.copyWith(showConnectionPrompt: true));
+    }
+  }
+
+  Future<void> _acceptConnectionPrompt(
+    AcceptConnectionPrompt event,
+    Emitter<PlayerBlocState> emit,
+  ) async {
+    emit(state.copyWith(showConnectionPrompt: false, connectionPromptShown: true));
+    add(ChangeQuality(VideoQuality.auto));
+  }
+
+  void _dismissConnectionPrompt(
+    DismissConnectionPrompt event,
+    Emitter<PlayerBlocState> emit,
+  ) {
+    emit(state.copyWith(showConnectionPrompt: false, connectionPromptShown: true));
+  }
+
   @override
   Future<void> close() async {
+    _bufferingTimer?.cancel();
+    await _bufferingSubscription?.cancel();
     mediaKit.dispose();
     await super.close();
   }

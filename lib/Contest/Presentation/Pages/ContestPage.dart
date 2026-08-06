@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
+
 
 import 'package:study_mate/Contest/Presentation/Bloc/ContestPage/ContestPageBloc.dart';
 import 'package:study_mate/Contest/Presentation/Bloc/ContestPage/ContestPageEvents.dart';
@@ -13,6 +13,7 @@ import 'package:study_mate/Contest/Presentation/Bloc/MyContest/MyContestBloc.dar
 import 'package:study_mate/Contest/Presentation/Pages/MyContestsPage.dart';
 import 'package:study_mate/DependancyInjections.dart/service_locator.dart';
 import 'package:study_mate/Contest/Data/ContestRepo.dart';
+import 'package:study_mate/LoadingScreen/LoadingAnimations.dart';
 import 'package:study_mate/fonts.dart';
 
 class ContestPage extends StatefulWidget {
@@ -42,7 +43,7 @@ class _ContestPageState extends State<ContestPage> {
       body: BlocBuilder<ContestPageBloc, ContestPagestates>(
         builder: (context, state) {
           if (state is LoadingContestListState) {
-            return Center(child: LoadingAnimationWidget.beat(color: Colors.green, size: 50));
+            return Center(child: LoadingLogo());
           } else if (state is SuccessContestPageState) {
             return Column(
             
