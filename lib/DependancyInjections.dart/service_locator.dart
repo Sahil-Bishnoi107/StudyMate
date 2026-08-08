@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:study_mate/AboutUs/Data/AboutUsRepo.dart';
+import 'package:study_mate/AboutUs/Presentation/Bloc/AboutUsBloc.dart';
 import 'package:study_mate/Authentication/Data/AuthRepo.dart';
 import 'package:study_mate/Authentication/Presentation/Bloc/auth_bloc.dart';
 import 'package:study_mate/Authentication/Presentation/Bloc/regirster_bloc.dart';
@@ -44,6 +46,7 @@ Future<void> setup()async {
   sl.registerLazySingleton<SettingsRepo>(() => SettingsRepo(sl<Dio>()));
   sl.registerLazySingleton<VideoRepo>(() => VideoRepo(sl<Dio>()));
   sl.registerCachedFactory<Notificationdata>(() => Notificationdata(sl<Dio>()));
+  sl.registerLazySingleton<AboutUsRepo>(() => AboutUsRepo(sl<Dio>()));
   // what this means is that whenevr someone asks for the object in <object> give them the object () => object, so whenever we need AuthBloc it recivers the bloc created from here and so on
 
   sl.registerLazySingleton<AuthBloc>(() => AuthBloc(sl<AuthRepo>()));
@@ -59,4 +62,5 @@ Future<void> setup()async {
   sl.registerLazySingleton<SettingsBloc>(() => SettingsBloc(sl<SettingsRepo>()));
   sl.registerLazySingleton<LecturesPageBloc>(() => LecturesPageBloc(sl<VideoRepo>()));
   sl.registerLazySingleton<NotificationBloc>(() => NotificationBloc(sl<Notificationdata>()));
+  sl.registerLazySingleton<Aboutusbloc>(() => Aboutusbloc(sl<AboutUsRepo>()));
 }

@@ -2,7 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
-import 'package:study_mate/ContactUs/Presentation/Pages/AboutUs.dart';
+import 'package:study_mate/AboutUs/Presentation/Pages/AboutUsPage.dart';
+
 import 'package:study_mate/Contest/Presentation/Pages/ContestPage.dart';
 import 'package:study_mate/Home/Presentation/Widgets/drawer.dart';
 import 'package:study_mate/Notifications/Presentation/Pages/NotificationPage.dart';
@@ -152,7 +153,7 @@ Widget _aboutSection(double height, double width,BuildContext context){
       Row(
         children: [
           GestureDetector(
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => Aboutus())),
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => AboutUsPage())),
             child: Text("Contact Us", style: TextStyle(color: Colors.green,fontFamily: Fonts.outfit,fontSize: 11),)),
           Icon(Icons.arrow_forward_ios_sharp,size: 10,color: Colors.green,)
         ],

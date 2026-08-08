@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
-import 'package:study_mate/ContactUs/Presentation/Pages/AboutUs.dart';
+import 'package:study_mate/AboutUs/Presentation/Pages/AboutUsPage.dart';
 import 'package:study_mate/Contest/Presentation/Pages/ContestPage.dart';
 import 'package:study_mate/Home/Presentation/Pages/Homepage.dart';
 import 'package:study_mate/Lectures/Presentation/Pages/LecturesPage.dart';
@@ -88,7 +88,7 @@ Drawer mainDrawer(double height, double width,BuildContext context){
               ListTile(
                 leading: Icon(LucideIcons.circleHelp400Dir),
                 title: const Text("Contact Us",style: ts,),
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Aboutus())),
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AboutUsPage())),
               ),
               ListTile(
                 leading: Icon(LucideIcons.settings),
