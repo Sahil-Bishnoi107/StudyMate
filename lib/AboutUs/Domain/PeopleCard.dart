@@ -24,11 +24,11 @@ class PersonCard {
 
   factory PersonCard.fromJson(Map<String, dynamic> json) {
     return PersonCard(
-      id: json['id'] ?? '',
+      id: json['person_id'] ?? '',
       name: json['name'] ?? '',
       roleTitle: json['roleTitle'] ?? '',
-      peopleRole: _parsePeopleRole(json['peopleRole']),
-      photoUrl: json['photoUrl'] ?? '',
+      peopleRole: _parsePeopleRole(json['role']),
+      photoUrl: json['picUrl'] ?? '',
     );
   }
 

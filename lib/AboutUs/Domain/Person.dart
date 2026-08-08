@@ -31,18 +31,18 @@ class Person {
 
   factory Person.fromJson(Map<String, dynamic> json) {
     return Person(
-      id: json['id'] ?? '',
+      id: json['person_id'] ?? '',
       name: json['name'] ?? '',
       description: json['description'] ?? '',
       role: _parsePeopleRole(json['role']),
       education: List<String>.from(json['education'] ?? const []),
       institute: List<String>.from(json['institute'] ?? const []),
       experience: List<String>.from(json['experience'] ?? const []),
-      yearsExperience: json['yearsExperience'] ?? 0,
+      yearsExperience: json['years_experience'] ?? 0,
       email: json['email'] ?? '',
-      mobileNumber: json['mobileNumber'] ?? '',
-      roleTitle: json['roleTitle'] ?? '',
-      photoUrl: json['photoUrl'] ?? '',
+      mobileNumber: json['mobile_number'] ?? '',
+      roleTitle: json['role_title'] ?? '',
+      photoUrl: json['photo_url'] ?? '',
     );
   }
 
