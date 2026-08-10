@@ -32,7 +32,7 @@ class ProfileTopSection extends StatelessWidget {
                   fontFamily: Fonts.outfit,
                   fontWeight: FontWeight.w600,
                   color: Colors.black,
-                  fontSize: 20,
+                  fontSize: Responsive.font(context, 20),
                 ),
               ),
             ),

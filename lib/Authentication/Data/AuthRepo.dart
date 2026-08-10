@@ -17,9 +17,28 @@ class AuthRepo extends AuthData{
 
   @override
   Future<ApiResponse> autoLogin(String refreshToken) async {
-   await Future.delayed(Duration(seconds: 2),(){
-   });
-   return ApiResponse(statusCode: 404,error: "Not Implemented");
+   print("${baseUrl}Auth/auto_login");
+   final url = Uri.parse("${baseUrl}Auth/auto_login");
+   try{
+    final res = await http.post(url,headers: {
+      'Content-Type' : 'application/json'
+    },
+    body:   jsonEncode({
+        "token" : refreshToken
+      }));
+
+      if(res.statusCode != 200){return ApiResponse(statusCode: res.statusCode);}
+      final jsonFile = jsonDecode(res.body);
+      String accessToken = jsonFile['access_token'] ?? "";
+      String refreshToke = jsonFile['refresh_token'] ?? "";
+      print("Access Tone : $accessToken");
+      print("Refresh Tone : $refreshToke");
+      await SecureTokens().saveTokens(accessToken, refreshToke);
+      return ApiResponse(statusCode: 200);
+   }
+   catch(e){
+    return ApiResponse(statusCode: 500);
+   }
   }
   
 

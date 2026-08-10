@@ -33,7 +33,7 @@ class _LoginBoxState extends State<LoginBox> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-        Text(widget.name, style: TextStyle(color: Colors.black,fontFamily: Fonts.outfit,fontSize: 14,fontWeight: FontWeight.w400),),
+        Text(widget.name, style: TextStyle(color: Colors.black,fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 14),fontWeight: FontWeight.w400),),
         SizedBox(height: height*0.005),
         Container(
           height: height*0.06,
@@ -47,7 +47,7 @@ class _LoginBoxState extends State<LoginBox> {
           child: Row(
             children: [
               SizedBox(width: width*0.025,),
-              Icon(widget.icon,color: Colors.black,size: widget.size,),
+              Icon(widget.icon,color: Colors.black,size: Responsive.icon(context, widget.size),),
               SizedBox(width: widget.additionalGap ?? 0,),
               SizedBox(width: width*0.016,),
               SizedBox(

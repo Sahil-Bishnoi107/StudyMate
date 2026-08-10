@@ -41,7 +41,7 @@ class PersonCardWidget extends StatelessWidget {
                       height: 60,
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) =>
-                          const Icon(Icons.person, color: Colors.grey, size: 60),
+                           Icon(Icons.person, color: Colors.grey, size: Responsive.icon(context, 60)),
                       loadingBuilder: (context, child, loadingProgress) {
                         if (loadingProgress == null) return child;
                         return Container(
@@ -62,7 +62,7 @@ class PersonCardWidget extends StatelessWidget {
                       width: 60,
                       height: 60,
                       color: Colors.grey[200],
-                      child: const Icon(Icons.person, color: Colors.grey, size: 40),
+                      child:  Icon(Icons.person, color: Colors.grey, size: Responsive.icon(context, 40)),
                     ),
             ),
             const SizedBox(width: 16),
@@ -74,7 +74,7 @@ class PersonCardWidget extends StatelessWidget {
                     person.name,
                     style: TextStyle(
                       fontFamily: Fonts.outfit,
-                      fontSize: 16,
+                      fontSize: Responsive.font(context, 16),
                       fontWeight: FontWeight.bold,
                       color: Colors.black87,
                     ),
@@ -84,7 +84,7 @@ class PersonCardWidget extends StatelessWidget {
                     person.roleTitle,
                     style: TextStyle(
                       fontFamily: Fonts.nunito,
-                      fontSize: 13,
+                      fontSize: Responsive.font(context, 13),
                       color: Colors.grey[600],
                     ),
                   ),

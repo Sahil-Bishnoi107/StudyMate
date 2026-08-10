@@ -26,7 +26,7 @@ class _LoginOptionState extends State<LoginOption> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(widget.icon,size: widget.size,),
+          Icon(widget.icon,size: Responsive.icon(context, widget.size),),
           SizedBox(width: 10,),
           Text(widget.type,style: TextStyle(color: Colors.black,fontFamily: Fonts.nunito),)
         ],

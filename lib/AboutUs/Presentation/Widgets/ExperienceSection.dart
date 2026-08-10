@@ -27,14 +27,14 @@ class ExperienceSection extends StatelessWidget {
                   color: Colors.green.withOpacity(0.1),
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(Icons.work_outline, color: Colors.green, size: 20),
+                child: Icon(Icons.work_outline, color: Colors.green, size: Responsive.icon(context, 20)),
               ),
               const SizedBox(width: 12),
               Text(
                 "Professional Experience",
                 style: TextStyle(
                   fontFamily: Fonts.outfit,
-                  fontSize: 18,
+                  fontSize: Responsive.font(context, 18),
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
@@ -53,7 +53,7 @@ class ExperienceSection extends StatelessWidget {
                         "${person.yearsExperience}+",
                         style: TextStyle(
                           fontFamily: Fonts.outfit,
-                          fontSize: 24,
+                          fontSize: Responsive.font(context, 24),
                           fontWeight: FontWeight.w900,
                           color: Colors.black,
                         ),
@@ -62,7 +62,7 @@ class ExperienceSection extends StatelessWidget {
                         "YEARS EXPERIENCE",
                         style: TextStyle(
                           fontFamily: Fonts.outfit,
-                          fontSize: 10,
+                          fontSize: Responsive.font(context, 10),
                           fontWeight: FontWeight.bold,
                           color: Colors.grey[500],
                         ),
@@ -80,16 +80,16 @@ class ExperienceSection extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Padding(
+                   Padding(
                     padding: EdgeInsets.only(top: 4, right: 12),
-                    child: Icon(Icons.verified_outlined, color: Colors.green, size: 16),
+                    child: Icon(Icons.verified_outlined, color: Colors.green, size: Responsive.icon(context, 16)),
                   ),
                   Expanded(
                     child: Text(
                       exp,
                       style: TextStyle(
                         fontFamily: Fonts.nunito,
-                        fontSize: 13,
+                        fontSize: Responsive.font(context, 13),
                         color: Colors.black87,
                         height: 1.5,
                       ),

@@ -65,7 +65,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         children: [
                      
                       _headerSection(height, width, state.student, state.contest),
-                      _graphHeader(height, width),
+                      _graphHeader(height, width,context),
                       const SizedBox(height: 20,),
                       _commonStatSection(height, width, 22, state.questions.length, state.student.testsGiven.length, state.contest.length),
                       SizedBox(height: height*0.02,),
@@ -110,9 +110,9 @@ Widget _appBar(double height,double width,BuildContext context){
       children: [
         InkWell(
           onTap: () => Scaffold.of(context).openDrawer(),
-          child: Icon(Icons.menu_sharp,size: 30,)),
+          child: Icon(Icons.menu_sharp,size: Responsive.icon(context, 30),)),
           SizedBox(width: width*0.05,),
-          Expanded(child: Text("Profile",style: TextStyle(color: Colors.black,fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: 18),)),
+          Expanded(child: Text("Profile",style: TextStyle(color: Colors.black,fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: Responsive.font(context, 18)),)),
           GestureDetector(
             onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => Notificationpage())),
             child: Icon(Icons.notifications_none_sharp))
@@ -132,16 +132,16 @@ Widget _headerSection(double height, double width, Student student,List<MyContes
   );
 }
 
-Widget _graphHeader(double height, double width){
+Widget _graphHeader(double height, double width,BuildContext context){
   final scale = (min(width, height) / 435).clamp(0.8, 1.2); 
   return Container(
     height: height*0.04,width: width,
     margin: EdgeInsets.symmetric(horizontal: width*0.05),
     child: Row(
       children: [
-      Text("Your",style: TextStyle(color: Colors.black,fontFamily: Fonts.outfit,fontSize: 20*scale,fontWeight: FontWeight.w600),),
-      Text(" Progress ",style: TextStyle(color: Colors.green,fontFamily: Fonts.outfit,fontSize: 20*scale,fontWeight: FontWeight.w600),),
-      Text("So Far",style: TextStyle(color: Colors.black,fontFamily: Fonts.outfit,fontSize: 20*scale,fontWeight: FontWeight.w600),),
+      Text("Your",style: TextStyle(color: Colors.black,fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 20*scale),fontWeight: FontWeight.w600),),
+      Text(" Progress ",style: TextStyle(color: Colors.green,fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 20*scale),fontWeight: FontWeight.w600),),
+      Text("So Far",style: TextStyle(color: Colors.black,fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 20*scale),fontWeight: FontWeight.w600),),
       Text(".",style: TextStyle(color: Colors.green,fontFamily: Fonts.outfit,fontSize: 20*scale,fontWeight: FontWeight.w600),)
       ],
     ),

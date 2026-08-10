@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:study_mate/Test/Presentation/Widgets/fixedTextWidget.dart';
 import 'package:study_mate/fonts.dart';
 
-Widget QuestionOption(String option,double height,double width,bool isSelected,String optionNum){
+Widget QuestionOption(String option,double height,double width,bool isSelected,String optionNum,BuildContext context){
   return Container(
     constraints: BoxConstraints(minHeight: height*0.08),
     width: width*0.9,
@@ -21,10 +21,10 @@ Widget QuestionOption(String option,double height,double width,bool isSelected,S
             color: isSelected ? Colors.green : const Color.fromRGBO(220, 220, 220, 0.4),
             borderRadius: BorderRadius.circular(30),
           ),
-          child: Center(child: Text(optionNum,style: TextStyle(fontFamily: Fonts.nunito,fontSize: 18, fontWeight: FontWeight.bold, color: isSelected ? Colors.white : Colors.blueGrey),)),
+          child: Center(child: Text(optionNum,style: TextStyle(fontFamily: Fonts.nunito,fontSize: Responsive.font(context, 18), fontWeight: FontWeight.bold, color: isSelected ? Colors.white : Colors.blueGrey),)),
         ),
         SizedBox(width: width*0.02,),
-        Expanded(child: MixedMathText(text:  option,textStyle: TextStyle(fontFamily: Fonts.nunito,color: isSelected ? Colors.green : Colors.black),)),
+        Flexible(child: MixedMathText(text:  option,textStyle: TextStyle(fontFamily: Fonts.nunito,color: isSelected ? Colors.green : Colors.black),)),
       ],
     ),
   );
@@ -53,7 +53,7 @@ Widget QuestionReviewOption(String option,double height,double width,bool isSele
           child: Center(child: Text(optionNum,style: TextStyle(fontFamily: Fonts.nunito,fontSize: 18, fontWeight: FontWeight.bold, color: isSelected ? Colors.white : Colors.blueGrey),)),
         ),
         SizedBox(width: width*0.02,),
-        Text(option,style: TextStyle(fontFamily: Fonts.nunito,color: isSelected ? (isCorrect ? Colors.green : Colors.red) : Colors.black),),
+        Flexible(child: Text(option,style: TextStyle(fontFamily: Fonts.nunito,color: isSelected ? (isCorrect ? Colors.green : Colors.red) : Colors.black),)),
       ],
     ),
   );

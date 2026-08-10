@@ -140,12 +140,12 @@ class _QuestionsPageState extends State<QuestionsPage> {
     return Row(
       children: [
         IconButton(
-          icon: Icon(Icons.arrow_back_ios, size: 20),
+          icon: Icon(Icons.arrow_back_ios, size: Responsive.icon(context, 20)),
           onPressed: () {
             BlocProvider.of<Questionsbloc>(context).add(ResetFiltersEvent());
           },
         ),
-        Text("Question Practice", style : TextStyle(color : Colors.black, fontFamily : Fonts.outfit,fontWeight: FontWeight.w600, fontSize: 18))
+        Text("Question Practice", style : TextStyle(color : Colors.black, fontFamily : Fonts.outfit,fontWeight: FontWeight.w600, fontSize: Responsive.font(context, 18)))
       ],
     );
   }
@@ -166,9 +166,9 @@ class _QuestionsPageState extends State<QuestionsPage> {
         child: Center(
           child: Row(
             children: [
-              Icon(Bootstrap.bookmark, size: 15, color: Colors.green),
+              Icon(Bootstrap.bookmark, size: Responsive.icon(context, 15), color: Colors.green),
               SizedBox(width: width * 0.015),
-              Text("Save to Collection", style: TextStyle(color: Colors.black, fontFamily: Fonts.nunito, fontWeight: FontWeight.bold, fontSize: 12)),
+              Text("Save to Collection", style: TextStyle(color: Colors.black, fontFamily: Fonts.nunito, fontWeight: FontWeight.bold, fontSize: Responsive.font(context, 12))),
             ],
           ),
         ),
@@ -209,13 +209,13 @@ class _QuestionsPageState extends State<QuestionsPage> {
     return Row(
       children: [
         Text("Question:",
-            style: TextStyle(fontFamily: Fonts.nunito, fontWeight: FontWeight.bold, fontSize: 15)),
+            style: TextStyle(fontFamily: Fonts.nunito, fontWeight: FontWeight.bold, fontSize: Responsive.font(context, 15))),
         SizedBox(width: width * 0.2),
         Expanded(
             child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Icon(Bootstrap.exclamation_circle, size: 15, color: Colors.orange),
+            Icon(Bootstrap.exclamation_circle, size: Responsive.icon(context, 15), color: Colors.orange),
             SizedBox(width: 5),
             Text(difficulty, style: TextStyle(fontFamily: Fonts.nunito, fontWeight: FontWeight.bold, color: Colors.grey[700])),
           ],
@@ -229,7 +229,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
       constraints: BoxConstraints(minHeight: height * 0.03, maxHeight: height * 0.5, minWidth: width * 0.9, maxWidth: width * 0.9),
       child: MixedMathText(
         text: question.description,
-        textStyle: TextStyle(fontFamily: Fonts.inter, fontWeight: FontWeight.bold, fontSize: 18),
+        textStyle: TextStyle(fontFamily: Fonts.inter, fontWeight: FontWeight.bold, fontSize: Responsive.font(context, 18)),
       ),
     );
   }
@@ -255,7 +255,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
                   localSelectedOption = option;
                 });
               },
-              child: QuestionOption(option, height, width, isSelected, optionLetter),
+              child: QuestionOption(option, height, width, isSelected, optionLetter,context),
             );
           }
         },
@@ -277,7 +277,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
               borderRadius: BorderRadius.circular(10),
             ),
             child: Center(
-              child: Text("Check", style: TextStyle(color: Colors.white, fontFamily: Fonts.nunito, fontWeight: FontWeight.bold, fontSize: 16)),
+              child: Text("Check", style: TextStyle(color: Colors.white, fontFamily: Fonts.nunito, fontWeight: FontWeight.bold, fontSize: Responsive.font(context, 16))),
             ),
           ),
         ),
@@ -292,7 +292,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
               borderRadius: BorderRadius.circular(10),
             ),
             child: Center(
-              child: Text("Next", style: TextStyle(color: Colors.white, fontFamily: Fonts.nunito, fontWeight: FontWeight.bold, fontSize: 16)),
+              child: Text("Next", style: TextStyle(color: Colors.white, fontFamily: Fonts.nunito, fontWeight: FontWeight.bold, fontSize: Responsive.font(context, 16))),
             ),
           ),
         ),
@@ -357,9 +357,9 @@ class _QuestionsPageState extends State<QuestionsPage> {
                          const SizedBox(width: 5,),
                           Icon(Icons.bookmark_add_outlined),
                           const SizedBox(width: 5,),
-                          Text("Save to ", style: TextStyle(fontFamily: Fonts.outfit, fontSize: 20, fontWeight: FontWeight.w600)),
+                          Text("Save to ", style: TextStyle(fontFamily: Fonts.outfit, fontSize: Responsive.font(context, 20), fontWeight: FontWeight.w600)),
                           
-                           Text("Collection", style: TextStyle(fontFamily: Fonts.outfit, fontSize: 20, fontWeight: FontWeight.w600,color: Colors.green)),
+                           Text("Collection", style: TextStyle(fontFamily: Fonts.outfit, fontSize: Responsive.font(context, 20), fontWeight: FontWeight.w600,color: Colors.green)),
                         ],
                       ),
                       Row(
@@ -367,7 +367,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
                           const SizedBox(width: 10,),
                          SizedBox(width: width*0.8,
                          child: Text("Organise your questions by choosing a collection to save this question for future review.",
-                         style: TextStyle(fontFamily: Fonts.outfit,fontSize: 10,color: const Color.fromRGBO(110, 110, 110, 1)),
+                         style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 10),color: const Color.fromRGBO(110, 110, 110, 1)),
                          ), 
                          )
                         ],
@@ -406,12 +406,12 @@ class _QuestionsPageState extends State<QuestionsPage> {
             return Column(
               children: [
                 ListTile(
-                  leading: Icon(collectionIcons[state.collections[index].iconIndex], color: Colors.green,size: 22,),
+                  leading: Icon(collectionIcons[state.collections[index].iconIndex], color: Colors.green,size: Responsive.icon(context, 22),),
                   title: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(col.collectionname, style: TextStyle(fontFamily: Fonts.nunito, fontSize: 13)),
-                      Text(que,style: TextStyle(color: const Color.fromRGBO(110, 110, 110, 1), fontFamily: Fonts.outfit, fontSize: 10),)
+                      Text(col.collectionname, style: TextStyle(fontFamily: Fonts.nunito, fontSize: Responsive.font(context, 13))),
+                      Text(que,style: TextStyle(color: const Color.fromRGBO(110, 110, 110, 1), fontFamily: Fonts.outfit, fontSize: Responsive.font(context, 10)),)
                     ],
                   ),
                   

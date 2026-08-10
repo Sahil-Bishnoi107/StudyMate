@@ -73,7 +73,7 @@ class LectureCard extends StatelessWidget {
                           width: double.infinity,
                           height: 180,
                           color: Colors.grey[200],
-                          child: Icon(Bootstrap.camera_video, size: 50, color: Colors.grey),
+                          child: Icon(Bootstrap.camera_video, size: Responsive.icon(context, 50), color: Colors.grey),
                         );
                       },
                     ),
@@ -87,7 +87,7 @@ class LectureCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(50)
                     ),
                     child: Center(
-                      child: Icon(LucideIcons.play,size: 23,color: Colors.green,),
+                      child: Icon(LucideIcons.play,size: Responsive.icon(context, 23),color: Colors.green,),
                     ),
                   )),
                   
@@ -101,14 +101,14 @@ class LectureCard extends StatelessWidget {
                   color: Colors.grey[200],
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Icon(Bootstrap.camera_video, size: 50, color: Colors.grey),
+                child: Icon(Bootstrap.camera_video, size: Responsive.icon(context, 50), color: Colors.grey),
               ),
           //  SizedBox(height: height*0.01),
             
             SizedBox(height: height*0.01),
             
             
-            _videoIntro(height, width, video, _formatDate(video.createdAt), _formatDuration(video.duration),_formatSize(video.fileSize) , video.title)
+            _videoIntro(height, width, video, _formatDate(video.createdAt), _formatDuration(video.duration),_formatSize(video.fileSize) , video.title,context)
             
           ],
         ),
@@ -121,7 +121,7 @@ class LectureCard extends StatelessWidget {
 
 
 
-Widget _videoIntro(double height, double width,VideoModel video, String foramteeddate,String duration,String videoSize,String title){
+Widget _videoIntro(double height, double width,VideoModel video, String foramteeddate,String duration,String videoSize,String title,BuildContext context){
   Color lightColor = const Color.fromRGBO(140, 140, 140, 1);
   return Container(
     padding: EdgeInsets.symmetric(horizontal: width*0.03),
@@ -131,7 +131,7 @@ Widget _videoIntro(double height, double width,VideoModel video, String foramtee
         Text(
               title ,
               style: TextStyle(
-                fontSize: 18,
+                fontSize: Responsive.font(context, 18),
                 fontWeight: FontWeight.w400,
                 fontFamily: Fonts.outfit,
               ),
@@ -146,20 +146,20 @@ Widget _videoIntro(double height, double width,VideoModel video, String foramtee
             width: width*0.6,
             child: Row(
               children: [
-               Icon(LucideIcons.graduationCap,size: 18,color: lightColor,),
+               Icon(LucideIcons.graduationCap,size: Responsive.icon(context, 18),color: lightColor,),
                SizedBox(width: width*0.01,),
-               Text("StudyMate Team", style: TextStyle(fontFamily: Fonts.outfit,color: lightColor,fontSize: 12),)
+               Text("StudyMate Team", style: TextStyle(fontFamily: Fonts.outfit,color: lightColor,fontSize: Responsive.font(context, 12)),)
               ],
             )  
            ),
 
-           Icon(FontAwesome.clock,size: 13,color: lightColor,),
+           Icon(FontAwesome.clock,size: Responsive.icon(context, 13),color: lightColor,),
            SizedBox(width: width*0.01,),
-           Text(duration, style: TextStyle(fontFamily: Fonts.outfit,color: lightColor,fontSize: 12,fontWeight: FontWeight.w500),)
+           Text(duration, style: TextStyle(fontFamily: Fonts.outfit,color: lightColor,fontSize: Responsive.font(context, 12),fontWeight: FontWeight.w500),)
           ],
         )    ,
         SizedBox(height: height*0.01,),
-        Text("\"${video.description}\"", style: TextStyle(fontFamily: Fonts.outfit,color: lightColor,fontSize: 12,fontStyle: FontStyle.italic),maxLines: 2,),
+        Text("\"${video.description}\"", style: TextStyle(fontFamily: Fonts.outfit,color: lightColor,fontSize: Responsive.font(context, 12),fontStyle: FontStyle.italic),maxLines: 2,),
         SizedBox(height: height*0.015,),
         Row(
           children: [
@@ -167,9 +167,9 @@ Widget _videoIntro(double height, double width,VideoModel video, String foramtee
               width: width*0.5,
               child: Row(
                 children: [
-                 _decoratedLabel(height, width, video.subject),
+                 _decoratedLabel(height, width, video.subject,context),
                          SizedBox(width: width*0.02,),
-                         _decoratedLabel(height, width, "Random"),
+                         _decoratedLabel(height, width, "Random",context),
                 ],
               ),
             ),
@@ -177,7 +177,7 @@ Widget _videoIntro(double height, double width,VideoModel video, String foramtee
            SizedBox(width: width*0.05,),
         //   _decoratedLabel2(height, width, videoSize,LucideIcons.database300Dir,lightColor),
            SizedBox(width: width*0.02,),
-           _decoratedLabel2(height, width, foramteeddate,LucideIcons.calendar300Dir,lightColor),
+           _decoratedLabel2(height, width, foramteeddate,LucideIcons.calendar300Dir,lightColor,context),
            
 
           ],
@@ -188,23 +188,23 @@ Widget _videoIntro(double height, double width,VideoModel video, String foramtee
 }
 
 
-Widget _decoratedLabel(double height, double width,String text){
+Widget _decoratedLabel(double height, double width,String text,BuildContext context){
   return  Container(
               padding: EdgeInsets.symmetric(horizontal: width*0.025),
               height: height*0.022,
               decoration: BoxDecoration(color: const Color.fromRGBO(158, 158, 158, 0.2),borderRadius: BorderRadius.circular(30)),
               child: Center(
-                child: Text(text,style:TextStyle(fontFamily: Fonts.outfit,fontSize: 10),),
+                child: Text(text,style:TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 10)),),
               ),
             );
 }
 
-Widget _decoratedLabel2(double height, double width,String text, IconData icon,Color lightColor){
+Widget _decoratedLabel2(double height, double width,String text, IconData icon,Color lightColor,BuildContext context){
   return Row(
     children: [
-      Icon(icon,size: 13,),
+      Icon(icon,size: Responsive.icon(context, 13),),
       SizedBox(width: width*0.01,),
-      Text(text,style: TextStyle(fontFamily: Fonts.outfit,fontSize: 11,color:lightColor),)
+      Text(text,style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 11),color:lightColor),)
     ],
   );
 }

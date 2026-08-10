@@ -41,7 +41,7 @@ class _MyContestsPageState extends State<MyContestsPage> {
           icon: Icon(Bootstrap.chevron_left, color: Colors.black),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text("My Contests", style: TextStyle(color: Colors.black, fontFamily: Fonts.inter, fontSize: 18, fontWeight: FontWeight.bold)),
+        title: Text("My Contests", style: TextStyle(color: Colors.black, fontFamily: Fonts.inter, fontSize: Responsive.font(context, 18), fontWeight: FontWeight.bold)),
         
       ),
       body: Column(
@@ -71,7 +71,7 @@ class _MyContestsPageState extends State<MyContestsPage> {
                         padding: EdgeInsets.symmetric(horizontal: width * 0.05, vertical: 15),
                         child: Text(
                           "SHOWING ${list.length} ATTEMPTS",
-                          style: TextStyle(color: Colors.grey[600], fontSize: 10, fontWeight: FontWeight.bold, fontFamily: Fonts.inter),
+                          style: TextStyle(color: Colors.grey[600], fontSize: Responsive.font(context, 10), fontWeight: FontWeight.bold, fontFamily: Fonts.inter),
                         ),
                       ),
                       Expanded(

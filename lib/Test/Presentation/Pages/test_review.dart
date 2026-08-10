@@ -49,7 +49,7 @@ class _TestState extends State<TestReview> {
                  
                  Container(height: 2,width: width,color: const Color.fromRGBO(200, 200, 200, 0.6),),
                  SizedBox(height: height*0.02,),
-                 _questionSection(height, width, state.test.questions, pageController)
+                 _questionSection(height, width, state.test.questions, pageController,context)
                 
               ],
             ),
@@ -93,14 +93,14 @@ Widget _header(double height,double width,String testName,BuildContext context){
         child: Icon(Icons.arrow_back_ios_new)),
       SizedBox(
         width: width*0.65,
-        child: Text(testName,style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: 20),)
+        child: Text(testName,style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: Responsive.font(context, 20)),)
         ),
     ],
     ),
   );
 }
 
-Widget _questionSection(double height,double width, List<Question> questions,PageController pageController){
+Widget _questionSection(double height,double width, List<Question> questions,PageController pageController,BuildContext context){
   return Column(
     children: [
      SizedBox(
@@ -123,13 +123,13 @@ Widget _questionSection(double height,double width, List<Question> questions,Pag
           onTap: () {
             pageController.previousPage(duration: Duration(microseconds: 300), curve: Curves.easeOut);
           },
-          child: queButton(height, width, false)),
+          child: queButton(height, width, false,context)),
           SizedBox(width: width*0.1,),
         GestureDetector(
           onTap: () {
             pageController.nextPage(duration: Duration(microseconds: 300), curve: Curves.easeOut);
           },
-          child: queButton(height, width, true))
+          child: queButton(height, width, true,context))
       ],
      )
     ],
@@ -151,7 +151,7 @@ Widget _question(double height,double width, Question question,int currQue,int t
             Container(
               height: height*0.034,width: width*0.36,
               decoration: BoxDecoration(border: Border.all(color: const Color.fromRGBO(180, 180, 180, 0.7),width: 1.5),borderRadius: BorderRadius.circular(20)),
-              child: Center(child: Text("Question ${(currQue+1).toString()} of $totalQuestions",style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: 12),)),
+              child: Center(child: Text("Question ${(currQue+1).toString()} of $totalQuestions",style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: Responsive.font(context, 12)),)),
             ),
             SizedBox(width: width*0.35,),
             Expanded(child: Text(question.difficulty,style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold),)),
@@ -162,7 +162,7 @@ Widget _question(double height,double width, Question question,int currQue,int t
         ConstrainedBox(
           constraints: BoxConstraints(minHeight: height*0.03, maxHeight: height*0.5,minWidth: width*0.9,maxWidth: width*0.9),
           
-          child: Text(question.description,style: TextStyle(fontFamily: Fonts.inter,fontWeight: FontWeight.bold, fontSize: 20),)),
+          child: Text(question.description,style: TextStyle(fontFamily: Fonts.inter,fontWeight: FontWeight.bold, fontSize: Responsive.font(context, 20)),)),
 
         //Options
         SizedBox(

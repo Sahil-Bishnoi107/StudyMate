@@ -59,11 +59,11 @@ class ContestResultPage extends StatelessWidget {
                   child: Column(
                     children: [
                      SizedBox(height: 10),
-                  _buildSummarySection(width, height, state, correctQues, totalQues),
+                  _buildSummarySection(width, height, state, correctQues, totalQues,context),
                   SizedBox(height: 30),
-                  _buildPieChart(height, width, totalQues, correctQues, skippedQues, wrongQues),
+                  _buildPieChart(height, width, totalQues, correctQues, skippedQues, wrongQues,context),
                   SizedBox(height: 30),
-                  _buildSubjectBreakdown(height, width, totalPerSub, correctPerSub),
+                  _buildSubjectBreakdown(height, width, totalPerSub, correctPerSub,context),
                   SizedBox(height: 40),
                   _buildReviewButton(width, context, state),
                   SizedBox(height: height*0.1),
@@ -80,7 +80,7 @@ class ContestResultPage extends StatelessWidget {
     );
   }
 
-  Widget _buildSummarySection(double width, double height, ContestResultLoaded state, int correct, int total) {
+  Widget _buildSummarySection(double width, double height, ContestResultLoaded state, int correct, int total,BuildContext context) {
     
     return Container(
       margin: EdgeInsets.symmetric(horizontal: width*0.05),
@@ -89,26 +89,26 @@ class ContestResultPage extends StatelessWidget {
         children: [
           Row(
             children: [
-              Text("Rating",style: TextStyle(color: Colors.green,fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: 25),),
-              Text(" Change",style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: 25),)
+              Text("Rating",style: TextStyle(color: Colors.green,fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: Responsive.font(context, 25)),),
+              Text(" Change",style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: Responsive.font(context, 25)),)
             ],
           ),
 
           Row(
             children: [
-              Text(state.result.prevRating.toString(),style: TextStyle(color: Colors.black,fontFamily: Fonts.outfit,fontWeight: FontWeight.w400,fontSize: 40)),
+              Text(state.result.prevRating.toString(),style: TextStyle(color: Colors.black,fontFamily: Fonts.outfit,fontWeight: FontWeight.w400,fontSize: Responsive.font(context, 40))),
               SizedBox(width: width*0.05,),
-              Icon(Icons.arrow_forward,size:20,color: Colors.blueGrey,),
+              Icon(Icons.arrow_forward,size: Responsive.icon(context, 20),color: Colors.blueGrey,),
               SizedBox(width: width*0.05,),
-              Text(state.result.newRating.toString(),style: TextStyle(color: Colors.green,fontFamily: Fonts.outfit,fontWeight: FontWeight.w400,fontSize: 40))
+              Text(state.result.newRating.toString(),style: TextStyle(color: Colors.green,fontFamily: Fonts.outfit,fontWeight: FontWeight.w400,fontSize: Responsive.font(context, 40)))
             ],
           ),
           SizedBox(height: height*0.02,),
           Row(
             children: [
-              Expanded(child: _buildStatCol("Score", "${state.result.score}", Colors.green, height, width, Bootstrap.file_code)),
-              Expanded(child: _buildStatCol("Rank", "${state.result.rank}", Colors.blue, height, width, LucideIcons.swords400Dir)),
-              Expanded(child: _buildStatCol("Time", "${state.result.duration}", Colors.orange, height, width, Bootstrap.stopwatch)),
+              Expanded(child: _buildStatCol("Score", "${state.result.score}", Colors.green, height, width, Bootstrap.file_code,context)),
+              Expanded(child: _buildStatCol("Rank", "${state.result.rank}", Colors.blue, height, width, LucideIcons.swords400Dir,context)),
+              Expanded(child: _buildStatCol("Time", "${state.result.duration}", Colors.orange, height, width, Bootstrap.stopwatch,context)),
             ],
           )
         ],
@@ -116,7 +116,7 @@ class ContestResultPage extends StatelessWidget {
     );
   }
 
-  Widget _buildStatCol(String title, String val, Color color,double height,double width,IconData icon) {
+  Widget _buildStatCol(String title, String val, Color color,double height,double width,IconData icon,BuildContext context) {
     return Row(
       children: [
        Container(
@@ -125,11 +125,11 @@ class ContestResultPage extends StatelessWidget {
           color: color.withOpacity(0.1),
           borderRadius: BorderRadius.circular(10)
         ),
-        child: Icon(icon,color: color,size: 20,)),
+        child: Icon(icon,color: color,size: Responsive.icon(context, 20),)),
         SizedBox(width: 5,),
         Column(
           children: [
-            Text(title, style: TextStyle(color: const Color.fromRGBO(110, 110, 110, 1),fontFamily: Fonts.outfit,fontWeight: FontWeight.w400,fontSize: 10),),
+            Text(title, style: TextStyle(color: const Color.fromRGBO(110, 110, 110, 1),fontFamily: Fonts.outfit,fontWeight: FontWeight.w400,fontSize: Responsive.font(context, 10)),),
             Text(val,style: TextStyle(color: Colors.black,fontFamily: Fonts.outfit,fontWeight: FontWeight.w600),)
           ],
         )
@@ -137,7 +137,7 @@ class ContestResultPage extends StatelessWidget {
     );
   }
 
-  Widget _buildPieChart(double height, double width, int totalQues, int correctQues, int skippedQues, int wrongQues) {
+  Widget _buildPieChart(double height, double width, int totalQues, int correctQues, int skippedQues, int wrongQues,BuildContext context) {
     return SizedBox(
       width: width * 0.9,
       child: Column(
@@ -146,8 +146,8 @@ class ContestResultPage extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Row(
               children: [
-                Text("Accuracy", style: TextStyle(fontFamily: Fonts.outfit, fontWeight: FontWeight.w600, fontSize: 22)),
-                Text(" Analytics", style: TextStyle(fontFamily: Fonts.outfit, fontWeight: FontWeight.w600, fontSize: 22,color: Colors.green)),
+                Text("Accuracy", style: TextStyle(fontFamily: Fonts.outfit, fontWeight: FontWeight.w600, fontSize: Responsive.font(context, 22))),
+                Text(" Analytics", style: TextStyle(fontFamily: Fonts.outfit, fontWeight: FontWeight.w600, fontSize: Responsive.font(context, 22),color: Colors.green)),
               ],
             ),
           ),
@@ -173,9 +173,9 @@ class ContestResultPage extends StatelessWidget {
                 children: [
                   Text(
                     "${totalQues == 0 ? 0 : (correctQues * 100 / totalQues).toInt()}%",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontFamily: Fonts.inter, fontSize: 24, color: Colors.black)
+                    style: TextStyle(fontWeight: FontWeight.bold, fontFamily: Fonts.inter, fontSize: Responsive.font(context, 24), color: Colors.black)
                   ),
-                  Text("Accuracy", style: TextStyle(color: Colors.grey[600], fontSize: 10, fontFamily: Fonts.nunito)),
+                  Text("Accuracy", style: TextStyle(color: Colors.grey[600], fontSize: Responsive.font(context, 10), fontFamily: Fonts.nunito)),
                 ],
               )
             ],
@@ -184,9 +184,9 @@ class ContestResultPage extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              QuestionData(height, width, "CORRECT", correctQues, Colors.green),
-              QuestionData(height, width, "WRONG", wrongQues, Colors.red),
-              QuestionData(height, width, "SKIPPED", skippedQues, Colors.blueGrey),
+              QuestionData(height, width, "CORRECT", correctQues, Colors.green,context),
+              QuestionData(height, width, "WRONG", wrongQues, Colors.red,context),
+              QuestionData(height, width, "SKIPPED", skippedQues, Colors.blueGrey,context),
             ],
           )
         ],
@@ -194,7 +194,7 @@ class ContestResultPage extends StatelessWidget {
     );
   }
 
-  Widget _buildSubjectBreakdown(double height, double width, Map<String, int> totalPerSub, Map<String, int> correctPerSub) {
+  Widget _buildSubjectBreakdown(double height, double width, Map<String, int> totalPerSub, Map<String, int> correctPerSub,BuildContext context) {
     return SizedBox(
       width: width * 0.9,
       child: Column(
@@ -202,8 +202,8 @@ class ContestResultPage extends StatelessWidget {
         children: [
           Row(
             children: [
-              Text("Subject ", style: TextStyle(fontFamily: Fonts.outfit, fontWeight: FontWeight.w600, fontSize: 22,color: Colors.green)),
-              Text("Breakdown", style: TextStyle(fontFamily: Fonts.outfit, fontWeight: FontWeight.w600, fontSize: 22)),
+              Text("Subject ", style: TextStyle(fontFamily: Fonts.outfit, fontWeight: FontWeight.w600, fontSize: Responsive.font(context, 22),color: Colors.green)),
+              Text("Breakdown", style: TextStyle(fontFamily: Fonts.outfit, fontWeight: FontWeight.w600, fontSize: Responsive.font(context, 22))),
             ],
           ),
           SizedBox(height: 20),
@@ -219,8 +219,8 @@ class ContestResultPage extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(sub, style: TextStyle(fontFamily: Fonts.nunito, fontWeight: FontWeight.bold, fontSize: 14)),
-                      Text("$cor / $tot", style: TextStyle(fontFamily: Fonts.nunito, color: Colors.black, fontSize: 12)),
+                      Text(sub, style: TextStyle(fontFamily: Fonts.nunito, fontWeight: FontWeight.bold, fontSize: Responsive.font(context, 14))),
+                      Text("$cor / $tot", style: TextStyle(fontFamily: Fonts.nunito, color: Colors.black, fontSize: Responsive.font(context, 12))),
                     ],
                   ),
                   SizedBox(height: 8),
@@ -253,7 +253,7 @@ class ContestResultPage extends StatelessWidget {
           borderRadius: BorderRadius.circular(50),
         ),
         child: Center(
-          child: Text("Review Questions", style: TextStyle(color: Colors.white, fontFamily: Fonts.inter, fontWeight: FontWeight.bold, fontSize: 16)),
+          child: Text("Review Questions", style: TextStyle(color: Colors.white, fontFamily: Fonts.inter, fontWeight: FontWeight.bold, fontSize: Responsive.font(context, 16))),
         ),
       ),
     );
@@ -271,7 +271,7 @@ Widget _appBar(double height,double width,BuildContext context){
           onTap: () => Navigator.pop(context),
           child: Icon(Bootstrap.chevron_left)),
         SizedBox(width: width*0.05,),
-        Text("Contest Result",style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: 18),)
+        Text("Contest Result",style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: Responsive.font(context, 18)),)
     
       ],
     ),

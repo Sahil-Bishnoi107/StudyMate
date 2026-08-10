@@ -141,7 +141,7 @@ class _MyQuestionState extends State<MyQuestion> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _headerText(height, width),
+                      _headerText(height, width,context),
 
                       SizedBox(height: height * 0.015),
                       _searchBar(height, width),
@@ -156,7 +156,7 @@ class _MyQuestionState extends State<MyQuestion> {
                               fontFamily: Fonts.outfit,
                               fontWeight: FontWeight.bold,
                               color: Colors.grey,
-                              fontSize: 12,
+                              fontSize: Responsive.font(context, 12),
                             ),
                           ),
                           Text(
@@ -165,7 +165,7 @@ class _MyQuestionState extends State<MyQuestion> {
                               fontFamily: Fonts.outfit,
                               fontWeight: FontWeight.bold,
                               color: Colors.green,
-                              fontSize: 12,
+                              fontSize: Responsive.font(context, 12),
                             ),
                           ),
                         ],
@@ -197,7 +197,7 @@ class _MyQuestionState extends State<MyQuestion> {
 
           GestureDetector(
             onTap: () => Navigator.pop(context),
-            child: Icon(LucideIcons.chevronLeft, color: Colors.black, size: 25),
+            child: Icon(LucideIcons.chevronLeft, color: Colors.black, size: Responsive.icon(context, 25)),
           ),
           SizedBox(width: width * 0.05),
           Text(
@@ -205,7 +205,7 @@ class _MyQuestionState extends State<MyQuestion> {
             style: TextStyle(
               fontFamily: Fonts.outfit,
               fontWeight: FontWeight.w600,
-              fontSize: 18,
+              fontSize: Responsive.font(context, 18),
             ),
           ),
         ],
@@ -260,7 +260,7 @@ class _MyQuestionState extends State<MyQuestion> {
             color: Colors.white,
             fontFamily: Fonts.outfit,
             fontWeight: FontWeight.w600,
-            fontSize: 18,
+            fontSize: Responsive.font(context, 18),
           ),
         ),
       ),
@@ -301,7 +301,7 @@ class _MyQuestionState extends State<MyQuestion> {
               child: Icon(
                 collectionIcons[iconIndex],
                 color: Colors.green,
-                size: 24,
+                size: Responsive.icon(context, 24),
               ),
             ),
             SizedBox(width: width * 0.04),
@@ -314,7 +314,7 @@ class _MyQuestionState extends State<MyQuestion> {
                     style: TextStyle(
                       fontFamily: Fonts.outfit,
                       fontWeight: FontWeight.w600,
-                      fontSize: 16,
+                      fontSize: Responsive.font(context, 16),
                     ),
                   ),
                   //  SizedBox(height: 5),
@@ -323,7 +323,7 @@ class _MyQuestionState extends State<MyQuestion> {
                     style: TextStyle(
                       fontFamily: Fonts.nunito,
                       color: Colors.grey[600],
-                      fontSize: 11,
+                      fontSize: Responsive.font(context, 11),
                     ),
                   ),
                 ],
@@ -373,7 +373,7 @@ class _MyQuestionState extends State<MyQuestion> {
                             "Create New ",
                             style: TextStyle(
                               fontFamily: Fonts.outfit,
-                              fontSize: 20,
+                              fontSize: Responsive.font(context, 20),
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -382,7 +382,7 @@ class _MyQuestionState extends State<MyQuestion> {
                             "Collection",
                             style: TextStyle(
                               fontFamily: Fonts.outfit,
-                              fontSize: 20,
+                              fontSize: Responsive.font(context, 20),
                               fontWeight: FontWeight.w600,
                               color: Colors.green,
                             ),
@@ -398,7 +398,7 @@ class _MyQuestionState extends State<MyQuestion> {
                               "Organise your questions by choosing a collection to save this question for future review.",
                               style: TextStyle(
                                 fontFamily: Fonts.outfit,
-                                fontSize: 10,
+                                fontSize: Responsive.font(context, 10),
                                 color: const Color.fromRGBO(110, 110, 110, 1),
                               ),
                             ),
@@ -500,7 +500,7 @@ class _MyQuestionState extends State<MyQuestion> {
                               color: Colors.white,
                               fontFamily: Fonts.nunito,
                               fontWeight: FontWeight.bold,
-                              fontSize: 16,
+                              fontSize: Responsive.font(context, 16),
                             ),
                           ),
                         ),
@@ -517,7 +517,7 @@ class _MyQuestionState extends State<MyQuestion> {
   }
 }
 
-Widget _headerText(double height, double width) {
+Widget _headerText(double height, double width,BuildContext context) {
   return Row(
     children: [
       Text(
@@ -525,7 +525,7 @@ Widget _headerText(double height, double width) {
         style: TextStyle(
           fontFamily: Fonts.outfit,
           color: Colors.black,
-          fontSize: 28,
+          fontSize: Responsive.font(context, 28),
           fontWeight: FontWeight.w600,
         ),
       ),
@@ -534,7 +534,7 @@ Widget _headerText(double height, double width) {
         style: TextStyle(
           fontFamily: Fonts.outfit,
           color: Colors.black,
-          fontSize: 28,
+          fontSize: Responsive.font(context, 28),
           fontWeight: FontWeight.w600,
         ),
       ),
@@ -543,7 +543,7 @@ Widget _headerText(double height, double width) {
         style: TextStyle(
           fontFamily: Fonts.outfit,
           color: Colors.green,
-          fontSize: 28,
+          fontSize: Responsive.font(context, 28),
           fontWeight: FontWeight.w600,
         ),
       ),

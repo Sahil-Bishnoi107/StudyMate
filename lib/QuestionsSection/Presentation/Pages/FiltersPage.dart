@@ -65,9 +65,9 @@ class _FiltersPageState extends State<FiltersPage> {
               SizedBox(height: height*0.02,),
               FilterSelection(filterOptions: state.filters.examType, type: "Exam", filterIndex: 1, icon: FontAwesome.hand_fist_solid),
               SizedBox(height: height*0.02,),
-              _difficultySelector(height, width),
+              _difficultySelector(height, width,context),
               SizedBox(height: height*0.03,),
-              _proTip(height, width),
+              _proTip(height, width,context),
               SizedBox(height: height*0.04,),
               Container(height: 1, width: width, color: const Color.fromRGBO(220, 220, 220, 0.8),),
               SizedBox(height: height*0.02,),
@@ -75,7 +75,7 @@ class _FiltersPageState extends State<FiltersPage> {
                 onTap: () {
                   BlocProvider.of<Questionsbloc>(context).add(SearchQuestions());
                 },
-                child: _startButton(height, width))
+                child: _startButton(height, width,context))
               ],
             ),
           ),
@@ -107,8 +107,8 @@ Widget _header(double height,double width,BuildContext context){
        Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Practice Questions",style: TextStyle(fontFamily: Fonts.outfit,fontSize: 19,fontWeight: FontWeight.w600),),
-          Text("Choose filters to generate your questions",style: TextStyle(color: const Color.fromRGBO(118, 118, 118, 1),fontFamily: Fonts.nunito,fontSize: 12),)
+          Text("Practice Questions",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 19),fontWeight: FontWeight.w600),),
+          Text("Choose filters to generate your questions",style: TextStyle(color: const Color.fromRGBO(118, 118, 118, 1),fontFamily: Fonts.nunito,fontSize: Responsive.font(context, 12)),)
         ],
        )
       ],
@@ -116,7 +116,7 @@ Widget _header(double height,double width,BuildContext context){
   );
 }
 
-Widget _difficultySelector(double height, double width){
+Widget _difficultySelector(double height, double width,BuildContext context){
   return Container(
     height: height*0.22,width: width*0.9,
     margin: EdgeInsets.symmetric(horizontal: width*0.05),
@@ -141,7 +141,7 @@ Widget _difficultySelector(double height, double width){
               color: const Color.fromRGBO(76, 175, 80, 0.2),
               border: Border.all(color: Colors.green)
             ),
-            child: Text("Default",style: TextStyle(fontFamily: Fonts.nunito,fontSize: 12)),
+            child: Text("Default",style: TextStyle(fontFamily: Fonts.nunito,fontSize: Responsive.font(context, 12))),
           )
         ],
        ),
@@ -161,7 +161,7 @@ Widget _difficultySelector(double height, double width){
 }
 
 
-Widget _proTip(double height, double width){
+Widget _proTip(double height, double width,BuildContext context){
   return Container(
     height: height*0.1, width: width*0.9,
     decoration: BoxDecoration(
@@ -187,11 +187,11 @@ Widget _proTip(double height, double width){
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: height*0.01,),
-            Text("Pro Tip",style: TextStyle(color: Colors.green,fontFamily: Fonts.outfit,fontWeight: FontWeight.w700,fontSize: 16),),
+            Text("Pro Tip",style: TextStyle(color: Colors.green,fontFamily: Fonts.outfit,fontWeight: FontWeight.w700,fontSize: Responsive.font(context, 16)),),
             SizedBox(
               width: width*0.7,
               child: Text("Selecting Multiple Subjects generates a more comprehensive mock test environment",
-              style: TextStyle(color: const Color.fromRGBO(100, 100, 100, 1), fontFamily: Fonts.nunito,fontSize: 12),
+              style: TextStyle(color: const Color.fromRGBO(100, 100, 100, 1), fontFamily: Fonts.nunito,fontSize: Responsive.font(context, 12)),
               ))
           ],)
         ],
@@ -200,14 +200,14 @@ Widget _proTip(double height, double width){
   );
 }
 
-Widget _startButton(double height, double width){
+Widget _startButton(double height, double width,BuildContext context){
   return Container(
     height: height*0.06, width: width*0.9,
     decoration: BoxDecoration(color: Colors.green,
     borderRadius: BorderRadius.circular(100),
     ),
     child: Center(
-      child: Text("Start Test", style: TextStyle(fontFamily: Fonts.nunito, fontWeight: FontWeight.w700,fontSize: 16),),
+      child: Text("Start Test", style: TextStyle(fontFamily: Fonts.nunito, fontWeight: FontWeight.w700,fontSize: Responsive.font(context, 16)),),
     ),
   );
 }

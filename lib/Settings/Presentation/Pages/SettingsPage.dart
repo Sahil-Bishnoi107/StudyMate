@@ -30,18 +30,18 @@ class _SettingspageState extends State<Settingspage> {
           backgroundColor: Colors.white,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
           title: Text(title, style: const TextStyle(fontFamily: Fonts.outfit, fontWeight: FontWeight.w600)),
-          content: Text(content, style: const TextStyle(fontFamily: Fonts.nunito, fontSize: 16)),
+          content: Text(content, style:  TextStyle(fontFamily: Fonts.nunito, fontSize: Responsive.font(context, 16))),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(ctx),
-              child: const Text("Cancel", style: TextStyle(fontFamily: Fonts.outfit, color: Colors.blueGrey, fontSize: 16)),
+              child:  Text("Cancel", style: TextStyle(fontFamily: Fonts.outfit, color: Colors.blueGrey, fontSize: Responsive.font(context, 16))),
             ),
             TextButton(
               onPressed: () {
                 Navigator.pop(ctx);
                 onConfirm();
               },
-              child: const Text("Confirm", style: TextStyle(fontFamily: Fonts.outfit, color: Colors.red, fontWeight: FontWeight.w600, fontSize: 16)),
+              child:  Text("Confirm", style: TextStyle(fontFamily: Fonts.outfit, color: Colors.red, fontWeight: FontWeight.w600, fontSize: Responsive.font(context, 16))),
             ),
           ],
         );
@@ -63,19 +63,19 @@ class _SettingspageState extends State<Settingspage> {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         child: Row(
           children: [
-            Icon(icon, color: color, size: 24),
+            Icon(icon, color: color, size: Responsive.icon(context, 24)),
             const SizedBox(width: 15),
             Text(
               title,
               style: TextStyle(
                 fontFamily: Fonts.outfit,
-                fontSize: 15,
+                fontSize: Responsive.font(context, 15),
                 fontWeight: FontWeight.w500,
                 color: color,
               ),
             ),
             const Spacer(),
-            const Icon(LucideIcons.chevronRight300Dir, color: Colors.grey, size: 24),
+             Icon(LucideIcons.chevronRight300Dir, color: Colors.grey, size: Responsive.icon(context, 24)),
            
           ],
         ),
@@ -91,15 +91,15 @@ class _SettingspageState extends State<Settingspage> {
           SizedBox(width: width * 0.03),
           GestureDetector(
             onTap: () => Navigator.pop(context),
-            child: const Icon(LucideIcons.chevronLeft300Dir, size: 30),
+            child:  Icon(LucideIcons.chevronLeft300Dir, size: Responsive.icon(context, 30)),
           ),
           SizedBox(width: width * 0.03),
-          const Text(
+           Text(
             "Settings",
             style: TextStyle(
               fontFamily: Fonts.outfit,
               fontWeight: FontWeight.w400,
-              fontSize: 21,
+              fontSize: Responsive.font(context, 21),
             ),
           )
         ],

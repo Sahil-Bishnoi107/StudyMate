@@ -9,6 +9,7 @@ import 'package:study_mate/Authentication/Presentation/Widgets/Button.dart';
 import 'package:study_mate/Authentication/Presentation/Widgets/LoginBoxes.dart';
 import 'package:study_mate/Authentication/Presentation/Widgets/LoginOptions.dart';
 import 'package:study_mate/Home/Presentation/Pages/Homepage.dart';
+import 'package:study_mate/LoadingScreen/LoadingAnimations.dart';
 import 'package:study_mate/fonts.dart';
 
 class Registerpage extends StatelessWidget {
@@ -30,6 +31,7 @@ class Registerpage extends StatelessWidget {
           if(state is SuccessfullRegisterState){
             Navigator.push(context, MaterialPageRoute(builder: (_) => Homepage()));
           }
+          
           if(state is FailureRegisterState){
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -42,6 +44,9 @@ class Registerpage extends StatelessWidget {
           }
         },
         builder: (context, state) {
+          if(state is LoadingRegisterState){
+            return SizedBox(height: height,width: width, child: Center(child: LoadingLogo(),));
+          }
        return  Padding(
           padding: EdgeInsetsGeometry.only(left: width*0.05),
           child: SafeArea(
@@ -54,7 +59,7 @@ class Registerpage extends StatelessWidget {
                   const SizedBox(height: 3,),
                   _line(height, width),
                   const SizedBox(height: 10,),
-                  _intro(height, width),
+                  _intro(height, width, context),
                   _registerForm(height, width, name, email, password, confirmPassword,(state is PasswordMismatchState)),
                   SizedBox(height: height*0.05,),
                   InkWell(
@@ -63,7 +68,7 @@ class Registerpage extends StatelessWidget {
                     },
                     child: LoginButton(name: "Sign Up", bgColor: Colors.green, fgColor: Colors.black,additinalWidth: width*0.1,)),
                   SizedBox(height: height*0.03,),
-                  _middleText(height, width),
+                  _middleText(height, width, context),
                   SizedBox(height: height*0.03,),
                   _socialLogin(height, width),
                   SizedBox(height: height*0.1,)
@@ -88,9 +93,9 @@ Widget _header(double height, double width,BuildContext context){
        
         InkWell(
           onTap: () => Navigator.pop(context),
-          child: Icon(LucideIcons.chevronLeft300Dir,size: 30,)),
+          child: Icon(LucideIcons.chevronLeft300Dir,size: Responsive.icon(context, 30),)),
         SizedBox(width: width*0.03,),
-        Text("Create Account",style: TextStyle(fontFamily: Fonts.outfit,fontSize: 16,fontWeight: FontWeight.w400),)
+        Text("Create Account",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 16),fontWeight: FontWeight.w400),)
       ],
     ),
   );
@@ -105,16 +110,16 @@ Widget _line(double height,double width){
   );
 }
 
-Widget _intro(double height, double width){
+Widget _intro(double height, double width, BuildContext context){
   return SizedBox(
     height: height*0.16,width: width*0.6,
    // margin: EdgeInsets.only(left: width*0.05),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Get Started",style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w700,fontSize: 32),),
+        Text("Get Started",style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w700,fontSize: Responsive.font(context, 32)),),
         Text("Join thousands of students achieving their goals with StudyMate's smart analytics.",
-        style: TextStyle(fontFamily: Fonts.nunito,color: const Color.fromRGBO(108, 108, 108, 1),fontSize: 12),
+        style: TextStyle(fontFamily: Fonts.nunito,color: const Color.fromRGBO(108, 108, 108, 1),fontSize: Responsive.font(context, 12)),
         )
       ],
     ),
@@ -140,7 +145,7 @@ Widget _registerForm(double height,double width,TextEditingController name,TextE
   );
 }
 
-Widget _middleText(double height,double width){
+Widget _middleText(double height,double width, BuildContext context){
   return SizedBox(
     width: width,
     child: Row(
@@ -152,7 +157,7 @@ Widget _middleText(double height,double width){
           height: 1.5,
           color: const Color.fromRGBO(200, 200, 200, 0.5),
         ),
-        Text("OR REGISTER WITH",style: TextStyle(color: const Color.fromRGBO(120, 120, 120, 1),fontFamily:Fonts.outfit ,fontSize: 12),),
+        Text("OR REGISTER WITH",style: TextStyle(color: const Color.fromRGBO(120, 120, 120, 1),fontFamily:Fonts.outfit ,fontSize: Responsive.font(context, 12)),),
         Container(
           margin: EdgeInsets.only(left: width*0.02),
           width: width*0.27,

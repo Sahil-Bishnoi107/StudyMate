@@ -1,3 +1,4 @@
+import 'package:study_mate/fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_mate/Lectures/Presentation/Bloc/PlayerBloc.dart';
@@ -35,9 +36,9 @@ class TimeIndicator extends StatelessWidget {
 
             return Text(
               "${_formatDuration(position)} / ${_formatDuration(duration)}",
-              style: const TextStyle(
+              style:  TextStyle(
                 color: Colors.white,
-                fontSize: 12,
+                fontSize: Responsive.font(context, 12),
                 fontWeight: FontWeight.w500,
               ),
             );

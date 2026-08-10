@@ -27,8 +27,8 @@ class ProfileSection extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Hello, $username",style: TextStyle(color: Colors.black,fontWeight: FontWeight.w600,fontFamily: Fonts.outfit,fontSize: 30),),
-            Text("Ready for Today's Challange?",style: TextStyle(fontFamily: Fonts.nunito,fontSize: 12, color: Colors.blueGrey),)
+            Text("Hello, $username",style: TextStyle(color: Colors.black,fontWeight: FontWeight.w600,fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 30)),),
+            Text("Ready for Today's Challange?",style: TextStyle(fontFamily: Fonts.nunito,fontSize: Responsive.font(context, 12), color: Colors.blueGrey),)
           ],
         ),
       ),

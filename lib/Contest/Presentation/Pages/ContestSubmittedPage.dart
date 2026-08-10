@@ -27,7 +27,7 @@ class ContestSubmittedPage extends StatelessWidget {
               "Test Submitted",
               style: TextStyle(
                 fontFamily: Fonts.inter,
-                fontSize: 24,
+                fontSize: Responsive.font(context, 24),
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -40,7 +40,7 @@ class ContestSubmittedPage extends StatelessWidget {
                 style: TextStyle(
                   fontFamily: Fonts.nunito,
                   color: Colors.grey[600],
-                  fontSize: 14,
+                  fontSize: Responsive.font(context, 14),
                 ),
               ),
             ),
@@ -64,7 +64,7 @@ class ContestSubmittedPage extends StatelessWidget {
                       color: Colors.white,
                       fontFamily: Fonts.inter,
                       fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                      fontSize: Responsive.font(context, 16),
                     ),
                   ),
                 ),

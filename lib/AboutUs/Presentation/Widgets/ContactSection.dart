@@ -27,14 +27,14 @@ class ContactSection extends StatelessWidget {
                   color: Colors.green.withOpacity(0.1),
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(Icons.contact_mail_outlined, color: Colors.green, size: 20),
+                child:  Icon(Icons.contact_mail_outlined, color: Colors.green, size: Responsive.icon(context, 20)),
               ),
               const SizedBox(width: 12),
               Text(
                 "Contact Information",
                 style: TextStyle(
                   fontFamily: Fonts.outfit,
-                  fontSize: 18,
+                  fontSize: Responsive.font(context, 18),
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
@@ -50,13 +50,13 @@ class ContactSection extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.email_outlined, color: Colors.grey[600], size: 18),
+                      Icon(Icons.email_outlined, color: Colors.grey[600], size: Responsive.icon(context, 18)),
                       const SizedBox(width: 8),
                       Text(
                         "Email",
                         style: TextStyle(
                           fontFamily: Fonts.outfit,
-                          fontSize: 14,
+                          fontSize: Responsive.font(context, 14),
                           fontWeight: FontWeight.w600,
                           color: Colors.grey[600],
                         ),
@@ -70,7 +70,7 @@ class ContactSection extends StatelessWidget {
                       person.email,
                       style: TextStyle(
                         fontFamily: Fonts.nunito,
-                        fontSize: 15,
+                        fontSize: Responsive.font(context, 15),
                         color: Colors.black87,
                         fontWeight: FontWeight.w500,
                       ),
@@ -87,13 +87,13 @@ class ContactSection extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.phone_outlined, color: Colors.grey[600], size: 18),
+                      Icon(Icons.phone_outlined, color: Colors.grey[600], size: Responsive.icon(context, 18)),
                       const SizedBox(width: 8),
                       Text(
                         "Mobile",
                         style: TextStyle(
                           fontFamily: Fonts.outfit,
-                          fontSize: 14,
+                          fontSize: Responsive.font(context, 14),
                           fontWeight: FontWeight.w600,
                           color: Colors.grey[600],
                         ),
@@ -107,7 +107,7 @@ class ContactSection extends StatelessWidget {
                       person.mobileNumber,
                       style: TextStyle(
                         fontFamily: Fonts.nunito,
-                        fontSize: 15,
+                        fontSize: Responsive.font(context, 15),
                         color: Colors.black87,
                         fontWeight: FontWeight.w500,
                       ),

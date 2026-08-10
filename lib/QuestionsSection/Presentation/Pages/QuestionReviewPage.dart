@@ -83,12 +83,12 @@ class _QuestionReviewPageState extends State<QuestionReviewPage> {
           Row(
             children: [
               IconButton(
-                icon: Icon(LucideIcons.chevronLeft, size: 25),
+                icon: Icon(LucideIcons.chevronLeft, size: Responsive.icon(context, 25)),
                 onPressed: () {
                   Navigator.pop(context);
                 },
               ),
-              Text("My Questions",style: TextStyle(fontFamily: Fonts.outfit,fontSize: 18,fontWeight: FontWeight.w600),)
+              Text("My Questions",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 18),fontWeight: FontWeight.w600),)
             ],
           ),
         ],
@@ -133,14 +133,14 @@ class _QuestionReviewPageState extends State<QuestionReviewPage> {
               borderRadius: BorderRadius.circular(20)),
           child: Center(
               child: Text("Question ${currInd + 1} of $totalQuestions",
-                  style: TextStyle(fontFamily: Fonts.nunito, fontWeight: FontWeight.bold, fontSize: 12))),
+                  style: TextStyle(fontFamily: Fonts.nunito, fontWeight: FontWeight.bold, fontSize: Responsive.font(context, 12))),)
         ),
         SizedBox(width: width * 0.2),
         Expanded(
             child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Icon(Bootstrap.exclamation_circle, size: 15, color: Colors.orange),
+            Icon(Bootstrap.exclamation_circle, size: Responsive.icon(context, 15), color: Colors.orange),
             SizedBox(width: 5),
             Text(difficulty, style: TextStyle(fontFamily: Fonts.nunito, fontWeight: FontWeight.bold, color: Colors.grey[700])),
           ],
@@ -154,7 +154,7 @@ class _QuestionReviewPageState extends State<QuestionReviewPage> {
       constraints: BoxConstraints(minHeight: height * 0.03, maxHeight: height * 0.5, minWidth: width * 0.9, maxWidth: width * 0.9),
       child: MixedMathText(
         text: question.description,
-        textStyle: TextStyle(fontFamily: Fonts.inter, fontWeight: FontWeight.bold, fontSize: 18),
+        textStyle: TextStyle(fontFamily: Fonts.inter, fontWeight: FontWeight.bold, fontSize: Responsive.font(context, 18)),
       ),
     );
   }
@@ -173,7 +173,7 @@ class _QuestionReviewPageState extends State<QuestionReviewPage> {
             bool isCorrect = option == question.correctOption;
             return QuestionReviewOption(option, height, width, isCorrect, optionLetter, isCorrect);
           } else {
-            return QuestionOption(option, height, width, false, optionLetter);
+            return QuestionOption(option, height, width, false, optionLetter,context);
           }
         },
       ),
@@ -196,7 +196,7 @@ class _QuestionReviewPageState extends State<QuestionReviewPage> {
             borderRadius: BorderRadius.circular(10),
           ),
           child: Center(
-            child: Text("Reveal Answer", style: TextStyle(color: Colors.white, fontFamily: Fonts.nunito, fontWeight: FontWeight.bold, fontSize: 16)),
+            child: Text("Reveal Answer", style: TextStyle(color: Colors.white, fontFamily: Fonts.nunito, fontWeight: FontWeight.bold, fontSize: Responsive.font(context, 16))),
           ),
         ),
       );
@@ -220,7 +220,7 @@ class _QuestionReviewPageState extends State<QuestionReviewPage> {
             borderRadius: BorderRadius.circular(10),
           ),
           child: Center(
-            child: Text(currentIndex < totalQuestions - 1 ? "Next Question" : "Finish Review", style: TextStyle(color: Colors.white, fontFamily: Fonts.nunito, fontWeight: FontWeight.bold, fontSize: 16)),
+            child: Text(currentIndex < totalQuestions - 1 ? "Next Question" : "Finish Review", style: TextStyle(color: Colors.white, fontFamily: Fonts.nunito, fontWeight: FontWeight.bold, fontSize: Responsive.font(context, 16))),
           ),
         ),
       );

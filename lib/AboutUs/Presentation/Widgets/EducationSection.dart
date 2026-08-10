@@ -30,14 +30,14 @@ class EducationSection extends StatelessWidget {
                   color: Colors.green.withOpacity(0.1),
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(Icons.school, color: Colors.green, size: 20),
+                child:  Icon(Icons.school, color: Colors.green, size: Responsive.icon(context, 20)),
               ),
               const SizedBox(width: 12),
               Text(
                 "Academic Qualifications",
                 style: TextStyle(
                   fontFamily: Fonts.outfit,
-                  fontSize: 18,
+                  fontSize: Responsive.font(context, 18),
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
@@ -68,7 +68,7 @@ class EducationSection extends StatelessWidget {
                         _getAcronym(edu),
                         style: TextStyle(
                           fontFamily: Fonts.outfit,
-                          fontSize: 10,
+                          fontSize: Responsive.font(context, 10),
                           fontWeight: FontWeight.bold,
                           color: Colors.green.shade700,
                         ),
@@ -85,7 +85,7 @@ class EducationSection extends StatelessWidget {
                             edu,
                             style: TextStyle(
                               fontFamily: Fonts.outfit,
-                              fontSize: 15,
+                              fontSize: Responsive.font(context, 15),
                               fontWeight: FontWeight.bold,
                               color: Colors.black87,
                             ),
@@ -95,7 +95,7 @@ class EducationSection extends StatelessWidget {
                             inst,
                             style: TextStyle(
                               fontFamily: Fonts.nunito,
-                              fontSize: 13,
+                              fontSize: Responsive.font(context, 13),
                               color: Colors.grey[600],
                             ),
                           ),

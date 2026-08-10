@@ -59,7 +59,7 @@ class _TestState extends State<GiveTest> {
             children: [
               SizedBox(height: height*0.1,),
               LoadingLogo(),
-              Text("Please Wait your Test is being Submitted",style: TextStyle(fontFamily: Fonts.nunito),)
+              //Text("Please Wait your Test is being Submitted",style: TextStyle(fontFamily: Fonts.nunito),)
             ],
             ),
           );
@@ -70,7 +70,7 @@ class _TestState extends State<GiveTest> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                 _header(height, width, state.timeLeft, state.test.name),
+                 _header(height, width, state.timeLeft, state.test.name,context),
                  SizedBox(height: height*0.01,),
                 // Container(color: const Color.fromRGBO(200, 200, 200, 0.6), height: 2, width: width,),
                
@@ -78,7 +78,7 @@ class _TestState extends State<GiveTest> {
                  
                  Container(height: 2,width: width,color: const Color.fromRGBO(200, 200, 200, 0.6),),
                  SizedBox(height: height*0.02,),
-                 _questionSection(height, width, state.test.questions, pageController)
+                 _questionSection(height, width, state.test.questions, pageController,context)
                 
               ],
             ),
@@ -100,7 +100,7 @@ class _TestState extends State<GiveTest> {
 
 
 
-Widget _header(double height,double width,int timeLeft,String testName){
+Widget _header(double height,double width,int timeLeft,String testName,BuildContext context){
   String minutes = (timeLeft / 60).toInt() < 10 ? "0${(timeLeft / 60).toInt().toString()}" : (timeLeft / 60).toInt().toString();
 
   String seconds = (timeLeft % 60 ) < 10 ? "0${(timeLeft % 60 ).toString()}"    : (timeLeft % 60 ).toString();
@@ -113,7 +113,7 @@ Widget _header(double height,double width,int timeLeft,String testName){
     children: [
       SizedBox(
         width: width*0.65,
-        child: Text(testName,style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: 20),)
+        child: Text(testName,style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: Responsive.font(context, 20)),)
         ),
 
       Container(
@@ -127,7 +127,7 @@ Widget _header(double height,double width,int timeLeft,String testName){
           child: Row(
             children: [
               SizedBox(width: width*0.02,),
-              Icon(Bootstrap.stopwatch,size: 15,color: Colors.green,fontWeight: FontWeight.bold,),
+              Icon(Bootstrap.stopwatch,size: Responsive.icon(context, 15),color: Colors.green,fontWeight: FontWeight.bold,),
               SizedBox(width: width*0.015,),
               Text("$minutes : $seconds",style: TextStyle(color: Colors.green,fontFamily: Fonts.nunito,fontWeight: FontWeight.bold),),
             ],
@@ -139,7 +139,7 @@ Widget _header(double height,double width,int timeLeft,String testName){
   );
 }
 
-Widget _questionSection(double height,double width, List<Question> questions,PageController pageController){
+Widget _questionSection(double height,double width, List<Question> questions,PageController pageController,BuildContext context){
   return Column(
     children: [
      SizedBox(
@@ -162,13 +162,13 @@ Widget _questionSection(double height,double width, List<Question> questions,Pag
           onTap: () {
             pageController.previousPage(duration: Duration(microseconds: 300), curve: Curves.easeOut);
           },
-          child: queButton(height, width, false)),
+          child: queButton(height, width, false,context)),
           SizedBox(width: width*0.1,),
         GestureDetector(
           onTap: () {
             pageController.nextPage(duration: Duration(microseconds: 300), curve: Curves.easeOut);
           },
-          child: queButton(height, width, true))
+          child: queButton(height, width, true,context))
       ],
      )
     ],
@@ -191,12 +191,12 @@ Widget _question(double height,double width, Question question,int currQue,int t
             Container(
               height: height*0.034,width: width*0.36,
               decoration: BoxDecoration(border: Border.all(color: const Color.fromRGBO(180, 180, 180, 0.7),width: 1.5),borderRadius: BorderRadius.circular(20)),
-              child: Center(child: Text("Question ${(currQue+1).toString()} of $totalQuestions",style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: 12),)),
+              child: Center(child: Text("Question ${(currQue+1).toString()} of $totalQuestions",style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: Responsive.font(context, 12)),)),
             ),
             SizedBox(width: width*0.32,),
             Expanded(child: Row(
               children: [
-                Icon(Bootstrap.exclamation_circle,size: 15,),
+                Icon(Bootstrap.exclamation_circle,size: Responsive.icon(context, 15),),
                 SizedBox(width: 3,),
                 Text(difficulty,style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold),),
               ],
@@ -208,7 +208,7 @@ Widget _question(double height,double width, Question question,int currQue,int t
         ConstrainedBox(
           constraints: BoxConstraints(minHeight: height*0.03, maxHeight: height*0.5,minWidth: width*0.9,maxWidth: width*0.9),
           
-          child: MixedMathText(text: question.description, textStyle: TextStyle(fontFamily: Fonts.inter,fontWeight: FontWeight.bold, fontSize: 20),)),
+          child: MixedMathText(text: question.description, textStyle: TextStyle(fontFamily: Fonts.inter,fontWeight: FontWeight.bold, fontSize: Responsive.font(context, 20)),)),
 
         //Options
         SizedBox(
@@ -222,7 +222,7 @@ Widget _question(double height,double width, Question question,int currQue,int t
                     BlocProvider.of<TestBloc>(context).add(TestOptionSelected(que: question, optionSelected: question.options[0]));
                   }            
                 },
-                child: QuestionOption(question.options[0], height, width, question.selectedOption == question.options[0],"A")),
+                child: QuestionOption(question.options[0], height, width, question.selectedOption == question.options[0],"A",context)),
           
           
               GestureDetector(
@@ -232,7 +232,7 @@ Widget _question(double height,double width, Question question,int currQue,int t
                     BlocProvider.of<TestBloc>(context).add(TestOptionSelected(que: question, optionSelected: question.options[1]));
                   } 
                 },
-                child: QuestionOption(question.options[1], height, width, question.selectedOption == question.options[1],"B")),
+                child: QuestionOption(question.options[1], height, width, question.selectedOption == question.options[1],"B",context)),
           
           
               GestureDetector(
@@ -242,7 +242,7 @@ Widget _question(double height,double width, Question question,int currQue,int t
                     BlocProvider.of<TestBloc>(context).add(TestOptionSelected(que: question, optionSelected: question.options[2]));
                   } 
                 },
-                child: QuestionOption(question.options[2], height, width, question.selectedOption == question.options[2],"C")),
+                child: QuestionOption(question.options[2], height, width, question.selectedOption == question.options[2],"C",context)),
           
           
               GestureDetector(
@@ -252,7 +252,7 @@ Widget _question(double height,double width, Question question,int currQue,int t
                     BlocProvider.of<TestBloc>(context).add(TestOptionSelected(que: question, optionSelected: question.options[3]));
                   } 
                 },
-                child: QuestionOption(question.options[3], height, width, question.selectedOption == question.options[3],"D"))
+                child: QuestionOption(question.options[3], height, width, question.selectedOption == question.options[3],"D",context))
             ],
           ),
         )

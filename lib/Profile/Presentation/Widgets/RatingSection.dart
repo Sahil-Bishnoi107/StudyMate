@@ -49,11 +49,11 @@ class RatingSection extends StatelessWidget {
                 children: [
                   Text(
                     "Current",
-                    style: TextStyle(fontFamily: Fonts.outfit,fontSize: 24,fontWeight: FontWeight.w600,color: Colors.green, ),
+                    style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 24),fontWeight: FontWeight.w600,color: Colors.green, ),
                   ),
                   Text(
                     " Rating",
-                    style: TextStyle(fontFamily: Fonts.outfit,fontSize: 24,fontWeight: FontWeight.w600,color: Colors.black, ),
+                    style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 24),fontWeight: FontWeight.w600,color: Colors.black, ),
                   ),
                   SizedBox(width: 5,),
                   if(ratingGain > 0) Icon(LucideIcons.trendingUp400Dir,color: Colors.green,),
@@ -71,7 +71,7 @@ class RatingSection extends StatelessWidget {
                     currentRating.toString(),
                     style: TextStyle(
                       fontFamily: Fonts.outfit,
-                      fontSize: 32,
+                      fontSize: Responsive.font(context, 32),
                       fontWeight: FontWeight.w600,
                       color:  Colors.black
                     ),
@@ -81,7 +81,7 @@ class RatingSection extends StatelessWidget {
                     "${isPositive ? '+' : ''}$ratingGain",
                     style: TextStyle(
                       fontFamily: Fonts.nunito,
-                      fontSize: 16,
+                      fontSize: Responsive.font(context, 16),
                       fontWeight: FontWeight.bold,
                       color: isPositive ? Colors.green : Colors.red,
                     ),
@@ -93,7 +93,7 @@ class RatingSection extends StatelessWidget {
                 "Progression Over Last 5 Contests",
                 style: TextStyle(
                   fontFamily: Fonts.outfit,
-                  fontSize: 10,
+                  fontSize: Responsive.font(context, 10),
                   color: const Color.fromRGBO(110, 110, 110, 1),
                 ),
               ),

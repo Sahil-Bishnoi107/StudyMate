@@ -37,14 +37,14 @@ class RecentTestsSection extends StatefulWidget {
         children: [
           Row(
             children: [
-              Icon(LucideIcons.fileCheck, size: 20,),
+              Icon(LucideIcons.fileCheck, size: Responsive.icon(context, 20),),
               const SizedBox(width: 8),
               Text(
                 "Recent ",
                 style: TextStyle(
                   fontFamily: Fonts.outfit,
                   fontWeight: FontWeight.bold,
-                  fontSize: 18,
+                  fontSize: Responsive.font(context, 18),
                   color: Colors.green
                 ),
               ),
@@ -53,7 +53,7 @@ class RecentTestsSection extends StatefulWidget {
                 style: TextStyle(
                   fontFamily: Fonts.outfit,
                   fontWeight: FontWeight.bold,
-                  fontSize: 18,
+                  fontSize: Responsive.font(context, 18),
                 ),
               ),
             ],
@@ -121,7 +121,7 @@ class RecentTestsSection extends StatefulWidget {
                 style: TextStyle(
                   fontFamily: Fonts.outfit,
                   fontWeight: FontWeight.w600,
-                  fontSize: 16,
+                  fontSize: Responsive.font(context, 16),
                   color: Colors.black87,
                 ),
               ),
@@ -135,7 +135,7 @@ class RecentTestsSection extends StatefulWidget {
                   difficulty.toUpperCase(),
                   style: TextStyle(
                     fontFamily: Fonts.nunito,
-                    fontSize: 10,
+                    fontSize: Responsive.font(context, 10),
                     fontWeight: FontWeight.bold,
                     color: _getDifficultyColor(difficulty),
                   ),
@@ -160,7 +160,7 @@ class RecentTestsSection extends StatefulWidget {
   Widget _buildInfoStat(IconData icon, String label, String value, Color color) {
     return Row(
       children: [
-        Icon(icon, size: 16, color: color),
+        Icon(icon, size: Responsive.icon(context, 16), color: color),
         const SizedBox(width: 6),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -169,7 +169,7 @@ class RecentTestsSection extends StatefulWidget {
               label,
               style: TextStyle(
                 fontFamily: Fonts.nunito,
-                fontSize: 10,
+                fontSize: Responsive.font(context, 10),
                 color: Colors.grey[600],
               ),
             ),
@@ -177,7 +177,7 @@ class RecentTestsSection extends StatefulWidget {
               value,
               style: TextStyle(
                 fontFamily: Fonts.nunito,
-                fontSize: 12,
+                fontSize: Responsive.font(context, 12),
                 fontWeight: FontWeight.bold,
                 color: Colors.black87,
               ),

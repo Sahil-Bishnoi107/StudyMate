@@ -8,6 +8,7 @@ class RegisterBloc extends Bloc<RegisterEvents,RegisterStates> {
   final AuthRepo authRepo;
   RegisterBloc(this.authRepo) : super(InitialRegisterState()){
     on<AttemptedRegisterEvent>((event, emit) async{
+      emit(LoadingRegisterState());
       if(event.password != event.confirmPassword){
         emit(PasswordMismatchState());
         return;

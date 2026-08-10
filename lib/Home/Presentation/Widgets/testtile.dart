@@ -21,7 +21,7 @@ class Testtile extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SizedBox(width: width*0.01,),
-          Icon(Bootstrap.journal_check,color: Colors.green,size: 40,),
+          Icon(Bootstrap.journal_check,color: Colors.green,size: Responsive.icon(context, 40),),
           SizedBox(width: width*0.025,),
           Container(
             height: height*0.07,
@@ -31,8 +31,8 @@ class Testtile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: height*0.01,),
-                Text(test.name,style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: 14),),
-                Text("${test.subject}    \u2022     ${test.time} minutes",style: TextStyle(color: Colors.grey,fontFamily: Fonts.outfit,fontSize: 10),)
+                Text(test.name,style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: Responsive.font(context, 14)),),
+                Text("${test.subject}    \u2022     ${test.time} minutes",style: TextStyle(color: Colors.grey,fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 10)),)
               ],
             ),
           ),
@@ -41,9 +41,9 @@ class Testtile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: height*0.01,),
-              Text("${test.correctQuestions} / ${test.totalQuestions}",style: TextStyle(fontFamily: Fonts.outfit,fontSize: 12,fontWeight: FontWeight.w500),),
+              Text("${test.correctQuestions} / ${test.totalQuestions}",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 12),fontWeight: FontWeight.w500),),
               SizedBox(height: height*0.003,),
-              Text(test.status,style: TextStyle(fontFamily: Fonts.nunito,fontSize: 10,fontWeight: FontWeight.bold),)
+              Text(test.status,style: TextStyle(fontFamily: Fonts.nunito,fontSize: Responsive.font(context, 10),fontWeight: FontWeight.bold),)
             ],
           )
         ],

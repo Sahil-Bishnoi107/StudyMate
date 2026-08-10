@@ -28,7 +28,7 @@ class PracticeRecordsSection extends StatelessWidget {
               style: TextStyle(
                 fontFamily: Fonts.outfit,
                 fontWeight: FontWeight.bold,
-                fontSize: 18,
+                fontSize: Responsive.font(context, 18),
               ),
             ),
           ],
@@ -46,7 +46,7 @@ class PracticeRecordsSection extends StatelessWidget {
           itemCount: sortedQuestions.length > 6 ? 6 : sortedQuestions.length, // Show only recent 6
           itemBuilder: (context, index) {
             final q = sortedQuestions[index];
-            return _buildQuestionCard(q);
+            return _buildQuestionCard(q,context);
           },
         ),
         if (sortedQuestions.length > 6)
@@ -63,7 +63,7 @@ class PracticeRecordsSection extends StatelessWidget {
     );
   }
 
-  Widget _buildQuestionCard(PracticeUserQuestion q) {
+  Widget _buildQuestionCard(PracticeUserQuestion q,BuildContext context) {
     final monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     String dateStr = "${q.submittedAt.day} ${monthNames[q.submittedAt.month - 1]}";
 
@@ -92,13 +92,13 @@ class PracticeRecordsSection extends StatelessWidget {
               Icon(
                 q.isCorrect ? Icons.check_circle : Icons.cancel,
                 color: q.isCorrect ? Colors.green : Colors.red,
-                size: 16,
+                size: Responsive.icon(context, 16),
               ),
               Text(
                 q.difficulty.toUpperCase(),
                 style: TextStyle(
                   fontFamily: Fonts.nunito,
-                  fontSize: 9,
+                  fontSize: Responsive.font(context, 9),
                   fontWeight: FontWeight.bold,
                   color: _getDifficultyColor(q.difficulty),
                 ),
@@ -110,20 +110,20 @@ class PracticeRecordsSection extends StatelessWidget {
             style: TextStyle(
               fontFamily: Fonts.outfit,
               fontWeight: FontWeight.bold,
-              fontSize: 12,
+              fontSize: Responsive.font(context, 12),
             ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
           Row(
             children: [
-              Icon(Icons.calendar_today, size: 10, color: Colors.grey),
+              Icon(Icons.calendar_today, size: Responsive.icon(context, 10), color: Colors.grey),
               const SizedBox(width: 4),
               Text(
                 dateStr,
                 style: TextStyle(
                   fontFamily: Fonts.nunito,
-                  fontSize: 10,
+                  fontSize: Responsive.font(context, 10),
                   color: Colors.grey[600],
                 ),
               ),

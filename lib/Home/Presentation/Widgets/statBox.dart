@@ -31,9 +31,9 @@ class Statbox extends StatelessWidget {
               child: Icon(icon, color: const Color.fromARGB(255, 60, 193, 39),size: height*0.02,),
               ),
               SizedBox(height: height*0.01,),
-              Text(heading.toUpperCase(),style: TextStyle(fontFamily: Fonts.nunito,color: Colors.blueGrey,fontSize: 11,fontWeight: FontWeight.bold),),
+              Text(heading.toUpperCase(),style: TextStyle(fontFamily: Fonts.nunito,color: Colors.blueGrey,fontSize: Responsive.font(context, 11),fontWeight: FontWeight.bold),),
               SizedBox(height: height*0.01,),
-              Text(stat,style: TextStyle(fontFamily: Fonts.outfit,fontSize: 20,fontWeight: FontWeight.w700),)
+              Text(stat,style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 20),fontWeight: FontWeight.w700),)
           ],
         ),
       ),

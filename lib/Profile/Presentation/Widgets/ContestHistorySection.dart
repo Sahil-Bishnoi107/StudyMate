@@ -30,7 +30,7 @@ class ContestHistorySection extends StatelessWidget {
                 style: TextStyle(
                   fontFamily: Fonts.outfit,
                   fontWeight: FontWeight.w700,
-                  fontSize: 18,
+                  fontSize: Responsive.font(context, 18),
                   color: Colors.black
                 ),
               ),
@@ -39,7 +39,7 @@ class ContestHistorySection extends StatelessWidget {
                 style: TextStyle(
                   fontFamily: Fonts.outfit,
                   fontWeight: FontWeight.w700,
-                  fontSize: 18,
+                  fontSize: Responsive.font(context, 18),
                   color: Colors.green
                 ),
               ),
@@ -54,7 +54,7 @@ class ContestHistorySection extends StatelessWidget {
             separatorBuilder: (context, index) => const SizedBox(height: 5),
             itemBuilder: (context, index) {
               final contest = sortedContests[index];
-             if(contest.rank > 0) {return  _buildContestCard(contest);}
+             if(contest.rank > 0) {return  _buildContestCard(contest,context);}
              else{return SizedBox.shrink();}
             },
           ),
@@ -63,7 +63,7 @@ class ContestHistorySection extends StatelessWidget {
     );
   }
 
-  Widget _buildContestCard(MyContest contest) {
+  Widget _buildContestCard(MyContest contest,BuildContext context) {
     bool isPositive = contest.ratingChnage >= 0;
     
     // Format date e.g. "22 OCT"
@@ -100,7 +100,7 @@ class ContestHistorySection extends StatelessWidget {
                 style: TextStyle(
                   fontFamily: Fonts.nunito,
                   color: Colors.grey[500],
-                  fontSize: 10,
+                  fontSize: Responsive.font(context, 10),
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -114,7 +114,7 @@ class ContestHistorySection extends StatelessWidget {
                   "${isPositive ? '+' : '-'}${contest.ratingChnage}",
                   style: TextStyle(
                     color: isPositive ? Colors.green : Colors.red,
-                    fontSize: 10,
+                    fontSize: Responsive.font(context, 10),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -127,16 +127,16 @@ class ContestHistorySection extends StatelessWidget {
             style: TextStyle(
               fontFamily: Fonts.outfit,
               fontWeight: FontWeight.w600,
-              fontSize: 14,
+              fontSize: Responsive.font(context, 14),
             ),
           ),
           const SizedBox(height: 15),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _buildMetric("RANK", "${contest.rank}/${contest.participants}"),
-              _buildMetric("CORRECT", "${contest.correctQuestions}", icon: Icons.check_circle_outline, iconColor: Colors.green),
-              _buildMetric("DIFFICULTY", contest.difficulty),
+              _buildMetric("RANK", "${contest.rank}/${contest.participants}",context),
+              _buildMetric("CORRECT", "${contest.correctQuestions}",context, icon: Icons.check_circle_outline, iconColor: Colors.green),
+              _buildMetric("DIFFICULTY", contest.difficulty,context),
             ],
           ),
         ],
@@ -144,14 +144,14 @@ class ContestHistorySection extends StatelessWidget {
     );
   }
 
-  Widget _buildMetric(String label, String value, {IconData? icon, Color? iconColor}) {
+  Widget _buildMetric(String label, String value,BuildContext context, {IconData? icon, Color? iconColor}) {
     return Column(
       children: [
         Text(
           label,
           style: TextStyle(
             fontFamily: Fonts.nunito,
-            fontSize: 9,
+            fontSize: Responsive.font(context, 9),
             color: Colors.grey[500],
             letterSpacing: 0.5,
           ),
@@ -160,7 +160,7 @@ class ContestHistorySection extends StatelessWidget {
         Row(
           children: [
             if (icon != null) ...[
-              Icon(icon, size: 12, color: iconColor),
+              Icon(icon, size: Responsive.icon(context, 12), color: iconColor),
               const SizedBox(width: 4),
             ],
             Text(
@@ -168,7 +168,7 @@ class ContestHistorySection extends StatelessWidget {
               style: TextStyle(
                 fontFamily: Fonts.outfit,
                 fontWeight: FontWeight.bold,
-                fontSize: 12,
+                fontSize: Responsive.font(context, 12),
               ),
             ),
           ],

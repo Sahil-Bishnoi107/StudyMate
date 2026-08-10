@@ -117,7 +117,7 @@ class _LecturespageState extends State<Lecturespage> {
               color: Colors.black,
               fontFamily: Fonts.outfit,
               fontWeight: FontWeight.w600,
-              fontSize: 18,
+              fontSize: Responsive.font(context, 18),
             ),
           ),
         ],

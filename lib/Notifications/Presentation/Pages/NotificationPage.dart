@@ -52,7 +52,7 @@ class _NotificationpageState extends State<Notificationpage> {
                     child: Column(
                       children: [
                         SizedBox(height: height*0.01,),
-                        _listNoti(height, width,state.notifications )
+                        _listNoti(height, width,state.notifications ,context)
                       ],
                     ),
                   )
@@ -82,23 +82,23 @@ Widget _header(double height,double width,BuildContext context){
         SizedBox(width: width*0.03,),
         InkWell(
           onTap: () => Navigator.pop(context),
-          child: Icon(LucideIcons.chevronLeft300Dir,size: 30,),
+          child: Icon(LucideIcons.chevronLeft300Dir,size: Responsive.icon(context, 30),),
         ),
         SizedBox(width: width*0.03,),
-        Text("Notifications",style: TextStyle(fontFamily: Fonts.outfit, fontSize: 18,fontWeight: FontWeight.w400),)
+        Text("Notifications",style: TextStyle(fontFamily: Fonts.outfit, fontSize: Responsive.font(context, 18),fontWeight: FontWeight.w400),)
       ],
     ),
   );
 }
 
-Widget _listNoti(double height, double width, List<NotificationModel> notis){
+Widget _listNoti(double height, double width, List<NotificationModel> notis,BuildContext context){
   return SizedBox(
     height: height*0.8,width: width,
     child: ListView.builder(
       itemCount: notis.length,
       padding: EdgeInsets.all(0),
       itemBuilder: (context, index) {
-        return NotificationTile(height, width, notis[index]);
+        return NotificationTile(height, width, notis[index],context);
       },
      ),
   );

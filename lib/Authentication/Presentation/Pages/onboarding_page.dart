@@ -18,15 +18,15 @@ class OnboardingPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(height: height*0.07,),
-          _topLogo(height, width),
+          _topLogo(height, width,context),
           SizedBox(height: height*0.01,),
-          _imageSection(height, width),
+          _imageSection(height, width, context),
           SizedBox(height: height*0.03,),
-          _text(height, width),
+          _text(height, width, context),
           SizedBox(height: height*0.03,),
           InkWell(
             onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => LoginPage())),
-            child: _getStarted(height, width)),
+            child: _getStarted(height, width, context)),
           SizedBox(height: height*0.01,),
           _registerOption(height, width, context)
         ],
@@ -37,20 +37,20 @@ class OnboardingPage extends StatelessWidget {
 
 
 
-Widget _topLogo(double height,double width){
+Widget _topLogo(double height,double width,BuildContext context){
   return SizedBox(
     height: height*0.1,width: width,
     child: Center(
       child: Container(
         height: height*0.08,width: height*0.08,
         decoration: BoxDecoration(color: Colors.black,borderRadius: BorderRadius.circular(10)),
-        child: Icon(LucideIcons.zap500,color: Colors.white,size: 45,),
+        child: Icon(LucideIcons.zap500,color: Colors.white,size: Responsive.icon(context, 45),),
       ),
     ),
   );
 }
 
-Widget _imageSection(double height,double width){
+Widget _imageSection(double height,double width, BuildContext context){
   return Transform.scale(
     scale: 0.9,
     child: SizedBox(
@@ -79,15 +79,15 @@ Widget _imageSection(double height,double width){
         
               Positioned(
               bottom: width*0.73,left: width*0.63,
-              child: _popIcons(height, width, "RANK #1", Bootstrap.trophy, 15),
+              child: _popIcons(height, width, "RANK #1", Bootstrap.trophy, 15, context),
             ),
             Positioned(
               top: width*0.75,left: width*0.5,
-              child: _popIcons(height, width, "100+ TESTS", Bootstrap.file_code, 15),
+              child: _popIcons(height, width, "100+ TESTS", Bootstrap.file_code, 15, context),
             ),
             Positioned(
               top: width*0.32,right: width*0.63,
-              child: _popIcons(height, width, "SMART AI", Bootstrap.stars, 15),
+              child: _popIcons(height, width, "SMART AI", Bootstrap.stars, 15, context),
             ),
           ],
         ),
@@ -97,7 +97,7 @@ Widget _imageSection(double height,double width){
 }
 
 
-Widget _popIcons(double height,double width,String title, IconData icon,double size){
+Widget _popIcons(double height,double width,String title, IconData icon,double size, BuildContext context){
   return Material(
     elevation: 1,
     borderRadius: BorderRadius.circular(30),
@@ -111,10 +111,10 @@ Widget _popIcons(double height,double width,String title, IconData icon,double s
           Container(
             height: width*0.07,width: width*0.07,
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(50),color: const Color.fromRGBO(76, 175, 80, 0.2)),
-            child: Icon(icon,size: size,color: Colors.green,fontWeight: FontWeight.bold,),
+            child: Icon(icon,size: Responsive.icon(context, size),color: Colors.green,fontWeight: FontWeight.bold,),
           ),
           SizedBox(width: width*0.01,),
-          Text(title, style:  TextStyle(fontFamily: Fonts.nunito,fontSize: 11,fontWeight: FontWeight.w600),),
+          Text(title, style:  TextStyle(fontFamily: Fonts.nunito,fontSize: Responsive.font(context, 11),fontWeight: FontWeight.w600),),
           SizedBox(width: width*0.02,)
         ],
       ),
@@ -122,16 +122,16 @@ Widget _popIcons(double height,double width,String title, IconData icon,double s
   );
 }
 
-Widget _text(double height,double width){
-  TextStyle tstyle = TextStyle(fontFamily: Fonts.nunito,color: const Color.fromRGBO(108, 108, 108, 1),fontSize: 13);
+Widget _text(double height,double width, BuildContext context){
+  TextStyle tstyle = TextStyle(fontFamily: Fonts.nunito,color: const Color.fromRGBO(108, 108, 108, 1),fontSize: Responsive.font(context, 13));
   return SizedBox(
     width: width,height: height*0.2,
     child: Padding(
       padding: EdgeInsetsGeometry.symmetric(horizontal: width*0.15),
       child: Column(
         children: [
-           Text("Master Your Exams",style: TextStyle(fontFamily: Fonts.outfit,fontSize: 30,fontWeight: FontWeight.w900),),
-           Text("With Confidence",style: TextStyle(fontFamily: Fonts.outfit,fontSize: 33,color: Colors.green,fontWeight: FontWeight.bold),),
+           Text("Master Your Exams",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 30),fontWeight: FontWeight.w900),),
+           Text("With Confidence",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 33),color: Colors.green,fontWeight: FontWeight.bold),),
            SizedBox(height: height*0.01,),
            Text("Your personalized learning journey",  style: tstyle),
            Text("starts here. Track Performance and ace", style: tstyle,),
@@ -142,7 +142,7 @@ Widget _text(double height,double width){
   );
 }
 
-Widget _getStarted(double height,double width){
+Widget _getStarted(double height,double width, BuildContext context){
   return Container(
     height: height*0.055,width: width*0.8,
     decoration: BoxDecoration(color: Colors.green,borderRadius: BorderRadius.circular(40)),
@@ -150,9 +150,9 @@ Widget _getStarted(double height,double width){
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text("Get Started",style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: 16),),
+          Text("Get Started",style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: Responsive.font(context, 16)),),
           SizedBox(width: width*0.01,),
-          Icon(Icons.arrow_forward,size: 20,fontWeight: FontWeight.bold,)
+          Icon(Icons.arrow_forward,size: Responsive.icon(context, 20),fontWeight: FontWeight.bold,)
         ],
       ),
     ),

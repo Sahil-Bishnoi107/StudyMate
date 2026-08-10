@@ -1,3 +1,4 @@
+import 'package:study_mate/fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_mate/Lectures/Presentation/Bloc/PlayerBloc.dart';
@@ -88,11 +89,11 @@ class _DoubleTapOverlayState extends State<DoubleTapOverlay> {
                         end: Alignment.centerRight,
                       ),
                     ),
-                    child: const Center(
+                    child: Center(
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(Icons.replay_5, color: Colors.white, size: 40),
+                          Icon(Icons.replay_5, color: Colors.white, size: Responsive.icon(context, 40)),
                           SizedBox(height: 8),
                           Text("5 seconds", style: TextStyle(color: Colors.white)),
                         ],
@@ -118,11 +119,11 @@ class _DoubleTapOverlayState extends State<DoubleTapOverlay> {
                         end: Alignment.centerRight,
                       ),
                     ),
-                    child: const Center(
+                    child:  Center(
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(Icons.forward_5, color: Colors.white, size: 40),
+                          Icon(Icons.forward_5, color: Colors.white, size: Responsive.icon(context, 40)),
                           SizedBox(height: 8),
                           Text("5 seconds", style: TextStyle(color: Colors.white)),
                         ],

@@ -44,14 +44,14 @@ class TestSubmittedPage extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(height: height*0.035,),
-                _header(height, width),
+                _header(height, width,context),
                 Container(height: 2,width: width,color: const Color.fromRGBO(220, 220, 220, 0.8),),
                 SizedBox(height: height*0.03,),
-                _scoreArea(height, width, correctQues*4, mystate.test.totalQuestions*4),
+                _scoreArea(height, width, correctQues*4, mystate.test.totalQuestions*4,context),
                 SizedBox(height: height*0.03,),
-                _statArea(height, width, correctQues, mystate.test.totalQuestions, (mystate.timeTaken), mystate.test.time - mystate.timeTaken,mystate.test.time, "Medium", quesSolved),
+                _statArea(height, width, correctQues, mystate.test.totalQuestions, (mystate.timeTaken), mystate.test.time - mystate.timeTaken,mystate.test.time, "Medium", quesSolved,context),
                 SizedBox(height: height*0.02,),
-                _pieChart(height, width, mystate.test.totalQuestions, correctQues, mystate.test.totalQuestions - quesSolved),
+                _pieChart(height, width, mystate.test.totalQuestions, correctQues, mystate.test.totalQuestions - quesSolved,context),
                 SizedBox(height: height*0.05,),
                 _subjectBreakdown(height, width, mystate.correctQuestionsPerSubject, mystate.questionsPerSubject, mystate.questionsSkippedPerSubject,context),
                 SizedBox(height: height*0.03,),
@@ -72,17 +72,17 @@ class TestSubmittedPage extends StatelessWidget {
 
 
 
-Widget _header(double height,double width){
+Widget _header(double height,double width,BuildContext context){
   return Container(
     height: height*0.06,width: width,
     padding: EdgeInsets.only(left: width*0.05),
     child: Align(
       alignment: Alignment.centerLeft,
-      child: Text("Test Result",style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: 18),)),
+      child: Text("Test Result",style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: Responsive.font(context, 18)),)),
   );
 }
 
-Widget _scoreArea(double height,double width,int marks,int total){
+Widget _scoreArea(double height,double width,int marks,int total,BuildContext context){
   return Container(
     height: height*0.35,width: width*0.9,
     decoration: BoxDecoration(
@@ -101,7 +101,7 @@ Widget _scoreArea(double height,double width,int marks,int total){
           color: const Color.fromRGBO(255, 255, 255, 0.25),
           border: Border.all(color: const Color.fromRGBO(255, 255, 255, 0.6))
           ),
-        child: Icon(Bootstrap.trophy,color: Colors.white,weight: 900,size: 30,),
+        child: Icon(Bootstrap.trophy,color: Colors.white,weight: 900,size: Responsive.icon(context, 30),),
         ),
 
         SizedBox(height: height*0.014,),
@@ -116,10 +116,10 @@ Widget _scoreArea(double height,double width,int marks,int total){
               Container(
                 height: height*0.05,
                 alignment: Alignment.bottomCenter,
-                child: Text(marks.toString(),style: TextStyle(fontFamily: Fonts.inter,fontSize: 44,fontWeight: FontWeight.bold))),
+                child: Text(marks.toString(),style: TextStyle(fontFamily: Fonts.inter,fontSize: Responsive.font(context, 44),fontWeight: FontWeight.bold))),
               Container(
                 alignment: Alignment.bottomCenter,
-                child: Text(" / $total",style: TextStyle(fontFamily: Fonts.inter,fontSize: 24,fontWeight: FontWeight.bold,color: const Color.fromRGBO(70, 70, 70, 0.6))))
+                child: Text(" / $total",style: TextStyle(fontFamily: Fonts.inter,fontSize: Responsive.font(context, 24),fontWeight: FontWeight.bold,color: const Color.fromRGBO(70, 70, 70, 0.6))))
             ],
           ),
         ),
@@ -129,8 +129,8 @@ Widget _scoreArea(double height,double width,int marks,int total){
         SizedBox(height: height*0.1,width: width*0.5,
         child: Column(
           children: [
-            Text("Excellent Work Champ!",style: TextStyle(fontFamily: Fonts.nunito,fontSize: 18,fontWeight: FontWeight.bold),),
-            Text("You performed better than 90% of students in this test.",style: TextStyle(fontFamily: Fonts.nunito,fontSize: 13,color: const Color.fromRGBO(70, 70, 70, 0.6)),)
+            Text("Excellent Work Champ!",style: TextStyle(fontFamily: Fonts.nunito,fontSize: Responsive.font(context, 18),fontWeight: FontWeight.bold),),
+            Text("You performed better than 90% of students in this test.",style: TextStyle(fontFamily: Fonts.nunito,fontSize: Responsive.font(context, 13),color: const Color.fromRGBO(70, 70, 70, 0.6)),)
           ],
         ),
         )
@@ -140,7 +140,7 @@ Widget _scoreArea(double height,double width,int marks,int total){
 }
 
 
-Widget _statArea(double height,double width,int marks, int total,int timeTaken,int timeLeft,int totalTime,String difficulty,int quesSolved){
+Widget _statArea(double height,double width,int marks, int total,int timeTaken,int timeLeft,int totalTime,String difficulty,int quesSolved,BuildContext context){
   String avgTime = (quesSolved/ (timeTaken)).toStringAsFixed(2);
   String mins = (timeTaken/60).toInt().toString();
   String secs = (timeTaken % 60) < 10 ? "0${(timeTaken % 60).toString()}" : (timeTaken % 60).toString(); 
@@ -150,17 +150,17 @@ Widget _statArea(double height,double width,int marks, int total,int timeTaken,i
       children: [
         Row(
           children: [
-            StatBox(height, width, FontAwesome.arrow_down_1_9_solid, "Accuracy", "${(marks*100/total).toInt().toString()}%", "Impove Accuracy by prcaticing problems"),
+            StatBox(height, width, FontAwesome.arrow_down_1_9_solid, "Accuracy", "${(marks*100/total).toInt().toString()}%", "Impove Accuracy by prcaticing problems",context),
             SizedBox(width: width*0.05,),
-            StatBox(height, width, FontAwesome.bolt_lightning_solid, "Difficulty", difficulty, "Well Done!")
+            StatBox(height, width, FontAwesome.bolt_lightning_solid, "Difficulty", difficulty, "Well Done!",context)
           ],
         ),
         SizedBox(height: height*0.02,),
         Row(
           children: [
-            StatBox(height, width, FontAwesome.stopwatch_solid ,"Avg. Speed", avgTime, "Per Question"),
+            StatBox(height, width, FontAwesome.stopwatch_solid ,"Avg. Speed", avgTime, "Per Question",context),
             SizedBox(width: width*0.05,),
-            StatBox(height, width, FontAwesome.clock, "Time Taken", "$mins : $secs", "Of $totalTime minutes")
+            StatBox(height, width, FontAwesome.clock, "Time Taken", "$mins : $secs", "Of $totalTime minutes",context)
           ],
         )
       ],
@@ -169,18 +169,18 @@ Widget _statArea(double height,double width,int marks, int total,int timeTaken,i
 }
 
 
-Widget _pieChart(double height,double width,int totalQues,int correctQues,int skippedQues){
+Widget _pieChart(double height,double width,int totalQues,int correctQues,int skippedQues,BuildContext context){
   return SizedBox(
     height: height*0.3,width: width*0.8,
     child: Column(
       children: [
         SizedBox(
           height: height*0.03,width: width*0.8,
-          child: Text("Performance Summary",style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: 18),),
+          child: Text("Performance Summary",style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: Responsive.font(context, 18)),),
         ),
         SizedBox(
           height: height*0.03,width: width*0.8,
-          child: Text("Breakdown By Subject",style: TextStyle(fontFamily: Fonts.nunito,fontSize: 12,color: Colors.blueGrey),),
+          child: Text("Breakdown By Subject",style: TextStyle(fontFamily: Fonts.nunito,fontSize: Responsive.font(context, 12),color: Colors.blueGrey),),
         ),
         SizedBox(height: height*0.04,),
         Stack(
@@ -188,7 +188,7 @@ Widget _pieChart(double height,double width,int totalQues,int correctQues,int sk
             Positioned(
               top: height*0.035,left: width*0.36,
               child: Text("${(correctQues*100/(totalQues)).toInt().toString()}%",
-              style: TextStyle(fontWeight: FontWeight.bold,fontFamily: Fonts.inter,fontSize: 20,color: const Color.fromRGBO(70, 70, 70, 1)))
+              style: TextStyle(fontWeight: FontWeight.bold,fontFamily: Fonts.inter,fontSize: Responsive.font(context, 20),color: const Color.fromRGBO(70, 70, 70, 1)))
               ),
             SizedBox(
               height: height*0.1,width: width*0.8,
@@ -232,9 +232,9 @@ Widget _pieChart(double height,double width,int totalQues,int correctQues,int sk
             spacing: width*0.13,
             children: [
               
-              QuestionData(height, width, "CORRECT", correctQues, Colors.green),
-              QuestionData(height, width, "WRONG", (totalQues - (correctQues + skippedQues)), Colors.red),
-              QuestionData(height, width, "SKIPPED", skippedQues, Colors.blueGrey),
+              QuestionData(height, width, "CORRECT", correctQues, Colors.green,context),
+              QuestionData(height, width, "WRONG", (totalQues - (correctQues + skippedQues)), Colors.red,context),
+              QuestionData(height, width, "SKIPPED", skippedQues, Colors.blueGrey,context),
             ],
           ),
         )
@@ -267,9 +267,9 @@ Widget _subjectBreakdown(double height,double width,Map<String,int> correctQues,
           height: height*0.04,width: width*0.9,
           child: Row(
             children: [
-              Icon(Icons.description_outlined,size: 27,color: Colors.green,),
+              Icon(Icons.description_outlined,size: Responsive.icon(context, 27),color: Colors.green,),
               SizedBox(width: width*0.02,),
-              Text("Subject Breakdown", style: TextStyle(fontFamily: Fonts.nunito,fontSize: 18,fontWeight: FontWeight.bold),),
+              Text("Subject Breakdown", style: TextStyle(fontFamily: Fonts.nunito,fontSize: Responsive.font(context, 18),fontWeight: FontWeight.bold),),
               SizedBox(width: width*0.2,),
               GestureDetector(
                 onTap: () {
@@ -293,7 +293,7 @@ Widget _subjectBreakdown(double height,double width,Map<String,int> correctQues,
             padding: EdgeInsets.all(0),
             itemCount: total.length,
             itemBuilder: (context, index) {
-             return SubjectBreakdownTile(height, width, correct[index], wrong[index], total[index], subjects[index]);
+             return SubjectBreakdownTile(height, width, correct[index], wrong[index], total[index], subjects[index],context);
             },
           ),
         )
@@ -327,7 +327,7 @@ Widget _retryButton(double height,double width,BuildContext context,Test test){
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.keyboard_double_arrow_left),
-            Text("Retake Test",style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: 15),),
+            Text("Retake Test",style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: Responsive.font(context, 15)),),
             SizedBox(width: width*0.1,)
           ],
         ),
@@ -352,7 +352,7 @@ Widget _goHome(double height,double width,BuildContext context){
         border: Border.all(color: const Color.fromRGBO(200, 200, 200, 0.6),)
       ),
       child: Center(
-        child: Text("Go to Home",style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: 14),),
+        child: Text("Go to Home",style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: Responsive.font(context, 14)),),
       ),
     ),
   );

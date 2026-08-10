@@ -37,7 +37,7 @@ class _ContestReviewPageState extends State<ContestReviewPage> {
           icon: Icon(Bootstrap.chevron_left, color: Colors.black),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text("Review Answers", style: TextStyle(color: Colors.black, fontFamily: Fonts.inter, fontSize: 18, fontWeight: FontWeight.bold)),
+        title: Text("Review Answers", style: TextStyle(color: Colors.black, fontFamily: Fonts.inter, fontSize: Responsive.font(context, 18), fontWeight: FontWeight.bold)),
       ),
       body: widget.questions.isEmpty
           ? Center(child: Text("No questions to review."))
@@ -118,7 +118,7 @@ class _ContestReviewPageState extends State<ContestReviewPage> {
                   pageController.previousPage(duration: Duration(milliseconds: 300), curve: Curves.easeOut);
                 }
               },
-              child: queButton(height, width, false),
+              child: queButton(height, width, false, context),
             ),
             SizedBox(width: width * 0.1),
             GestureDetector(
@@ -127,7 +127,7 @@ class _ContestReviewPageState extends State<ContestReviewPage> {
                   pageController.nextPage(duration: Duration(milliseconds: 300), curve: Curves.easeOut);
                 }
               },
-              child: queButton(height, width, true),
+              child: queButton(height, width, true, context),
             )
           ],
         )
@@ -157,7 +157,7 @@ class _ContestReviewPageState extends State<ContestReviewPage> {
                 child: Center(
                   child: Text(
                     "Question ${index + 1} of ${widget.questions.length}",
-                    style: TextStyle(fontFamily: Fonts.nunito, fontWeight: FontWeight.bold, fontSize: 12),
+                    style: TextStyle(fontFamily: Fonts.nunito, fontWeight: FontWeight.bold, fontSize: Responsive.font(context, 12)),
                   ),
                 ),
               ),
@@ -165,7 +165,7 @@ class _ContestReviewPageState extends State<ContestReviewPage> {
               Expanded(
                 child: Row(
                   children: [
-                    Icon(Bootstrap.exclamation_circle, size: 15),
+                    Icon(Bootstrap.exclamation_circle, size: Responsive.icon(context, 15)),
                     SizedBox(width: 3),
                     Text(diff, style: TextStyle(fontFamily: Fonts.nunito, fontWeight: FontWeight.bold)),
                   ],
@@ -183,7 +183,7 @@ class _ContestReviewPageState extends State<ContestReviewPage> {
             ),
             child: MixedMathText(
               text: question.description,
-              textStyle: TextStyle(fontFamily: Fonts.inter, fontWeight: FontWeight.bold, fontSize: 20),
+              textStyle: TextStyle(fontFamily: Fonts.inter, fontWeight: FontWeight.bold, fontSize: Responsive.font(context, 20)),
             ),
           ),
           SizedBox(

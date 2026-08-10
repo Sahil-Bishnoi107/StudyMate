@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:study_mate/fonts.dart';
 
-Widget StatBox(double height,double width,IconData icon,String statName,String stat, String followOn){
+Widget StatBox(double height,double width,IconData icon,String statName,String stat, String followOn,BuildContext context){
    return Container(
     height: height*0.12,width: width*0.42,
     padding: EdgeInsets.only(left: width*0.04),
@@ -19,9 +19,9 @@ Widget StatBox(double height,double width,IconData icon,String statName,String s
           ],
         ),
         SizedBox(height: height*0.005,),
-        Text(stat,style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: 18),),
+        Text(stat,style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: Responsive.font(context, 18)),),
         
-        Text(followOn,style: TextStyle(color: Colors.blueGrey,fontFamily: Fonts.nunito,fontSize: 10),)
+        Text(followOn,style: TextStyle(color: Colors.blueGrey,fontFamily: Fonts.nunito,fontSize: Responsive.font(context, 10)),)
 
       ],
     ),

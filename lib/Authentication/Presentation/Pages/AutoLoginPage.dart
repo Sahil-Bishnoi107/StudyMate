@@ -8,6 +8,7 @@ import 'package:study_mate/Authentication/Presentation/Pages/onboarding_page.dar
 import 'package:study_mate/Home/Presentation/Pages/Homepage.dart';
 import 'package:study_mate/LoadingScreen/LoadingAnimations.dart';
 
+
 class Autologinpage extends StatefulWidget {
   const Autologinpage({super.key});
 
@@ -21,8 +22,8 @@ class _AutologinpageState extends State<Autologinpage> {
     
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_){
-
-    BlocProvider.of<AuthBloc>(context).add(AutoLogin(refreshToken: "theres none now"));
+    
+    BlocProvider.of<AuthBloc>(context).add(AutoLogin());
     });
   }
   @override
@@ -44,7 +45,7 @@ class _AutologinpageState extends State<Autologinpage> {
       },
       child: Scaffold(
         body: Container(
-          color: Colors.black,
+          color: Colors.white,
           height: height,width: width,
           child: Center(child: LoadingLogo())),
       ),

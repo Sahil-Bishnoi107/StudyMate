@@ -35,14 +35,14 @@ class QuestionStatsSection extends StatelessWidget {
           Row(
             children: [
               const SizedBox(width: 5,),
-              Icon(LucideIcons.activity,size: 20,),
+              Icon(LucideIcons.activity,size: Responsive.icon(context, 20),),
               const SizedBox(width: 5),
               Text(
                 "Accuracy ",
                 style: TextStyle(
                   fontFamily: Fonts.outfit,
                   fontWeight: FontWeight.w700,
-                  fontSize: 18,
+                  fontSize: Responsive.font(context, 18),
                   color: Colors.green
                 ),
               ),
@@ -51,27 +51,27 @@ class QuestionStatsSection extends StatelessWidget {
             style: TextStyle(
               fontFamily: Fonts.outfit,
               fontWeight: FontWeight.w700,
-              fontSize: 18,
+              fontSize: Responsive.font(context, 18),
             ),
           ),
             ],
           ),
           
           const SizedBox(height: 15),
-          _buildAccuracyProgression(subjects, subjectColors),
+          _buildAccuracyProgression(subjects, subjectColors,context),
           const SizedBox(height: 30),
           
           Row(
             children: [
               const SizedBox(width: 5,),
-              Icon(LucideIcons.crosshair400Dir,size: 20,),
+              Icon(LucideIcons.crosshair400Dir,size: Responsive.icon(context, 20),),
               const SizedBox(width: 5,),
               Text(
                 "Subject",
                 style: TextStyle(
                   fontFamily: Fonts.outfit,
                   fontWeight: FontWeight.bold,
-                  fontSize: 18,
+                  fontSize: Responsive.font(context, 18),
                 ),
               ),
               Text(
@@ -79,20 +79,20 @@ class QuestionStatsSection extends StatelessWidget {
                 style: TextStyle(
                   fontFamily: Fonts.outfit,
                   fontWeight: FontWeight.bold,
-                  fontSize: 18,
+                  fontSize: Responsive.font(context, 18),
                   color: Colors.green
                 ),
               ),
             ],
           ),
           const SizedBox(height: 15),
-          _buildSubjectList(subjects, subjectColors),
+          _buildSubjectList(subjects, subjectColors,context),
         ],
       ),
     );
   }
 
-  Widget _buildAccuracyProgression(List<String> subjects, List<Color> colors) {
+  Widget _buildAccuracyProgression(List<String> subjects, List<Color> colors,BuildContext context) {
     List<LineChartBarData> lines = [];
 
     for (int i = 0; i < subjects.length; i++) {
@@ -172,7 +172,7 @@ class QuestionStatsSection extends StatelessWidget {
                           TextStyle(
                             color: colors[lineBarSpot.barIndex % colors.length],
                             fontWeight: FontWeight.bold,
-                            fontSize: 10,
+                            fontSize: Responsive.font(context, 10),
                           ),
                         );
                       }).toList();
@@ -195,7 +195,7 @@ class QuestionStatsSection extends StatelessWidget {
                       getTitlesWidget: (value, meta) {
                         return Text(
                           '${value.toInt()}',
-                          style: TextStyle(fontFamily: Fonts.nunito, fontSize: 10, color: Colors.grey),
+                          style: TextStyle(fontFamily: Fonts.nunito, fontSize: Responsive.font(context, 10), color: Colors.grey),
                         );
                       },
                     ),
@@ -228,7 +228,7 @@ class QuestionStatsSection extends StatelessWidget {
                 const SizedBox(width: 5),
                 Text(
                   subject,
-                  style: TextStyle(fontFamily: Fonts.nunito, fontSize: 12),
+                  style: TextStyle(fontFamily: Fonts.nunito, fontSize: Responsive.font(context, 12)),
                 ),
               ],
             );
@@ -238,7 +238,7 @@ class QuestionStatsSection extends StatelessWidget {
     );
   }
 
-  Widget _buildSubjectList(List<String> subjects, List<Color> colors) {
+  Widget _buildSubjectList(List<String> subjects, List<Color> colors,BuildContext context) {
     return Column(
       children: subjects.asMap().entries.map((entry) {
         int idx = entry.key;
@@ -270,7 +270,7 @@ class QuestionStatsSection extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: Fonts.outfit,
                       fontWeight: FontWeight.w600,
-                      fontSize: 16,
+                      fontSize: Responsive.font(context, 16),
                       color: Colors.black87,
                     ),
                   ),
@@ -282,7 +282,7 @@ class QuestionStatsSection extends StatelessWidget {
                         style: TextStyle(
                           fontFamily: Fonts.nunito,
                           fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                          fontSize: Responsive.font(context, 16),
                           color: color,
                         ),
                       ),
@@ -290,7 +290,7 @@ class QuestionStatsSection extends StatelessWidget {
                         "$correctCount/$totalSolved",
                         style: TextStyle(
                           fontFamily: Fonts.nunito,
-                          fontSize: 12,
+                          fontSize: Responsive.font(context, 12),
                           color: Colors.grey[600],
                         ),
                       ),
@@ -303,7 +303,7 @@ class QuestionStatsSection extends StatelessWidget {
                 "$totalSolved Problems Solved",
                 style: TextStyle(
                   fontFamily: Fonts.nunito,
-                  fontSize: 12,
+                  fontSize: Responsive.font(context, 12),
                   color: Colors.grey[600],
                 ),
               ),

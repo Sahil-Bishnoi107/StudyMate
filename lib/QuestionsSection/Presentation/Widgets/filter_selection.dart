@@ -38,7 +38,7 @@ class _FilterSelectionState extends State<FilterSelection> {
           SizedBox(height: height*0.01,),
           Row(children: [
             Icon(widget.icon,color: Colors.green,fontWeight: FontWeight.w100,), SizedBox(width: width*0.02,), 
-            Text(widget.type,style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: 16),)
+            Text(widget.type,style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: Responsive.font(context, 16)),)
           ],),
           SizedBox(height: height*0.01,),
           BlocBuilder<Questionsbloc,Questionsstates>(
@@ -50,7 +50,7 @@ class _FilterSelectionState extends State<FilterSelection> {
                   onTap: () {
                     BlocProvider.of<Questionsbloc>(context).add(FilterSelectEvent(filterNumber: widget.filterIndex, selectedIndex: index));
                   },
-                  child: _tagWidget(height, width, widget.filterOptions[index].filterName, widget.filterOptions[index].isSelected)))
+                  child: _tagWidget(height, width, widget.filterOptions[index].filterName, widget.filterOptions[index].isSelected,context)))
             ),
           ),
           SizedBox(height: height*0.01,)
@@ -62,7 +62,7 @@ class _FilterSelectionState extends State<FilterSelection> {
 
 
 
-Widget _tagWidget(double height, double width,String text,bool isSelected){
+Widget _tagWidget(double height, double width,String text,bool isSelected,BuildContext context){
   return Container(
     
     padding: EdgeInsets.symmetric(horizontal: width*0.025, vertical: height*0.006),
@@ -72,6 +72,6 @@ Widget _tagWidget(double height, double width,String text,bool isSelected){
       color: isSelected ? Colors.green : Colors.white
     ),
     
-    child: Text(text.toUpperCase(), style: TextStyle(color: isSelected ? Colors.white : Colors.black,fontFamily: Fonts.nunito,fontSize: 12),),
+    child: Text(text.toUpperCase(), style: TextStyle(color: isSelected ? Colors.white : Colors.black,fontFamily: Fonts.nunito,fontSize: Responsive.font(context, 12)),),
   );
 }

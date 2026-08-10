@@ -24,7 +24,7 @@ class AuthBloc extends Bloc<AuthEvent,AuthState> {
 
    on<AutoLogin>((event, emit) async {
      String? token = await SecureTokens().getRefreshToken();
-     token = null;
+     
      if(token == null){
       emit(NewUserState());
       return;

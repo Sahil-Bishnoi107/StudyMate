@@ -1,3 +1,4 @@
+import 'package:study_mate/fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_mate/Lectures/Presentation/Bloc/PlayerBloc.dart';
@@ -40,13 +41,13 @@ class QualityBottomSheet extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Padding(
+               Padding(
                 padding: EdgeInsets.only(bottom: 16.0),
                 child: Text(
                   "Video Quality",
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 18,
+                    fontSize: Responsive.font(context, 18),
                     fontWeight: FontWeight.bold,
                   ),
                 ),

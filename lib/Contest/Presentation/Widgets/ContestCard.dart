@@ -84,7 +84,7 @@ class ContestCard extends StatelessWidget {
                       contest.subject.toUpperCase(),
                       style: TextStyle(
                         color: Colors.green,
-                        fontSize: 10,
+                        fontSize: Responsive.font(context, 10),
                         fontWeight: FontWeight.bold,
                         fontFamily: Fonts.nunito,
                       ),
@@ -101,7 +101,7 @@ class ContestCard extends StatelessWidget {
                       contest.difficulty.toUpperCase(),
                       style: TextStyle(
                         color: _getDifficultyColor(contest.difficulty),
-                        fontSize: 10,
+                        fontSize: Responsive.font(context, 10),
                         fontWeight: FontWeight.bold,
                         fontFamily: Fonts.nunito,
                       ),
@@ -114,7 +114,7 @@ class ContestCard extends StatelessWidget {
                 textAlign: TextAlign.right,
                 style: TextStyle(
                   color: isEnded ? Colors.grey : Colors.green,
-                  fontSize: 12,
+                  fontSize: Responsive.font(context, 12),
                   fontWeight: FontWeight.bold,
                   fontFamily: Fonts.nunito,
                 ),
@@ -125,7 +125,7 @@ class ContestCard extends StatelessWidget {
           Text(
             contest.contestName,
             style: TextStyle(
-              fontSize: 16,
+              fontSize: Responsive.font(context, 16),
               fontWeight: FontWeight.bold,
               fontFamily: Fonts.inter,
             ),
@@ -143,22 +143,22 @@ class ContestCard extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Icon(Bootstrap.question_circle, size: 14, color: Colors.black),
+                    Icon(Bootstrap.question_circle, size: Responsive.icon(context, 14), color: Colors.black),
                     SizedBox(width: 5),
                     Text(
                       "${contest.marksPerQuestion * 10} Questions", // placeholder if we don't know total questions
-                      style: TextStyle(color: Colors.black, fontSize: 12, fontFamily: Fonts.nunito),
+                      style: TextStyle(color: Colors.black, fontSize: Responsive.font(context, 12), fontFamily: Fonts.nunito),
                     ),
                   ],
                 ),
                 Container(width: 1, height: 15, color: Colors.black),
                 Row(
                   children: [
-                    Icon(Bootstrap.people, size: 14, color: Colors.black),
+                    Icon(Bootstrap.people, size: Responsive.icon(context, 14), color: Colors.black),
                     SizedBox(width: 5),
                     Text(
                       "${contest.participants > 1000 ? '${(contest.participants/1000).toStringAsFixed(1)}k' : contest.participants} Joined",
-                      style: TextStyle(color: Colors.black, fontSize: 12, fontFamily: Fonts.nunito),
+                      style: TextStyle(color: Colors.black, fontSize: Responsive.font(context, 12), fontFamily: Fonts.nunito),
                     ),
                   ],
                 ),
@@ -172,11 +172,11 @@ class ContestCard extends StatelessWidget {
               Row(
                 children: [
                   SizedBox(width: 5,),
-                  Icon(Bootstrap.stopwatch, size: 14, color: Colors.black),
+                  Icon(Bootstrap.stopwatch, size: Responsive.icon(context, 14), color: Colors.black),
                   SizedBox(width: 5),
                   Text(
                     "Duration: ${contest.duration} mins",
-                    style: TextStyle(color: Colors.black, fontSize: 12, fontFamily: Fonts.nunito),
+                    style: TextStyle(color: Colors.black, fontSize: Responsive.font(context, 12), fontFamily: Fonts.nunito),
                   ),
                 ],
               ),
@@ -196,12 +196,12 @@ class ContestCard extends StatelessWidget {
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
-                            fontSize: 12,
+                            fontSize: Responsive.font(context, 12),
                             fontFamily: Fonts.nunito,
                           ),
                         ),
                         SizedBox(width: 5),
-                        Icon(Bootstrap.chevron_right, size: 12, color: Colors.white),
+                        Icon(Bootstrap.chevron_right, size: Responsive.icon(context, 12), color: Colors.white),
                       ],
                     ),
                   ),

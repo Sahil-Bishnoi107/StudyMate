@@ -139,7 +139,7 @@ class _ContestQuestionPageState extends State<ContestQuestionPage> {
             width: width * 0.65,
             child: Text(
               contestName,
-              style: TextStyle(fontFamily: Fonts.nunito, fontWeight: FontWeight.bold, fontSize: 20),
+              style: TextStyle(fontFamily: Fonts.nunito, fontWeight: FontWeight.bold, fontSize: Responsive.font(context, 20)),
             ),
           ),
           Container(
@@ -154,7 +154,7 @@ class _ContestQuestionPageState extends State<ContestQuestionPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Bootstrap.stopwatch, size: 15, color: Colors.green, weight: 600),
+                  Icon(Bootstrap.stopwatch, size: Responsive.icon(context, 15), color: Colors.green, weight: 600),
                   SizedBox(width: 5),
                   Text(
                     "$minutes : $seconds",
@@ -237,7 +237,7 @@ class _ContestQuestionPageState extends State<ContestQuestionPage> {
                   pageController.previousPage(duration: Duration(milliseconds: 300), curve: Curves.easeOut);
                 }
               },
-              child: queButton(height, width, false),
+              child: queButton(height, width, false,context),
             ),
             SizedBox(width: width * 0.1),
             GestureDetector(
@@ -246,7 +246,7 @@ class _ContestQuestionPageState extends State<ContestQuestionPage> {
                   pageController.nextPage(duration: Duration(milliseconds: 300), curve: Curves.easeOut);
                 }
               },
-              child: queButton(height, width, true),
+              child: queButton(height, width, true,context),
             )
           ],
         )
@@ -278,7 +278,7 @@ class _ContestQuestionPageState extends State<ContestQuestionPage> {
                 child: Center(
                   child: Text(
                     "Question ${index + 1} of $totalQuestions",
-                    style: TextStyle(fontFamily: Fonts.nunito, fontWeight: FontWeight.bold, fontSize: 12),
+                    style: TextStyle(fontFamily: Fonts.nunito, fontWeight: FontWeight.bold, fontSize: Responsive.font(context, 12)),
                   ),
                 ),
               ),
@@ -286,7 +286,7 @@ class _ContestQuestionPageState extends State<ContestQuestionPage> {
               Expanded(
                 child: Row(
                   children: [
-                    Icon(Bootstrap.exclamation_circle, size: 15),
+                    Icon(Bootstrap.exclamation_circle, size: Responsive.icon(context, 15)),
                     SizedBox(width: 3),
                     Text(diff, style: TextStyle(fontFamily: Fonts.nunito, fontWeight: FontWeight.bold)),
                   ],
@@ -304,7 +304,7 @@ class _ContestQuestionPageState extends State<ContestQuestionPage> {
             ),
             child: MixedMathText(
               text: question.description,
-              textStyle: TextStyle(fontFamily: Fonts.inter, fontWeight: FontWeight.bold, fontSize: 20),
+              textStyle: TextStyle(fontFamily: Fonts.inter, fontWeight: FontWeight.bold, fontSize: Responsive.font(context, 20)),
             ),
           ),
           SizedBox(
@@ -333,7 +333,7 @@ class _ContestQuestionPageState extends State<ContestQuestionPage> {
           BlocProvider.of<ContestQuestionBloc>(context).add(SelectContestOption(question: question, optionIndex: optionIndex));
         }
       },
-      child: QuestionOption(optionText, height, width, isSelected, label),
+      child: QuestionOption(optionText, height, width, isSelected, label,context),
     );
   }
 }

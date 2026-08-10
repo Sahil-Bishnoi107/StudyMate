@@ -125,8 +125,8 @@ class _CustomOverlayWidgetState extends State<CustomOverlayWidget> {
                       SizedBox(height: height*0.01,),
                       SizedBox(
                         height: height*0.015,
-                        child: Text("LEVEL",style: TextStyle(fontFamily: Fonts.nunito,fontSize: 12,fontWeight: FontWeight.bold),)),
-                      Text("Mixed (Recommended)",style: TextStyle(fontFamily: Fonts.outfit,fontSize: 14,fontWeight: FontWeight.w600),)
+                        child: Text("LEVEL",style: TextStyle(fontFamily: Fonts.nunito,fontSize: Responsive.font(context, 12),fontWeight: FontWeight.bold),)),
+                      Text("Mixed (Recommended)",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 14),fontWeight: FontWeight.w600),)
                     ],
                   ),
                 ),

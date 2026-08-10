@@ -21,7 +21,7 @@ class _LoginButtonState extends State<LoginButton> {
       height: height*0.06, width: width*0.8 + (widget.additinalWidth ?? 0),
       decoration: BoxDecoration(color: Colors.green,borderRadius: BorderRadius.circular(height*0.01)),
       child: Center(
-        child: Text(widget.name,style: TextStyle(color: widget.fgColor,fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: 18),),
+        child: Text(widget.name,style: TextStyle(color: widget.fgColor,fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: Responsive.font(context, 18)),),
       ),
     );
   }

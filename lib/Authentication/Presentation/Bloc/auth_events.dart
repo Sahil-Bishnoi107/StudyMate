@@ -7,8 +7,6 @@ class AuthLoginStart extends AuthEvent{
 }
 
 class AutoLogin extends AuthEvent{
-  String refreshToken;
-  AutoLogin({required this.refreshToken});
 }
 
 class GoogleLoginStarted extends AuthEvent{}

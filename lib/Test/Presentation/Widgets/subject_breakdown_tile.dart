@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:study_mate/fonts.dart';
 
-Widget SubjectBreakdownTile(double height,double width,int correctQues,int wrongQues,int totalQues,String subject){
+Widget SubjectBreakdownTile(double height,double width,int correctQues,int wrongQues,int totalQues,String subject,BuildContext context){
 
   return Container(
     height: height*0.15,width: width*0.9,
@@ -24,8 +24,8 @@ Widget SubjectBreakdownTile(double height,double width,int correctQues,int wrong
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(subject,style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: 17),),
-                  Text("$correctQues/$totalQues Correct",style: TextStyle(fontFamily: Fonts.nunito,fontSize: 11,color: const Color.fromRGBO(140, 140, 140, 1),fontWeight: FontWeight.bold),)
+                  Text(subject,style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: Responsive.font(context, 17)),),
+                  Text("$correctQues/$totalQues Correct",style: TextStyle(fontFamily: Fonts.nunito,fontSize: Responsive.font(context, 11),color: const Color.fromRGBO(140, 140, 140, 1),fontWeight: FontWeight.bold),)
                 ],
               ),
             ),
@@ -38,7 +38,7 @@ Widget SubjectBreakdownTile(double height,double width,int correctQues,int wrong
                 borderRadius: BorderRadius.circular(width*0.09),
                 color: const Color.fromRGBO(76, 175, 80, 0.06),
                 ),
-              child: Center(child: Text("${(correctQues*100/((correctQues + wrongQues) != 0 ? (correctQues + wrongQues) : 1)).toInt().toString()}%",style: TextStyle(color: Colors.green,fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: 12),)))
+              child: Center(child: Text("${(correctQues*100/((correctQues + wrongQues) != 0 ? (correctQues + wrongQues) : 1)).toInt().toString()}%",style: TextStyle(color: Colors.green,fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: Responsive.font(context, 12)),)))
           ],
         ),
         SizedBox(height: height*0.01,),
@@ -58,18 +58,18 @@ Widget SubjectBreakdownTile(double height,double width,int correctQues,int wrong
           children: [
             Container(height: height*0.02,width: height*0.02,
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(40),border: Border.all(color: Colors.green)),
-            child: Center(child: Icon(Icons.check,color: Colors.green,size: 15,weight: 700,)),
+            child: Center(child: Icon(Icons.check,color: Colors.green,size: Responsive.icon(context, 15),weight: 700,)),
             ),
             SizedBox(width: width*0.01,),
-            Text("$correctQues Correct",style: TextStyle(color: Colors.green,fontFamily: Fonts.nunito,fontSize: 12,fontWeight: FontWeight.bold),),
+            Text("$correctQues Correct",style: TextStyle(color: Colors.green,fontFamily: Fonts.nunito,fontSize: Responsive.font(context, 12),fontWeight: FontWeight.bold),),
             SizedBox(width: width*0.2,),
 
             Container(height: 20,width: 20,
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(40),border: Border.all(color: Colors.red)),
-            child: Center(child: Icon(Icons.close,color: Colors.red,size: 15,)),
+            child: Center(child: Icon(Icons.close,color: Colors.red,size: Responsive.icon(context, 15),)),
             ),
             SizedBox(width: width*0.01,),
-            Text("$wrongQues Wrong",style: TextStyle(color: Colors.red,fontFamily: Fonts.nunito,fontSize: 12,fontWeight: FontWeight.bold)),
+            Text("$wrongQues Wrong",style: TextStyle(color: Colors.red,fontFamily: Fonts.nunito,fontSize: Responsive.font(context, 12),fontWeight: FontWeight.bold)),
           ],
         )
       ],

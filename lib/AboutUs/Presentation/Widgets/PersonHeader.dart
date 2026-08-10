@@ -21,7 +21,7 @@ class PersonHeader extends StatelessWidget {
                   height: 120,
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) =>
-                      const Icon(Icons.person, color: Colors.grey, size: 120),
+                       Icon(Icons.person, color: Colors.grey, size: Responsive.icon(context, 120)),
                   loadingBuilder: (context, child, loadingProgress) {
                     if (loadingProgress == null) return child;
                     return Container(
@@ -38,7 +38,7 @@ class PersonHeader extends StatelessWidget {
                   width: 120,
                   height: 120,
                   color: Colors.grey[200],
-                  child: const Icon(Icons.person, color: Colors.grey, size: 80),
+                  child:  Icon(Icons.person, color: Colors.grey, size: Responsive.icon(context, 80)),
                 ),
         ),
         const SizedBox(height: 16),
@@ -46,7 +46,7 @@ class PersonHeader extends StatelessWidget {
           person.name,
           style: TextStyle(
             fontFamily: Fonts.outfit,
-            fontSize: 24,
+            fontSize: Responsive.font(context, 24),
             fontWeight: FontWeight.bold,
             color: Colors.black87,
           ),
@@ -57,7 +57,7 @@ class PersonHeader extends StatelessWidget {
           person.roleTitle,
           style: TextStyle(
             fontFamily: Fonts.nunito,
-            fontSize: 16,
+            fontSize: Responsive.font(context, 16),
             color: Colors.grey[600],
           ),
           textAlign: TextAlign.center,

@@ -1,3 +1,4 @@
+import 'package:study_mate/fonts.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -99,7 +100,7 @@ class _PlayerControlsState extends State<PlayerControls> {
                           icon:  Icon(
                             LucideIcons.chevronLeft,
                             color: Colors.white,
-                            size: 30,
+                            size: Responsive.icon(context, 30),
                           ),
                         ),
                         const Spacer(),
@@ -136,7 +137,7 @@ class _PlayerControlsState extends State<PlayerControls> {
                       
                       if (isCompleted) {
                         return IconButton(
-                          iconSize: 60,
+                          iconSize: Responsive.icon(context, 60),
                           color: Colors.white,
                           onPressed: () {
                             context.read<PlayerBloc>().add(SeekTo(Duration.zero));
@@ -153,7 +154,7 @@ class _PlayerControlsState extends State<PlayerControls> {
                           final playing = playingSnapshot.data ?? false;
 
                           return IconButton(
-                            iconSize: 60,
+                            iconSize: Responsive.icon(context, 60),
                             color: Colors.white,
                             onPressed: () {
                               if (playing) {

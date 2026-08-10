@@ -37,13 +37,13 @@ class PersonDetailsPage extends StatelessWidget {
                 child: BlocBuilder<PersonDetailsBloc, PersonDetailsStates>(
                   builder: (context, state) {
                     if (state is PersonDetailsLoadingState) {
-                      return const Center(child: LoadingLogo());
+                      return  Center(child: LoadingLogo());
                     }
                     if (state is PersonDetailsErrorState) {
                       return Center(child: Text(state.message, style: TextStyle(color: Colors.red)));
                     }
                     if (state is PersonDetailsLoadedState) {
-                      return _buildContent(state.person);
+                      return _buildContent(state.person,context);
                     }
                     return const SizedBox();
                   },
@@ -64,7 +64,7 @@ class PersonDetailsPage extends StatelessWidget {
         children: [
           InkWell(
             onTap: () => Navigator.pop(context),
-            child: const Icon(Icons.arrow_back_ios_new, size: 24, color: Colors.black),
+            child:  Icon(Icons.arrow_back_ios_new, size: Responsive.icon(context, 24), color: Colors.black),
           ),
           Text(
             "Teacher Details",
@@ -72,19 +72,19 @@ class PersonDetailsPage extends StatelessWidget {
               color: Colors.black,
               fontFamily: Fonts.outfit,
               fontWeight: FontWeight.w600,
-              fontSize: 18,
+              fontSize: Responsive.font(context, 18),
             ),
           ),
           GestureDetector(
             onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const Notificationpage())),
-            child: const Icon(Icons.notifications_none_sharp, size: 24, color: Colors.black),
+            child:  Icon(Icons.notifications_none_sharp, size: Responsive.icon(context, 24), color: Colors.black),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildContent(Person person) {
+  Widget _buildContent(Person person,BuildContext context) {
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
       child: Column(
@@ -101,7 +101,7 @@ class PersonDetailsPage extends StatelessWidget {
           if (person.education.isNotEmpty)
             const SizedBox(height: 24),
           if (person.description.isNotEmpty) ...[
-            _buildDescriptionSection(person.description),
+            _buildDescriptionSection(person.description,context),
             const SizedBox(height: 24),
           ],
           if (person.email.isNotEmpty || person.mobileNumber.isNotEmpty)
@@ -111,7 +111,7 @@ class PersonDetailsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildDescriptionSection(String description) {
+  Widget _buildDescriptionSection(String description,BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -130,14 +130,14 @@ class PersonDetailsPage extends StatelessWidget {
                   color: Colors.green.withOpacity(0.1),
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(Icons.menu_book, color: Colors.green, size: 20),
+                child:  Icon(Icons.menu_book, color: Colors.green, size: Responsive.icon(context, 20)),
               ),
               const SizedBox(width: 12),
               Text(
                 "About",
                 style: TextStyle(
                   fontFamily: Fonts.outfit,
-                  fontSize: 18,
+                  fontSize: Responsive.font(context, 18),
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
@@ -149,7 +149,7 @@ class PersonDetailsPage extends StatelessWidget {
             description,
             style: TextStyle(
               fontFamily: Fonts.nunito,
-              fontSize: 14,
+              fontSize: Responsive.font(context, 14),
               color: Colors.black87,
               height: 1.5,
             ),

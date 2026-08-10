@@ -6,7 +6,7 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:study_mate/fonts.dart';
 
 class LoadingLogo extends StatefulWidget {
-  const LoadingLogo({
+   LoadingLogo({
     super.key,
     this.size = 80,
   });
@@ -95,7 +95,7 @@ class _LoadingLogoState extends State<LoadingLogo>
     while (mounted) {
       await _controller.forward(from: 0);
 
-      // Pause for half a second after each cycle
+   
       await Future.delayed(const Duration(milliseconds: 500));
     }
   }
@@ -130,7 +130,7 @@ class _LoadingLogoState extends State<LoadingLogo>
             child: Icon(
               LucideIcons.zap,
               color: Colors.white,
-              size: widget.size * 0.58,
+              size: Responsive.icon(context, widget.size * 0.58),
             ),
           ),
         ),

@@ -6,3 +6,5 @@ class PasswordMismatchState extends RegisterStates {}
 class SuccessfullRegisterState extends RegisterStates {}
 
 class FailureRegisterState extends RegisterStates {}
+
+class LoadingRegisterState extends RegisterStates{}

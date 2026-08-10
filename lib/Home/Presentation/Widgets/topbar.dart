@@ -27,7 +27,7 @@ class _TopbarState extends State<Topbar> {
         //  Transform.scale( scale: 0.5    , child: Logo(height, width)),
           SizedBox(width: width*0.07,),
 
-          Text("Study Mate",style: TextStyle(fontFamily: Fonts.outfit,fontSize: 21,fontWeight: FontWeight.w600),),
+          Text("Study Mate",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 21),fontWeight: FontWeight.w600),),
          
         ],
       ),

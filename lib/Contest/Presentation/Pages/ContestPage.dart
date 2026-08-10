@@ -120,7 +120,7 @@ Widget _searchBar(double height,double width, TextEditingController searchContro
                         decoration: InputDecoration(
                           hintText: "Search contests...",
                           hintStyle: TextStyle(color: Colors.grey, fontFamily: Fonts.nunito),
-                          prefixIcon: Icon(Bootstrap.search, color: Colors.black, size: 18),
+                          prefixIcon: Icon(Bootstrap.search, color: Colors.black, size: Responsive.icon(context, 18)),
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.symmetric(vertical: 10),
                         ),
@@ -138,7 +138,7 @@ Widget _appBar(double height,double width,BuildContext context){
           children: [
             SizedBox(width: 5,),
             IconButton(icon: Icon(Icons.arrow_back_ios_sharp, color: Colors.black), onPressed: () => Navigator.pop(context)),
-            Text("Contests", style: TextStyle(color: Colors.black, fontFamily: Fonts.outfit, fontWeight: FontWeight.w700,fontSize: 18)),
+            Text("Contests", style: TextStyle(color: Colors.black, fontFamily: Fonts.outfit, fontWeight: FontWeight.w700,fontSize: Responsive.font(context, 18))),
           ],
         ),
         
@@ -152,10 +152,10 @@ Widget _statSection(double height, double width,BuildContext context,int rating,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        _buildStatCard(width * 0.42, "MY CONTESTS", contestsGiven.toString(), "3 ongoing", Bootstrap.clock_history, 
+                        _buildStatCard(width * 0.42, "MY CONTESTS", contestsGiven.toString(), "3 ongoing", Bootstrap.clock_history, context,
                          onTap: () { Navigator.push(context, MaterialPageRoute(builder: (_) => BlocProvider<MyContestBloc>(create: (context) => MyContestBloc(sl<ContestRepo>()), child: MyContestsPage()))); }),
 
-                        _buildStatCard(width * 0.42, "MY RATING", rating.toString(), "Global Top 5%", Bootstrap.trophy, isRating: true),
+                        _buildStatCard(width * 0.42, "MY RATING", rating.toString(), "Global Top 5%", Bootstrap.trophy,context, isRating: true),
                       ],
                     ),
                   );
@@ -164,7 +164,7 @@ Widget _statSection(double height, double width,BuildContext context,int rating,
 
 
 
-    Widget _buildStatCard(double width, String title, String value, String subtitle, IconData icon, {bool isRating = false, VoidCallback? onTap}) {
+    Widget _buildStatCard(double width, String title, String value, String subtitle, IconData icon,BuildContext context, {bool isRating = false, VoidCallback? onTap}) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -187,7 +187,7 @@ Widget _statSection(double height, double width,BuildContext context,int rating,
                   color: const Color.fromRGBO(76, 175, 80, 0.05),
                   borderRadius: BorderRadius.circular(20)
                 ),
-                child: Icon(icon, color: Colors.green, size: 20)),
+                child: Icon(icon, color: Colors.green, size: Responsive.icon(context, 20))),
 
               if (isRating)
                 Container(
@@ -198,9 +198,9 @@ Widget _statSection(double height, double width,BuildContext context,int rating,
                   ),
                   child: Row(
                     children: [
-                      Icon(Bootstrap.graph_up_arrow, size: 10, color: Colors.green),
+                      Icon(Bootstrap.graph_up_arrow, size: Responsive.icon(context, 10), color: Colors.green),
                       SizedBox(width: 3),
-                      Text("+12", style: TextStyle(color: Colors.green, fontSize: 10, fontWeight: FontWeight.bold)),
+                      Text("+12", style: TextStyle(color: Colors.green, fontSize: Responsive.font(context, 10), fontWeight: FontWeight.bold)),
                     ],
                   ),
                 )
@@ -209,12 +209,12 @@ Widget _statSection(double height, double width,BuildContext context,int rating,
           SizedBox(height: 8),
           Text(
             value,
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, fontFamily: Fonts.inter),
+            style: TextStyle(fontSize: Responsive.font(context, 22), fontWeight: FontWeight.bold, fontFamily: Fonts.inter),
           ),
           SizedBox(height: 5),
           Text(
             title,
-            style: TextStyle(fontSize: 10, color: Colors.grey[600], fontWeight: FontWeight.bold, fontFamily: Fonts.nunito),
+            style: TextStyle(fontSize: Responsive.font(context, 10), color: Colors.grey[600], fontWeight: FontWeight.bold, fontFamily: Fonts.nunito),
           ),
           SizedBox(height: 10),
           Row(
@@ -227,7 +227,7 @@ Widget _statSection(double height, double width,BuildContext context,int rating,
               SizedBox(width: 5),
               Text(
                 subtitle,
-                style: TextStyle(fontSize: 10, color: Colors.grey[500], fontFamily: Fonts.nunito),
+                style: TextStyle(fontSize: Responsive.font(context, 10), color: Colors.grey[500], fontFamily: Fonts.nunito),
               )
             ],
           )
@@ -246,7 +246,7 @@ Widget _statSection(double height, double width,BuildContext context,int rating,
                       children: [
                         Text(
                           "Active Contests",
-                          style: TextStyle(fontFamily: Fonts.outfit, fontWeight: FontWeight.w600, fontSize: 18),
+                          style: TextStyle(fontFamily: Fonts.outfit, fontWeight: FontWeight.w600, fontSize: Responsive.font(context, 18)),
                         ),
                        
                         IconButton(icon: Icon(Icons.refresh, color: Colors.black), onPressed: () => BlocProvider.of<ContestPageBloc>(context).add(RefreshContestDataEvent())),
@@ -300,7 +300,7 @@ Widget _statSection(double height, double width,BuildContext context,int rating,
                 color: isSelected ? Colors.white : Colors.grey[600],
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                 fontFamily: Fonts.nunito,
-                fontSize: 14,
+                fontSize: Responsive.font(context, 14),
               ),
             ),
           ),

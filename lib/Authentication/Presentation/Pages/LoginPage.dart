@@ -61,7 +61,7 @@ class LoginPage extends StatelessWidget {
                   
                   Container(height: 1.8,width: width,color: const Color.fromRGBO(220, 220, 220, 0.5),),
                   const SizedBox(height: 10,),
-                  topLogin(height, width),
+                  topLogin(height, width, context),
                   SizedBox(height: height*0.05,),
                   LoginBox(name: "Email", icon: Bootstrap.at, placeholder: "name@gmail.com",  isHidden: false, txtController: email ,size: 28,hideText: false,),
                   SizedBox(height: height*0.02,),
@@ -71,7 +71,7 @@ class LoginPage extends StatelessWidget {
                     onTap: () => BlocProvider.of<AuthBloc>(context).add(AuthLoginStart(email: email.text, password: password.text)),
                     child: LoginButton(name: "Sign In", bgColor: Colors.green, fgColor: Colors.black)),
                   SizedBox(height: height*0.04,),
-                  _middleText(height, width),
+                  _middleText(height, width, context),
                   SizedBox(height: height*0.04,),
                   //Social Login Buttons 
                   Row(mainAxisAlignment: MainAxisAlignment.center,
@@ -82,7 +82,20 @@ class LoginPage extends StatelessWidget {
                       },
                       child: LoginOption(icon: FontAwesome.google_brand, type: "Google",size: 22,)), 
                     SizedBox(width: width*0.06,),
-                    LoginOption(icon: FontAwesome.github_brand, type: "GitHub",size: 25,)],),
+                    InkWell(
+                      onTap: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                          content: Text("GitHub Login is not currently Available in this version of the App.",
+                          style: TextStyle(fontFamily: Fonts.outfit),
+                          
+                          ),
+                          backgroundColor: Colors.green,
+                          behavior: SnackBarBehavior.floating,
+                          )
+                          );
+                      },
+                      child: LoginOption(icon: FontAwesome.github_brand, type: "GitHub",size: 25,))],),
               
                     SizedBox(height: height*0.04,),
                   _createAccount(height, width,context)  
@@ -96,7 +109,7 @@ class LoginPage extends StatelessWidget {
   }
 }
 
-Widget topLogin(double height,double width){
+Widget topLogin(double height,double width, BuildContext context){
   return Container(
    
     child: Column(
@@ -106,16 +119,16 @@ Widget topLogin(double height,double width){
         Container(
           height: height*0.06,width: height*0.06,
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),color: Colors.black),
-          child: Icon(LucideIcons.zap400,color: Colors.white,size: 35,)),
+          child: Icon(LucideIcons.zap400,color: Colors.white,size: Responsive.icon(context, 35),)),
           SizedBox(height: height*0.01,),
-        Text("StudyMate",style: TextStyle(color: Colors.black,fontSize: 40,fontFamily: Fonts.outfit,fontWeight: FontWeight.w600),),
-        Text("Smarter Learning, One test at a time",style: TextStyle(color: const Color.fromRGBO(132, 132, 132, 1),fontFamily: Fonts.outfit,fontSize: 12),)
+        Text("StudyMate",style: TextStyle(color: Colors.black,fontSize: Responsive.font(context, 40),fontFamily: Fonts.outfit,fontWeight: FontWeight.w600),),
+        Text("Smarter Learning, One test at a time",style: TextStyle(color: const Color.fromRGBO(132, 132, 132, 1),fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 12)),)
       ],
     ),
   );
 }
 
-Widget _middleText(double height,double width){
+Widget _middleText(double height,double width, BuildContext context){
   return SizedBox(
     width: width,
     child: Row(
@@ -127,7 +140,7 @@ Widget _middleText(double height,double width){
           height: 1.5,
           color: const Color.fromRGBO(200, 200, 200, 0.5),
         ),
-        Text("OR CONTINUE WITH",style: TextStyle(color: const Color.fromRGBO(120, 120, 120, 1),fontFamily:Fonts.outfit ,fontSize: 12),),
+        Text("OR CONTINUE WITH",style: TextStyle(color: const Color.fromRGBO(120, 120, 120, 1),fontFamily:Fonts.outfit ,fontSize: Responsive.font(context, 12)),),
         Container(
           margin: EdgeInsets.only(left: width*0.02),
           width: width*0.23,
@@ -147,9 +160,9 @@ Widget _header(double height, double width,BuildContext context){
     children: [
       InkWell(
         onTap: () => Navigator.pop(context),
-        child: Icon(LucideIcons.chevronLeft300Dir,size: 30,)),
+        child: Icon(LucideIcons.chevronLeft300Dir,size: Responsive.icon(context, 30),)),
       SizedBox(width: width*0.03,),
-      Text("Sign In",style: TextStyle(fontFamily: Fonts.outfit,fontSize: 18),)
+      Text("Sign In",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 18)),)
     ],
   ),
   );

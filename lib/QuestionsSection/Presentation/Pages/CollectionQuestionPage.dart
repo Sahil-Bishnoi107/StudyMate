@@ -38,7 +38,7 @@ class CollectionQuestionPage extends StatelessWidget {
                         child: Column(
                           children: [
                             SizedBox(height: height * 0.02),
-                            _statsBar(height, width, questions.length),
+                            _statsBar(height, width, questions.length,context),
                             SizedBox(height: height * 0.03),
                             _recentQuestionsHeader(width),
                             SizedBox(height: height * 0.02),
@@ -79,13 +79,13 @@ class CollectionQuestionPage extends StatelessWidget {
           Row(
             children: [
               IconButton(
-                icon: Icon(LucideIcons.chevronLeft, size: 20, color: Colors.black),
+                icon: Icon(LucideIcons.chevronLeft, size: Responsive.icon(context, 20), color: Colors.black),
                 onPressed: () => Navigator.pop(context),
               ),
               SizedBox(width: 5),
               Text(
                 collection.collectionname,
-                style: TextStyle(fontFamily: Fonts.outfit, fontSize: 18, fontWeight: FontWeight.w600),
+                style: TextStyle(fontFamily: Fonts.outfit, fontSize: Responsive.font(context, 18), fontWeight: FontWeight.w600),
               ),
             ],
           ),
@@ -95,14 +95,14 @@ class CollectionQuestionPage extends StatelessWidget {
     );
   }
 
-  Widget _statsBar(double height, double width, int totalQuestions) {
+  Widget _statsBar(double height, double width, int totalQuestions,BuildContext context) {
     return Container(
       width: width,
       color: Colors.green.withOpacity(0.1),
       padding: EdgeInsets.symmetric(horizontal: width * 0.05, vertical: height * 0.02),
       child: Row(
         children: [
-          Icon(FontAwesome.book_open_solid, color: Colors.green, size: 20),
+          Icon(FontAwesome.book_open_solid, color: Colors.green, size: Responsive.icon(context, 20)),
           SizedBox(width: width * 0.04),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -143,14 +143,14 @@ class CollectionQuestionPage extends StatelessWidget {
     String difficulty = question.difficulty;
     if (difficulty.length > 2) difficulty = difficulty.toUpperCase();
     
-    // Subject pill color mapping (rough approximation based on typical subjects)
+   
     Color subjectColor = Colors.green;
     if (question.subject.toLowerCase() == 'physics') subjectColor = Colors.green;
     if (question.subject.toLowerCase() == 'chemistry') subjectColor = Colors.teal;
     if (question.subject.toLowerCase() == 'biology') subjectColor = Colors.lightGreen;
     if (question.subject.toLowerCase() == 'mathematics') subjectColor = Colors.greenAccent[700]!;
 
-    // Difficulty pill color
+   
     Color diffBgColor = Colors.orange.withOpacity(0.1);
     Color diffTextColor = Colors.orange;
     if (difficulty == 'EASY') {
@@ -163,8 +163,7 @@ class CollectionQuestionPage extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        // Tapping a specific question opens review mode starting from this question.
-        // We find the index of the question in the state to pass it.
+       
         final state = BlocProvider.of<MyQuestionsBloc>(context).state;
         if (state is MyQuestionsLoadedState) {
           int index = state.collectionQuestions.indexOf(question);
@@ -233,7 +232,7 @@ class CollectionQuestionPage extends StatelessWidget {
             SizedBox(height: height * 0.02),
             Row(
               children: [
-                Icon(Icons.history, size: 14, color: Colors.grey), // Placeholder for avatars/history
+                Icon(Icons.history, size: Responsive.icon(context, 14), color: Colors.grey), // Placeholder for avatars/history
                 SizedBox(width: 8),
                 Text("Practice history available", style: TextStyle(fontFamily: Fonts.nunito, color: Colors.grey[500], fontSize: 11, fontStyle: FontStyle.italic)),
                 Spacer(),

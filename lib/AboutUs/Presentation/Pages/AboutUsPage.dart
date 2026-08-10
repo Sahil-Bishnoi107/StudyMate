@@ -37,7 +37,7 @@ class _AboutUsPageState extends State<AboutUsPage> {
       body: Column(
         children: [
           SizedBox(height: height * 0.05),
-          _appBar(height, width),
+          _appBar(height, width,context),
           Container(
             color: const Color.fromRGBO(220, 220, 220, 0.8),
             height: 1,
@@ -47,7 +47,7 @@ class _AboutUsPageState extends State<AboutUsPage> {
             child: BlocBuilder<Aboutusbloc, Aboutusstates>(
               builder: (context, state) {
                 if (state is AboutusInitialState || state is AboutUsLoading) {
-                  return const Center(child: LoadingLogo());
+                  return  Center(child: LoadingLogo());
                 } else if (state is AboutUsLoaded) {
                   return _buildContent(context, state.people, width);
                 } else if (state is AboutUsError) {
@@ -67,7 +67,7 @@ class _AboutUsPageState extends State<AboutUsPage> {
     );
   }
 
-  Widget _appBar(double height, double width) {
+  Widget _appBar(double height, double width,BuildContext context) {
   return Container(
     height: height * 0.05,
     margin: EdgeInsets.symmetric(horizontal: width * 0.05),
@@ -79,9 +79,9 @@ class _AboutUsPageState extends State<AboutUsPage> {
               onTap: () {
                 Scaffold.of(context).openDrawer();
               },
-              child: const Icon(
+              child:  Icon(
                 Icons.menu_sharp,
-                size: 30,
+                size: Responsive.icon(context, 30),
               ),
             );
           },
@@ -97,7 +97,7 @@ class _AboutUsPageState extends State<AboutUsPage> {
               color: Colors.black,
               fontFamily: Fonts.outfit,
               fontWeight: FontWeight.w600,
-              fontSize: 18,
+              fontSize: Responsive.font(context, 18),
             ),
             textAlign: TextAlign.start,
           ),
@@ -136,7 +136,7 @@ class _AboutUsPageState extends State<AboutUsPage> {
               "StudyMate is an AI-powered platform for JEE and NEET preparation providing mock tests, contests, analytics, practice questions, and experienced teachers.",
               style: TextStyle(
                 fontFamily: Fonts.outfit,
-                fontSize: 12,
+                fontSize: Responsive.font(context, 12),
                 color: Colors.grey[600],
                 height: 1.5,
               ),
@@ -161,14 +161,14 @@ class _AboutUsPageState extends State<AboutUsPage> {
       text: TextSpan(
         style: TextStyle(
           fontFamily: Fonts.outfit,
-          fontSize: 32,
+          fontSize: Responsive.font(context, 32),
           fontWeight: FontWeight.w900,
           color: Colors.black,
         ),
-        children: const [
-          TextSpan(text: "Learn. ",style: TextStyle(fontFamily: Fonts.lobster,fontSize: 40)),
-          TextSpan(text: "Grow. ", style: TextStyle(color: Colors.green,fontFamily: Fonts.lobster,fontSize: 40)),
-          TextSpan(text: "Succeed.",style: TextStyle(fontFamily: Fonts.lobster,fontSize: 40)),
+        children:  [
+          TextSpan(text: "Learn. ",style: TextStyle(fontFamily: Fonts.lobster,fontSize: Responsive.font(context, 40))),
+          TextSpan(text: "Grow. ", style: TextStyle(color: Colors.green,fontFamily: Fonts.lobster,fontSize: Responsive.font(context, 40))),
+          TextSpan(text: "Succeed.",style: TextStyle(fontFamily: Fonts.lobster,fontSize: Responsive.font(context, 40))),
         ],
       ),
     );
@@ -180,9 +180,9 @@ class _AboutUsPageState extends State<AboutUsPage> {
       children: [
         Row(
           children: [
-            Text("Who  ",style: TextStyle(fontFamily: Fonts.lobsterTwo,fontSize: 25,fontWeight: FontWeight.bold, color: Colors.black, ), ),
-            Text("We  ",style: TextStyle(fontFamily: Fonts.lobsterTwo,fontSize: 25,fontWeight: FontWeight.bold, color: Colors.green, ), ),
-            Text("Are",style: TextStyle(fontFamily: Fonts.lobsterTwo,fontSize: 25,fontWeight: FontWeight.bold, color: Colors.black, ), ),
+            Text("Who  ",style: TextStyle(fontFamily: Fonts.lobsterTwo,fontSize: Responsive.font(context, 25),fontWeight: FontWeight.bold, color: Colors.black, ), ),
+            Text("We  ",style: TextStyle(fontFamily: Fonts.lobsterTwo,fontSize: Responsive.font(context, 25),fontWeight: FontWeight.bold, color: Colors.green, ), ),
+            Text("Are",style: TextStyle(fontFamily: Fonts.lobsterTwo,fontSize: Responsive.font(context, 25),fontWeight: FontWeight.bold, color: Colors.black, ), ),
           ],
         ),
         
@@ -191,7 +191,7 @@ class _AboutUsPageState extends State<AboutUsPage> {
           "Founded with a mission to democratize quality education, StudyMate combines cutting-edge AI technology with the wisdom of industry-leading educators. We believe every student deserves a personalized roadmap to success.",
           style: TextStyle(
             fontFamily: Fonts.outfit,
-            fontSize: 12,
+            fontSize: Responsive.font(context, 12),
             color: Colors.grey[600],
             height: 1.5,
           ),
@@ -206,13 +206,13 @@ class _AboutUsPageState extends State<AboutUsPage> {
       children: [
         Row(
           children: [
-            Text("Meet ",style: TextStyle(fontFamily: Fonts.lobster,fontSize: 30, fontWeight: FontWeight.bold, color: Colors.green), ),
-            Text("Our ",style: TextStyle(fontFamily: Fonts.lobster,fontSize: 30, fontWeight: FontWeight.bold, color: Colors.black), ),
-            Text("Team",style: TextStyle(fontFamily: Fonts.lobster,fontSize: 30, fontWeight: FontWeight.bold, color: Colors.green), ),
+            Text("Meet ",style: TextStyle(fontFamily: Fonts.lobster,fontSize: Responsive.font(context, 30), fontWeight: FontWeight.bold, color: Colors.green), ),
+            Text("Our ",style: TextStyle(fontFamily: Fonts.lobster,fontSize: Responsive.font(context, 30), fontWeight: FontWeight.bold, color: Colors.black), ),
+            Text("Team",style: TextStyle(fontFamily: Fonts.lobster,fontSize: Responsive.font(context, 30), fontWeight: FontWeight.bold, color: Colors.green), ),
           ],
         ),
         const SizedBox(height: 4),
-        Text( "Learn from the industry's best minds",style: TextStyle( fontFamily: Fonts.outfit,fontSize: 12,color: Colors.grey[600],),
+        Text( "Learn from the industry's best minds",style: TextStyle( fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 12),color: Colors.grey[600],),
         ),
       ],
     );
@@ -228,7 +228,7 @@ class _AboutUsPageState extends State<AboutUsPage> {
           title,
           style: TextStyle(
             fontFamily: Fonts.outfit,
-            fontSize: 18,
+            fontSize: Responsive.font(context, 18),
             fontWeight: FontWeight.w600,
             color: Colors.black87,
           ),
