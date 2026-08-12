@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
-import 'package:study_mate/LoadingScreen/LoadingAnimations.dart';
 
-import 'package:study_mate/QuestionsSection/Presentation/Bloc/QuestionsBloc.dart';
-import 'package:study_mate/QuestionsSection/Presentation/Bloc/QuestionsEvents.dart';
-import 'package:study_mate/QuestionsSection/Presentation/Bloc/QuestionsStates.dart';
+import 'package:study_mate/QuestionsSection/Presentation/FiltersBloc/FilterBloc.dart';
+import 'package:study_mate/QuestionsSection/Presentation/FiltersBloc/FilterStates.dart';
 import 'package:study_mate/QuestionsSection/Presentation/Pages/QuestionPage.dart';
 import 'package:study_mate/QuestionsSection/Presentation/Widgets/difficulty_selection.dart';
 import 'package:study_mate/QuestionsSection/Presentation/Widgets/filter_selection.dart';
@@ -23,35 +21,9 @@ class _FiltersPageState extends State<FiltersPage> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    return BlocConsumer<Questionsbloc,Questionsstates>(
-      listener: (context, state) {
-        if(state is QuestionFetchFailed){
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar( 
-              content: Text(state.message),
-              behavior: SnackBarBehavior.floating,
-              shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-              ),
-              margin: const EdgeInsets.all(16),
-              duration: const Duration(seconds: 2),
-              ));
-        }
-
-        if(state is LoadQuestionsState){
-          Navigator.push(context, MaterialPageRoute(builder: (context) => QuestionsPage()));
-        }
-      },
+    return BlocBuilder<FilterBloc,FilterStates>(
       builder: (context, state) {
-        if(state is FetchingQuestionsState){
-          return Scaffold(
-            backgroundColor: Colors.white,
-            body: Center(
-             child: LoadingLogo(),
-            ),
-          );
-        }
-        if(state is QuestionsInitialState){
+        if(state is InitialFiltersState){
         return Scaffold(
           backgroundColor: Colors.white,
           body:  SingleChildScrollView(
@@ -73,7 +45,8 @@ class _FiltersPageState extends State<FiltersPage> {
               SizedBox(height: height*0.02,),
                GestureDetector(
                 onTap: () {
-                  BlocProvider.of<Questionsbloc>(context).add(SearchQuestions());
+                  final st = state as InitialFiltersState;
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => QuestionsPage(filters: st.filters)));
                 },
                 child: _startButton(height, width,context))
               ],

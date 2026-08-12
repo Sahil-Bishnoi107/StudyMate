@@ -16,6 +16,7 @@ import 'package:study_mate/Profile/Presentation/Bloc/ProfileBloc.dart';
 import 'package:study_mate/QuestionsSection/Data/QuestionsRepo.dart';
 import 'package:study_mate/QuestionsSection/Presentation/Bloc/MyQuestionsBloc/MyQuestionsBloc.dart';
 import 'package:study_mate/QuestionsSection/Presentation/Bloc/QuestionsBloc.dart';
+import 'package:study_mate/QuestionsSection/Presentation/FiltersBloc/FilterBloc.dart';
 import 'package:study_mate/Test/Data/test_repo.dart';
 import 'package:study_mate/Test/Presentation/Bloc/test_bloc.dart';
 import 'package:study_mate/TestsPage/Data/testdata.dart';
@@ -63,4 +64,5 @@ Future<void> setup()async {
   sl.registerLazySingleton<LecturesPageBloc>(() => LecturesPageBloc(sl<VideoRepo>()));
   sl.registerLazySingleton<NotificationBloc>(() => NotificationBloc(sl<Notificationdata>()));
   sl.registerLazySingleton<Aboutusbloc>(() => Aboutusbloc(sl<AboutUsRepo>()));
+  sl.registerLazySingleton<FilterBloc>(() => FilterBloc(sl<QuestionsRepo>()));
 }

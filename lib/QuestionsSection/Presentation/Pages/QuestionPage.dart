@@ -9,12 +9,14 @@ import 'package:study_mate/QuestionsSection/Domain/Collection.dart';
 import 'package:study_mate/QuestionsSection/Presentation/Bloc/QuestionsBloc.dart';
 import 'package:study_mate/QuestionsSection/Presentation/Bloc/QuestionsEvents.dart';
 import 'package:study_mate/QuestionsSection/Presentation/Bloc/QuestionsStates.dart';
+import 'package:study_mate/QuestionsSection/Domain/QuestionFilters.dart';
 import 'package:study_mate/Test/Presentation/Widgets/fixedTextWidget.dart';
 import 'package:study_mate/Test/Presentation/Widgets/question_option.dart';
 import 'package:study_mate/fonts.dart';
 
 class QuestionsPage extends StatefulWidget {
-  const QuestionsPage({super.key});
+  final Questionfilters filters;
+  const QuestionsPage({super.key, required this.filters});
 
   @override
   State<QuestionsPage> createState() => _QuestionsPageState();
@@ -26,6 +28,12 @@ class _QuestionsPageState extends State<QuestionsPage> {
   String newCollectionName = "";
   int selectedIconIndex = 0;
   bool isCreatingCollection = false;
+
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<Questionsbloc>(context).add(SearchQuestions(filters: widget.filters));
+  }
 
  final List<IconData> collectionIcons = [
   LucideIcons.folder,
@@ -72,6 +80,10 @@ class _QuestionsPageState extends State<QuestionsPage> {
           }
 
           if (state is LoadQuestionsState) {
+            if (state.questions.isEmpty) {
+              return _zeroQuestions(height, width, context);
+            }
+
             Question currentQuestion = state.questions[state.currInd];
             
             return SingleChildScrollView(
@@ -142,7 +154,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
         IconButton(
           icon: Icon(Icons.arrow_back_ios, size: Responsive.icon(context, 20)),
           onPressed: () {
-            BlocProvider.of<Questionsbloc>(context).add(ResetFiltersEvent());
+            Navigator.pop(context);
           },
         ),
         Text("Question Practice", style : TextStyle(color : Colors.black, fontFamily : Fonts.outfit,fontWeight: FontWeight.w600, fontSize: Responsive.font(context, 18)))
@@ -457,6 +469,55 @@ class _QuestionsPageState extends State<QuestionsPage> {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Question Not Saved"), backgroundColor: Colors.red,behavior: SnackBarBehavior.floating,));
     }
   }
+
+
+  Widget _zeroQuestions(double height, double width,BuildContext context){
+    return Center(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: width*0.1),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: height*0.1,width: height*0.1,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(width*0.03),
+                          color: Colors.black
+                        ),
+                        child: Center(child: Icon(LucideIcons.zap300Dir, size: Responsive.icon(context, 50),color: Colors.white,)),
+                      ),
+                      SizedBox(height: height*0.02,),
+                      Text(
+                        "No questions with the set filters are currently available.",
+                        style: TextStyle(
+                          fontFamily: Fonts.outfit,
+                          fontSize: Responsive.font(context, 16),
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black87,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: height * 0.03),
+                      SizedBox(
+                        width: width * 0.5,
+                        height: height * 0.06,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.black,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text("Go Back", style: TextStyle(color: Colors.white, fontFamily: Fonts.outfit, fontWeight: FontWeight.w400, fontSize: Responsive.font(context, 16))),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+  }
+
 
   List<Widget> _buildCreateCollectionForm(double height, double width, StateSetter setModalState, BuildContext context) {
     return [

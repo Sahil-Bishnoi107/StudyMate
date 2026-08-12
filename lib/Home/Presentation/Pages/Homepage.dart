@@ -54,8 +54,13 @@ class _HomepageState extends State<Homepage> {
                  "Practice", "Without Limits",40, context),
               ),
                SizedBox(height: height*0.02,),
-               _card(height, width, LucideIcons.chartColumn300, "Analyze your performance with detailed analytics and identify your strengths and weaknesses.",
-               "Track Your", "Progress",40, context),
+               InkWell(
+                onTap: () {
+                   _snakcBar(height, width, context);
+                },
+                 child: _card(height, width, LucideIcons.chartColumn300, "Analyze your performance with detailed analytics and identify your strengths and weaknesses.",
+                 "Track Your", "Progress",40, context),
+               ),
                SizedBox(height: height*0.02,),
                _premiumCard(height, width,context),
                SizedBox(height: height*0.1,)
@@ -96,23 +101,19 @@ Widget _header(double height,double width,BuildContext context){
 
   return Container(
 
-    height: height*0.2,width: width,
+    height: height*0.22,width: width,
     padding: EdgeInsets.symmetric(horizontal: width*0.05),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        SizedBox( height: height*0.045,
-          child: TypingText(text: "Master",style: TextStyle(color: Colors.black, fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 40),fontWeight: FontWeight.w600),)),
-        SizedBox(height: height*0.045,
-          child: TypingText(text: "Your",style: TextStyle(color: Colors.green, fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 40),fontWeight: FontWeight.w600), delay: const Duration(milliseconds: 315),)),
-        SizedBox(height: height*0.045,
-          child: Row(
-            children: [
-              TypingText(text: "Potential",style: TextStyle(color: Colors.black, fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 40),fontWeight: FontWeight.w600), delay: const Duration(milliseconds: 540),),
-              TypingText(text: ".",style: TextStyle(color: Colors.green, fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 40),fontWeight: FontWeight.w600), delay: const Duration(milliseconds: 900),)
-            ],
-          ),
+        TypingText(text: "Master",style: TextStyle(color: Colors.black, fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 40),fontWeight: FontWeight.w600),),
+        TypingText(text: "Your",style: TextStyle(color: Colors.green, fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 40),fontWeight: FontWeight.w600), delay: const Duration(milliseconds: 315),),
+        Row(
+          children: [
+            TypingText(text: "Potential",style: TextStyle(color: Colors.black, fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 40),fontWeight: FontWeight.w600), delay: const Duration(milliseconds: 540),),
+            TypingText(text: ".",style: TextStyle(color: Colors.green, fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 40),fontWeight: FontWeight.w600), delay: const Duration(milliseconds: 900),)
+          ],
         ),
         SizedBox(height: 10,),
         SizedBox(
@@ -133,11 +134,10 @@ Widget _aboutSection(double height, double width,BuildContext context){
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-      SizedBox(height: height*0.032,
-        child: Text(
-           "Preparing The Future",
-          style: TextStyle(color: Colors.black,fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 24),fontWeight: FontWeight.w600)
-        )),
+      Text(
+         "Preparing The Future",
+        style: TextStyle(color: Colors.black,fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 24),fontWeight: FontWeight.w600)
+      ),
       Row(
         children: [
           Text( "Engineers ",style: TextStyle(color: Colors.green,fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 24),fontWeight: FontWeight.w600)),
@@ -248,4 +248,15 @@ Widget _premiumCard(double height, double width,BuildContext context){
        ],
     ),
   );
+}
+
+
+ScaffoldFeatureController<SnackBar, SnackBarClosedReason> _snakcBar(double height, double width, BuildContext context){
+  return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content: Text("Analythics are not availabe in this version of the app. They will be soon availabe!",
+    style: TextStyle(fontFamily: Fonts.outfit, fontSize: Responsive.font(context, 12)),
+    ),
+    behavior: SnackBarBehavior.floating,
+    backgroundColor: Colors.green,
+    ));
 }

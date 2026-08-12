@@ -1,12 +1,12 @@
+import 'package:study_mate/QuestionsSection/Domain/QuestionFilters.dart';
+
 class Questionsevents {}
 
-class FilterSelectEvent extends Questionsevents{
-  int filterNumber;
-  int selectedIndex;
-  FilterSelectEvent({required this.filterNumber,required this.selectedIndex});
-}
 
-class SearchQuestions extends Questionsevents{}
+class SearchQuestions extends Questionsevents{
+  final Questionfilters? filters;
+  SearchQuestions({this.filters});
+}
 
 class AnswerQuestion extends Questionsevents {
   String option;

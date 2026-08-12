@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_mate/QuestionsSection/Domain/QuestionFilters.dart';
-import 'package:study_mate/QuestionsSection/Presentation/Bloc/QuestionsBloc.dart';
-import 'package:study_mate/QuestionsSection/Presentation/Bloc/QuestionsEvents.dart';
-import 'package:study_mate/QuestionsSection/Presentation/Bloc/QuestionsStates.dart';
+import 'package:study_mate/QuestionsSection/Presentation/FiltersBloc/FilterBloc.dart';
+import 'package:study_mate/QuestionsSection/Presentation/FiltersBloc/FilterEvents.dart';
+import 'package:study_mate/QuestionsSection/Presentation/FiltersBloc/FilterStates.dart';
 import 'package:study_mate/fonts.dart';
 
 class FilterSelection extends StatefulWidget {
@@ -41,14 +41,14 @@ class _FilterSelectionState extends State<FilterSelection> {
             Text(widget.type,style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: Responsive.font(context, 16)),)
           ],),
           SizedBox(height: height*0.01,),
-          BlocBuilder<Questionsbloc,Questionsstates>(
+          BlocBuilder<FilterBloc,FilterStates>(
             builder: (context, state) =>  Wrap(     
               spacing: width*0.02, runSpacing: height*0.01,
               children: List.generate(
                 widget.filterOptions.length,
                  (index) => InkWell(
                   onTap: () {
-                    BlocProvider.of<Questionsbloc>(context).add(FilterSelectEvent(filterNumber: widget.filterIndex, selectedIndex: index));
+                    BlocProvider.of<FilterBloc>(context).add(FilterSelectEvent(filterNumber: widget.filterIndex, selectedIndex: index));
                   },
                   child: _tagWidget(height, width, widget.filterOptions[index].filterName, widget.filterOptions[index].isSelected,context)))
             ),

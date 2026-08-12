@@ -74,11 +74,20 @@ class _TypingTextState extends State<TypingText> {
         Text(
           widget.text,
           style: widget.style.copyWith(color: Colors.transparent),
+          textHeightBehavior: const TextHeightBehavior(
+          applyHeightToFirstAscent: false,
+         applyHeightToLastDescent: false,
+        ),
         ),
         // Visible typing text
         Text(
           !_started ? "" : widget.text.substring(0, _currentIndex),
           style: widget.style,
+          textHeightBehavior: const TextHeightBehavior(
+          applyHeightToFirstAscent: false,
+         applyHeightToLastDescent: false,
+        ),
+        
         ),
       ],
     );

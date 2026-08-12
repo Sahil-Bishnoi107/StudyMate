@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:study_mate/QuestionsSection/Domain/QuestionFilters.dart';
-import 'package:study_mate/QuestionsSection/Presentation/Bloc/QuestionsBloc.dart';
-import 'package:study_mate/QuestionsSection/Presentation/Bloc/QuestionsEvents.dart';
-import 'package:study_mate/QuestionsSection/Presentation/Bloc/QuestionsStates.dart';
+import 'package:study_mate/QuestionsSection/Presentation/FiltersBloc/FilterBloc.dart';
+import 'package:study_mate/QuestionsSection/Presentation/FiltersBloc/FilterEvents.dart';
+import 'package:study_mate/QuestionsSection/Presentation/FiltersBloc/FilterStates.dart';
 import 'package:study_mate/fonts.dart';
 
 class CustomOverlayWidget extends StatefulWidget {
@@ -64,17 +64,17 @@ class _CustomOverlayWidgetState extends State<CustomOverlayWidget> {
                 
                 child: SizedBox(
                   height: height*0.15, width: width*0.8,
-                  child: BlocBuilder<Questionsbloc,Questionsstates>(
+                  child: BlocBuilder<FilterBloc,FilterStates>(
                     builder: (context, state) {
                       List<Option> difficulties = [];
-                      if(state is QuestionsInitialState){difficulties = state.filters.difficulty;}
+                      if(state is InitialFiltersState){difficulties = state.filters.difficulty;}
                       return ListView.builder(
                         padding: EdgeInsets.all(0),
                         itemCount: difficulties.length,
                         itemBuilder: (context, index) => GestureDetector(
                           onTap: () {
                             print("clicked");
-                            BlocProvider.of<Questionsbloc>(context).add(FilterSelectEvent(filterNumber: 2, selectedIndex: index));
+                            BlocProvider.of<FilterBloc>(context).add(FilterSelectEvent(filterNumber: 2, selectedIndex: index));
                           },
                           child: _difficultyOption(height, width, difficulties[index],index != difficulties.length-1), ) ,
                         );
