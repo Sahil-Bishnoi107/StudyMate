@@ -8,7 +8,6 @@ import 'package:study_mate/QuestionsSection/Presentation/FiltersBloc/FilterState
 import 'package:study_mate/fonts.dart';
 
 class CustomOverlayWidget extends StatefulWidget {
-  
   const CustomOverlayWidget({super.key});
 
   @override
@@ -16,34 +15,41 @@ class CustomOverlayWidget extends StatefulWidget {
 }
 
 class _CustomOverlayWidgetState extends State<CustomOverlayWidget> {
-  final LayerLink _layerLink = LayerLink();   // this is a ref to the widget so dropdown moves with teh text of whatever
+  final LayerLink _layerLink = LayerLink(); // this is a ref to the widget so dropdown moves with teh text of whatever
 
-  OverlayEntry? _overlayEntry;    // this is our overlay object
-  
-  bool get _isOpen => _overlayEntry != null;     // we decide open or close from the fact that overlay is null or not
+  OverlayEntry? _overlayEntry; // this is our overlay object
 
-  void _showOverlay(){
-    _overlayEntry = _createOverlay();   // _createOverlay is written below
-    Overlay.of(context).insert(_overlayEntry!);    // basically puts the overlay on top of scaffold
+  bool get _isOpen => _overlayEntry != null; // we decide open or close from the fact that overlay is null or not
+
+  void _showOverlay() {
+    _overlayEntry = _createOverlay(); // _createOverlay is written below
+    Overlay.of(context).insert(_overlayEntry!); // basically puts the overlay on top of scaffold
   }
 
-  void _removeOverlay(){
+  void _removeOverlay() {
     _overlayEntry?.remove();
     _overlayEntry = null;
   }
 
-  void _toggle(){
-    if(_isOpen){_removeOverlay();}
-    else{_showOverlay();}
+  void _toggle() {
+    if (_isOpen) {
+      _removeOverlay();
+    } else {
+      _showOverlay();
+    }
   }
 
-  OverlayEntry _createOverlay(){
-    return OverlayEntry(builder: (context) {
-      double height = MediaQuery.of(context).size.height;
-      double width = MediaQuery.of(context).size.width;
-     return Stack(
-        children: [
-          Positioned.fill(
+  OverlayEntry _createOverlay() {
+    // Capture the bloc from the main widget's context BEFORE entering the overlay builder
+    final filterBloc = BlocProvider.of<FilterBloc>(context);
+
+    return OverlayEntry(
+      builder: (context) {
+        double height = MediaQuery.of(context).size.height;
+        double width = MediaQuery.of(context).size.width;
+        return Stack(
+          children: [
+            Positioned.fill(
               child: GestureDetector(
                 behavior: HitTestBehavior.translucent,
                 onTap: () {
@@ -53,40 +59,52 @@ class _CustomOverlayWidgetState extends State<CustomOverlayWidget> {
                 },
               ),
             ),
-
             CompositedTransformFollower(
               link: _layerLink,
               showWhenUnlinked: false,
-              offset:  Offset(0, height*0.055),
+              offset: Offset(0, height * 0.055),
               child: Material(
                 elevation: 0.4,
                 color: Colors.white,
-                
                 child: SizedBox(
-                  height: height*0.15, width: width*0.8,
-                  child: BlocBuilder<FilterBloc,FilterStates>(
+                  height: height * 0.15,
+                  width: width * 0.8,
+                  child: BlocBuilder<FilterBloc, FilterStates>(
+                    bloc: filterBloc, // Explicitly pass the captured bloc here
                     builder: (context, state) {
                       List<Option> difficulties = [];
-                      if(state is InitialFiltersState){difficulties = state.filters.difficulty;}
+                      if (state is InitialFiltersState) {
+                        difficulties = state.filters.difficulty;
+                      }
                       return ListView.builder(
-                        padding: EdgeInsets.all(0),
+                        padding: const EdgeInsets.all(0),
                         itemCount: difficulties.length,
-                        itemBuilder: (context, index) => GestureDetector(
+                        itemBuilder: (context, index) => InkWell(
                           onTap: () {
                             print("clicked");
-                            BlocProvider.of<FilterBloc>(context).add(FilterSelectEvent(filterNumber: 2, selectedIndex: index));
+                            // Use the captured bloc to add the event, menu stays open!
+                            filterBloc.add(FilterSelectEvent(
+                                filterNumber: 2, selectedIndex: index));
                           },
-                          child: _difficultyOption(height, width, difficulties[index],index != difficulties.length-1), ) ,
-                        );
-                    }
+                          child: _difficultyOption(
+                            height,
+                            width,
+                            difficulties[index],
+                            index != difficulties.length - 1,
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ),
               ),
-              )
-        ],
-      );
-    },);
+            )
+          ],
+        );
+      },
+    );
   }
+
   @override
   void dispose() {
     _removeOverlay();
@@ -99,64 +117,101 @@ class _CustomOverlayWidgetState extends State<CustomOverlayWidget> {
     double width = MediaQuery.of(context).size.width;
     return CompositedTransformTarget(
       link: _layerLink,
-
       child: GestureDetector(
         onTap: () {
-         setState(() {
-           _toggle();
-         }); 
+          setState(() {
+            _toggle();
+          });
         },
         child: Container(
-          height: height*0.06, width: width*0.8,
+          height: height * 0.06,
+          width: width * 0.8,
           decoration: BoxDecoration(
-            color: Colors.white, 
-            border: Border.all(width: 1.5, color: const Color.fromRGBO(220, 220, 220, 0.8)),
+            color: Colors.white,
+            border: Border.all(
+                width: 1.5,
+                color: const Color.fromRGBO(220, 220, 220, 0.8)),
             borderRadius: BorderRadius.circular(10),
-            ),
-            child: Row(
-              children: [
-                SizedBox(width: width*0.025,),
-                Icon(Bootstrap.bullseye,color: Colors.green,),
-                SizedBox(width: width*0.032,),
-                SizedBox( width: width*0.6,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: height*0.01,),
-                      SizedBox(
-                        height: height*0.015,
-                        child: Text("LEVEL",style: TextStyle(fontFamily: Fonts.nunito,fontSize: Responsive.font(context, 12),fontWeight: FontWeight.bold),)),
-                      Text("Mixed (Recommended)",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 14),fontWeight: FontWeight.w600),)
-                    ],
-                  ),
+          ),
+          child: Row(
+            children: [
+              SizedBox(
+                width: width * 0.025,
+              ),
+              Icon(
+                Bootstrap.bullseye,
+                color: Colors.green,
+              ),
+              SizedBox(
+                width: width * 0.032,
+              ),
+              SizedBox(
+                width: width * 0.6,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: height * 0.01,
+                    ),
+                    SizedBox(
+                        height: height * 0.015,
+                        child: Text(
+                          "LEVEL",
+                          style: TextStyle(
+                              fontFamily: Fonts.nunito,
+                              fontSize: Responsive.font(context, 12),
+                              fontWeight: FontWeight.bold),
+                        )),
+                    Text(
+                      "Mixed (Recommended)",
+                      style: TextStyle(
+                          fontFamily: Fonts.outfit,
+                          fontSize: Responsive.font(context, 14),
+                          fontWeight: FontWeight.w600),
+                    )
+                  ],
                 ),
-               Icon(_isOpen ? Icons.keyboard_arrow_up_outlined : Icons.keyboard_arrow_down_outlined)
-              ],
-            ),
+              ),
+              Icon(_isOpen
+                  ? Icons.keyboard_arrow_up_outlined
+                  : Icons.keyboard_arrow_down_outlined)
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-
-
-Widget _difficultyOption(double height, double width,Option option, bool draw){
+Widget _difficultyOption(double height, double width, Option option, bool draw) {
   return SizedBox(
-    height: height*0.05,width: width*0.8,
+    height: height * 0.05,
+    width: width * 0.8,
     child: Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Row(
             children: [
-              SizedBox(width: width*0.05,),
-              SizedBox(width: width*0.65, child: Text(option.filterName.toUpperCase()),),
-              if(option.isSelected) Icon(Icons.check) 
+              SizedBox(
+                width: width * 0.05,
+              ),
+              SizedBox(
+                width: width * 0.65,
+                child: Text(option.filterName.toUpperCase()),
+              ),
+              if (option.isSelected) Icon(Icons.check)
             ],
           ),
-          SizedBox(height: height*0.012,),
-         if(draw) Container(height: 1,width: width*0.8,color: const Color.fromRGBO(220, 220, 220, 0.8),)
+          SizedBox(
+            height: height * 0.012,
+          ),
+          if (draw)
+            Container(
+              height: 1,
+              width: width * 0.8,
+              color: const Color.fromRGBO(220, 220, 220, 0.8),
+            )
         ],
       ),
     ),

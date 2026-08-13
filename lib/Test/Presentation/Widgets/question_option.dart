@@ -53,7 +53,7 @@ Widget QuestionReviewOption(String option,double height,double width,bool isSele
           child: Center(child: Text(optionNum,style: TextStyle(fontFamily: Fonts.nunito,fontSize: 18, fontWeight: FontWeight.bold, color: isSelected ? Colors.white : Colors.blueGrey),)),
         ),
         SizedBox(width: width*0.02,),
-        Flexible(child: Text(option,style: TextStyle(fontFamily: Fonts.nunito,color: isSelected ? (isCorrect ? Colors.green : Colors.red) : Colors.black),)),
+        Flexible(child: MixedMathText(text:  option, textStyle: TextStyle(fontFamily: Fonts.nunito,color: isSelected ? (isCorrect ? Colors.green : Colors.red) : Colors.black),)),
       ],
     ),
   );

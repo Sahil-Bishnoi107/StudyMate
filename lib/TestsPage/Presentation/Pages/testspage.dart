@@ -11,6 +11,7 @@ import 'package:study_mate/TestsPage/Domain/entities/Test.dart';
 import 'package:study_mate/TestsPage/Presentation/Bloc/TestBloc.dart';
 import 'package:study_mate/TestsPage/Presentation/Bloc/TestEvents.dart';
 import 'package:study_mate/TestsPage/Presentation/Bloc/TestStates.dart';
+import 'package:study_mate/Test/Data/test_repo.dart';
 import 'package:study_mate/fonts.dart';
 
 class TestsPage extends StatelessWidget {
@@ -257,7 +258,7 @@ Widget _testOption(double height,double width,TestInfo test,BuildContext context
              InkWell(
               onTap: () { 
           Navigator.push(context, MaterialPageRoute(builder: (context) => BlocProvider(
-          create: (context) => sl<TestBloc>()..add(
+          create: (context) => TestBloc(sl<TestRepo>())..add(
             TestLoadingComplete(id: test.id, difficulty: test.diffiucluty, name: test.name, subject: test.subject, time: test.time, totalQuestions: test.totalQuestions)
           ),
           child: GiveTest())));},

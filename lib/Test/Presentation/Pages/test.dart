@@ -2,8 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:study_mate/DependancyInjections.dart/service_locator.dart';
+
 import 'package:study_mate/Home/Domain/Entities/Question.dart';
 import 'package:study_mate/LoadingScreen/LoadingAnimations.dart';
+import 'package:study_mate/Test/Data/test_repo.dart';
+import 'package:study_mate/Test/Presentation/Bloc/SubmitBloc/SubmitBloc.dart';
+import 'package:study_mate/Test/Presentation/Bloc/SubmitBloc/SubmitEvents.dart';
+
 import 'package:study_mate/Test/Presentation/Bloc/test_bloc.dart';
 import 'package:study_mate/Test/Presentation/Bloc/testevents.dart';
 import 'package:study_mate/Test/Presentation/Bloc/teststates.dart';
@@ -32,14 +38,13 @@ class _TestState extends State<GiveTest> {
       backgroundColor: Colors.white,
       body: BlocConsumer<TestBloc,Teststates>(
 
-      listener: (context, state) {
-          if(state is TestSubmitted){
-            Navigator.push(context, MaterialPageRoute(builder: (_) => BlocProvider.value(
-              value: context.read<TestBloc>(),
+      listener: (context,state){   
+         if(state is TestSubmitState){
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => BlocProvider(
+              create: (context) => Submitbloc(sl<TestRepo>())..add(TestSubmittedEvent(test: state.test, timeLeft: state.timeLeft)),
               child: TestSubmittedPage())));
           }
       },
-
 
       builder: (context, state) {
         if(state is TestLoading){
@@ -50,20 +55,7 @@ class _TestState extends State<GiveTest> {
           );
         }
 
-        if(state is TestSubmitting){
-          return SizedBox( 
-            height: height,width: width,
-            
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(height: height*0.1,),
-              LoadingLogo(),
-              //Text("Please Wait your Test is being Submitted",style: TextStyle(fontFamily: Fonts.nunito),)
-            ],
-            ),
-          );
-        }
+        
         if(state is TestLoaded){
         return SizedBox(
           height: height, width: width,
@@ -85,10 +77,10 @@ class _TestState extends State<GiveTest> {
           ),
         );
         }
-
+        
         return Container(
           child: Center(
-            child: Text("Failed to load the test, Please try again",style:  TextStyle(color: Colors.red,fontFamily: Fonts.nunito),),
+            child: SizedBox.shrink()
           ),
         );
       },
@@ -273,7 +265,7 @@ Widget _testProgress(double height, double width,BuildContext context,List<Quest
        if(index == questions.length){
         return GestureDetector(
           onTap: () {
-            BlocProvider.of<TestBloc>(context).add(TestSubmittedEvent());
+            BlocProvider.of<TestBloc>(context).add(TestSubmitEvent());
           },
           child: Align(
             alignment: Alignment.center,

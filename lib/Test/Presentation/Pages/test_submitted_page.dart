@@ -3,12 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:study_mate/DependancyInjections.dart/service_locator.dart';
 import 'package:study_mate/Home/Domain/Entities/Question.dart';
 import 'package:study_mate/Home/Presentation/Pages/Homepage.dart';
+import 'package:study_mate/LoadingScreen/LoadingAnimations.dart';
+import 'package:study_mate/Test/Data/test_repo.dart';
 import 'package:study_mate/Test/Domain/Entities/test.dart';
+import 'package:study_mate/Test/Presentation/Bloc/SubmitBloc/SubmitBloc.dart';
+import 'package:study_mate/Test/Presentation/Bloc/SubmitBloc/SubmitStates.dart';
+import 'package:study_mate/Test/Presentation/Bloc/ReviewBloc/ReviewBloc.dart';
+import 'package:study_mate/Test/Presentation/Bloc/ReviewBloc/ReviewEvents.dart';
 import 'package:study_mate/Test/Presentation/Bloc/test_bloc.dart';
 import 'package:study_mate/Test/Presentation/Bloc/testevents.dart';
-import 'package:study_mate/Test/Presentation/Bloc/teststates.dart';
 import 'package:study_mate/Test/Presentation/Pages/test.dart';
 import 'package:study_mate/Test/Presentation/Pages/test_review.dart';
 import 'package:study_mate/Test/Presentation/Widgets/question_data.dart';
@@ -25,10 +31,16 @@ class TestSubmittedPage extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
-      body:  BlocBuilder<TestBloc,Teststates>(
+      body: BlocBuilder<Submitbloc,Submitstates>(
         builder: (context, state) {
-          if(state is !TestSubmitted){
-            return SizedBox.shrink();
+          if (state is InitialSubmitState || state is TestSubmitting) {
+            return  Center(child: LoadingLogo());
+          }
+          if (state is FailedToSubmitTest) {
+            return const Center(child: Text("Failed to submit test."));
+          }
+          if(state is! TestSubmitted){
+            return const SizedBox.shrink();
           }
           final mystate = state;
           int correctQues = 0;
@@ -273,9 +285,11 @@ Widget _subjectBreakdown(double height,double width,Map<String,int> correctQues,
               SizedBox(width: width*0.2,),
               GestureDetector(
                 onTap: () {
+                  final currentState = context.read<Submitbloc>().state;
+                  if (currentState is! TestSubmitted) return;
                   Navigator.push(context, MaterialPageRoute(
-                    builder: (_) => BlocProvider.value(
-                      value: context.read<TestBloc>()..add(LoadTestReview()),
+                    builder: (_) => BlocProvider(
+                      create: (_) => ReviewBloc()..add(LoadReviewEvent(test: currentState.test )), 
                       child: TestReview(),
                       )
                     ));
@@ -307,9 +321,12 @@ Widget _subjectBreakdown(double height,double width,Map<String,int> correctQues,
 Widget _retryButton(double height,double width,BuildContext context,Test test){
   return GestureDetector(
     onTap: () {
+      for(int i = 0;i < test.questions.length;i++){
+        test.questions[i].selectedOption = null;
+      }
       Navigator.pushReplacement(context, MaterialPageRoute(
-        builder: (_) => BlocProvider.value(
-          value: context.read<TestBloc>()..add(RetakeTest(test: test)),
+        builder: (_) => BlocProvider(
+          create: (context) => TestBloc(sl<TestRepo>())..add(RetakeTestEvent(test: test)),
           child: GiveTest(),
           )         
           ));

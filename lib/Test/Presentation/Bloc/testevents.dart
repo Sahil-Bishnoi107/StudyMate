@@ -1,6 +1,7 @@
 import 'package:study_mate/Home/Domain/Entities/Question.dart';
 import 'package:study_mate/Test/Domain/Entities/test.dart';
 
+
 class Testevents {}
 
 class TestLoadingComplete extends Testevents{
@@ -24,20 +25,14 @@ class TestOptionCleared extends Testevents {
   TestOptionCleared({required this.que});
 }
 
-class TestSubmittedEvent extends Testevents{
 
-}
 class TimerTicked extends Testevents{}
 
-class TestTimeUp extends Testevents{}
+class TestSubmitEvent extends Testevents{}
 
-class RetakeTest extends Testevents{
+class RetakeTestEvent extends Testevents{
   Test test;
-  RetakeTest({required this.test});
+  RetakeTestEvent({required this.test});
 }
 
-class LoadTestReview extends Testevents{
 
-}
-
-class ReviewToSubmitPageEvent extends Testevents{}

@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:study_mate/Home/Domain/Entities/Question.dart';
-
-import 'package:study_mate/Test/Presentation/Bloc/test_bloc.dart';
-import 'package:study_mate/Test/Presentation/Bloc/testevents.dart';
-import 'package:study_mate/Test/Presentation/Bloc/teststates.dart';
-import 'package:study_mate/Test/Presentation/Pages/test_submitted_page.dart';
+import 'package:study_mate/Test/Presentation/Bloc/ReviewBloc/ReviewBloc.dart';
+import 'package:study_mate/Test/Presentation/Bloc/ReviewBloc/ReviewStates.dart';
+import 'package:study_mate/Test/Presentation/Widgets/fixedTextWidget.dart';
 
 import 'package:study_mate/Test/Presentation/Widgets/question_button.dart';
 import 'package:study_mate/Test/Presentation/Widgets/question_icon.dart';
@@ -30,12 +28,12 @@ class _TestState extends State<TestReview> {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
-      body: BlocBuilder<TestBloc,Teststates>(
+      body: BlocBuilder<ReviewBloc,ReviewStates>(
 
       builder: (context, state) {
        
         
-        if(state is TestLoaded){
+        if(state is ReviewLoadedState){
         return SizedBox(
           height: height, width: width,
           child: SingleChildScrollView(
@@ -82,13 +80,7 @@ Widget _header(double height,double width,String testName,BuildContext context){
     children: [
       GestureDetector(
         onTap: ()  {
-         Navigator.push(context, MaterialPageRoute(
-                    builder: (_) => BlocProvider.value(
-                      value: context.read<TestBloc>()..add(ReviewToSubmitPageEvent()),
-                      child: TestSubmittedPage(),
-                      )
-                    )
-                    );
+         Navigator.pop(context);
         },
         child: Icon(Icons.arrow_back_ios_new)),
       SizedBox(
@@ -162,7 +154,7 @@ Widget _question(double height,double width, Question question,int currQue,int t
         ConstrainedBox(
           constraints: BoxConstraints(minHeight: height*0.03, maxHeight: height*0.5,minWidth: width*0.9,maxWidth: width*0.9),
           
-          child: Text(question.description,style: TextStyle(fontFamily: Fonts.inter,fontWeight: FontWeight.bold, fontSize: Responsive.font(context, 20)),)),
+          child: MixedMathText(text:  question.description,textStyle:  TextStyle(fontFamily: Fonts.inter,fontWeight: FontWeight.bold, fontSize: Responsive.font(context, 20)),)),
 
         //Options
         SizedBox(
