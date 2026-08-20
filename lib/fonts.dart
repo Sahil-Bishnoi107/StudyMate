@@ -12,6 +12,7 @@ class Fonts {
   static const String lobsterTwo = 'Lobster-Two';
   static const String inter = 'Inter';
   static const String outfit = 'OutFit';
+  static const String rubik = 'Rubik';
 }
 
 

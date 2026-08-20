@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_math_fork/flutter_math.dart';
+import 'package:study_mate/fonts.dart';
 
 class MixedMathText extends StatelessWidget {
   final String text;
@@ -10,73 +11,82 @@ class MixedMathText extends StatelessWidget {
     super.key,
     required this.text,
     this.textStyle,
-    this.mathFontSize = 16.0,
+    this.mathFontSize = 15.0,
   });
 
   @override
   Widget build(BuildContext context) {
-    // Regex to match blocks enclosed in $$ ... $$
+    final effectiveStyle = textStyle ?? TextStyle(fontFamily: Fonts.outfit);
     final regex = RegExp(r'\$\$(.*?)\$\$', dotAll: true);
     final matches = regex.allMatches(text);
 
     if (matches.isEmpty) {
-      // If there's no math block, render it as standard text
-      return Text(text, style: textStyle);
+      return Text(text, style: effectiveStyle);
     }
 
-    List<Widget> inlineWidgets = [];
+    final List<InlineSpan> spans = [];
     int lastMatchEnd = 0;
 
     for (final match in matches) {
-      // 1. Extract and add preceding normal text segment
       if (match.start > lastMatchEnd) {
-        String normalText = text.substring(lastMatchEnd, match.start);
-        inlineWidgets.add(
-          Text(
-            normalText,
-            style: textStyle,
+        spans.add(
+          TextSpan(
+            text: text.substring(lastMatchEnd, match.start),
+            style: effectiveStyle,
           ),
         );
       }
 
-      // 2. Extract the raw math string inside the $$ delimiters
-      String mathFormula = match.group(1)!.trim();
-
-      // 3. Add the Math widget
-      inlineWidgets.add(
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 4.0),
-          child: Math.tex(
-            mathFormula,
-            textStyle: TextStyle(fontSize: mathFontSize),
-            mathStyle: MathStyle.display,
-            onErrorFallback: (err) => Text(
-              mathFormula, 
-              style: const TextStyle(color: Colors.red),
-            ),
-          ),
-        ),
-      );
+      final mathFormula = match.group(1)!.trim();
+      spans.add(_buildMathSpan(mathFormula, effectiveStyle));
 
       lastMatchEnd = match.end;
     }
 
-    // 4. Add any remaining trailing text segment
     if (lastMatchEnd < text.length) {
-      String trailingText = text.substring(lastMatchEnd);
-      inlineWidgets.add(
-        Text(
-          trailingText,
-          style: textStyle,
+      spans.add(
+        TextSpan(
+          text: text.substring(lastMatchEnd),
+          style: effectiveStyle,
         ),
       );
     }
 
-    // Wrap allows inline mixing without forcing a vertical block layout
-    return Wrap(
-      alignment: WrapAlignment.start,
-      crossAxisAlignment: WrapCrossAlignment.center,
-      children: inlineWidgets,
+    return Text.rich(
+      TextSpan(style: effectiveStyle, children: spans),
+      softWrap: true,
+      overflow: TextOverflow.visible,
     );
+  }
+
+  InlineSpan _buildMathSpan(String formula, TextStyle effectiveStyle) {
+    try {
+      return WidgetSpan(
+        alignment: PlaceholderAlignment.middle, // NOT .baseline — see explanation
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 2.0),
+          child: Math.tex(
+            formula,
+            mathStyle: MathStyle.text, // inline size, not display/block size
+            textStyle: TextStyle(
+              fontSize: mathFontSize,
+              color: effectiveStyle.color,
+              fontWeight: effectiveStyle.fontWeight,
+            ),
+            onErrorFallback: (err) => Text(
+              formula,
+              style: effectiveStyle.copyWith(color: Colors.red),
+            ),
+          ),
+        ),
+      );
+    } catch (_) {
+      // Guards against synchronous parse-time exceptions Math.tex
+      // doesn't route through onErrorFallback.
+      return TextSpan(
+        text: formula,
+        style: effectiveStyle.copyWith(color: Colors.red),
+      );
+    }
   }
 }

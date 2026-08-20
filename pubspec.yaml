@@ -101,7 +101,7 @@ flutter:
         - asset: assets/fonts/Inter/Inter_18pt-ExtraLight.ttf
           weight: 200
 
-        - asset: assets/fonts/Inter/Inter_18pt-Black.ttf
+        - asset: assets/fonts/Inter/Inter_18pt-Regular.ttf
           weight: 400
 
         - asset: assets/fonts/Inter/Inter_18pt-Bold.ttf
@@ -128,4 +128,8 @@ flutter:
           weight: 500
 
         - asset: assets/fonts/Outfit/Outfit-Light.ttf
-          weight: 200     
+          weight: 200   
+
+    - family: Rubik
+      fonts:
+        - asset: assets/fonts/Rubik/Rubik-VariableFont_wght.ttf

@@ -64,12 +64,13 @@ class _TestState extends State<GiveTest> {
               children: [
                  _header(height, width, state.timeLeft, state.test.name,context),
                  SizedBox(height: height*0.01,),
+                 Container(height: 1,width: width,color: const Color.fromRGBO(200, 200, 200, 0.6),),
                 // Container(color: const Color.fromRGBO(200, 200, 200, 0.6), height: 2, width: width,),
-               
+                 SizedBox(height: height*0.005,),
                  _testProgress(height, width, context, state.test.questions, pageController),
                  
-                 Container(height: 2,width: width,color: const Color.fromRGBO(200, 200, 200, 0.6),),
-                 SizedBox(height: height*0.02,),
+                 
+                 SizedBox(height: height*0.01,),
                  _questionSection(height, width, state.test.questions, pageController,context)
                 
               ],
@@ -111,7 +112,7 @@ Widget _header(double height,double width,int timeLeft,String testName,BuildCont
       Container(
         height: height*0.035,
         width: width*0.25,
-        decoration: BoxDecoration(color: const Color.fromRGBO(76, 175, 80, 0.15),
+        decoration: BoxDecoration(color: const Color.fromRGBO(76, 175, 80, 0.1),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: Colors.green)
         ),
@@ -141,7 +142,7 @@ Widget _questionSection(double height,double width, List<Question> questions,Pag
         physics: NeverScrollableScrollPhysics(),
         itemCount: questions.length,
         itemBuilder: (context,index){
-          return _question(height, width, questions[index], index, questions.length, context);
+          return SingleChildScrollView(child: _question(height, width, questions[index], index, questions.length, context));
         }),
      ),
 
@@ -172,7 +173,7 @@ Widget _question(double height,double width, Question question,int currQue,int t
  late String difficulty;
  if(question.difficulty.length > 2)difficulty = question.difficulty[0].toUpperCase() + question.difficulty.substring(1);
   return Container(
-    width: width,height: height*0.6,
+    width: width,
     padding: EdgeInsets.symmetric(horizontal: width*0.05),
     child: Column(
       children: [
@@ -180,16 +181,12 @@ Widget _question(double height,double width, Question question,int currQue,int t
         //header
         Row(
           children: [
-            Container(
-              height: height*0.034,width: width*0.36,
-              decoration: BoxDecoration(border: Border.all(color: const Color.fromRGBO(180, 180, 180, 0.7),width: 1.5),borderRadius: BorderRadius.circular(20)),
-              child: Center(child: Text("Question ${(currQue+1).toString()} of $totalQuestions",style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: Responsive.font(context, 12)),)),
-            ),
+            Text("Question ${currQue + 1} of ${totalQuestions}",style: TextStyle(fontFamily: Fonts.inter,fontWeight: FontWeight.w700,fontSize: Responsive.font(context, 16)),),
             SizedBox(width: width*0.32,),
             Expanded(child: Row(
               children: [
                 Icon(Bootstrap.exclamation_circle,size: Responsive.icon(context, 15),),
-                SizedBox(width: 3,),
+                const SizedBox(width: 5,),
                 Text(difficulty,style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold),),
               ],
             )),
@@ -198,14 +195,17 @@ Widget _question(double height,double width, Question question,int currQue,int t
         SizedBox(height: height*0.01,),
         //Question
         ConstrainedBox(
-          constraints: BoxConstraints(minHeight: height*0.03, maxHeight: height*0.5,minWidth: width*0.9,maxWidth: width*0.9),
+          constraints: BoxConstraints(minHeight: height*0.03, maxHeight: height*0.6,minWidth: width*0.9,maxWidth: width*0.9),
           
-          child: MixedMathText(text: question.description, textStyle: TextStyle(fontFamily: Fonts.inter,fontWeight: FontWeight.bold, fontSize: Responsive.font(context, 20)),)),
+          child: MixedMathText(text: question.description, textStyle: TextStyle(fontFamily: Fonts.rubik,fontWeight: FontWeight.w700,color: const Color.fromRGBO(60, 60, 60, 1), fontSize: Responsive.font(context, 16)),)),
 
+
+        SizedBox(height: height*0.03,),
         //Options
         SizedBox(
-          height: height*0.4,
-          child: ListView(
+        
+          child: Column(
+            
             children: [
               GestureDetector(
                 onTap: () {
@@ -244,7 +244,9 @@ Widget _question(double height,double width, Question question,int currQue,int t
                     BlocProvider.of<TestBloc>(context).add(TestOptionSelected(que: question, optionSelected: question.options[3]));
                   } 
                 },
-                child: QuestionOption(question.options[3], height, width, question.selectedOption == question.options[3],"D",context))
+                child: QuestionOption(question.options[3], height, width, question.selectedOption == question.options[3],"D",context)),
+
+                SizedBox(height: height*0.02,)
             ],
           ),
         )
@@ -271,7 +273,7 @@ Widget _testProgress(double height, double width,BuildContext context,List<Quest
             alignment: Alignment.center,
             child: Container(height: height*0.04,width: width*0.2,
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),color: Colors.green),
-            child: Center(child: Text("Submit",style: TextStyle(color: Colors.white,fontFamily: Fonts.nunito),),),
+            child: Center(child: Text("Submit",style: TextStyle(color: Colors.white,fontFamily: Fonts.outfit),),),
             ),
           ),
         );
