@@ -91,8 +91,8 @@ class _QuestionsPageState extends State<QuestionsPage> {
                 children: [
                   _header(height, width, context, state),
                   SizedBox(height: height * 0.01),
-                  Container(height: 1.5, width: width, color: const Color.fromRGBO(200, 200, 200, 0.6)),
-                  SizedBox(height: height * 0.02),
+                  Container(height: 1.5, width: width, color: const Color.fromRGBO(220, 220, 220, 0.7)),
+                  SizedBox(height: height * 0.01),
                   _questionSection(height, width, currentQuestion, state.currInd, state.questions.length, context),
                 ],
               ),
@@ -172,8 +172,8 @@ class _QuestionsPageState extends State<QuestionsPage> {
         padding: EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: const Color.fromRGBO(200, 200, 200, 1)),
+         // borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: const Color.fromRGBO(220, 220, 220, 0.7)),
         ),
         child: Center(
           child: Row(
@@ -207,7 +207,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
             ),
           ),
         ),
-        Container(height: 2, width: width, color: const Color.fromRGBO(200, 200, 200, 0.6)),
+        Container(height: 1, width: width, color: const Color.fromRGBO(200, 200, 200, 0.7)),
         SizedBox(height: height * 0.01),
         _actionButtons(height, width, question, context),
       ],
@@ -221,7 +221,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
     return Row(
       children: [
         Text("Question:",
-            style: TextStyle(fontFamily: Fonts.nunito, fontWeight: FontWeight.bold, fontSize: Responsive.font(context, 15))),
+            style: TextStyle(fontFamily: Fonts.outfit, fontWeight: FontWeight.w600, fontSize: Responsive.font(context, 18))),
         SizedBox(width: width * 0.2),
         Expanded(
             child: Row(
@@ -241,7 +241,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
       constraints: BoxConstraints(minHeight: height * 0.03, maxHeight: height * 0.5, minWidth: width * 0.9, maxWidth: width * 0.9),
       child: MixedMathText(
         text: question.description,
-        textStyle: TextStyle(fontFamily: Fonts.inter, fontWeight: FontWeight.bold, fontSize: Responsive.font(context, 18)),
+        textStyle: TextStyle(fontFamily: Fonts.rubik, fontWeight: FontWeight.w700, fontSize: Responsive.font(context, 18),color: const Color.fromRGBO(60, 60, 60, 1)),
       ),
     );
   }
@@ -285,11 +285,12 @@ class _QuestionsPageState extends State<QuestionsPage> {
             height: height * 0.06,
             width: width * 0.4,
             decoration: BoxDecoration(
-              color: isSubmitted ? Colors.grey : Colors.green,
-              borderRadius: BorderRadius.circular(10),
+              color: isSubmitted ? Colors.white : Colors.green,
+            //  borderRadius: BorderRadius.circular(10),
+              border: Border.all(color:  isSubmitted ? Colors.black : Colors.white)
             ),
             child: Center(
-              child: Text("Check", style: TextStyle(color: Colors.white, fontFamily: Fonts.nunito, fontWeight: FontWeight.bold, fontSize: Responsive.font(context, 16))),
+              child: Text("Check", style: TextStyle( color: isSubmitted ? Colors.black : Colors.white, fontFamily: Fonts.nunito, fontWeight: FontWeight.bold, fontSize: Responsive.font(context, 16))),
             ),
           ),
         ),
@@ -300,11 +301,12 @@ class _QuestionsPageState extends State<QuestionsPage> {
             height: height * 0.06,
             width: width * 0.4,
             decoration: BoxDecoration(
-              color: isSubmitted ? Colors.green : Colors.grey,
-              borderRadius: BorderRadius.circular(10),
+              color: isSubmitted ? Colors.green : Colors.white,
+            //  borderRadius: BorderRadius.circular(10),
+              border: Border.all(color:  isSubmitted ? Colors.green : Colors.black)
             ),
             child: Center(
-              child: Text("Next", style: TextStyle(color: Colors.white, fontFamily: Fonts.nunito, fontWeight: FontWeight.bold, fontSize: Responsive.font(context, 16))),
+              child: Text("Next", style: TextStyle(color: isSubmitted ? Colors.white : Colors.black, fontFamily: Fonts.nunito, fontWeight: FontWeight.bold, fontSize: Responsive.font(context, 16))),
             ),
           ),
         ),

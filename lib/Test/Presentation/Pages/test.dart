@@ -136,7 +136,7 @@ Widget _questionSection(double height,double width, List<Question> questions,Pag
   return Column(
     children: [
      SizedBox(
-      height: height*0.65,width: width,
+      height: height*0.68,width: width,
       child: PageView.builder(
         controller: pageController,
         physics: NeverScrollableScrollPhysics(),
@@ -146,7 +146,7 @@ Widget _questionSection(double height,double width, List<Question> questions,Pag
         }),
      ),
 
-     Container(height: 2,width: width,color: const Color.fromRGBO(200, 200, 200, 0.6),),
+     Container(height: 1,width: width,color: const Color.fromRGBO(220, 220, 220, 0.7),),
      SizedBox(height: height*0.01,),
      Row(
       children: [
@@ -183,13 +183,13 @@ Widget _question(double height,double width, Question question,int currQue,int t
           children: [
             Text("Question ${currQue + 1} of ${totalQuestions}",style: TextStyle(fontFamily: Fonts.inter,fontWeight: FontWeight.w700,fontSize: Responsive.font(context, 16)),),
             SizedBox(width: width*0.32,),
-            Expanded(child: Row(
+           /* Expanded(child: Row(
               children: [
                 Icon(Bootstrap.exclamation_circle,size: Responsive.icon(context, 15),),
                 const SizedBox(width: 5,),
                 Text(difficulty,style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold),),
               ],
-            )),
+            )), */
           ],
         ),
         SizedBox(height: height*0.01,),

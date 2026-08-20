@@ -11,14 +11,14 @@ Widget QuestionOption(String option,double height,double width,bool isSelected,S
     margin: EdgeInsets.only(bottom: height*0.01),
     decoration: BoxDecoration(
       border: Border.all(color: isSelected ? Colors.green : const Color.fromRGBO(220, 220, 220, 0.7),width: 1.2),
-      borderRadius: BorderRadius.circular(width*0.03)
+    //  borderRadius: BorderRadius.circular(width*0.03)
     ),
     child: Row(
       children: [
         Container(
           height: width*0.099,width: width*0.099,
           decoration: BoxDecoration(
-            color: isSelected ? Colors.green : const Color.fromRGBO(220, 220, 220, 0.2),
+            color: isSelected ? Colors.green : const Color.fromRGBO(220, 220, 220, 0.15),
             borderRadius: BorderRadius.circular(30),
             border: Border.all(color: const Color.fromRGBO(0, 0, 0, 0.15))
           ),
@@ -40,18 +40,19 @@ Widget QuestionReviewOption(String option,double height,double width,bool isSele
     padding: EdgeInsets.only(left: width*0.04),
     margin: EdgeInsets.only(bottom: height*0.01),
     decoration: BoxDecoration(
-      border: Border.all(color: isSelected ? (isCorrect ? Colors.green : Colors.red) : const Color.fromRGBO(200, 200, 200, 0.8),width: 1.5),
-      borderRadius: BorderRadius.circular(width*0.03)
+      border: Border.all(color: isSelected ? (isCorrect ? Colors.green : Colors.red) : const Color.fromRGBO(220, 220, 220, 0.8),width: 1),
+     // borderRadius: BorderRadius.circular(width*0.03)
     ),
     child: Row(
       children: [
         Container(
           height: width*0.099,width: width*0.099,
           decoration: BoxDecoration(
-            color: isSelected ? (isCorrect ? Colors.green : Colors.red) : const Color.fromRGBO(220, 220, 220, 0.4),
+            color: isSelected ? (isCorrect ? Colors.green : Colors.red) : const Color.fromRGBO(220, 220, 220, 0.15),
             borderRadius: BorderRadius.circular(30),
+            border: Border.all(color: const Color.fromRGBO(0, 0, 0, 0.15))
           ),
-          child: Center(child: Text(optionNum,style: TextStyle(fontFamily: Fonts.nunito,fontSize: 15, fontWeight: FontWeight.bold, color: isSelected ? Colors.white : Colors.blueGrey),)),
+          child: Center(child: Text(optionNum,style: TextStyle(fontFamily: Fonts.nunito,fontSize: 15, fontWeight: FontWeight.bold, color: isSelected ? Colors.white : Colors.black),)),
         ),
         SizedBox(width: width*0.03,),
         Flexible(child: MixedMathText(text:  option, textStyle: TextStyle(fontFamily: Fonts.nunito,color: isSelected ? (isCorrect ? Colors.green : Colors.red) : Colors.black),)),

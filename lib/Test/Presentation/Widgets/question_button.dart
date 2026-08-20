@@ -9,7 +9,7 @@ Widget queButton(double height,double width,bool isnext,BuildContext context){
     decoration: BoxDecoration(
       color: isnext ? Colors.green : Colors.white,
       border: Border.all(color: isnext ? Colors.green : Colors.black),
-      borderRadius: BorderRadius.circular(height*0.05),
+    //  borderRadius: BorderRadius.circular(height*0.05),
     ),
     child: Center(child: Text(txt,style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,color: isnext ?  Colors.white : Colors.black,fontSize: Responsive.font(context, 13)),)),
   );
