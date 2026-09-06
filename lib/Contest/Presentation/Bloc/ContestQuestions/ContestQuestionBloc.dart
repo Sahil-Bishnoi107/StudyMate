@@ -22,6 +22,7 @@ class ContestQuestionBloc extends Bloc<ContestQuestionEvents, ContestQuestionSta
     var res = await contestRepo.FetchContestQuestions(event.contestId);
     if (res.statusCode == 200) {
       List<ContestQuestion> questions = res.data as List<ContestQuestion>;
+      questions.sort((a,b) => a.subject.compareTo(b.subject));
       // Ensure contest time is computed
       DateTime endTime = contest.startTime.add(Duration(minutes: contest.duration));
       emit(ContestQuestionLoaded(

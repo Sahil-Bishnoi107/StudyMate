@@ -166,9 +166,9 @@ class _AboutUsPageState extends State<AboutUsPage> {
           color: Colors.black,
         ),
         children:  [
-          TextSpan(text: "Learn. ",style: TextStyle(fontFamily: Fonts.lobster,fontSize: Responsive.font(context, 40))),
-          TextSpan(text: "Grow. ", style: TextStyle(color: Colors.green,fontFamily: Fonts.lobster,fontSize: Responsive.font(context, 40))),
-          TextSpan(text: "Succeed.",style: TextStyle(fontFamily: Fonts.lobster,fontSize: Responsive.font(context, 40))),
+          TextSpan(text: "Learn. ",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 35),fontWeight: FontWeight.w600)),
+          TextSpan(text: "Grow. ", style: TextStyle(color: Colors.green,fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 35),fontWeight: FontWeight.w600)),
+          TextSpan(text: "Succeed.",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 35),fontWeight: FontWeight.w600)),
         ],
       ),
     );
@@ -180,9 +180,9 @@ class _AboutUsPageState extends State<AboutUsPage> {
       children: [
         Row(
           children: [
-            Text("Who  ",style: TextStyle(fontFamily: Fonts.lobsterTwo,fontSize: Responsive.font(context, 25),fontWeight: FontWeight.bold, color: Colors.black, ), ),
-            Text("We  ",style: TextStyle(fontFamily: Fonts.lobsterTwo,fontSize: Responsive.font(context, 25),fontWeight: FontWeight.bold, color: Colors.green, ), ),
-            Text("Are",style: TextStyle(fontFamily: Fonts.lobsterTwo,fontSize: Responsive.font(context, 25),fontWeight: FontWeight.bold, color: Colors.black, ), ),
+            Text("Who  ",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 25),fontWeight: FontWeight.w600, color: Colors.black, ), ),
+            Text("We  ",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 25),fontWeight: FontWeight.w600, color: Colors.green, ), ),
+            Text("Are",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 25),fontWeight: FontWeight.w600, color: Colors.black, ), ),
           ],
         ),
         
@@ -206,9 +206,9 @@ class _AboutUsPageState extends State<AboutUsPage> {
       children: [
         Row(
           children: [
-            Text("Meet ",style: TextStyle(fontFamily: Fonts.lobster,fontSize: Responsive.font(context, 30), fontWeight: FontWeight.bold, color: Colors.green), ),
-            Text("Our ",style: TextStyle(fontFamily: Fonts.lobster,fontSize: Responsive.font(context, 30), fontWeight: FontWeight.bold, color: Colors.black), ),
-            Text("Team",style: TextStyle(fontFamily: Fonts.lobster,fontSize: Responsive.font(context, 30), fontWeight: FontWeight.bold, color: Colors.green), ),
+            Text("Meet ",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 30), fontWeight: FontWeight.w600, color: Colors.green), ),
+            Text("Our ",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 30), fontWeight: FontWeight.w600, color: Colors.black), ),
+            Text("Team",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 30), fontWeight: FontWeight.w600, color: Colors.green), ),
           ],
         ),
         const SizedBox(height: 4),

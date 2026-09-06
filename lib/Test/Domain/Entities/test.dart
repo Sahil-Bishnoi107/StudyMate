@@ -13,12 +13,15 @@ class Test {
 
   factory Test.fromJson(Map<String,dynamic> mp){
     List<Question> questions = [];
+    
     if(mp.containsKey("questions")){
       for(var que in mp['questions']){
         questions.add(Question.fromJson(que));
       }
+     
     }
-
+    questions.sort((a, b) => a.subject.compareTo(b.subject),);
+    print(questions);
     String id = mp['id'] ?? "No id found";
     String name = mp['name'] ?? "No name found";
     int totalQuestions = mp['total_questions']  ?? 0;

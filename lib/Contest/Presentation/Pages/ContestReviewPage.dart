@@ -44,7 +44,7 @@ class _ContestReviewPageState extends State<ContestReviewPage> {
           : Column(
               children: [
                 _buildTestProgress(height, width),
-                Container(height: 1.5, width: width, color: const Color.fromRGBO(220, 220, 220, 0.8)),
+                Container(height: 1, width: width, color: const Color.fromRGBO(220, 220, 220, 0.8)),
                 SizedBox(height: height * 0.02),
                 _buildQuestionSection(height, width),
               ],
@@ -97,7 +97,7 @@ class _ContestReviewPageState extends State<ContestReviewPage> {
     return Column(
       children: [
         SizedBox(
-          height: height * 0.65,
+          height: height * 0.68,
           width: width,
           child: PageView.builder(
             controller: pageController,
@@ -143,61 +143,46 @@ class _ContestReviewPageState extends State<ContestReviewPage> {
       width: width,
       height: height * 0.6,
       padding: EdgeInsets.symmetric(horizontal: width * 0.05),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Container(
-                height: height * 0.034,
-                width: width * 0.36,
-                decoration: BoxDecoration(
-                  border: Border.all(color: const Color.fromRGBO(180, 180, 180, 0.7), width: 1.5),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Center(
-                  child: Text(
-                    "Question ${index + 1} of ${widget.questions.length}",
-                    style: TextStyle(fontFamily: Fonts.nunito, fontWeight: FontWeight.bold, fontSize: Responsive.font(context, 12)),
-                  ),
-                ),
-              ),
-              SizedBox(width: width * 0.32),
-              Expanded(
-                child: Row(
-                  children: [
-                    Icon(Bootstrap.exclamation_circle, size: Responsive.icon(context, 15)),
-                    SizedBox(width: 3),
-                    Text(diff, style: TextStyle(fontFamily: Fonts.nunito, fontWeight: FontWeight.bold)),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: height * 0.01),
-          ConstrainedBox(
-            constraints: BoxConstraints(
-              minHeight: height * 0.03,
-              maxHeight: height * 0.5,
-              minWidth: width * 0.9,
-              maxWidth: width * 0.9,
-            ),
-            child: MixedMathText(
-              text: question.description,
-              textStyle: TextStyle(fontFamily: Fonts.inter, fontWeight: FontWeight.bold, fontSize: Responsive.font(context, 20)),
-            ),
-          ),
-          SizedBox(
-            height: height * 0.4,
-            child: ListView(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Row(
               children: [
-                _buildOption(question, question.optionA, 1, "A", height, width),
-                _buildOption(question, question.optionB, 2, "B", height, width),
-                _buildOption(question, question.optionC, 3, "C", height, width),
-                _buildOption(question, question.optionD, 4, "D", height, width),
+                Text(
+                  "Question ${index + 1} of ${widget.questions.length}",
+                  style: TextStyle(fontFamily: Fonts.outfit, fontWeight: FontWeight.w600, fontSize: Responsive.font(context, 16)),
+                ),
+                SizedBox(width: width * 0.32),
+               
               ],
             ),
-          )
-        ],
+            SizedBox(height: height * 0.01),
+            ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: height * 0.03,
+                maxHeight: height * 0.5,
+                minWidth: width * 0.9,
+                maxWidth: width * 0.9,
+              ),
+              child: MixedMathText(
+                text: question.description,
+                textStyle: TextStyle(fontFamily: Fonts.rubik, fontWeight: FontWeight.bold, fontSize: Responsive.font(context, 16)),
+              ),
+            ),
+            SizedBox(height: height*0.02,),
+            SizedBox(
+              height: height * 0.4,
+              child: Column(
+                children: [
+                  _buildOption(question, question.optionA, 1, "A", height, width),
+                  _buildOption(question, question.optionB, 2, "B", height, width),
+                  _buildOption(question, question.optionC, 3, "C", height, width),
+                  _buildOption(question, question.optionD, 4, "D", height, width),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

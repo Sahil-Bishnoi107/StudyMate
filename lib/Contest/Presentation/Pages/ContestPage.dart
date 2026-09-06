@@ -56,7 +56,7 @@ class _ContestPageState extends State<ContestPage> {
                     children: [
 
                       SizedBox(height: height*0.01,),
-                      _searchBar(height, width, searchController, context),
+                     // _searchBar(height, width, searchController, context),
                
                       _statSection(height, width, context, state.rating.rating, state.rating.contestsGiven),
                 
@@ -168,71 +168,82 @@ Widget _statSection(double height, double width,BuildContext context,int rating,
     return GestureDetector(
       onTap: onTap,
       child: Container(
-      width: width,
-      padding: EdgeInsets.symmetric(horizontal: 15,vertical: 10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: const Color.fromRGBO(220, 220, 220, 0.7),width: 1.5),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        padding: EdgeInsets.all(width*0.01),
+        decoration: BoxDecoration(
+          border: Border.all(color: const Color.fromRGBO(158, 158, 158, 0.2))
+        ),
+        child: Material(
+          elevation : 0.5,
+          color : Colors.white,
+        
+          child: Container(
+          width: width,
+          padding: EdgeInsets.symmetric(horizontal: 15,vertical: 10),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            //borderRadius: BorderRadius.circular(15),
+           // border: Border.all(color: const Color.fromRGBO(220, 220, 220, 0.7),width: 1),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: const Color.fromRGBO(76, 175, 80, 0.05),
-                  borderRadius: BorderRadius.circular(20)
-                ),
-                child: Icon(icon, color: Colors.green, size: Responsive.icon(context, 20))),
-
-              if (isRating)
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                  decoration: BoxDecoration(
-                    color: Colors.green.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Row(
-                    children: [
-                      Icon(Bootstrap.graph_up_arrow, size: Responsive.icon(context, 10), color: Colors.green),
-                      SizedBox(width: 3),
-                      Text("+12", style: TextStyle(color: Colors.green, fontSize: Responsive.font(context, 10), fontWeight: FontWeight.bold)),
-                    ],
-                  ),
-                )
-            ],
-          ),
-          SizedBox(height: 8),
-          Text(
-            value,
-            style: TextStyle(fontSize: Responsive.font(context, 22), fontWeight: FontWeight.bold, fontFamily: Fonts.inter),
-          ),
-          SizedBox(height: 5),
-          Text(
-            title,
-            style: TextStyle(fontSize: Responsive.font(context, 10), color: Colors.grey[600], fontWeight: FontWeight.bold, fontFamily: Fonts.nunito),
-          ),
-          SizedBox(height: 10),
-          Row(
-            children: [
-              Container(
-                width: 6,
-                height: 6,
-                decoration: BoxDecoration(color: Colors.green, shape: BoxShape.circle),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: const Color.fromRGBO(76, 175, 80, 0.05),
+                      borderRadius: BorderRadius.circular(20)
+                    ),
+                    child: Icon(icon, color: Colors.green, size: Responsive.icon(context, 20))),
+          
+                  if (isRating)
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: Colors.green.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(Bootstrap.graph_up_arrow, size: Responsive.icon(context, 10), color: Colors.green),
+                          SizedBox(width: 3),
+                          Text("+12", style: TextStyle(color: Colors.green, fontSize: Responsive.font(context, 10), fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                    )
+                ],
               ),
-              SizedBox(width: 5),
+              SizedBox(height: 8),
               Text(
-                subtitle,
-                style: TextStyle(fontSize: Responsive.font(context, 10), color: Colors.grey[500], fontFamily: Fonts.nunito),
+                value,
+                style: TextStyle(fontSize: Responsive.font(context, 22), fontWeight: FontWeight.bold, fontFamily: Fonts.inter),
+              ),
+              SizedBox(height: 5),
+              Text(
+                title,
+                style: TextStyle(fontSize: Responsive.font(context, 10), color: Colors.grey[600], fontWeight: FontWeight.bold, fontFamily: Fonts.nunito),
+              ),
+              SizedBox(height: 10),
+              Row(
+                children: [
+                  Container(
+                    width: 6,
+                    height: 6,
+                    decoration: BoxDecoration(color: Colors.green, shape: BoxShape.circle),
+                  ),
+                  SizedBox(width: 5),
+                  Text(
+                    subtitle,
+                    style: TextStyle(fontSize: Responsive.font(context, 10), color: Colors.grey[500], fontFamily: Fonts.nunito),
+                  )
+                ],
               )
             ],
-          )
-        ],
-      ),
+          ),
+          ),
+        ),
       ),
     );
   }

@@ -11,10 +11,6 @@ class QuestionStatsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (questions.isEmpty) {
-      return const SizedBox.shrink();
-    }
-
     final subjects = questions.map((q) => q.subject).toSet().toList();
     final subjectColors = [
       Colors.green,
@@ -59,34 +55,36 @@ class QuestionStatsSection extends StatelessWidget {
           
           const SizedBox(height: 15),
           _buildAccuracyProgression(subjects, subjectColors,context),
-          const SizedBox(height: 30),
-          
-          Row(
-            children: [
-              const SizedBox(width: 5,),
-              Icon(LucideIcons.crosshair400Dir,size: Responsive.icon(context, 20),),
-              const SizedBox(width: 5,),
-              Text(
-                "Subject",
-                style: TextStyle(
-                  fontFamily: Fonts.outfit,
-                  fontWeight: FontWeight.bold,
-                  fontSize: Responsive.font(context, 18),
+
+          if (subjects.isNotEmpty) ...[
+            const SizedBox(height: 30),
+            Row(
+              children: [
+                const SizedBox(width: 5,),
+                Icon(LucideIcons.crosshair400Dir,size: Responsive.icon(context, 20),),
+                const SizedBox(width: 5,),
+                Text(
+                  "Subject",
+                  style: TextStyle(
+                    fontFamily: Fonts.outfit,
+                    fontWeight: FontWeight.bold,
+                    fontSize: Responsive.font(context, 18),
+                  ),
                 ),
-              ),
-              Text(
-                " Accuracy",
-                style: TextStyle(
-                  fontFamily: Fonts.outfit,
-                  fontWeight: FontWeight.bold,
-                  fontSize: Responsive.font(context, 18),
-                  color: Colors.green
+                Text(
+                  " Accuracy",
+                  style: TextStyle(
+                    fontFamily: Fonts.outfit,
+                    fontWeight: FontWeight.bold,
+                    fontSize: Responsive.font(context, 18),
+                    color: Colors.green
+                  ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 15),
-          _buildSubjectList(subjects, subjectColors,context),
+              ],
+            ),
+            const SizedBox(height: 15),
+            _buildSubjectList(subjects, subjectColors,context),
+          ],
         ],
       ),
     );

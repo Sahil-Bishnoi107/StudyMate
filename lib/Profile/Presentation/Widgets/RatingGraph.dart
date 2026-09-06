@@ -10,27 +10,30 @@ class RatingGraph extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (contests.isEmpty) {
-      return const SizedBox.shrink();
-    }
-
     final sortedContests = List<MyContest>.from(contests)..sort((a, b) => a.startTime.compareTo(b.startTime));
-    
+
     List<FlSpot> spots = [];
     int currentRating = 1500;
-    
-    // Initial spot before any contest (if we want to show a starting point)
-    spots.add(FlSpot(0, currentRating.toDouble()));
 
-    for (int i = 0; i < sortedContests.length; i++) {
-      currentRating += sortedContests[i].ratingChnage;
-      spots.add(FlSpot((i + 1).toDouble(), currentRating.toDouble()));
+    if (sortedContests.isEmpty) {
+      // No contest data yet — show a flat line at 1500,
+      // anchored with a point on the far left and far right.
+      spots.add(const FlSpot(0, 1500));
+      spots.add(const FlSpot(1, 1500));
+    } else {
+      // Initial spot before any contest (if we want to show a starting point)
+      spots.add(FlSpot(0, currentRating.toDouble()));
+
+      for (int i = 0; i < sortedContests.length; i++) {
+        currentRating += sortedContests[i].ratingChnage;
+        spots.add(FlSpot((i + 1).toDouble(), currentRating.toDouble()));
+      }
     }
 
     // Determine min and max Y for the graph
     double minY = spots.map((s) => s.y).reduce((a, b) => a < b ? a : b);
     double maxY = spots.map((s) => s.y).reduce((a, b) => a > b ? a : b);
-    
+
     // Add some padding to Y axis
     minY = (minY - 50).floorToDouble();
     maxY = (maxY + 50).ceilToDouble();

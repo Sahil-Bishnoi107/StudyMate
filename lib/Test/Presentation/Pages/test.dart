@@ -13,6 +13,9 @@ import 'package:study_mate/Test/Presentation/Bloc/SubmitBloc/SubmitEvents.dart';
 import 'package:study_mate/Test/Presentation/Bloc/test_bloc.dart';
 import 'package:study_mate/Test/Presentation/Bloc/testevents.dart';
 import 'package:study_mate/Test/Presentation/Bloc/teststates.dart';
+import 'package:study_mate/Test/Presentation/Bloc/FlagBloc/FlagBloc.dart';
+import 'package:study_mate/Test/Presentation/Bloc/FlagBloc/FlagEvents.dart';
+import 'package:study_mate/Test/Presentation/Bloc/FlagBloc/FlagStates.dart';
 import 'package:study_mate/Test/Presentation/Pages/test_submitted_page.dart';
 import 'package:study_mate/Test/Presentation/Widgets/fixedTextWidget.dart';
 import 'package:study_mate/Test/Presentation/Widgets/question_button.dart';
@@ -36,15 +39,30 @@ class _TestState extends State<GiveTest> {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
-      body: BlocConsumer<TestBloc,Teststates>(
+      body: BlocProvider(
+        create: (context) => FlagBloc(sl<TestRepo>()),
+        child: BlocListener<FlagBloc, FlagStates>(
+          listener: (context, state) {
+            if (state is FlagSuccessState) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text("Question flagged successfully."), backgroundColor: Colors.green)
+              );
+            } else if (state is FlagErrorState) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(state.message), backgroundColor: Colors.red)
+              );
+            }
+          },
+          child: BlocConsumer<TestBloc,Teststates>(
 
-      listener: (context,state){   
-         if(state is TestSubmitState){
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => BlocProvider(
-              create: (context) => Submitbloc(sl<TestRepo>())..add(TestSubmittedEvent(test: state.test, timeLeft: state.timeLeft)),
-              child: TestSubmittedPage())));
-          }
-      },
+          listener: (context,state){   
+             if(state is TestSubmitState){
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => BlocProvider(
+                  create: (context) => Submitbloc(sl<TestRepo>())..add(TestSubmittedEvent(test: state.test, timeLeft: state.timeLeft)),
+                  child: TestSubmittedPage())));
+              }
+          },
+
 
       builder: (context, state) {
         if(state is TestLoading){
@@ -86,6 +104,8 @@ class _TestState extends State<GiveTest> {
         );
       },
       ),
+      )
+      )
     );
   }
 }
@@ -182,14 +202,29 @@ Widget _question(double height,double width, Question question,int currQue,int t
         Row(
           children: [
             Text("Question ${currQue + 1} of ${totalQuestions}",style: TextStyle(fontFamily: Fonts.inter,fontWeight: FontWeight.w700,fontSize: Responsive.font(context, 16)),),
-            SizedBox(width: width*0.32,),
-           /* Expanded(child: Row(
-              children: [
-                Icon(Bootstrap.exclamation_circle,size: Responsive.icon(context, 15),),
-                const SizedBox(width: 5,),
-                Text(difficulty,style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold),),
-              ],
-            )), */
+            const Spacer(),
+            BlocBuilder<FlagBloc, FlagStates>(
+              builder: (context, flagState) {
+                bool isLoading = flagState is FlagLoadingState && flagState.questionId == question.id;
+                return GestureDetector(
+                  onTap: () {
+                    if (!isLoading) {
+                      context.read<FlagBloc>().add(FlagQuestionEvent(question: question));
+                    }
+                  },
+                  child: Row(
+                    children: [
+                      if (isLoading)
+                        SizedBox(width: Responsive.icon(context, 15), height: Responsive.icon(context, 15), child: const CircularProgressIndicator(strokeWidth: 2, color: Colors.redAccent))
+                      else
+                        Icon(Icons.flag_rounded, color: Colors.redAccent, size: Responsive.icon(context, 15)),
+                      const SizedBox(width: 5),
+                      Text("Flag", style: TextStyle(fontFamily: Fonts.nunito, fontWeight: FontWeight.bold, color: Colors.redAccent, fontSize: Responsive.font(context, 14))),
+                    ],
+                  ),
+                );
+              },
+            ),
           ],
         ),
         SizedBox(height: height*0.01,),

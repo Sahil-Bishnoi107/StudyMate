@@ -57,8 +57,22 @@ class TestRepo {
         print("Failed to submit test with exception $e");
         return ApiResponse(statusCode: 500);
       }
+    }
 
        
+    Future<ApiResponse> flagQuestion(String questionId) async{
+      try{
+          final res = await dio.post("/GenQuestions/add-error-question", queryParameters: {'id' : questionId});
+          if(res.statusCode != 200){
+            print("could not flag question ${res.statusCode}");
+            return ApiResponse(statusCode: res.statusCode ?? 0);
+          }
+          return ApiResponse(statusCode: 200);
+      }
+      catch(e){
+        print("Failed to flag question with exception $e");
+        return ApiResponse(statusCode: 500, error: e.toString());
+      }
     }
 }
 
