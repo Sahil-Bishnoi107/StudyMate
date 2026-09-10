@@ -28,6 +28,8 @@ import 'package:study_mate/Settings/Data/SettingsRepo.dart';
 import 'package:study_mate/Settings/Presentation/Bloc/SettingsBloc.dart';
 import 'package:study_mate/Lectures/Data/VideoRepo.dart';
 import 'package:study_mate/Lectures/Presentation/Bloc/LecturesPage/LecturesPageBloc.dart';
+import 'package:study_mate/GeneratedQuestions/Data/gen_questions_repo.dart';
+import 'package:study_mate/GeneratedQuestions/Presentation/Bloc/gen_questions_bloc.dart';
 
 final sl = GetIt.instance;
 
@@ -65,4 +67,10 @@ Future<void> setup()async {
   sl.registerLazySingleton<NotificationBloc>(() => NotificationBloc(sl<Notificationdata>()));
   sl.registerLazySingleton<Aboutusbloc>(() => Aboutusbloc(sl<AboutUsRepo>()));
   sl.registerLazySingleton<FilterBloc>(() => FilterBloc(sl<QuestionsRepo>()));
+  sl.registerLazySingleton<GenQuestionsRepo>(() => GenQuestionsRepo(sl<Dio>()));
+  // Factory (not lazySingleton): BlocProvider closes the Bloc when the page
+  // is disposed. A factory ensures a fresh instance is created the next time
+  // the page is opened, avoiding "Bad state: Cannot add new events after
+  // calling close" when the page is re-entered.
+  sl.registerFactory<GenQuestionsBloc>(() => GenQuestionsBloc(sl<GenQuestionsRepo>()));
 }

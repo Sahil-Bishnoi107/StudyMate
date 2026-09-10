@@ -31,10 +31,12 @@ class AuthRepo extends AuthData{
       final jsonFile = jsonDecode(res.body);
       String accessToken = jsonFile['access_token'] ?? "";
       String refreshToke = jsonFile['refresh_token'] ?? "";
+      String role = jsonFile['role'] ?? "user";
       print("Access Tone : $accessToken");
       print("Refresh Tone : $refreshToke");
+      print("Role is $role");
       await SecureTokens().saveTokens(accessToken, refreshToke);
-      return ApiResponse(statusCode: 200);
+      return ApiResponse(statusCode: 200,data: role);
    }
    catch(e){
     return ApiResponse(statusCode: 500);
@@ -64,10 +66,12 @@ class AuthRepo extends AuthData{
    final jsonFile = jsonDecode(res.body);
    String accessToken = jsonFile['access_token'] ?? "";
    String refreshToken = jsonFile['refresh_token'] ?? "";
+   String role = jsonFile['role'] ?? "user";
    print("Access Tone : $accessToken");
    print("Refresh Tone : $refreshToken");
+   print("Role is $role");
    await SecureTokens().saveTokens(accessToken, refreshToken);
-   return ApiResponse(statusCode: 200);  
+   return ApiResponse(statusCode: 200,data: role);  
    
    }
    catch(e){
@@ -98,10 +102,12 @@ class AuthRepo extends AuthData{
    final jsonFile = jsonDecode(res.body);
    String accessToken = jsonFile['access_token'] ?? "";
    String refreshToken = jsonFile['refresh_token'] ?? "";
+   String role = jsonFile['role'] ?? "user";
    print("Access Tone : $accessToken");
    print("Refresh Tone : $refreshToken");
+   print("Role is $role");
    await SecureTokens().saveTokens(accessToken, refreshToken);
-   return ApiResponse(statusCode: 200);  
+   return ApiResponse(statusCode: 200,data: role);  
    
    }
    catch(e){
@@ -125,9 +131,11 @@ class AuthRepo extends AuthData{
    final jsonFile = jsonDecode(res.body);
    String accessToken = jsonFile['access_token'] ?? "";
    String refreshToken = jsonFile['refresh_token'] ?? "";
+   String role = jsonFile['role'] ?? "user";
    print("Access Tone : $accessToken");
    print("Refresh Tone : $refreshToken");
+   print("Role is $role");
    await SecureTokens().saveTokens(accessToken, refreshToken);
-   return ApiResponse(statusCode: 200); 
+   return ApiResponse(statusCode: 200,data: role); 
   }
 }

@@ -1,6 +1,11 @@
+import 'package:study_mate/Role.dart';
+
 class AuthState {}
 
 class AuthSuccess extends AuthState{
+  UserRole role;
+
+  AuthSuccess({required this.role});
 }
 class AuthFailure extends AuthState{
   String message;

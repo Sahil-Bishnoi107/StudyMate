@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:study_mate/AboutUs/Presentation/Pages/AboutUsPage.dart';
+import 'package:study_mate/Authentication/Presentation/Bloc/auth_bloc.dart';
+import 'package:study_mate/Authentication/Presentation/Bloc/auth_states.dart';
 import 'package:study_mate/Contest/Presentation/Pages/ContestPage.dart';
+import 'package:study_mate/GeneratedQuestions/Presentation/Pages/gen_questions_page.dart';
 import 'package:study_mate/Home/Presentation/Pages/Homepage.dart';
 import 'package:study_mate/Lectures/Presentation/Pages/LecturesPage.dart';
 import 'package:study_mate/Profile/Presentation/Pages/ProfilePage.dart';
 import 'package:study_mate/QuestionsSection/Presentation/Pages/FiltersPage.dart';
 import 'package:study_mate/QuestionsSection/Presentation/Pages/MyQuestion.dart';
+import 'package:study_mate/Role.dart';
 import 'package:study_mate/Settings/Presentation/Pages/SettingsPage.dart';
 import 'package:study_mate/Subscriptions/Presentation/Pages/SubscriptionsPage.dart';
 import 'package:study_mate/TestsPage/Presentation/Pages/testspage.dart';
@@ -95,7 +100,26 @@ Drawer mainDrawer(double height, double width,BuildContext context){
                 title:  Text("Settings",style: ts,),
                 onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Settingspage())),
               ),
-              
+
+              // Admin-only: AI Questions
+              Builder(
+                builder: (ctx) {
+                  final authState = ctx.read<AuthBloc>().state;
+                  if (authState is AuthSuccess && authState.role == UserRole.admin) {
+                    return ListTile(
+                      leading: Icon(LucideIcons.zap),
+                      title: Text('AI Questions', style: ts),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const GenQuestionsPage(),
+                        ),
+                      ),
+                    );
+                  }
+                  return const SizedBox.shrink();
+                },
+              ),
               
           ],
         ),

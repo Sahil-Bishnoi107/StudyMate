@@ -4,6 +4,7 @@ import 'package:study_mate/Authentication/Data/AuthRepo.dart';
 import 'package:study_mate/Authentication/Domain/Entities/ApiResponse.dart';
 import 'package:study_mate/Authentication/Presentation/Bloc/auth_events.dart';
 import 'package:study_mate/Authentication/Presentation/Bloc/auth_states.dart';
+import 'package:study_mate/Role.dart';
 import 'package:study_mate/secure_storage.dart';
 
 class AuthBloc extends Bloc<AuthEvent,AuthState> {
@@ -19,7 +20,8 @@ class AuthBloc extends Bloc<AuthEvent,AuthState> {
       emit(AuthFailure(message: "Login Failed"));
       return;
      }
-     emit(AuthSuccess());
+     UserRole role = response.data == "Admin" ? UserRole.admin : UserRole.student;
+     emit(AuthSuccess(role: role));
    },);
 
    on<AutoLogin>((event, emit) async {
@@ -31,7 +33,8 @@ class AuthBloc extends Bloc<AuthEvent,AuthState> {
      }
      ApiResponse response = await authRepo.autoLogin(token);
      if(response.statusCode == 200){
-      emit(AuthSuccess());
+      UserRole role = response.data == "Admin" ? UserRole.admin : UserRole.student;
+      emit(AuthSuccess(role: role));
       return;
      }
        emit(AuthInitial());
@@ -59,7 +62,8 @@ class AuthBloc extends Bloc<AuthEvent,AuthState> {
       return;
     }
 
-    emit(AuthSuccess());
+     UserRole role = response.data == "Admin" ? UserRole.admin : UserRole.student;
+     emit(AuthSuccess(role: role));
   } catch (e, st) {
     print("Google Sign-In Exception: $e");
     print("Stack Trace:\n$st");

@@ -82,24 +82,36 @@ class MixedMathText extends StatelessWidget {
             // formulas never hit this cap, so visually nothing changes
             // for them. Long ones now can never exceed the line width.
             constraints: BoxConstraints(maxWidth: availableWidth),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              physics: const ClampingScrollPhysics(),
-              child: Math.tex(
-                formula,
-                mathStyle: MathStyle.text, // inline size, not display/block size
-                textStyle: TextStyle(
-                  fontSize: mathFontSize,
-                  color: effectiveStyle.color,
-                  fontWeight: effectiveStyle.fontWeight,
-                ),
-                onErrorFallback: (err) => Text(
+            child: UnconstrainedBox(
+              // Text.rich's inline layout forces a minHeight on WidgetSpan
+              // children (≈ line ascent+descent, e.g. 17.6 for fontSize 15).
+              // ConstrainedBox cannot lower an incoming minHeight — it only
+              // raises it. UnconstrainedBox DOES strip the parent's minHeight,
+              // giving Math.tex {0≤h≤∞}. Without this, flutter_math_fork's
+              // internal RenderResetDimension can receive minHeight > its
+              // natural render height for unusual formulas and crash.
+              // constrainedAxis: horizontal preserves the maxWidth cap.
+              constrainedAxis: Axis.horizontal,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                physics: const ClampingScrollPhysics(),
+                child: Math.tex(
                   formula,
-                  style: effectiveStyle.copyWith(color: Colors.red),
+                  mathStyle: MathStyle.text, // inline size, not display/block size
+                  textStyle: TextStyle(
+                    fontSize: mathFontSize,
+                    color: effectiveStyle.color,
+                    fontWeight: effectiveStyle.fontWeight,
+                  ),
+                  onErrorFallback: (err) => Text(
+                    formula,
+                    style: effectiveStyle.copyWith(color: Colors.red),
+                  ),
                 ),
               ),
             ),
           ),
+
         ),
       );
     } catch (_) {
