@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:phosphor_icons/phosphor_icons.dart';
 import 'package:study_mate/AboutUs/Presentation/Pages/AboutUsPage.dart';
 
 
@@ -10,6 +11,7 @@ import 'package:study_mate/Home/Presentation/Widgets/drawer.dart';
 import 'package:study_mate/Notifications/Presentation/Pages/NotificationPage.dart';
 import 'package:study_mate/QuestionsSection/Presentation/Pages/FiltersPage.dart';
 import 'package:study_mate/Subscriptions/Presentation/Pages/SubscriptionsPage.dart';
+import 'package:study_mate/TestsPage/Presentation/Pages/testspage.dart';
 import 'package:study_mate/fonts.dart';
 import 'package:study_mate/Home/Presentation/Widgets/animated_texts.dart';
 
@@ -30,47 +32,57 @@ class _HomepageState extends State<Homepage> {
       backgroundColor: Colors.white,
       key: _scaffoldKey,
       drawer: mainDrawer(height, width, context),
-      body: Column(
-        children: [
-          SizedBox(height: height*0.05,),
-          _appBar(height, width, _scaffoldKey,context),
-          Container(color: const Color.fromRGBO(220, 220, 220, 0.8),height: 1,width: width,),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column( 
-                children: [
-              SizedBox(height: height*0.02,),
-              _header(height, width,context),
-              SizedBox(height: height*0.01,),
-              _aboutSection(height, width,context),
-              SizedBox(height: height*0.01,),
-              GestureDetector( onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ContestPage())),
-                child: _card(height, width, LucideIcons.swords300, "Challenge yourself with timed mock contests designed to simulate real exam pressure. Track your rating, climb the leaderboard, analyze your performance, and see how you compare with other aspirants.",
-                 "Ready to", "Compete?",40, context),
+      body: SafeArea(
+        child: Column(
+          children: [
+            SizedBox(height: height*0.005,),
+            _appBar(height, width, _scaffoldKey,context),
+            Container(color: const Color.fromRGBO(220, 220, 220, 0.8),height: 1,width: width,),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column( 
+                  children: [
+                SizedBox(height: height*0.02,),
+                _header(height, width,context),
+                SizedBox(height: height*0.01,),
+                _aboutSection(height, width,context),
+                SizedBox(height: height*0.01,),
+                GestureDetector( onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => TestsPage())),
+                  child: _card(height, width, LucideIcons.swords300, "Challenge yourself with timed mock contests designed to simulate real exam pressure. Track your rating, climb the leaderboard, analyze your performance, and see how you compare with other aspirants.",
+                   "Ready to", "Compete?",40, context),
+                ),
+                 SizedBox(height: height*0.02,),
+                GestureDetector( onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => FiltersPage())),
+                  child: _card(height, width, LucideIcons.gauge300, "Strengthen your concepts one question at a time. Solve curated problems across Physics, Chemistry, and Mathematics, learn from your mistakes, and build confidence through consistent practice.",
+                   "Practice", "Without Limits",40, context),
+                ),
+                 SizedBox(height: height*0.02,),
+                 InkWell(
+                  onTap: () {
+                     _snakcBar(height, width, context);
+                  },
+                   child: _card(height, width, PhosphorIconsRegular.chartLineUp, "Analyze your performance with detailed analytics and identify your strengths and weaknesses.",
+                   "Track Your", "Progress",40, context),
+                 ),
+                 SizedBox(height: height*0.02,),
+                 InkWell(
+                  onTap: () {
+                     _snakcBar(height, width, context);
+                  },
+                   child: _card(height, width, PhosphorIconsDuotone.target, "Put your preparation to the test. Challenge yourself across Physics, Chemistry, and Mathematics, sharpen your problem-solving skills, and grow with every attempt.",
+                   "Perfect Your", "Practice",40, context),
+                 ),
+                 SizedBox(height: height*0.02,),
+                 _premiumCard(height, width,context),
+                 SizedBox(height: height*0.1,)
+                  ],
+                ),
               ),
-               SizedBox(height: height*0.02,),
-              GestureDetector( onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => FiltersPage())),
-                child: _card(height, width, LucideIcons.gauge300, "Strengthen your concepts one question at a time. Solve curated problems across Physics, Chemistry, and Mathematics, learn from your mistakes, and build confidence through consistent practice.",
-                 "Practice", "Without Limits",40, context),
-              ),
-               SizedBox(height: height*0.02,),
-               InkWell(
-                onTap: () {
-                   _snakcBar(height, width, context);
-                },
-                 child: _card(height, width, LucideIcons.chartColumn300, "Analyze your performance with detailed analytics and identify your strengths and weaknesses.",
-                 "Track Your", "Progress",40, context),
-               ),
-               SizedBox(height: height*0.02,),
-               _premiumCard(height, width,context),
-               SizedBox(height: height*0.1,)
-                ],
-              ),
-            ),
-          )
-          
-          
-        ],
+            )
+            
+            
+          ],
+        ),
       ),
     );
   }
@@ -85,9 +97,9 @@ Widget _appBar(double height, double width,GlobalKey<ScaffoldState> key,BuildCon
       SizedBox(width: width*0.05,),
       InkWell(
         onTap: () => key.currentState?.openDrawer(),
-        child: Icon(Icons.menu_sharp,size: Responsive.icon(context, 30),)),
+        child: Icon(Icons.menu_sharp,size: Responsive.icon(context, 25),)),
       SizedBox(width: width*0.05,),
-      Expanded(child: Text("StudyMate",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 18),fontWeight: FontWeight.w600),)),
+      Expanded(child: Text("StudyMate",style: TextStyle(fontFamily: Fonts.rubik,fontSize: Responsive.font(context, 20),fontWeight: FontWeight.w700),)),
       InkWell(
         onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => Notificationpage())),
         child: Icon(Icons.notifications_none_sharp)),
@@ -101,17 +113,17 @@ Widget _header(double height,double width,BuildContext context){
 
   return Container(
 
-    height: height*0.22,width: width,
+    height: height*0.2,width: width,
     padding: EdgeInsets.symmetric(horizontal: width*0.05),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        TypingText(text: "Master",style: TextStyle(color: Colors.black, fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 40),fontWeight: FontWeight.w600),),
-        TypingText(text: "Your",style: TextStyle(color: Colors.green, fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 40),fontWeight: FontWeight.w600), delay: const Duration(milliseconds: 315),),
+        TypingText(text: "Master",style: TextStyle(color: Colors.black, fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 35),fontWeight: FontWeight.w600),),
+        TypingText(text: "Your",style: TextStyle(color: Colors.green, fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 35),fontWeight: FontWeight.w600), delay: const Duration(milliseconds: 315),),
         Row(
           children: [
-            TypingText(text: "Potential",style: TextStyle(color: Colors.black, fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 40),fontWeight: FontWeight.w600), delay: const Duration(milliseconds: 540),),
+            TypingText(text: "Potential",style: TextStyle(color: Colors.black, fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 35),fontWeight: FontWeight.w600), delay: const Duration(milliseconds: 540),),
             TypingText(text: ".",style: TextStyle(color: Colors.green, fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 40),fontWeight: FontWeight.w600), delay: const Duration(milliseconds: 900),)
           ],
         ),
@@ -169,7 +181,7 @@ Widget _card(double height, double width,IconData icon,String text,String header
     margin: EdgeInsets.symmetric(horizontal: width*0.05),
     decoration: BoxDecoration(
       border: Border.all(color: const Color.fromRGBO(220, 220, 220, 0.8)),
-      borderRadius: BorderRadius.circular(10)
+      borderRadius: BorderRadius.circular(0)
     ),
     child: Row(
       children: [
@@ -177,8 +189,8 @@ Widget _card(double height, double width,IconData icon,String text,String header
 
        Container(height: height*0.08,width: height*0.08, 
        decoration: BoxDecoration(
-        border: Border.all(color: const Color.fromRGBO(76, 175, 80, 0.75)),
-        borderRadius: BorderRadius.circular(10)
+       // border: Border.all(color: const Color.fromRGBO(76, 175, 80, 0.75)),
+       // borderRadius: BorderRadius.circular(10)
         ),
         child: Icon(icon,size: Responsive.icon(context, iconSize.toDouble()),color: Colors.green,),
        ),
@@ -215,7 +227,7 @@ Widget _premiumCard(double height, double width,BuildContext context){
     padding: EdgeInsets.symmetric(horizontal: width*0.05),
     decoration: BoxDecoration(
       border: Border.all(color: const Color.fromRGBO(220, 220, 220, 0.8)),
-      borderRadius: BorderRadius.circular(10)
+    //  borderRadius: BorderRadius.circular(10)
     ),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
