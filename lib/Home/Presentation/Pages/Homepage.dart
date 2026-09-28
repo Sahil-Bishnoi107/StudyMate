@@ -47,7 +47,7 @@ class _HomepageState extends State<Homepage> {
                 SizedBox(height: height*0.01,),
                 _aboutSection(height, width,context),
                 SizedBox(height: height*0.01,),
-                GestureDetector( onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => TestsPage())),
+                GestureDetector( onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ContestPage())),
                   child: _card(height, width, LucideIcons.swords300, "Challenge yourself with timed mock contests designed to simulate real exam pressure. Track your rating, climb the leaderboard, analyze your performance, and see how you compare with other aspirants.",
                    "Ready to", "Compete?",40, context),
                 ),
@@ -67,7 +67,7 @@ class _HomepageState extends State<Homepage> {
                  SizedBox(height: height*0.02,),
                  InkWell(
                   onTap: () {
-                     _snakcBar(height, width, context);
+                     Navigator.push(context, MaterialPageRoute(builder: (_) => TestsPage()));
                   },
                    child: _card(height, width, PhosphorIconsDuotone.target, "Put your preparation to the test. Challenge yourself across Physics, Chemistry, and Mathematics, sharpen your problem-solving skills, and grow with every attempt.",
                    "Perfect Your", "Practice",40, context),

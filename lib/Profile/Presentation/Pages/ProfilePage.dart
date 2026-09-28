@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:study_mate/Contest/Domain/MyContest.dart';
 import 'package:study_mate/Home/Presentation/Widgets/drawer.dart';
+import 'package:study_mate/Profile/Presentation/Widgets/parallelogram.dart';
 import 'package:study_mate/LoadingScreen/LoadingAnimations.dart';
 import 'package:study_mate/Notifications/Presentation/Pages/NotificationPage.dart';
 import 'package:study_mate/Profile/Domain/student.dart';
@@ -53,39 +54,41 @@ class _ProfilePageState extends State<ProfilePage> {
               onRefresh: () async {
                 BlocProvider.of<Profilebloc>(context).add(LoadProfileEvent());
               },
-              child: Column(
-                
-                children: [
-                  SizedBox(height: height*0.05,),
-                  _appBar(height, width, context),
-                  Container(color: const Color.fromRGBO(220, 220, 220, 0.8),height: 1,width: width,),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                     
-                      _headerSection(height, width, state.student, state.contest),
-                      _graphHeader(height, width,context),
-                      const SizedBox(height: 20,),
-                      _commonStatSection(height, width, 22, state.questions.length, state.student.testsGiven.length, state.contest.length),
-                      SizedBox(height: height*0.02,),
-                      
-                     // const SizedBox(height: 25),
-                      RatingGraph(contests: state.contest),
-                      const SizedBox(height: 25),
-                      ContestHistorySection(contests: state.contest,width: width,),
-                      const SizedBox(height: 25),
-                      QuestionStatsSection(questions: state.questions),
-                      
-                      const SizedBox(height: 25),
-                      RecentTestsSection(tests: state.student.testsGiven,width: width,),
-                      const SizedBox(height: 100),
-                        ],
+              child: SafeArea(
+                child: Column(
+                  
+                  children: [
+                    SizedBox(height: height*0.008,),
+                    _appBar(height, width, context),
+                    Container(color: const Color.fromRGBO(220, 220, 220, 0.8),height: 1,width: width,),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                       
+                        _headerSection(height, width, state.student, state.contest),
+                        _graphHeader(height, width,context),
+                        const SizedBox(height: 20,),
+                        _commonStatSection(height, width, 22, state.questions.length, state.student.testsGiven.length, state.contest.length,context),
+                        SizedBox(height: height*0.02,),
+                        
+                       // const SizedBox(height: 25),
+                        RatingGraph(contests: state.contest),
+                        const SizedBox(height: 25),
+                        ContestHistorySection(contests: state.contest,width: width,),
+                        const SizedBox(height: 25),
+                        QuestionStatsSection(questions: state.questions),
+                        
+                        const SizedBox(height: 25),
+                        RecentTestsSection(tests: state.student.testsGiven,width: width,),
+                        const SizedBox(height: 100),
+                          ],
+                        ),
                       ),
-                    ),
-                  )
-                
-                ],
+                    )
+                  
+                  ],
+                ),
               ),
             );
           } else {
@@ -110,9 +113,9 @@ Widget _appBar(double height,double width,BuildContext context){
       children: [
         InkWell(
           onTap: () => Scaffold.of(context).openDrawer(),
-          child: Icon(Icons.menu_sharp,size: Responsive.icon(context, 30),)),
+          child: Icon(Icons.menu_sharp,size: Responsive.icon(context, 25),)),
           SizedBox(width: width*0.05,),
-          Expanded(child: Text("Profile",style: TextStyle(color: Colors.black,fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: Responsive.font(context, 18)),)),
+          Expanded(child: Text("Profile",style: TextStyle(color: Colors.black,fontFamily: Fonts.rubik,fontWeight: FontWeight.w600,fontSize: Responsive.font(context, 20)),)),
           GestureDetector(
             onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => Notificationpage())),
             child: Icon(Icons.notifications_none_sharp))
@@ -148,24 +151,60 @@ Widget _graphHeader(double height, double width,BuildContext context){
   );
 }
 
-Widget _commonStatSection(double height, double width,int rank,int questions,int tests,int contests){
+Widget _commonStatSection(double height, double width,int rank,int questions,int tests,int contests, BuildContext context){
   return Column(
     children: [
-      Row(
-        children: [
-          Expanded(child: _commonStat(height, width, LucideIcons.medal400Dir, "Global Rank", "#$rank")),
-          
-          Expanded(child: _commonStat(height, width, LucideIcons.notebookPen400Dir, "Questions", questions.toString()))
-        ],
+      
+     
+      
+          _commonStat2(height, width, LucideIcons.medal300Dir, "Global Rank", "#$rank",true, "Your Global Rank on the Leaderboard",context, "Rank"),
+          SizedBox(height: 5,),
+          _commonStat2(height, width, LucideIcons.notebookPen300Dir, "Questions", questions.toString(),false, "Questions attempted by you in question section",context, "Questions"),
+       
+          SizedBox(height: 5,),
+        
+          _commonStat2(height, width, LucideIcons.notepadText300Dir, "Tests", tests.toString(),true, "Number of tests given by you in Tests Section",context, "Tests"),
+          SizedBox(height: 5,),
+          _commonStat2(height, width, LucideIcons.swords300Dir, "Contests", contests.toString(),false, "Number of Global Contests attempted by you",context, "Contests")
+    ],
+  );
+}
+
+
+
+Widget  _commonStat2(double height, double width, IconData icon,String name, String stat, bool isLeft,String des,BuildContext context,String followUp){
+  return Row(
+    children: [
+     // SizedBox(width: width*0.05,),
+      
+      Container(
+        margin: EdgeInsets.only(bottom: height*0.01),
+        child: Row(
+          children: [
+            SizedBox(width: width*0.05,),
+            Icon(icon, color: Colors.black,size: Responsive.icon(context, 25),),
+            SizedBox(width: width*0.03,),
+            SizedBox(
+              width: width*0.55,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  
+                  Text(name, style: TextStyle(fontFamily: Fonts.outfit,fontSize: 13,color: Colors.black,fontWeight: FontWeight.w400)),
+                  Text(des, style: TextStyle(fontFamily: Fonts.outfit,fontSize: 6,color: const Color.fromRGBO(120, 120, 120, 1),fontWeight: FontWeight.w400))
+                ],
+              )),
+           // SizedBox(width: width*0.02,),
+            Text(stat,style:  TextStyle(fontFamily: Fonts.outfit,fontSize: 18,color: Colors.black,fontWeight: FontWeight.w400),),
+            SizedBox(width: width*0.01,),
+            Padding(
+              padding: EdgeInsetsGeometry.only(top: height*0.003),
+              child: Text(followUp,style:  TextStyle(fontFamily: Fonts.rubik,fontSize: 12,color: const Color.fromRGBO(120, 120, 120, 1),fontWeight: FontWeight.w400),),
+            )
+          ],
+        ),
       ),
-      const SizedBox(height: 10,),
-      Row(
-        children: [
-          Expanded(child: _commonStat(height, width, LucideIcons.notepadText400Dir, "Tests", tests.toString())),
-          
-          Expanded(child: _commonStat(height, width, LucideIcons.swords400Dir, "Contests", contests.toString()))
-        ],
-      )
     ],
   );
 }
