@@ -22,6 +22,7 @@ class QuestionStatsSection extends StatelessWidget {
     ];
 
     double width = MediaQuery.of(context).size.width;
+    double height  =MediaQuery.of(context).size.height;
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: width * 0.05),
@@ -83,7 +84,7 @@ class QuestionStatsSection extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 15),
-            _buildSubjectList(subjects, subjectColors,context),
+            _buildSubjectList(subjects, subjectColors,context,height),
           ],
         ],
       ),
@@ -138,7 +139,7 @@ class QuestionStatsSection extends StatelessWidget {
           padding: const EdgeInsets.only(top: 20, bottom: 20, left: 10, right: 30),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(5),
             border: Border.all(color: Colors.grey.withOpacity(0.1)),
           ),
           child: SizedBox(
@@ -236,7 +237,7 @@ class QuestionStatsSection extends StatelessWidget {
     );
   }
 
-  Widget _buildSubjectList(List<String> subjects, List<Color> colors,BuildContext context) {
+  Widget _buildSubjectList(List<String> subjects, List<Color> colors,BuildContext context, double height) {
     return Column(
       children: subjects.asMap().entries.map((entry) {
         int idx = entry.key;
@@ -254,7 +255,7 @@ class QuestionStatsSection extends StatelessWidget {
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(Responsive.font(context, 5)),
             border: Border.all(color: Colors.grey.withOpacity(0.1)),
           ),
           child: Column(
@@ -263,24 +264,27 @@ class QuestionStatsSection extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    subject.isNotEmpty ? '${subject[0].toUpperCase()}${subject.substring(1)}' : subject,
-                    style: TextStyle(
-                      fontFamily: Fonts.outfit,
-                      fontWeight: FontWeight.w600,
-                      fontSize: Responsive.font(context, 16),
-                      color: Colors.black87,
+                  Padding(
+                    padding: EdgeInsetsGeometry.only(bottom: height*0.015),
+                    child: Text(
+                      subject.isNotEmpty ? '${subject[0].toUpperCase()}${subject.substring(1)}' : subject,
+                      style: TextStyle(
+                        fontFamily: Fonts.outfit,
+                        fontWeight: FontWeight.w600,
+                        fontSize: Responsive.font(context, 16),
+                        color: Colors.black87,
+                      ),
                     ),
                   ),
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         "${accuracyPercent.toStringAsFixed(1)}%",
                         style: TextStyle(
                           fontFamily: Fonts.nunito,
                           fontWeight: FontWeight.bold,
-                          fontSize: Responsive.font(context, 16),
+                          fontSize: Responsive.font(context, 14),
                           color: color,
                         ),
                       ),
@@ -300,19 +304,19 @@ class QuestionStatsSection extends StatelessWidget {
               Text(
                 "$totalSolved Problems Solved",
                 style: TextStyle(
-                  fontFamily: Fonts.nunito,
+                  fontFamily: Fonts.rubik,
                   fontSize: Responsive.font(context, 12),
                   color: Colors.grey[600],
                 ),
               ),
-              const SizedBox(height: 15),
+              SizedBox(height: height*0.01),
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: LinearProgressIndicator(
                   value: accuracy,
                   backgroundColor: color.withOpacity(0.1),
                   color: color,
-                  minHeight: 4,
+                  minHeight: 2.5,
                 ),
               ),
             ],

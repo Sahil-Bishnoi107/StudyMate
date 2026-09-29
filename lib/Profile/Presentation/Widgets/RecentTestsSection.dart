@@ -99,7 +99,7 @@ class RecentTestsSection extends StatefulWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(Responsive.icon(context, 5)),
         border: Border.all(color: Colors.grey.withOpacity(0.1)),
         boxShadow: [
           BoxShadow(
@@ -128,7 +128,7 @@ class RecentTestsSection extends StatefulWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: _getDifficultyColor(difficulty).withOpacity(0.1),
+                 // color: _getDifficultyColor(difficulty).withOpacity(0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(

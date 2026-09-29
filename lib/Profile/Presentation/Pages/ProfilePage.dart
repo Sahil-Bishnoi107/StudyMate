@@ -181,8 +181,8 @@ Widget  _commonStat2(double height, double width, IconData icon,String name, Str
         margin: EdgeInsets.only(bottom: height*0.01),
         child: Row(
           children: [
-            SizedBox(width: width*0.05,),
-            Icon(icon, color: Colors.black,size: Responsive.icon(context, 25),),
+            SizedBox(width: width*0.03,),
+           // Icon(icon, color: Colors.black,size: Responsive.icon(context, 25),),
             SizedBox(width: width*0.03,),
             SizedBox(
               width: width*0.55,
@@ -191,7 +191,7 @@ Widget  _commonStat2(double height, double width, IconData icon,String name, Str
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   
-                  Text(name, style: TextStyle(fontFamily: Fonts.outfit,fontSize: 13,color: Colors.black,fontWeight: FontWeight.w400)),
+                  Text(name, style: TextStyle(fontFamily: Fonts.outfit,fontSize: 13,color: Colors.green,fontWeight: FontWeight.w400)),
                   Text(des, style: TextStyle(fontFamily: Fonts.outfit,fontSize: 6,color: const Color.fromRGBO(120, 120, 120, 1),fontWeight: FontWeight.w400))
                 ],
               )),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:study_mate/QuestionsSection/Domain/QuestionFilters.dart';
 import 'package:study_mate/QuestionsSection/Presentation/FiltersBloc/FilterBloc.dart';
 import 'package:study_mate/QuestionsSection/Presentation/FiltersBloc/FilterEvents.dart';
@@ -68,7 +69,7 @@ class _CustomOverlayWidgetState extends State<CustomOverlayWidget> {
                 color: Colors.white,
                 child: SizedBox(
                   height: height * 0.15,
-                  width: width * 0.8,
+                  width: width * 0.85,
                   child: BlocBuilder<FilterBloc, FilterStates>(
                     bloc: filterBloc, // Explicitly pass the captured bloc here
                     builder: (context, state) {
@@ -125,21 +126,17 @@ class _CustomOverlayWidgetState extends State<CustomOverlayWidget> {
         },
         child: Container(
           height: height * 0.06,
-          width: width * 0.8,
+          width: width * 0.85,
           decoration: BoxDecoration(
             color: Colors.white,
-            border: Border.all(
-                width: 1.5,
-                color: const Color.fromRGBO(220, 220, 220, 0.8)),
-            borderRadius: BorderRadius.circular(10),
-          ),
+            border: Border.all( width: 1.25, color: const Color.fromRGBO(220, 220, 220, 0.8)), borderRadius: BorderRadius.circular(Responsive.icon(context, 5)), ),
           child: Row(
             children: [
               SizedBox(
                 width: width * 0.025,
               ),
               Icon(
-                Bootstrap.bullseye,
+                LucideIcons.flame,
                 color: Colors.green,
               ),
               SizedBox(
@@ -153,21 +150,19 @@ class _CustomOverlayWidgetState extends State<CustomOverlayWidget> {
                     SizedBox(
                       height: height * 0.01,
                     ),
-                    SizedBox(
-                        height: height * 0.015,
-                        child: Text(
-                          "LEVEL",
-                          style: TextStyle(
-                              fontFamily: Fonts.nunito,
-                              fontSize: Responsive.font(context, 12),
-                              fontWeight: FontWeight.bold),
-                        )),
+                    Text(
+                      "LEVEL",
+                      style: TextStyle(
+                          fontFamily: Fonts.outfit,
+                          fontSize: Responsive.font(context, 13),
+                          fontWeight: FontWeight.w500),
+                    ),
                     Text(
                       "Mixed (Recommended)",
                       style: TextStyle(
                           fontFamily: Fonts.outfit,
-                          fontSize: Responsive.font(context, 14),
-                          fontWeight: FontWeight.w600),
+                          fontSize: Responsive.font(context, 11),
+                          fontWeight: FontWeight.w500),
                     )
                   ],
                 ),

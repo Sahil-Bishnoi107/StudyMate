@@ -28,22 +28,22 @@ class _FilterSelectionState extends State<FilterSelection> {
       margin: EdgeInsets.symmetric(horizontal: width*0.05),
       padding: EdgeInsets.symmetric(horizontal: width*0.02),
       decoration: BoxDecoration(
-        border: Border.all(color: const Color.fromRGBO(210, 210, 210, 0.8), width: 1.5 ),
-        borderRadius: BorderRadius.circular(10),
+       // border: Border.all(color: const Color.fromRGBO(220, 220, 220, 0.8), width: 1.25 ),
+        borderRadius: BorderRadius.circular(Responsive.icon(context, 5)),
         color: Colors.white
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: height*0.01,),
-          Row(children: [
-            Icon(widget.icon,color: Colors.green,fontWeight: FontWeight.w100,), SizedBox(width: width*0.02,), 
-            Text(widget.type,style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: Responsive.font(context, 16)),)
-          ],),
+          Text(widget.type,style: TextStyle(fontFamily: Fonts.rubik,fontWeight: FontWeight.w600,fontSize: Responsive.font(context, 16)),),
           SizedBox(height: height*0.01,),
           BlocBuilder<FilterBloc,FilterStates>(
             builder: (context, state) =>  Wrap(     
               spacing: width*0.02, runSpacing: height*0.01,
+              crossAxisAlignment: WrapCrossAlignment.start,
+              alignment: WrapAlignment.start,
               children: List.generate(
                 widget.filterOptions.length,
                  (index) => InkWell(
@@ -68,7 +68,7 @@ Widget _tagWidget(double height, double width,String text,bool isSelected,BuildC
     padding: EdgeInsets.symmetric(horizontal: width*0.025, vertical: height*0.006),
     decoration: BoxDecoration(
       border: Border.all(color: isSelected ? Colors.green : const Color.fromRGBO(215, 215, 215, 0.8)),
-      borderRadius: BorderRadius.circular(50),
+      borderRadius: BorderRadius.circular(Responsive.icon(context, 5)),
       color: isSelected ? Colors.green : Colors.white
     ),
     
