@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:icons_plus/icons_plus.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:study_mate/Contest/Domain/Contest.dart';
 import 'package:study_mate/fonts.dart';
 
@@ -15,17 +15,24 @@ class ContestCard extends StatelessWidget {
     required this.onJoin,
   });
 
+  DateTime get _endTime => contest.startTime.add(Duration(minutes: contest.duration));
+
+  String _getTimeLabel() {
+    if (currentTime.isBefore(contest.startTime)) return "BEGINS IN";
+    if (currentTime.isBefore(_endTime)) return "ENDS IN";
+    return "STATUS";
+  }
+
   String _getTimeLeftText() {
-    // 0: Current, 1: Upcoming, 2: Ended
     if (currentTime.isBefore(contest.startTime)) {
       Duration diff = contest.startTime.difference(currentTime);
-      if (diff.inDays > 0) return "BEGINS IN\n${diff.inDays}d : ${diff.inHours % 24}h";
-      return "BEGINS IN\n${diff.inHours}h : ${diff.inMinutes % 60}m";
-    } else if (currentTime.isBefore(contest.startTime.add(Duration(minutes: contest.duration)))) {
-      Duration diff = contest.startTime.add(Duration(minutes: contest.duration)).difference(currentTime);
-      return "ENDS IN\n${diff.inHours}h : ${diff.inMinutes % 60}m";
+      if (diff.inDays > 0) return "${diff.inDays}d : ${diff.inHours % 24}h";
+      return "${diff.inHours}h : ${diff.inMinutes % 60}m";
+    } else if (currentTime.isBefore(_endTime)) {
+      Duration diff = _endTime.difference(currentTime);
+      return "${diff.inHours}h : ${diff.inMinutes % 60}m";
     } else {
-      return "ENDED";
+      return "Ended";
     }
   }
 
@@ -45,23 +52,26 @@ class ContestCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
 
-    bool isEnded = currentTime.isAfter(contest.startTime.add(Duration(minutes: contest.duration)));
+    bool isEnded = currentTime.isAfter(_endTime);
     bool isUpcoming = currentTime.isBefore(contest.startTime);
 
+    // Same card as the contest history / recent tests cards on the profile page
     return Container(
       width: width * 0.9,
-      margin: EdgeInsets.symmetric(vertical: 10, horizontal: width * 0.05),
-      padding: EdgeInsets.all(15),
+      margin: EdgeInsets.only(bottom: 10, left: width * 0.05, right: width * 0.05),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [
+        borderRadius: BorderRadius.circular(Responsive.icon(context, 5)),
+        border: Border.all(color: const Color.fromRGBO(158, 158, 158, 0.1)),
+        boxShadow: const [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            blurRadius: 10,
-            spreadRadius: 2,
-            offset: Offset(0, 5),
+            color: Color.fromRGBO(158, 158, 158, 0.02),
+            spreadRadius: 1,
+            blurRadius: 5,
+            offset: Offset(0, 2),
           ),
         ],
       ),
@@ -70,139 +80,104 @@ class ContestCard extends StatelessWidget {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: Colors.green.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Text(
-                      contest.subject.toUpperCase(),
-                      style: TextStyle(
-                        color: Colors.green,
-                        fontSize: Responsive.font(context, 10),
-                        fontWeight: FontWeight.bold,
-                        fontFamily: Fonts.nunito,
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 8),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: _getDifficultyColor(contest.difficulty).withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Text(
-                      contest.difficulty.toUpperCase(),
-                      style: TextStyle(
-                        color: _getDifficultyColor(contest.difficulty),
-                        fontSize: Responsive.font(context, 10),
-                        fontWeight: FontWeight.bold,
-                        fontFamily: Fonts.nunito,
-                      ),
-                    ),
-                  ),
-                ],
+              Text(
+                contest.subject.toUpperCase(),
+                style: TextStyle(
+                  fontFamily: Fonts.nunito,
+                  color: Colors.grey[500],
+                  fontSize: Responsive.font(context, 10),
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               Text(
-                _getTimeLeftText(),
-                textAlign: TextAlign.right,
+                contest.difficulty.toUpperCase(),
                 style: TextStyle(
-                  color: isEnded ? Colors.grey : Colors.green,
-                  fontSize: Responsive.font(context, 12),
-                  fontWeight: FontWeight.bold,
                   fontFamily: Fonts.nunito,
+                  fontSize: Responsive.font(context, 10),
+                  fontWeight: FontWeight.bold,
+                  color: _getDifficultyColor(contest.difficulty),
                 ),
               ),
             ],
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 5),
           Text(
             contest.contestName,
             style: TextStyle(
+              fontFamily: Fonts.outfit,
+              fontWeight: FontWeight.w600,
               fontSize: Responsive.font(context, 16),
-              fontWeight: FontWeight.bold,
-              fontFamily: Fonts.inter,
+              color: Colors.black87,
             ),
           ),
-          SizedBox(height: 15),
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-            decoration: BoxDecoration(
-              color: Colors.grey.withOpacity(0.05),
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: const Color.fromRGBO(220, 220, 220, 0.5),width: 1)
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Icon(Bootstrap.question_circle, size: Responsive.icon(context, 14), color: Colors.black),
-                    SizedBox(width: 5),
-                    Text(
-                      "${contest.marksPerQuestion * 10} Questions", // placeholder if we don't know total questions
-                      style: TextStyle(color: Colors.black, fontSize: Responsive.font(context, 12), fontFamily: Fonts.nunito),
-                    ),
-                  ],
-                ),
-                Container(width: 1, height: 15, color: Colors.black),
-                Row(
-                  children: [
-                    Icon(Bootstrap.people, size: Responsive.icon(context, 14), color: Colors.black),
-                    SizedBox(width: 5),
-                    Text(
-                      "${contest.participants > 1000 ? '${(contest.participants/1000).toStringAsFixed(1)}k' : contest.participants} Joined",
-                      style: TextStyle(color: Colors.black, fontSize: Responsive.font(context, 12), fontFamily: Fonts.nunito),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 15),
+          const SizedBox(height: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  SizedBox(width: 5,),
-                  Icon(Bootstrap.stopwatch, size: Responsive.icon(context, 14), color: Colors.black),
-                  SizedBox(width: 5),
-                  Text(
-                    "Duration: ${contest.duration} mins",
-                    style: TextStyle(color: Colors.black, fontSize: Responsive.font(context, 12), fontFamily: Fonts.nunito),
-                  ),
-                ],
+              _buildInfoStat(LucideIcons.timer400Dir, "Duration", "${contest.duration} mins", Colors.orange, context),
+              _buildInfoStat(
+                LucideIcons.users400Dir,
+                "Joined",
+                contest.participants > 1000 ? '${(contest.participants / 1000).toStringAsFixed(1)}k' : contest.participants.toString(),
+                Colors.blue,
+                context,
               ),
+              _buildInfoStat(LucideIcons.circleCheck400Dir, "Marks", "+${contest.marksPerQuestion} / -${contest.negativeMarking.abs()}", Colors.green, context),
+            ],
+          ),
+          const SizedBox(height: 14),
+          Container(height: 1, color: const Color.fromRGBO(220, 220, 220, 0.7)),
+          const SizedBox(height: 12),
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      _getTimeLabel(),
+                      style: TextStyle(
+                        fontFamily: Fonts.nunito,
+                        fontSize: Responsive.font(context, 9),
+                        color: Colors.grey[500],
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      _getTimeLeftText(),
+                      style: TextStyle(
+                        fontFamily: Fonts.outfit,
+                        fontWeight: FontWeight.bold,
+                        fontSize: Responsive.font(context, 14),
+                        color: isEnded ? Colors.grey[600] : (isUpcoming ? Colors.black : Colors.green),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              // Square button, same look as the next / previous buttons on the test page
               if (!isEnded)
                 GestureDetector(
                   onTap: onJoin,
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                    height: height * 0.045,
+                    width: width * 0.34,
                     decoration: BoxDecoration(
-                      color: isUpcoming ? Colors.blueGrey : Colors.green,
-                      borderRadius: BorderRadius.circular(20),
+                      color: isUpcoming ? Colors.white : Colors.green,
+                      border: Border.all(color: isUpcoming ? Colors.black : Colors.green),
                     ),
-                    child: Row(
-                      children: [
-                        Text(
-                          isUpcoming ? "View Details" : "Join Now",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: Responsive.font(context, 12),
-                            fontFamily: Fonts.nunito,
-                          ),
+                    child: Center(
+                      child: Text(
+                        isUpcoming ? "View Details >" : "Join Now >",
+                        style: TextStyle(
+                          fontFamily: Fonts.nunito,
+                          fontWeight: FontWeight.bold,
+                          color: isUpcoming ? Colors.black : Colors.white,
+                          fontSize: Responsive.font(context, 13),
                         ),
-                        SizedBox(width: 5),
-                        Icon(Bootstrap.chevron_right, size: Responsive.icon(context, 12), color: Colors.white),
-                      ],
+                      ),
                     ),
                   ),
                 ),
@@ -210,6 +185,37 @@ class ContestCard extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildInfoStat(IconData icon, String label, String value, Color color, BuildContext context) {
+    return Row(
+      children: [
+        Icon(icon, size: Responsive.icon(context, 16), color: color),
+        const SizedBox(width: 6),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              label,
+              style: TextStyle(
+                fontFamily: Fonts.nunito,
+                fontSize: Responsive.font(context, 10),
+                color: Colors.grey[600],
+              ),
+            ),
+            Text(
+              value,
+              style: TextStyle(
+                fontFamily: Fonts.nunito,
+                fontSize: Responsive.font(context, 12),
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

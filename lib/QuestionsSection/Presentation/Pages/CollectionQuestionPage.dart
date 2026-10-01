@@ -7,6 +7,7 @@ import 'package:study_mate/QuestionsSection/Domain/Collection.dart';
 import 'package:study_mate/QuestionsSection/Presentation/Bloc/MyQuestionsBloc/MyQuestionsBloc.dart';
 import 'package:study_mate/QuestionsSection/Presentation/Bloc/MyQuestionsBloc/MyQuestionsStates.dart';
 import 'package:study_mate/QuestionsSection/Presentation/Pages/QuestionReviewPage.dart';
+import 'package:study_mate/Test/Presentation/Widgets/fixedTextWidget.dart';
 import 'package:study_mate/fonts.dart';
 
 class CollectionQuestionPage extends StatelessWidget {
@@ -25,43 +26,33 @@ class CollectionQuestionPage extends StatelessWidget {
           if (state is MyQuestionsLoadedState) {
             List<Question> questions = state.collectionQuestions;
             
-            return Stack(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: height*0.042,),
-                    _header(height, width, context),
-                    Container(color: const Color.fromRGBO(220, 220, 220, 0.8),height: 1,width: width,),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            SizedBox(height: height * 0.02),
-                            _statsBar(height, width, questions.length,context),
-                            SizedBox(height: height * 0.03),
-                            _recentQuestionsHeader(width),
-                            SizedBox(height: height * 0.02),
-                            Padding(
-                      padding: EdgeInsets.symmetric(horizontal: width * 0.05),
+            return SafeArea(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: height*0.005,),
+                  _header(height, width, context),
+                  Container(color: const Color.fromRGBO(220, 220, 220, 0.8),height: 1,width: width,),
+                  Expanded(
+                    child: SingleChildScrollView(
                       child: Column(
-                        children: questions.map((q) => _questionCard(height, width, q, context)).toList(),
+                        children: [
+                        //  SizedBox(height: height * 0.02),
+                        //  _recentQuestionsHeader(width),
+                          SizedBox(height: height * 0.02),
+                          Padding(
+                    padding: EdgeInsets.symmetric(horizontal: width * 0.05),
+                    child: Column(
+                      children: questions.map((q) => _questionCard(height, width, q, context)).toList(),
+                    ),
+                  ),
+                        ],
                       ),
                     ),
-                          ],
-                        ),
-                      ),
-                    )
-                    
-                  ],
-                ),
-                Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: _startPracticeButton(height, width, context, questions),
-                ),
-              ],
+                  ),
+                  _startPracticeButton(height, width, context, questions)
+                ],
+              ),
             );
           }
           return Center(child: Text("Error loading questions"));
@@ -84,43 +75,12 @@ class CollectionQuestionPage extends StatelessWidget {
               ),
               SizedBox(width: 5),
               Text(
-                collection.collectionname,
-                style: TextStyle(fontFamily: Fonts.outfit, fontSize: Responsive.font(context, 18), fontWeight: FontWeight.w600),
+               "COLLECTION : " + collection.collectionname.toUpperCase(),
+                style: TextStyle(fontFamily: Fonts.rubik, fontSize: Responsive.font(context, 16), fontWeight: FontWeight.w600),
               ),
             ],
           ),
           
-        ],
-      ),
-    );
-  }
-
-  Widget _statsBar(double height, double width, int totalQuestions,BuildContext context) {
-    return Container(
-      width: width,
-      color: Colors.green.withOpacity(0.1),
-      padding: EdgeInsets.symmetric(horizontal: width * 0.05, vertical: height * 0.02),
-      child: Row(
-        children: [
-          Icon(FontAwesome.book_open_solid, color: Colors.green, size: Responsive.icon(context, 20)),
-          SizedBox(width: width * 0.04),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("TOTAL QUESTIONS", style: TextStyle(fontFamily: Fonts.nunito, fontSize: 10, fontWeight: FontWeight.bold, color: Colors.grey[600])),
-              Text("$totalQuestions Questions", style: TextStyle(fontFamily: Fonts.outfit, fontSize: 15, fontWeight: FontWeight.w600)),
-            ],
-          ),
-          Spacer(),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("LAST ACTIVITY", style: TextStyle(fontFamily: Fonts.nunito, fontSize: 10, fontWeight: FontWeight.bold, color: Colors.grey[600])),
-              Text("         -", style: TextStyle(fontFamily: Fonts.outfit, fontSize: 15, fontWeight: FontWeight.w600)),
-            ],
-          ),
-          SizedBox(width: width * 0.04),
-          Icon(FontAwesome.clock_solid, color: Colors.green, size: 20),
         ],
       ),
     );
@@ -223,11 +183,9 @@ class CollectionQuestionPage extends StatelessWidget {
               ],
             ),
             SizedBox(height: height * 0.02),
-            Text(
-              question.description,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontFamily: Fonts.inter, fontWeight: FontWeight.bold, fontSize: 14, height: 1.4),
+            MixedMathText(
+              text: question.description,
+              textStyle: TextStyle(fontFamily: Fonts.inter, fontWeight: FontWeight.bold, fontSize: 14, height: 1.4),
             ),
             SizedBox(height: height * 0.02),
             Row(

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:icons_plus/icons_plus.dart';
-
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import 'package:study_mate/Contest/Presentation/Bloc/ContestPage/ContestPageBloc.dart';
 import 'package:study_mate/Contest/Presentation/Bloc/ContestPage/ContestPageEvents.dart';
@@ -24,8 +23,6 @@ class ContestPage extends StatefulWidget {
 }
 
 class _ContestPageState extends State<ContestPage> {
-  final TextEditingController searchController = TextEditingController();
-
   @override
   void initState() {
     super.initState();
@@ -39,283 +36,207 @@ class _ContestPageState extends State<ContestPage> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-
       body: BlocBuilder<ContestPageBloc, ContestPagestates>(
         builder: (context, state) {
           if (state is LoadingContestListState) {
             return Center(child: LoadingLogo());
           } else if (state is SuccessContestPageState) {
-            return Column(
-            
-              children: [
-                SizedBox(height: height*0.05,),
-                _appBar(height, width, context),
-                Container(height: 1,width: width,color: const Color.fromRGBO(220, 220, 220, 0.8),),
-                Expanded(child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-
-                      SizedBox(height: height*0.01,),
-                     // _searchBar(height, width, searchController, context),
-               
-                      _statSection(height, width, context, state.rating.rating, state.rating.contestsGiven),
-                
-                      _activeContestsHeader(height, width, context),
-
-                      _filters(height, width, state.selectedFilter, context),
-                       SizedBox(height: 10),
-
-                 
-                  if (state.filteredList.isEmpty)
-                    SizedBox(
-                      height: height * 0.3,
-                      child: Center(
-                        child: Text("No contests found.", style: TextStyle(fontFamily: Fonts.nunito, color: Colors.grey)),
+            return SafeArea(
+              child: Column(
+                children: [
+                  SizedBox(height: height*0.008,),
+                  _appBar(height, width, context),
+                  Container(color: const Color.fromRGBO(220, 220, 220, 0.8),height: 1,width: width,),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _ratingSection(height, width, context, state.rating.rating),
+                          _statSection(height, width, context, state.rating.contestsGiven),
+                          SizedBox(height: height*0.03,),
+                          _contestsHeader(height, width, context),
+                          SizedBox(height: height*0.015,),
+                          _filters(height, width, state.selectedFilter, context),
+                          SizedBox(height: height*0.015,),
+                          if (state.filteredList.isEmpty)
+                            _emptyState(height, width, context)
+                          else
+                            ...state.filteredList.map((contest) {
+                              return ContestCard(
+                                contest: contest,
+                                currentTime: state.time,
+                                onJoin: () {
+                                  Navigator.push(context, MaterialPageRoute(builder: (_) => ContestOnboardingPage(contest: contest)));
+                                },
+                              );
+                            }),
+                          const SizedBox(height: 100),
+                        ],
                       ),
-                    )
-                  else
-                    ...state.filteredList.map((contest) {
-                      return ContestCard(
-                        contest: contest,
-                        currentTime: state.time,
-                        onJoin: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (_) => ContestOnboardingPage(contest: contest)));
-                        },
-                      );
-                    }),
-                  
-                  SizedBox(height: 100),
-                  ],),
-                )),
-                
+                    ),
+                  ),
                 ],
-              );
+              ),
+            );
           }
-          return Center(child: Text("Failed to load data.", style: TextStyle(color: Colors.red)));
+          return Center(child: Text("Failed to load data.", style: TextStyle(color: Colors.red, fontFamily: Fonts.nunito)));
         },
       ),
     );
   }
-
-
-
-
 }
-
-
-Widget _searchBar(double height,double width, TextEditingController searchController, BuildContext context){
-  return  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: width * 0.05, vertical: 10),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey.withOpacity(0.01),
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(color: const Color.fromRGBO(220, 220, 220, 0.75),width: 1.25),
-                      ),
-                      child: TextField(
-                        controller: searchController,
-                        onChanged: (val) {
-                          BlocProvider.of<ContestPageBloc>(context).add(SearchContestEvent(query: val));
-                        },
-                        decoration: InputDecoration(
-                          hintText: "Search contests...",
-                          hintStyle: TextStyle(color: Colors.grey, fontFamily: Fonts.nunito),
-                          prefixIcon: Icon(Bootstrap.search, color: Colors.black, size: Responsive.icon(context, 18)),
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(vertical: 10),
-                        ),
-                      ),
-                    ),
-                  );
-}
-
 
 Widget _appBar(double height,double width,BuildContext context){
-  return SizedBox(
-        height: height*0.05,
-        width: width, 
-        child: Row(
-          children: [
-            SizedBox(width: 5,),
-            IconButton(icon: Icon(Icons.arrow_back_ios_sharp, color: Colors.black), onPressed: () => Navigator.pop(context)),
-            Text("Contests", style: TextStyle(color: Colors.black, fontFamily: Fonts.outfit, fontWeight: FontWeight.w700,fontSize: Responsive.font(context, 18))),
-          ],
-        ),
-        
-      );
+  return Container(
+    height: height*0.05,
+    margin: EdgeInsets.symmetric(horizontal: width*0.05),
+    child: Row(
+      children: [
+        InkWell(
+          onTap: () => Navigator.pop(context),
+          child: Icon(LucideIcons.chevronLeft400Dir,size: Responsive.icon(context, 25),)),
+        SizedBox(width: width*0.05,),
+        Expanded(child: Text("Contests",style: TextStyle(color: Colors.black,fontFamily: Fonts.rubik,fontWeight: FontWeight.w600,fontSize: Responsive.font(context, 20)),)),
+        InkWell(
+          onTap: () => BlocProvider.of<ContestPageBloc>(context).add(RefreshContestDataEvent()),
+          child: Icon(LucideIcons.refreshCw400Dir,size: Responsive.icon(context, 22),))
+      ],
+    ),
+  );
 }
 
-
-Widget _statSection(double height, double width,BuildContext context,int rating,int contestsGiven){
-  return Padding(
-                    padding: EdgeInsets.symmetric(horizontal: width * 0.05, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        _buildStatCard(width * 0.42, "MY CONTESTS", contestsGiven.toString(), "3 ongoing", Bootstrap.clock_history, context,
-                         onTap: () { Navigator.push(context, MaterialPageRoute(builder: (_) => BlocProvider<MyContestBloc>(create: (context) => MyContestBloc(sl<ContestRepo>()), child: MyContestsPage()))); }),
-
-                        _buildStatCard(width * 0.42, "MY RATING", rating.toString(), "Global Top 5%", Bootstrap.trophy,context, isRating: true),
-                      ],
-                    ),
-                  );
-}
-
-
-
-
-    Widget _buildStatCard(double width, String title, String value, String subtitle, IconData icon,BuildContext context, {bool isRating = false, VoidCallback? onTap}) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: EdgeInsets.all(width*0.01),
-        decoration: BoxDecoration(
-          border: Border.all(color: const Color.fromRGBO(158, 158, 158, 0.2))
-        ),
-        child: Material(
-          elevation : 0.5,
-          color : Colors.white,
-        
-          child: Container(
-          width: width,
-          padding: EdgeInsets.symmetric(horizontal: 15,vertical: 10),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            //borderRadius: BorderRadius.circular(15),
-           // border: Border.all(color: const Color.fromRGBO(220, 220, 220, 0.7),width: 1),
-          ),
+// Same open, typographic block as the rating section on the profile page
+Widget _ratingSection(double height,double width,BuildContext context,int rating){
+  return Container(
+    width: width,
+    margin: EdgeInsets.only(top: height*0.03,left: width*0.05,right: width*0.05),
+    child: Row(
+      children: [
+        Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: const Color.fromRGBO(76, 175, 80, 0.05),
-                      borderRadius: BorderRadius.circular(20)
-                    ),
-                    child: Icon(icon, color: Colors.green, size: Responsive.icon(context, 20))),
-          
-                  if (isRating)
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                      decoration: BoxDecoration(
-                        color: Colors.green.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(Bootstrap.graph_up_arrow, size: Responsive.icon(context, 10), color: Colors.green),
-                          SizedBox(width: 3),
-                          Text("+12", style: TextStyle(color: Colors.green, fontSize: Responsive.font(context, 10), fontWeight: FontWeight.bold)),
-                        ],
-                      ),
-                    )
+                  Text("Contest",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 24),fontWeight: FontWeight.w600,color: Colors.green),),
+                  Text(" Rating",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 24),fontWeight: FontWeight.w600,color: Colors.black),),
                 ],
               ),
-              SizedBox(height: 8),
-              Text(
-                value,
-                style: TextStyle(fontSize: Responsive.font(context, 22), fontWeight: FontWeight.bold, fontFamily: Fonts.inter),
-              ),
-              SizedBox(height: 5),
-              Text(
-                title,
-                style: TextStyle(fontSize: Responsive.font(context, 10), color: Colors.grey[600], fontWeight: FontWeight.bold, fontFamily: Fonts.nunito),
-              ),
-              SizedBox(height: 10),
-              Row(
-                children: [
-                  Container(
-                    width: 6,
-                    height: 6,
-                    decoration: BoxDecoration(color: Colors.green, shape: BoxShape.circle),
-                  ),
-                  SizedBox(width: 5),
-                  Text(
-                    subtitle,
-                    style: TextStyle(fontSize: Responsive.font(context, 10), color: Colors.grey[500], fontFamily: Fonts.nunito),
-                  )
-                ],
-              )
+              Text(rating.toString(),style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 32),fontWeight: FontWeight.w600,color: Colors.black),),
+              Text("Your rating moves after every rated contest",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 10),color: const Color.fromRGBO(110, 110, 110, 1)),),
             ],
           ),
-          ),
+        ),
+        Icon(LucideIcons.trophy200Dir,color: Colors.green,size: Responsive.icon(context, 64),),
+        SizedBox(width: width*0.03,),
+      ],
+    ),
+  );
+}
+
+Widget _statSection(double height,double width,BuildContext context,int contestsGiven){
+  return Column(
+    children: [
+      SizedBox(height: height*0.03,),
+      _statRow(height, width, context, "Contests Given", "Number of Global Contests attempted by you", contestsGiven.toString(), "Contests"),
+      SizedBox(height: height*0.015,),
+      InkWell(
+        onTap: () { Navigator.push(context, MaterialPageRoute(builder: (_) => BlocProvider<MyContestBloc>(create: (context) => MyContestBloc(sl<ContestRepo>()), child: MyContestsPage()))); },
+        child: _statRow(height, width, context, "My Contests", "Results and reviews of the contests you gave", null, "View"),
+      ),
+    ],
+  );
+}
+
+Widget _statRow(double height,double width,BuildContext context,String name,String des,String? stat,String followUp){
+  return Row(
+    children: [
+      SizedBox(width: width*0.06,),
+      Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(name, style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 14),color: Colors.green,fontWeight: FontWeight.w400)),
+            Text(des, style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 9),color: const Color.fromRGBO(120, 120, 120, 1),fontWeight: FontWeight.w400))
+          ],
+        )),
+      if(stat != null) Text(stat,style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 18),color: Colors.black,fontWeight: FontWeight.w400),),
+      SizedBox(width: width*0.01,),
+      Padding(
+        padding: EdgeInsetsGeometry.only(top: height*0.003),
+        child: Text(followUp,style: TextStyle(fontFamily: Fonts.rubik,fontSize: Responsive.font(context, 12),color: const Color.fromRGBO(120, 120, 120, 1),fontWeight: FontWeight.w400),),
+      ),
+      if(stat == null) Icon(LucideIcons.chevronRight400Dir,size: Responsive.icon(context, 18),color: const Color.fromRGBO(120, 120, 120, 1),),
+      SizedBox(width: width*0.05,),
+    ],
+  );
+}
+
+Widget _contestsHeader(double height,double width,BuildContext context){
+  return Padding(
+    padding: EdgeInsets.symmetric(horizontal: width*0.05),
+    child: Row(
+      children: [
+        const SizedBox(width: 5,),
+        Icon(LucideIcons.swords400Dir,size: Responsive.icon(context, 20),),
+        const SizedBox(width: 8),
+        Text("Active ",style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w700,fontSize: Responsive.font(context, 18),color: Colors.green),),
+        Text("Contests",style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w700,fontSize: Responsive.font(context, 18),color: Colors.black),),
+      ],
+    ),
+  );
+}
+
+// Square buttons, same look as the previous / next buttons on the test page
+Widget _filters(double height,double width,int selectedFilter,BuildContext context){
+  return Padding(
+    padding: EdgeInsets.symmetric(horizontal: width*0.05),
+    child: Row(
+      children: [
+        _buildFilterButton("Current", 0, selectedFilter, height, context),
+        SizedBox(width: width*0.02,),
+        _buildFilterButton("Upcoming", 1, selectedFilter, height, context),
+        SizedBox(width: width*0.02,),
+        _buildFilterButton("Ended", 2, selectedFilter, height, context),
+      ],
+    ),
+  );
+}
+
+Widget _buildFilterButton(String text,int index,int selectedIndex,double height,BuildContext context){
+  bool isSelected = index == selectedIndex;
+  return Expanded(
+    child: GestureDetector(
+      onTap: () {
+        BlocProvider.of<ContestPageBloc>(context).add(ChnageFilter(newFilter: index));
+      },
+      child: Container(
+        height: height*0.045,
+        decoration: BoxDecoration(
+          color: isSelected ? Colors.green : Colors.white,
+          border: Border.all(color: isSelected ? Colors.green : const Color.fromRGBO(220, 220, 220, 0.7),width: 1.2),
+        ),
+        child: Center(
+          child: Text(text,style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,color: isSelected ? Colors.white : Colors.black,fontSize: Responsive.font(context, 13)),),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 
-
-  Widget _activeContestsHeader(double height,double width,BuildContext context){
-    return    Padding(
-                    padding: EdgeInsets.symmetric(horizontal: width * 0.05, vertical: 5),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Active Contests",
-                          style: TextStyle(fontFamily: Fonts.outfit, fontWeight: FontWeight.w600, fontSize: Responsive.font(context, 18)),
-                        ),
-                       
-                        IconButton(icon: Icon(Icons.refresh, color: Colors.black), onPressed: () => BlocProvider.of<ContestPageBloc>(context).add(RefreshContestDataEvent())),
-                      ],
-                    ),
-                  );
-  }
-
-
-  Widget _filters(double height,double width,int selectedFilter,BuildContext context)
-  {
-    return  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: width * 0.05),
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 2),
-                      decoration: BoxDecoration(
-                        color: const Color.fromRGBO(220, 220, 220, 0.05),
-                        borderRadius: BorderRadius.circular(50),
-                        border: Border.all(color: const Color.fromRGBO(220, 220, 220, 0.6),width: 1.5)
-                      ),
-                      child: Row(
-                        children: [
-                          _buildFilterButton("Current", 0, selectedFilter, width,context),
-                          _buildFilterButton("Upcoming", 1, selectedFilter, width,context),
-                          _buildFilterButton("Ended", 2, selectedFilter, width,context),
-                        ],
-                      ),
-                    ),
-                  );
-  }
-
-
-    Widget _buildFilterButton(String text, int index, int selectedIndex, double screenWidth,BuildContext context) {
-    bool isSelected = index == selectedIndex;
-    return Expanded(
-      child: GestureDetector(
-        onTap: () {
-          BlocProvider.of<ContestPageBloc>(context).add(ChnageFilter(newFilter: index));
-        },
-        child: Container(
-          padding: EdgeInsets.symmetric(vertical: 10),
-          margin: EdgeInsets.symmetric(vertical: 2),
-          decoration: BoxDecoration(
-            color: isSelected ? Colors.green : Colors.transparent,
-            borderRadius: BorderRadius.circular(50),
-          ),
-          child: Center(
-            child: Text(
-              text,
-              style: TextStyle(
-                color: isSelected ? Colors.white : Colors.grey[600],
-                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                fontFamily: Fonts.nunito,
-                fontSize: Responsive.font(context, 14),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+Widget _emptyState(double height,double width,BuildContext context){
+  return SizedBox(
+    height: height*0.25,width: width,
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(LucideIcons.swords200Dir,size: Responsive.icon(context, 40),color: const Color.fromRGBO(120, 120, 120, 1),),
+        SizedBox(height: height*0.01,),
+        Text("No contests found",style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: Responsive.font(context, 16)),),
+        Text("Try another tab or refresh the list",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 11),color: const Color.fromRGBO(110, 110, 110, 1)),),
+      ],
+    ),
+  );
+}
