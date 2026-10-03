@@ -45,48 +45,50 @@ class _LecturespageState extends State<Lecturespage> {
               ),
             );
           } else if (state is SuccessLecturesState) {
-            return Column(
-              children: [
-                SizedBox(height: height * 0.05),
-                _appBar(height, width, context),
-                Container(height: 1, width: width, color: const Color.fromRGBO(220, 220, 220, 0.8)),
-                Expanded(
-                  child: state.videos.isEmpty
-                      ? Center(
-                          child: Text(
-                            "No lectures found.",
-                            style: TextStyle(fontFamily: Fonts.nunito, color: Colors.grey),
-                          ),
-                        )
-                      : ListView.builder(
-                          padding: EdgeInsets.only(bottom: 100, top: 10),
-                          itemCount: state.videos.length,
-                          itemBuilder: (context, index) {
-                            final video = state.videos[index];
-                            return LectureCard(
-                              video: video,
-                              onTap: () {
-                                if (video.streamUrl != null) {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) => BlocProvider<PlayerBloc>(
-                                        create: (context) => PlayerBloc(MediaKitService())..add(OpenVideo(video.streamUrl!)),
-                                        child: VideoPlayerPage(streamUrl: video.streamUrl!),
+            return SafeArea(
+              child: Column(
+                children: [
+                  SizedBox(height: height * 0.005),
+                  _appBar(height, width, context),
+                  Container(height: 1, width: width, color: const Color.fromRGBO(220, 220, 220, 0.8)),
+                  Expanded(
+                    child: state.videos.isEmpty
+                        ? Center(
+                            child: Text(
+                              "No lectures found.",
+                              style: TextStyle(fontFamily: Fonts.nunito, color: Colors.grey),
+                            ),
+                          )
+                        : ListView.builder(
+                            padding: EdgeInsets.only(bottom: 100, top: 10),
+                            itemCount: state.videos.length,
+                            itemBuilder: (context, index) {
+                              final video = state.videos[index];
+                              return LectureCard(
+                                video: video,
+                                onTap: () {
+                                  if (video.streamUrl != null) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => BlocProvider<PlayerBloc>(
+                                          create: (context) => PlayerBloc(MediaKitService())..add(OpenVideo(video.streamUrl!)),
+                                          child: VideoPlayerPage(streamUrl: video.streamUrl!),
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text("Video stream URL is not available.")),
-                                  );
-                                }
-                              },
-                            );
-                          },
-                        ),
-                ),
-              ],
+                                    );
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text("Video stream URL is not available.")),
+                                    );
+                                  }
+                                },
+                              );
+                            },
+                          ),
+                  ),
+                ],
+              ),
             );
           }
           return Center(
@@ -111,11 +113,12 @@ class _LecturespageState extends State<Lecturespage> {
             icon: Icon(LucideIcons.chevronLeft, color: Colors.black),
             onPressed: () => Navigator.pop(context),
           ),
+          SizedBox(width: width*0.02,),
           Text(
             "Lectures",
             style: TextStyle(
               color: Colors.black,
-              fontFamily: Fonts.outfit,
+              fontFamily: Fonts.rubik,
               fontWeight: FontWeight.w600,
               fontSize: Responsive.font(context, 18),
             ),

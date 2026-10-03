@@ -39,7 +39,7 @@ class LectureCard extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    double rad = width*0.04;
+    double rad = width*0.02;
     return GestureDetector(
       onTap: onTap,
       child: Container(

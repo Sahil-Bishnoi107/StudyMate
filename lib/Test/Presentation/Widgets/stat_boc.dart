@@ -1,28 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:study_mate/fonts.dart';
 
-Widget StatBox(double height,double width,IconData icon,String statName,String stat, String followOn,BuildContext context){
-   return Container(
-    height: height*0.12,width: width*0.42,
-    padding: EdgeInsets.only(left: width*0.04),
-    decoration: BoxDecoration(borderRadius: BorderRadius.circular(width*0.04), border: Border.all(color: const Color.fromRGBO(220, 220, 220, 1),width: 1.7)),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(height: height*0.02,),
-        Row(
-          children: [
-            
-             Icon(icon,color:  Color(0xFF17B169),),
-             SizedBox(width: width*0.02,),
-             Text(statName,style: TextStyle(color: Colors.blueGrey,fontFamily: Fonts.nunito,fontWeight: FontWeight.bold),)
-          ],
-        ),
-        SizedBox(height: height*0.005,),
-        Text(stat,style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: Responsive.font(context, 18)),),
-        
-        Text(followOn,style: TextStyle(color: Colors.blueGrey,fontFamily: Fonts.nunito,fontSize: Responsive.font(context, 10)),)
 
+Widget StatBox(double height,double width,IconData icon,Color color,String statName,String stat, String followOn,BuildContext context){
+   return Padding(
+    padding: EdgeInsets.symmetric(vertical: height*0.014),
+    child: Row(
+      children: [
+        Icon(icon,color: color,size: Responsive.icon(context, 22),),
+        SizedBox(width: width*0.04,),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(statName,style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 14),fontWeight: FontWeight.w600,color: Colors.black),),
+              Text(followOn,style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 10),color: const Color.fromRGBO(110, 110, 110, 1)),)
+            ],
+          ),
+        ),
+        Text(stat,style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w500,fontSize: Responsive.font(context, 18),color: Colors.black),),
       ],
     ),
    );

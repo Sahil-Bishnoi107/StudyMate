@@ -1,8 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:icons_plus/icons_plus.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:study_mate/DependancyInjections.dart/service_locator.dart';
 import 'package:study_mate/Home/Domain/Entities/Question.dart';
 import 'package:study_mate/Home/Presentation/Pages/Homepage.dart';
@@ -17,7 +16,6 @@ import 'package:study_mate/Test/Presentation/Bloc/test_bloc.dart';
 import 'package:study_mate/Test/Presentation/Bloc/testevents.dart';
 import 'package:study_mate/Test/Presentation/Pages/test.dart';
 import 'package:study_mate/Test/Presentation/Pages/test_review.dart';
-import 'package:study_mate/Test/Presentation/Widgets/question_data.dart';
 import 'package:study_mate/Test/Presentation/Widgets/stat_boc.dart';
 import 'package:study_mate/Test/Presentation/Widgets/subject_breakdown_tile.dart';
 import 'package:study_mate/fonts.dart';
@@ -37,7 +35,7 @@ class TestSubmittedPage extends StatelessWidget {
             return  Center(child: LoadingLogo());
           }
           if (state is FailedToSubmitTest) {
-            return const Center(child: Text("Failed to submit test."));
+            return Center(child: Text("Failed to submit test.", style: TextStyle(color: Colors.red, fontFamily: Fonts.nunito)));
           }
           if(state is! TestSubmitted){
             return const SizedBox.shrink();
@@ -50,211 +48,220 @@ class TestSubmittedPage extends StatelessWidget {
              if(q.selectedOption == null)continue;
              quesSolved++;
           }
-          return SingleChildScrollView(
-            child: SizedBox(
-            width: width,
+          return SafeArea(
             child: Column(
               children: [
-                SizedBox(height: height*0.035,),
-                _header(height, width,context),
-                Container(height: 2,width: width,color: const Color.fromRGBO(220, 220, 220, 0.8),),
-                SizedBox(height: height*0.03,),
-                _scoreArea(height, width, correctQues*4, mystate.test.totalQuestions*4,context),
-                SizedBox(height: height*0.03,),
-                _statArea(height, width, correctQues, mystate.test.totalQuestions, (mystate.timeTaken), mystate.test.time - mystate.timeTaken,mystate.test.time, "Medium", quesSolved,context),
-                SizedBox(height: height*0.02,),
-                _pieChart(height, width, mystate.test.totalQuestions, correctQues, mystate.test.totalQuestions - quesSolved,context),
-                SizedBox(height: height*0.05,),
-                _subjectBreakdown(height, width, mystate.correctQuestionsPerSubject, mystate.questionsPerSubject, mystate.questionsSkippedPerSubject,context),
-                SizedBox(height: height*0.03,),
-                _retryButton(height, width, context, mystate.test),
-                SizedBox(height: height*0.02,),
-                _goHome(height, width, context),
-                SizedBox(height: height*0.08,),
-                
+                SizedBox(height: height*0.008,),
+                _appBar(height, width, context),
+                Container(color: const Color.fromRGBO(220, 220, 220, 0.8),height: 1,width: width,),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _header(height, width, mystate.test.name, context),
+                        SizedBox(height: height*0.02,),
+                        _scoreArea(height, width, correctQues, mystate.test.totalQuestions, context),
+                        SizedBox(height: height*0.015,),
+                        _statArea(height, width, correctQues, mystate.test.totalQuestions, mystate.timeTaken, mystate.test.time, mystate.test.diffiucluty, quesSolved, context),
+                        _divider(height, width),
+                        _pieChart(height, width, mystate.test.totalQuestions, correctQues, mystate.test.totalQuestions - quesSolved, context),
+                        _divider(height, width),
+                        _subjectBreakdown(height, width, mystate.correctQuestionsPerSubject, mystate.questionsPerSubject, mystate.questionsSkippedPerSubject, context),
+                        SizedBox(height: height*0.02,),
+                        _reviewButton(height, width, context, mystate.test),
+                        SizedBox(height: height*0.012,),
+                        _retryButton(height, width, context, mystate.test),
+                        SizedBox(height: height*0.012,),
+                        _goHome(height, width, context),
+                        SizedBox(height: height*0.06,),
+                      ],
+                    ),
+                  ),
+                ),
               ],
-            ) ),
+            ),
           );
-        } 
+        }
       ),
     );
   }
 }
 
-
-
-
-Widget _header(double height,double width,BuildContext context){
+Widget _appBar(double height,double width,BuildContext context){
   return Container(
-    height: height*0.06,width: width,
-    padding: EdgeInsets.only(left: width*0.05),
-    child: Align(
-      alignment: Alignment.centerLeft,
-      child: Text("Test Result",style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: Responsive.font(context, 18)),)),
+    height: height*0.05,
+    margin: EdgeInsets.symmetric(horizontal: width*0.05),
+    child: Row(
+      children: [
+        Expanded(child: Text("Test Result",style: TextStyle(color: Colors.black,fontFamily: Fonts.rubik,fontWeight: FontWeight.w600,fontSize: Responsive.font(context, 20)),)),
+      ],
+    ),
   );
 }
 
-Widget _scoreArea(double height,double width,int marks,int total,BuildContext context){
-  return Container(
-    height: height*0.35,width: width*0.9,
-    decoration: BoxDecoration(
-      gradient: LinearGradient(
-        begin: Alignment.topLeft, end: Alignment.bottomRight,
-        colors: [Color(0xFF17B169),Color(0xFF1DB954)]
-        ),
-        borderRadius: BorderRadius.circular(width*0.07),
-    ),
-    child: Column(
-      children: [
-        SizedBox(height: height*0.02,),
-        Container(height: height*0.07,width: height*0.07, 
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(width*0.03),
-          color: const Color.fromRGBO(255, 255, 255, 0.25),
-          border: Border.all(color: const Color.fromRGBO(255, 255, 255, 0.6))
-          ),
-        child: Icon(Bootstrap.trophy,color: Colors.white,weight: 900,size: Responsive.icon(context, 30),),
-        ),
+Widget _divider(double height,double width){
+  return Container(color: const Color.fromRGBO(220, 220, 220, 0.8),height: 1,margin: EdgeInsets.symmetric(horizontal: width*0.05,vertical: height*0.03),);
+}
 
-        SizedBox(height: height*0.014,),
-        Text("FINAL SCORE",style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,color: Colors.white),),
-       
-        Container(
-          height: height*0.07,width: width*0.8,
-          alignment: Alignment.bottomCenter,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+Widget _header(double height,double width,String testName,BuildContext context){
+  return Padding(
+    padding: EdgeInsets.only(top: height*0.03,left: width*0.05,right: width*0.05),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Text("Test",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 26),fontWeight: FontWeight.w600,color: Colors.black),),
+            Text(" Submitted",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 26),fontWeight: FontWeight.w600,color: Colors.green),),
+            Text(".",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 26),fontWeight: FontWeight.w600,color: Colors.black),),
+          ],
+        ),
+        Text(testName,style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 11),color: const Color.fromRGBO(110, 110, 110, 1)),),
+      ],
+    ),
+  );
+}
+
+// dark card, same colour as the app logo box
+Widget _scoreArea(double height,double width,int correctQues,int totalQues,BuildContext context){
+  int accuracy = (correctQues*100/(totalQues != 0 ? totalQues : 1)).toInt();
+  String message = "Keep practicing, you will get there";
+  if(accuracy >= 50){message = "Good effort, keep pushing";}
+  if(accuracy >= 80){message = "Excellent work, champ!";}
+
+  return Container(
+    width: width*0.9,
+    margin: EdgeInsets.symmetric(horizontal: width*0.05),
+    padding: EdgeInsets.symmetric(horizontal: width*0.05,vertical: height*0.022),
+    decoration: BoxDecoration(
+      color: const Color.fromRGBO(30, 30, 30, 1),
+      borderRadius: BorderRadius.circular(Responsive.icon(context, 3))
+    ),
+    child: Row(
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                height: height*0.05,
-                alignment: Alignment.bottomCenter,
-                child: Text(marks.toString(),style: TextStyle(fontFamily: Fonts.inter,fontSize: Responsive.font(context, 44),fontWeight: FontWeight.bold))),
-              Container(
-                alignment: Alignment.bottomCenter,
-                child: Text(" / $total",style: TextStyle(fontFamily: Fonts.inter,fontSize: Responsive.font(context, 24),fontWeight: FontWeight.bold,color: const Color.fromRGBO(70, 70, 70, 0.6))))
+              Text("FINAL SCORE",style: TextStyle(fontFamily: Fonts.nunito,fontSize: Responsive.font(context, 10),fontWeight: FontWeight.bold,color: Colors.green,letterSpacing: 1),),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.baseline,
+                textBaseline: TextBaseline.alphabetic,
+                children: [
+                  Text((correctQues*4).toString(),style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 44),fontWeight: FontWeight.w600,color: Colors.white),),
+                  Text(" / ${totalQues*4}",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 18),fontWeight: FontWeight.w600,color: const Color.fromRGBO(160, 160, 160, 1)),),
+                ],
+              ),
+              Text(message,style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 13),fontWeight: FontWeight.w600,color: Colors.white),),
+              Text("You got $correctQues of $totalQues questions right",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 10),color: const Color.fromRGBO(160, 160, 160, 1)),),
             ],
           ),
         ),
-        SizedBox(height: height*0.02),
-        Container(height: 1.5,width: width*0.75,color: const Color.fromRGBO(255, 255, 255, 0.5),),
-        SizedBox(height: height*0.03),
-        SizedBox(height: height*0.1,width: width*0.5,
-        child: Column(
-          children: [
-            Text("Excellent Work Champ!",style: TextStyle(fontFamily: Fonts.nunito,fontSize: Responsive.font(context, 18),fontWeight: FontWeight.bold),),
-            Text("You performed better than 90% of students in this test.",style: TextStyle(fontFamily: Fonts.nunito,fontSize: Responsive.font(context, 13),color: const Color.fromRGBO(70, 70, 70, 0.6)),)
-          ],
+        SizedBox(height: height*0.09,width: height*0.09,
+        child: Image.asset("assets/images/trophy (1).png"),
         ),
-        )
       ],
     ),
   );
 }
 
-
-Widget _statArea(double height,double width,int marks, int total,int timeTaken,int timeLeft,int totalTime,String difficulty,int quesSolved,BuildContext context){
-  String avgTime = (quesSolved/ (timeTaken)).toStringAsFixed(2);
+Widget _statArea(double height,double width,int correctQues,int totalQues,int timeTaken,int totalTime,String difficulty,int quesSolved,BuildContext context){
+  String avgTime = quesSolved != 0 ? "${(timeTaken/quesSolved).toStringAsFixed(1)}s" : "-";
   String mins = (timeTaken/60).toInt().toString();
-  String secs = (timeTaken % 60) < 10 ? "0${(timeTaken % 60).toString()}" : (timeTaken % 60).toString(); 
-  return SizedBox(
-    height: height*0.3, width: width*0.9,
+  String secs = (timeTaken % 60) < 10 ? "0${(timeTaken % 60).toString()}" : (timeTaken % 60).toString();
+  if(difficulty.length > 1){difficulty = difficulty[0].toUpperCase() + difficulty.substring(1);}
+
+  return Padding(
+    padding: EdgeInsets.symmetric(horizontal: width*0.05),
     child: Column(
       children: [
-        Row(
-          children: [
-            StatBox(height, width, FontAwesome.arrow_down_1_9_solid, "Accuracy", "${(marks*100/total).toInt().toString()}%", "Impove Accuracy by prcaticing problems",context),
-            SizedBox(width: width*0.05,),
-            StatBox(height, width, FontAwesome.bolt_lightning_solid, "Difficulty", difficulty, "Well Done!",context)
-          ],
-        ),
-        SizedBox(height: height*0.02,),
-        Row(
-          children: [
-            StatBox(height, width, FontAwesome.stopwatch_solid ,"Avg. Speed", avgTime, "Per Question",context),
-            SizedBox(width: width*0.05,),
-            StatBox(height, width, FontAwesome.clock, "Time Taken", "$mins : $secs", "Of $totalTime minutes",context)
-          ],
-        )
+        StatBox(height, width, LucideIcons.target400Dir, Colors.green, "Accuracy", "${(correctQues*100/(totalQues != 0 ? totalQues : 1)).toInt()}%", "$quesSolved of $totalQues questions attempted",context),
+        Container(color: const Color.fromRGBO(220, 220, 220, 0.5),height: 1,),
+        StatBox(height, width, LucideIcons.zap400Dir, Colors.orange, "Difficulty", difficulty, "Level of this test",context),
+        Container(color: const Color.fromRGBO(220, 220, 220, 0.5),height: 1,),
+        StatBox(height, width, LucideIcons.gauge400Dir, Colors.blue, "Avg. Speed", avgTime, "Time spent per attempted question",context),
+        Container(color: const Color.fromRGBO(220, 220, 220, 0.5),height: 1,),
+        StatBox(height, width, LucideIcons.timer400Dir, Colors.red, "Time Taken", "$mins : $secs", "Out of $totalTime minutes",context),
       ],
     ),
   );
 }
-
 
 Widget _pieChart(double height,double width,int totalQues,int correctQues,int skippedQues,BuildContext context){
-  return SizedBox(
-    height: height*0.3,width: width*0.8,
+  int wrongQues = totalQues - (correctQues + skippedQues);
+  return Padding(
+    padding: EdgeInsets.symmetric(horizontal: width*0.05),
     child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          height: height*0.03,width: width*0.8,
-          child: Text("Performance Summary",style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: Responsive.font(context, 18)),),
-        ),
-        SizedBox(
-          height: height*0.03,width: width*0.8,
-          child: Text("Breakdown By Subject",style: TextStyle(fontFamily: Fonts.nunito,fontSize: Responsive.font(context, 12),color: Colors.blueGrey),),
-        ),
-        SizedBox(height: height*0.04,),
-        Stack(
+        Row(
           children: [
-            Positioned(
-              top: height*0.035,left: width*0.36,
-              child: Text("${(correctQues*100/(totalQues)).toInt().toString()}%",
-              style: TextStyle(fontWeight: FontWeight.bold,fontFamily: Fonts.inter,fontSize: Responsive.font(context, 20),color: const Color.fromRGBO(70, 70, 70, 1)))
-              ),
-            SizedBox(
-              height: height*0.1,width: width*0.8,
-              child: PieChart(
-                PieChartData(
-                  sectionsSpace: 0,
-                  centerSpaceRadius: 70,
-                  sections: [
-                    
-                    PieChartSectionData(
-                      value: correctQues.toDouble(),
-                      color: Colors.green,
-                      radius: 20,
-                      title: ''
-                    ),
-                    
-                    PieChartSectionData(
-                      value: (totalQues - (correctQues + skippedQues)).toDouble(),
-                      color: Colors.red,
-                      radius: 20,
-                      title: ''
-                    ),
-                    
-                    PieChartSectionData(
-                      value: skippedQues.toDouble(),
-                      color: Colors.grey,
-                      radius: 20,
-                      title: ''
-                    ),
-                    
-                  ]
-                )
-                ),
-            ),
+            Icon(LucideIcons.chartPie400Dir,size: Responsive.icon(context, 20),),
+            const SizedBox(width: 8),
+            Text("Performance ",style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w700,fontSize: Responsive.font(context, 18),color: Colors.green),),
+            Text("Summary",style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w700,fontSize: Responsive.font(context, 18),color: Colors.black),),
           ],
         ),
-         SizedBox(height: height*0.05,),
-        SizedBox(
-          width: width*0.7,
-          child: Row(
-            spacing: width*0.13,
-            children: [
-              
-              QuestionData(height, width, "CORRECT", correctQues, Colors.green,context),
-              QuestionData(height, width, "WRONG", (totalQues - (correctQues + skippedQues)), Colors.red,context),
-              QuestionData(height, width, "SKIPPED", skippedQues, Colors.blueGrey,context),
-            ],
+        SizedBox(height: height*0.015,),
+        Center(
+          child: SizedBox(
+            height: width*0.62,width: width*0.62,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                PieChart(
+                  PieChartData(
+                    sectionsSpace: 2,
+                    centerSpaceRadius: width*0.22,
+                    sections: [
+                      PieChartSectionData(value: correctQues.toDouble(),color: Colors.green,radius: width*0.06,title: ''),
+                      PieChartSectionData(value: wrongQues.toDouble(),color: Colors.red,radius: width*0.06,title: ''),
+                      PieChartSectionData(value: skippedQues.toDouble(),color: const Color.fromRGBO(200, 200, 200, 1),radius: width*0.06,title: ''),
+                    ]
+                  )
+                ),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text("${(correctQues*100/(totalQues != 0 ? totalQues : 1)).toInt()}%",style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: Responsive.font(context, 38),color: Colors.black,height: 1.1),),
+                    Text("CORRECT",style: TextStyle(fontFamily: Fonts.nunito,fontSize: Responsive.font(context, 10),fontWeight: FontWeight.bold,color: Colors.blueGrey,letterSpacing: 1),),
+                  ],
+                ),
+              ],
+            ),
           ),
-        )
+        ),
+        SizedBox(height: height*0.02,),
+        Row(
+          children: [
+            Expanded(child: _legend(height, width, Colors.green, "Correct", correctQues, context)),
+            Container(color: const Color.fromRGBO(220, 220, 220, 0.8),width: 1,height: height*0.045,),
+            Expanded(child: _legend(height, width, Colors.red, "Wrong", wrongQues, context)),
+            Container(color: const Color.fromRGBO(220, 220, 220, 0.8),width: 1,height: height*0.045,),
+            Expanded(child: _legend(height, width, const Color.fromRGBO(200, 200, 200, 1), "Skipped", skippedQues, context)),
+          ],
+        ),
       ],
     ),
   );
 }
 
+Widget _legend(double height,double width,Color color,String name,int stat,BuildContext context){
+  return Column(
+    children: [
+      Text(stat.toString(),style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: Responsive.font(context, 22),color: Colors.black,height: 1.1),),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(height: height*0.01,width: height*0.01,color: color,),
+          SizedBox(width: width*0.015,),
+          Text(name,style: TextStyle(fontFamily: Fonts.nunito,fontSize: Responsive.font(context, 11),color: Colors.blueGrey),),
+        ],
+      ),
+    ],
+  );
+}
 
 Widget _subjectBreakdown(double height,double width,Map<String,int> correctQues, Map<String,int> totalQues,Map<String,int> skippedQues,BuildContext context){
   List<String> subjects = [];
@@ -271,52 +278,52 @@ Widget _subjectBreakdown(double height,double width,Map<String,int> correctQues,
      wrong.add(incorrect);
   }
 
-  return SizedBox(
-    height: height*0.56,width: width*0.9,
+  return Padding(
+    padding: EdgeInsets.symmetric(horizontal: width*0.05),
     child: Column(
       children: [
-        SizedBox(
-          height: height*0.04,width: width*0.9,
-          child: Row(
-            children: [
-              Icon(Icons.description_outlined,size: Responsive.icon(context, 27),color: Colors.green,),
-              SizedBox(width: width*0.02,),
-              Text("Subject Breakdown", style: TextStyle(fontFamily: Fonts.nunito,fontSize: Responsive.font(context, 18),fontWeight: FontWeight.bold),),
-              SizedBox(width: width*0.2,),
-              GestureDetector(
-                onTap: () {
-                  final currentState = context.read<Submitbloc>().state;
-                  if (currentState is! TestSubmitted) return;
-                  Navigator.push(context, MaterialPageRoute(
-                    builder: (_) => BlocProvider(
-                      create: (_) => ReviewBloc()..add(LoadReviewEvent(test: currentState.test )), 
-                      child: TestReview(),
-                      )
-                    ));
-                },
-                child: Text("View All",style: TextStyle(color: Colors.green,fontWeight: FontWeight.bold,fontFamily: Fonts.inter),),
-              )
-            ],
-          ),
+        Row(
+          children: [
+            Icon(LucideIcons.notepadText400Dir,size: Responsive.icon(context, 20),),
+            const SizedBox(width: 8),
+            Text("Subject ",style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w700,fontSize: Responsive.font(context, 18),color: Colors.green),),
+            Expanded(child: Text("Breakdown",style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w700,fontSize: Responsive.font(context, 18),color: Colors.black),)),
+  
+          ],
         ),
-         SizedBox(height: height*0.02,),
-        Container(
-          constraints: BoxConstraints(minHeight: height*0.3,maxHeight: height*0.5),
-          width: width*0.9,
-          child: ListView.builder(
-            padding: EdgeInsets.all(0),
-            itemCount: total.length,
-            itemBuilder: (context, index) {
-             return SubjectBreakdownTile(height, width, correct[index], wrong[index], total[index], subjects[index],context);
-            },
-          ),
-        )
+        SizedBox(height: height*0.015,),
+        for(int index = 0;index < total.length;index++)
+          SubjectBreakdownTile(height, width, correct[index], wrong[index], total[index], subjects[index],context),
       ],
     ),
   );
 }
 
-
+Widget _reviewButton(double height,double width,BuildContext context,Test test){
+  return GestureDetector(
+    onTap: () {
+      Navigator.push(context, MaterialPageRoute(
+        builder: (_) => BlocProvider(
+          create: (_) => ReviewBloc()..add(LoadReviewEvent(test: test)),
+          child: TestReview(),
+          )
+        ));
+    },
+    child: Container(
+      height: height*0.05,
+      margin: EdgeInsets.symmetric(horizontal: width*0.05),
+      decoration: BoxDecoration(color: const Color.fromRGBO(30, 30, 30, 1),borderRadius: BorderRadius.circular(Responsive.icon(context, 3))),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(LucideIcons.listChecks400Dir,color: Colors.white,size: Responsive.icon(context, 18),),
+          SizedBox(width: width*0.02,),
+          Text("Review Answers",style: TextStyle(color: Colors.white,fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: Responsive.font(context, 14)),),
+        ],
+      ),
+    ),
+  );
+}
 
 Widget _retryButton(double height,double width,BuildContext context,Test test){
   return GestureDetector(
@@ -328,31 +335,24 @@ Widget _retryButton(double height,double width,BuildContext context,Test test){
         builder: (_) => BlocProvider(
           create: (context) => TestBloc(sl<TestRepo>())..add(RetakeTestEvent(test: test)),
           child: GiveTest(),
-          )         
+          )
           ));
     },
     child: Container(
-      height: height*0.055,width: width*0.9,
-      decoration: BoxDecoration(
-        color: Color(0xFF1DB954),
-        borderRadius: BorderRadius.circular(
-          width*0.1
-        )
-      ),
-      child: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.keyboard_double_arrow_left),
-            Text("Retake Test",style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: Responsive.font(context, 15)),),
-            SizedBox(width: width*0.1,)
-          ],
-        ),
+      height: height*0.05,
+      margin: EdgeInsets.symmetric(horizontal: width*0.05),
+      decoration: BoxDecoration(color: Colors.green,borderRadius: BorderRadius.circular(Responsive.icon(context, 3))),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(LucideIcons.rotateCcw400Dir,color: Colors.white,size: Responsive.icon(context, 18),),
+          SizedBox(width: width*0.02,),
+          Text("Retake Test",style: TextStyle(color: Colors.white,fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: Responsive.font(context, 14)),),
+        ],
       ),
     ),
   );
 }
-
 
 Widget _goHome(double height,double width,BuildContext context){
   return GestureDetector(
@@ -360,16 +360,15 @@ Widget _goHome(double height,double width,BuildContext context){
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Homepage()));
     },
     child: Container(
-      height: height*0.055,width: width*0.9,
+      height: height*0.05,
+      margin: EdgeInsets.symmetric(horizontal: width*0.05),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(
-          width*0.1
-        ),
-        border: Border.all(color: const Color.fromRGBO(200, 200, 200, 0.6),)
+        borderRadius: BorderRadius.circular(Responsive.icon(context, 3)),
+        border: Border.all(color: const Color.fromRGBO(220, 220, 220, 0.8))
       ),
       child: Center(
-        child: Text("Go to Home",style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: Responsive.font(context, 14)),),
+        child: Text("Go to Home",style: TextStyle(color: Colors.black,fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: Responsive.font(context, 14)),),
       ),
     ),
   );

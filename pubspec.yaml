@@ -2,7 +2,7 @@ name: study_mate
 description: "A new Flutter project."
 publish_to: 'none'
 
-version: 1.0.0+11
+version: 1.0.0+12
 
 environment:
   sdk: ^3.10.1
@@ -33,6 +33,7 @@ dependencies:
   media_kit_libs_video: ^1.0.7
   hugeicons: ^1.2.0
   phosphor_icons: ^3.0.1
+  flutter_svg: ^2.3.0
 
 dev_dependencies:
   flutter_test:
@@ -52,6 +53,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/svgs/
     - assets/images/profile_pic_girl.png
     - assets/images/priscilla-du-preez-XkKCui44iM0-unsplash.jpg
     - assets/animations/check_animation.json

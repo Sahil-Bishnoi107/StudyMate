@@ -40,7 +40,7 @@ Widget QuestionReviewOption(String option,double height,double width,bool isSele
     padding: EdgeInsets.only(left: width*0.04),
     margin: EdgeInsets.only(bottom: height*0.01),
     decoration: BoxDecoration(
-      border: Border.all(color: isSelected ? (isCorrect ? Colors.green : Colors.red) : const Color.fromRGBO(220, 220, 220, 0.8),width: 1),
+      border: Border.all(color: isSelected ? (isCorrect ? Colors.green : Colors.red) : const Color.fromRGBO(220, 220, 220, 0.7),width: 1.2),
      // borderRadius: BorderRadius.circular(width*0.03)
     ),
     child: Row(

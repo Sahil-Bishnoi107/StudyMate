@@ -31,8 +31,8 @@ class _TestState extends State<TestReview> {
       body: BlocBuilder<ReviewBloc,ReviewStates>(
 
       builder: (context, state) {
-       
-        
+
+
         if(state is ReviewLoadedState){
         return SizedBox(
           height: height, width: width,
@@ -41,14 +41,14 @@ class _TestState extends State<TestReview> {
               children: [
                  _header(height, width, state.test.name,context),
                  SizedBox(height: height*0.01,),
-               
-               
+                 Container(height: 1,width: width,color: const Color.fromRGBO(200, 200, 200, 0.6),),
+                 SizedBox(height: height*0.005,),
                  _testProgress(height, width, context, state.test.questions, pageController),
-                 
-                 Container(height: 2,width: width,color: const Color.fromRGBO(200, 200, 200, 0.6),),
-                 SizedBox(height: height*0.02,),
+
+
+                 SizedBox(height: height*0.01,),
                  _questionSection(height, width, state.test.questions, pageController,context)
-                
+
               ],
             ),
           ),
@@ -82,7 +82,8 @@ Widget _header(double height,double width,String testName,BuildContext context){
         onTap: ()  {
          Navigator.pop(context);
         },
-        child: Icon(Icons.arrow_back_ios_new)),
+        child: Icon(Icons.arrow_back_ios_new,size: Responsive.icon(context, 20),)),
+      SizedBox(width: width*0.03,),
       SizedBox(
         width: width*0.65,
         child: Text(testName,style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: Responsive.font(context, 20)),)
@@ -96,17 +97,17 @@ Widget _questionSection(double height,double width, List<Question> questions,Pag
   return Column(
     children: [
      SizedBox(
-      height: height*0.65,width: width,
+      height: height*0.68,width: width,
       child: PageView.builder(
         controller: pageController,
         physics: NeverScrollableScrollPhysics(),
         itemCount: questions.length,
         itemBuilder: (context,index){
-          return _question(height, width, questions[index], index, questions.length, context);
+          return SingleChildScrollView(child: _question(height, width, questions[index], index, questions.length, context));
         }),
      ),
 
-     Container(height: 2,width: width,color: const Color.fromRGBO(200, 200, 200, 0.6),),
+     Container(height: 1,width: width,color: const Color.fromRGBO(220, 220, 220, 0.7),),
      SizedBox(height: height*0.01,),
      Row(
       children: [
@@ -130,9 +131,10 @@ Widget _questionSection(double height,double width, List<Question> questions,Pag
 
 
 Widget _question(double height,double width, Question question,int currQue,int totalQuestions,BuildContext context){
- 
+ String difficulty = question.difficulty;
+ if(question.difficulty.length > 2)difficulty = question.difficulty[0].toUpperCase() + question.difficulty.substring(1);
   return Container(
-    width: width,height: height*0.6,
+    width: width,
     padding: EdgeInsets.symmetric(horizontal: width*0.05),
     child: Column(
       children: [
@@ -140,37 +142,47 @@ Widget _question(double height,double width, Question question,int currQue,int t
         //header
         Row(
           children: [
-            Container(
-              height: height*0.034,width: width*0.36,
-              decoration: BoxDecoration(border: Border.all(color: const Color.fromRGBO(180, 180, 180, 0.7),width: 1.5),borderRadius: BorderRadius.circular(20)),
-              child: Center(child: Text("Question ${(currQue+1).toString()} of $totalQuestions",style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: Responsive.font(context, 12)),)),
-            ),
-            SizedBox(width: width*0.35,),
-            Expanded(child: Text(question.difficulty,style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold),)),
+            Text("Question ${currQue + 1} of ${totalQuestions}",style: TextStyle(fontFamily: Fonts.inter,fontWeight: FontWeight.w700,fontSize: Responsive.font(context, 16)),),
+            const Spacer(),
+            Text(difficulty,style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,color: Colors.blueGrey,fontSize: Responsive.font(context, 14)),),
           ],
         ),
         SizedBox(height: height*0.01,),
         //Question
         ConstrainedBox(
-          constraints: BoxConstraints(minHeight: height*0.03, maxHeight: height*0.5,minWidth: width*0.9,maxWidth: width*0.9),
-          
-          child: MixedMathText(text:  question.description,textStyle:  TextStyle(fontFamily: Fonts.inter,fontWeight: FontWeight.bold, fontSize: Responsive.font(context, 20)),)),
+          constraints: BoxConstraints(minHeight: height*0.03, maxHeight: height*0.6,minWidth: width*0.9,maxWidth: width*0.9),
 
+          child: MixedMathText(text: question.description, textStyle: TextStyle(fontFamily: Fonts.rubik,fontWeight: FontWeight.w700,color: const Color.fromRGBO(60, 60, 60, 1), fontSize: Responsive.font(context, 16)),)),
+
+
+        SizedBox(height: height*0.03,),
         //Options
         SizedBox(
-          height: height*0.4,
-          child: ListView(
+
+          child: Column(
+
             children: [
-              QuestionReviewOption(question.options[0], height, width, question.selectedOption == question.options[0],"A",question.selectedOption == question.correctOption),
-          
-          
-              QuestionReviewOption(question.options[1], height, width, question.selectedOption == question.options[1],"B",question.selectedOption == question.correctOption),
-          
-          
-              QuestionReviewOption(question.options[2], height, width, question.selectedOption == question.options[2],"C",question.selectedOption == question.correctOption),
-          
-          
-              QuestionReviewOption(question.options[3], height, width, question.selectedOption == question.options[3],"D",question.selectedOption == question.correctOption)
+              _reviewOption(height, width, question, 0, "A"),
+
+
+              _reviewOption(height, width, question, 1, "B"),
+
+
+              _reviewOption(height, width, question, 2, "C"),
+
+
+              _reviewOption(height, width, question, 3, "D"),
+
+              if(question.selectedOption != question.correctOption)
+              Row(
+                children: [
+                  Icon(Icons.check_circle_outline,color: Colors.green,size: Responsive.icon(context, 15),),
+                  const SizedBox(width: 5),
+                  Expanded(child: Text(question.selectedOption == null ? "You skipped this question, the correct answer is marked green" : "Your answer is marked red, the correct answer green",style: TextStyle(fontFamily: Fonts.nunito,fontSize: Responsive.font(context, 11),color: Colors.blueGrey),)),
+                ],
+              ),
+
+                SizedBox(height: height*0.02,)
             ],
           ),
         )
@@ -180,20 +192,30 @@ Widget _question(double height,double width, Question question,int currQue,int t
 }
 
 
+// the correct option is shown green even when the user picked something else or skipped
+Widget _reviewOption(double height,double width,Question question,int index,String optionNum){
+  String option = question.options[index];
+  if(option == question.correctOption){
+    return QuestionReviewOption(option, height, width, true, optionNum, true);
+  }
+  return QuestionReviewOption(option, height, width, question.selectedOption == option, optionNum, false);
+}
+
+
 Widget _testProgress(double height, double width,BuildContext context,List<Question> questions,PageController pageController){
   return SizedBox(
-    
+
     height: height*0.05,width: width*0.9,
     child: ListView.builder(
      scrollDirection: Axis.horizontal,
      itemCount: questions.length,
      itemBuilder: (context, index) {
-      
+
        return GestureDetector(
         onTap: () {
           pageController.animateToPage(index, duration: Duration(microseconds: 300), curve: Curves.bounceIn);
         },
-        child: questionIcon(height, width, questions[index].selectedOption != null, index + 1));
+        child: questionIcon(height, width, questions[index].selectedOption != null, index + 1,color: questions[index].selectedOption == questions[index].correctOption ? Colors.green : Colors.red));
      },
 
     ),

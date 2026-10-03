@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:study_mate/AboutUs/Domain/PeopleCard.dart';
 import 'package:study_mate/AboutUs/Presentation/Bloc/AboutUsBloc.dart';
 import 'package:study_mate/AboutUs/Presentation/Bloc/AboutUsEvents.dart';
 import 'package:study_mate/AboutUs/Presentation/Bloc/AboutUsStates.dart';
 import 'package:study_mate/AboutUs/Presentation/Pages/PersonDetailsPage.dart';
 import 'package:study_mate/AboutUs/Presentation/Widgets/PersonCardWidget.dart';
-import 'package:study_mate/Home/Presentation/Widgets/drawer.dart';
 import 'package:study_mate/LoadingScreen/LoadingAnimations.dart';
 import 'package:study_mate/Notifications/Presentation/Pages/NotificationPage.dart';
 import 'package:study_mate/fonts.dart';
@@ -19,7 +19,6 @@ class AboutUsPage extends StatefulWidget {
 }
 
 class _AboutUsPageState extends State<AboutUsPage> {
-
   @override
   void initState() {
     super.initState();
@@ -30,225 +29,229 @@ class _AboutUsPageState extends State<AboutUsPage> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    
+
     return Scaffold(
       backgroundColor: Colors.white,
-      drawer: mainDrawer(height, width, context),
-      body: Column(
-        children: [
-          SizedBox(height: height * 0.05),
-          _appBar(height, width,context),
-          Container(
-            color: const Color.fromRGBO(220, 220, 220, 0.8),
-            height: 1,
-            width: width,
-          ),
-          Expanded(
-            child: BlocBuilder<Aboutusbloc, Aboutusstates>(
-              builder: (context, state) {
-                if (state is AboutusInitialState || state is AboutUsLoading) {
-                  return  Center(child: LoadingLogo());
-                } else if (state is AboutUsLoaded) {
-                  return _buildContent(context, state.people, width);
-                } else if (state is AboutUsError) {
-                  return Center(
-                    child: Text(
-                      "Failed to load about us data",
-                      style: TextStyle(color: Colors.red, fontFamily: Fonts.nunito),
-                    ),
-                  );
-                }
-                return const SizedBox();
-              },
+      body: SafeArea(
+        child: Column(
+          children: [
+            SizedBox(height: height*0.008,),
+            _appBar(height, width, context),
+            Container(color: const Color.fromRGBO(220, 220, 220, 0.8),height: 1,width: width,),
+            Expanded(
+              child: BlocBuilder<Aboutusbloc, Aboutusstates>(
+                builder: (context, state) {
+                  if (state is AboutusInitialState || state is AboutUsLoading) {
+                    return Center(child: LoadingLogo());
+                  } else if (state is AboutUsLoaded) {
+                    List<PersonCard> teachers = state.people.where((p) => p.peopleRole == PeopleRole.teacher).toList();
+                    List<PersonCard> developers = state.people.where((p) => p.peopleRole == PeopleRole.developer).toList();
+                    List<PersonCard> management = state.people.where((p) => p.peopleRole == PeopleRole.management).toList();
+
+                    return RefreshIndicator(
+                      onRefresh: () async {
+                        BlocProvider.of<Aboutusbloc>(context).add(AboutusLoadData());
+                      },
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _heroSection(height, width, context),
+                            SizedBox(height: height*0.025,),
+                            _offerSection(height, width, context),
+                            SizedBox(height: height*0.03,),
+                            Container(color: const Color.fromRGBO(220, 220, 220, 0.8),height: 1,margin: EdgeInsets.symmetric(horizontal: width*0.05),),
+                            SizedBox(height: height*0.03,),
+                            _whoWeAreSection(height, width, context),
+                            SizedBox(height: height*0.03,),
+                            Container(color: const Color.fromRGBO(220, 220, 220, 0.8),height: 1,margin: EdgeInsets.symmetric(horizontal: width*0.05),),
+                            SizedBox(height: height*0.03,),
+                            _teamHeader(height, width, context),
+                            SizedBox(height: height*0.02,),
+                            _roleSection(height, width, context, "TEACHERS", teachers),
+                            _roleSection(height, width, context, "APP DEVELOPER", developers),
+                            _roleSection(height, width, context, "MANAGEMENT", management),
+                            SizedBox(height: height*0.08,),
+                          ],
+                        ),
+                      ),
+                    );
+                  }
+                  return Center(child: Text("Failed to load about us data", style: TextStyle(color: Colors.red, fontFamily: Fonts.nunito)));
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
+}
 
-  Widget _appBar(double height, double width,BuildContext context) {
+Widget _appBar(double height,double width,BuildContext context){
   return Container(
-    height: height * 0.05,
-    margin: EdgeInsets.symmetric(horizontal: width * 0.05),
+    height: height*0.05,
+    margin: EdgeInsets.symmetric(horizontal: width*0.05),
     child: Row(
       children: [
-        Builder(
-          builder: (context) {
-            return InkWell(
-              onTap: () {
-                Scaffold.of(context).openDrawer();
-              },
-              child:  Icon(
-                Icons.menu_sharp,
-                size: Responsive.icon(context, 30),
+        InkWell(
+          onTap: () => Navigator.pop(context),
+          child: Icon(LucideIcons.chevronLeft400Dir,size: Responsive.icon(context, 25),)),
+        SizedBox(width: width*0.05,),
+        Expanded(child: Text("About Us",style: TextStyle(color: Colors.black,fontFamily: Fonts.rubik,fontWeight: FontWeight.w600,fontSize: Responsive.font(context, 20)),)),
+
+      ],
+    ),
+  );
+}
+
+Widget _heroSection(double height,double width,BuildContext context){
+  return Padding(
+    padding: EdgeInsets.only(top: height*0.03,left: width*0.05,right: width*0.05),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Learn.",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 35),fontWeight: FontWeight.w600,color: Colors.black,height: 1.1),),
+                  Text("Grow.",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 35),fontWeight: FontWeight.w600,color: Colors.green,height: 1.1),),
+                  Row(
+                    children: [
+                      Text("Succeed",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 35),fontWeight: FontWeight.w600,color: Colors.black,height: 1.1),),
+                      Text(".",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 35),fontWeight: FontWeight.w600,color: Colors.green,height: 1.1),),
+                    ],
+                  ),
+                ],
               ),
-            );
-          },
-        ),
-
-        SizedBox(width: width * 0.25),
-
-        SizedBox(
-          width: width * 0.5,
-          child: Text(
-            "About Us",
-            style: TextStyle(
-              color: Colors.black,
-              fontFamily: Fonts.outfit,
-              fontWeight: FontWeight.w600,
-              fontSize: Responsive.font(context, 18),
             ),
-            textAlign: TextAlign.start,
-          ),
+            Column(
+              children: [
+                Container(height: height*0.07,width: height*0.07,
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(Responsive.icon(context, 10)),color: const Color.fromRGBO(30, 30, 30, 1)),
+                child: Icon(LucideIcons.zap,color: Colors.white,size: Responsive.icon(context, 30),)
+                ),
+                SizedBox(height: height*0.008,),
+                Text("StudyMate",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 14),fontWeight: FontWeight.w600,color: Colors.black),),
+              ],
+            ),
+            SizedBox(width: width*0.07,),
+          ],
         ),
-
-        GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => const Notificationpage(),
-              ),
-            );
-          },
-          child: const Icon(
-            Icons.notifications_none_sharp,
-          ),
+        SizedBox(height: height*0.012,),
+        Text("StudyMate is an AI-powered platform for JEE and NEET preparation providing mock tests, contests, analytics, practice questions, and experienced teachers.",
+        style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 11),color: const Color.fromRGBO(110, 110, 110, 1),height: 1.5),
         ),
       ],
     ),
   );
 }
-  Widget _buildContent(BuildContext context, List<PersonCard> people, double width) {
-    return RefreshIndicator(
-      onRefresh: () async {
-        BlocProvider.of<Aboutusbloc>(context).add(AboutusLoadData());
-      },
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildHeroText(),
-            const SizedBox(height: 16),
-            Text(
-              "StudyMate is an AI-powered platform for JEE and NEET preparation providing mock tests, contests, analytics, practice questions, and experienced teachers.",
-              style: TextStyle(
-                fontFamily: Fonts.outfit,
-                fontSize: Responsive.font(context, 12),
-                color: Colors.grey[600],
-                height: 1.5,
-              ),
-            ),
-            const SizedBox(height: 32),
-            _buildWhoWeAreSection(),
-            const SizedBox(height: 32),
-            _buildTeamHeader(),
-            const SizedBox(height: 24),
-            _buildRoleSection(context, "Teachers", people.where((p) => p.peopleRole == PeopleRole.teacher).toList()),
-            _buildRoleSection(context, "App Developer", people.where((p) => p.peopleRole == PeopleRole.developer).toList()),
-            _buildRoleSection(context, "Management", people.where((p) => p.peopleRole == PeopleRole.management).toList()),
-            const SizedBox(height: 40),
-          ],
-        ),
-      ),
-    );
-  }
 
-  Widget _buildHeroText() {
-    return RichText(
-      text: TextSpan(
-        style: TextStyle(
-          fontFamily: Fonts.outfit,
-          fontSize: Responsive.font(context, 32),
-          fontWeight: FontWeight.w900,
-          color: Colors.black,
-        ),
-        children:  [
-          TextSpan(text: "Learn. ",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 35),fontWeight: FontWeight.w600)),
-          TextSpan(text: "Grow. ", style: TextStyle(color: Colors.green,fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 35),fontWeight: FontWeight.w600)),
-          TextSpan(text: "Succeed.",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 35),fontWeight: FontWeight.w600)),
-        ],
-      ),
-    );
-  }
+Widget _offerSection(double height,double width,BuildContext context){
+  return Padding(
+    padding: EdgeInsets.symmetric(horizontal: width*0.05),
+    child: Wrap(
+      spacing: width*0.03,runSpacing: width*0.03,
+      children: [
+        _offerTile(height, width, LucideIcons.notepadText400Dir, Colors.green, "Mock Tests", context),
+        _offerTile(height, width, LucideIcons.swords400Dir, Colors.orange, "Contests", context),
+        _offerTile(height, width, LucideIcons.brain400Dir, Colors.blue, "Practice Questions", context),
+        _offerTile(height, width, LucideIcons.monitorPlay400Dir, Colors.red, "Lectures", context),
+      ],
+    ),
+  );
+}
 
-  Widget _buildWhoWeAreSection() {
-    return Column(
+Widget _offerTile(double height,double width,IconData icon,Color color,String name,BuildContext context){
+  return Container(
+    width: width*0.435,
+    padding: EdgeInsets.symmetric(horizontal: width*0.03,vertical: height*0.012),
+    decoration: BoxDecoration(
+      color: Colors.white,
+      border: Border.all(color: const Color.fromRGBO(220, 220, 220, 0.8)),
+      borderRadius: BorderRadius.circular(Responsive.icon(context, 3))
+    ),
+    child: Row(
+      children: [
+        Container(height: height*0.04,width: height*0.04,
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(Responsive.icon(context, 3)),color: color.withValues(alpha: 0.1)),
+        child: Icon(icon,color: color,size: Responsive.icon(context, 18),)
+        ),
+        SizedBox(width: width*0.025,),
+        Expanded(child: Text(name,style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 12),fontWeight: FontWeight.w600,color: Colors.black),)),
+      ],
+    ),
+  );
+}
+
+Widget _whoWeAreSection(double height,double width,BuildContext context){
+  return Padding(
+    padding: EdgeInsets.symmetric(horizontal: width*0.05),
+    child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
-            Text("Who  ",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 25),fontWeight: FontWeight.w600, color: Colors.black, ), ),
-            Text("We  ",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 25),fontWeight: FontWeight.w600, color: Colors.green, ), ),
-            Text("Are",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 25),fontWeight: FontWeight.w600, color: Colors.black, ), ),
+            Text("Who ",style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: Responsive.font(context, 24),color: Colors.black),),
+            Text("We ",style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: Responsive.font(context, 24),color: Colors.green),),
+            Text("Are",style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: Responsive.font(context, 24),color: Colors.black),),
+            Text(".",style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: Responsive.font(context, 24),color: Colors.green),),
           ],
         ),
-        
-        const SizedBox(height: 16),
-        Text(
-          "Founded with a mission to democratize quality education, StudyMate combines cutting-edge AI technology with the wisdom of industry-leading educators. We believe every student deserves a personalized roadmap to success.",
-          style: TextStyle(
-            fontFamily: Fonts.outfit,
-            fontSize: Responsive.font(context, 12),
-            color: Colors.grey[600],
-            height: 1.5,
-          ),
+        SizedBox(height: height*0.008,),
+        Text("Founded with a mission to democratize quality education, StudyMate combines cutting-edge AI technology with the wisdom of industry-leading educators. We believe every student deserves a personalized roadmap to success.",
+        style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 11),color: const Color.fromRGBO(110, 110, 110, 1),height: 1.5),
         ),
       ],
-    );
-  }
+    ),
+  );
+}
 
-  Widget _buildTeamHeader() {
-    return Column(
+Widget _teamHeader(double height,double width,BuildContext context){
+  return Padding(
+    padding: EdgeInsets.symmetric(horizontal: width*0.05),
+    child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
-            Text("Meet ",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 30), fontWeight: FontWeight.w600, color: Colors.green), ),
-            Text("Our ",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 30), fontWeight: FontWeight.w600, color: Colors.black), ),
-            Text("Team",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 30), fontWeight: FontWeight.w600, color: Colors.green), ),
+            Text("Meet ",style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: Responsive.font(context, 24),color: Colors.black),),
+            Text("Our ",style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: Responsive.font(context, 24),color: Colors.green),),
+            Text("Team",style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: Responsive.font(context, 24),color: Colors.black),),
+            Text(".",style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: Responsive.font(context, 24),color: Colors.green),),
           ],
         ),
-        const SizedBox(height: 4),
-        Text( "Learn from the industry's best minds",style: TextStyle( fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 12),color: Colors.grey[600],),
-        ),
+        Text("Learn from the industry's best minds",style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 11),color: const Color.fromRGBO(110, 110, 110, 1)),),
       ],
-    );
-  }
+    ),
+  );
+}
 
-  Widget _buildRoleSection(BuildContext context, String title, List<PersonCard> rolePeople) {
-    if (rolePeople.isEmpty) return const SizedBox();
+Widget _roleSection(double height,double width,BuildContext context,String title,List<PersonCard> people){
+  if(people.isEmpty) return const SizedBox.shrink();
 
-    return Column(
+  return Padding(
+    padding: EdgeInsets.only(left: width*0.05,right: width*0.05,bottom: height*0.02),
+    child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: TextStyle(
-            fontFamily: Fonts.outfit,
-            fontSize: Responsive.font(context, 18),
-            fontWeight: FontWeight.w600,
-            color: Colors.black87,
-          ),
+        Row(
+          children: [
+            Expanded(child: Text(title,style: TextStyle(fontFamily: Fonts.nunito,fontSize: Responsive.font(context, 11),fontWeight: FontWeight.bold,color: Colors.blueGrey,letterSpacing: 1),)),
+            Text(people.length.toString(),style: TextStyle(fontFamily: Fonts.nunito,fontSize: Responsive.font(context, 11),fontWeight: FontWeight.bold,color: Colors.green),),
+          ],
         ),
-        const SizedBox(height: 8),
-        
-        const SizedBox(height: 16),
-        ...rolePeople.map((personCard) => PersonCardWidget(
+        SizedBox(height: height*0.012,),
+        ...people.map((personCard) => PersonCardWidget(
           person: personCard,
           onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => PersonDetailsPage(personId: personCard.id),
-              ),
-            );
+            Navigator.push(context, MaterialPageRoute(builder: (context) => PersonDetailsPage(personId: personCard.id)));
           },
-        )).toList(),
-        const SizedBox(height: 24),
+        )),
       ],
-    );
-  }
+    ),
+  );
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:study_mate/AboutUs/Domain/Person.dart';
 import 'package:study_mate/fonts.dart';
 import 'dart:math';
@@ -6,99 +7,53 @@ import 'dart:math';
 class EducationSection extends StatelessWidget {
   final Person person;
 
-  const EducationSection({Key? key, required this.person}) : super(key: key);
+  const EducationSection({super.key, required this.person});
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     int count = max(person.education.length, person.institute.length);
-    
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color.fromRGBO(240, 240, 240, 1)),
-      ),
+
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: width*0.05),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Colors.green.withOpacity(0.1),
-                  shape: BoxShape.circle,
-                ),
-                child:  Icon(Icons.school, color: Colors.green, size: Responsive.icon(context, 20)),
-              ),
-              const SizedBox(width: 12),
-              Text(
-                "Academic Qualifications",
-                style: TextStyle(
-                  fontFamily: Fonts.outfit,
-                  fontSize: Responsive.font(context, 18),
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
+              Icon(LucideIcons.graduationCap400Dir,size: Responsive.icon(context, 20),),
+              const SizedBox(width: 8),
+              Text("Academic ",style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w700,fontSize: Responsive.font(context, 18),color: Colors.green),),
+              Text("Qualifications",style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w700,fontSize: Responsive.font(context, 18),color: Colors.black),),
             ],
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: height*0.015,),
           ...List.generate(count, (index) {
             String edu = index < person.education.length ? person.education[index] : "";
             String inst = index < person.institute.length ? person.institute[index] : "";
-            
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 16),
+
+            return Container(
+              margin: EdgeInsets.only(bottom: height*0.012),
+              padding: EdgeInsets.symmetric(horizontal: width*0.04,vertical: height*0.012),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: const Color.fromRGBO(220, 220, 220, 0.8)),
+                borderRadius: BorderRadius.circular(Responsive.icon(context, 3))
+              ),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    margin: const EdgeInsets.only(top: 4),
-                    width: 36,
-                    height: 36,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[100],
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.grey[300]!),
-                    ),
-                    child: Center(
-                      child: Text(
-                        _getAcronym(edu),
-                        style: TextStyle(
-                          fontFamily: Fonts.outfit,
-                          fontSize: Responsive.font(context, 10),
-                          fontWeight: FontWeight.bold,
-                          color: Colors.green.shade700,
-                        ),
-                      ),
-                    ),
+                  Container(height: height*0.05,width: height*0.05,
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(Responsive.icon(context, 3)),color: const Color.fromRGBO(33, 150, 243, 0.1)),
+                  child: Center(child: Text(_getAcronym(edu),style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 11),fontWeight: FontWeight.w700,color: Colors.blue),)),
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: width*0.035,),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        if (edu.isNotEmpty)
-                          Text(
-                            edu,
-                            style: TextStyle(
-                              fontFamily: Fonts.outfit,
-                              fontSize: Responsive.font(context, 15),
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black87,
-                            ),
-                          ),
-                        if (inst.isNotEmpty)
-                          Text(
-                            inst,
-                            style: TextStyle(
-                              fontFamily: Fonts.nunito,
-                              fontSize: Responsive.font(context, 13),
-                              color: Colors.grey[600],
-                            ),
-                          ),
+                        if(edu.isNotEmpty) Text(edu,style: TextStyle(fontFamily: Fonts.outfit,fontSize: Responsive.font(context, 14),fontWeight: FontWeight.w600,color: Colors.black),),
+                        if(inst.isNotEmpty) Text(inst,style: TextStyle(fontFamily: Fonts.nunito,fontSize: Responsive.font(context, 11),color: Colors.blueGrey),),
                       ],
                     ),
                   ),

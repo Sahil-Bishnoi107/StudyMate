@@ -27,12 +27,9 @@ class _SubscriptionspageState extends State<Subscriptionspage> {
                 SizedBox(width: width*0.05,),
                 InkWell(
                   onTap: () => Navigator.pop(context),
-                  child: Icon(LucideIcons.chevronLeft,size: Responsive.icon(context, 30),)),
-                SizedBox(width: width*0.7,
-                child: Center(
-                  child: Text("Premium Plans",style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: Responsive.font(context, 18)),),
-                ),
-                )
+                  child: Icon(LucideIcons.chevronLeft,size: Responsive.icon(context, 25),)),
+                  SizedBox(width: width*0.05,),
+                Text("Premium Plans",style: TextStyle(fontFamily: Fonts.rubik,fontWeight: FontWeight.w600,fontSize: Responsive.font(context, 18)),)
               ],
             ),
             ),

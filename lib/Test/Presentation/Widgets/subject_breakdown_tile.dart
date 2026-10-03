@@ -1,78 +1,100 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:study_mate/fonts.dart';
 
 Widget SubjectBreakdownTile(double height,double width,int correctQues,int wrongQues,int totalQues,String subject,BuildContext context){
+  int attempted = correctQues + wrongQues;
+  int skippedQues = totalQues - attempted;
+  int accuracy = (correctQues*100/(attempted != 0 ? attempted : 1)).toInt();
+
+  Color color = Colors.green;
+  if(subject.toLowerCase().contains("phy")){color = Colors.blue;}
+  if(subject.toLowerCase().contains("chem")){color = Colors.orange;}
+  if(subject.toLowerCase().contains("bio")){color = Colors.red;}
 
   return Container(
-    height: height*0.15,width: width*0.9,
-    margin: EdgeInsets.only(bottom: height*0.015),
-    padding: EdgeInsets.only(left: width*0.05),
+    width: width*0.9,
+    margin: EdgeInsets.only(bottom: height*0.012),
     decoration: BoxDecoration(
-      border: Border.all(color: const Color.fromRGBO(200, 200, 200, 0.5),width: 1.5),
-      borderRadius: BorderRadius.circular(10)
+      color: Colors.white,
+      border: Border.all(color: const Color.fromRGBO(220, 220, 220, 0.8)),
+      borderRadius: BorderRadius.circular(Responsive.icon(context, 3))
     ),
     child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: height*0.014,),
-
-        Row(
-          children: [
-            SizedBox(
-              height: height*0.06,width: width*0.65,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: width*0.04,vertical: height*0.014),
+          child: Row(
+            children: [
+              // subject initial in the subject colour
+              Container(height: height*0.05,width: height*0.05,
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(Responsive.icon(context, 3)),color: color.withValues(alpha: 0.1)),
+              child: Center(child: Text(subject.isNotEmpty ? subject[0].toUpperCase() : "",style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w700,fontSize: Responsive.font(context, 18),color: color),)),
+              ),
+              SizedBox(width: width*0.035,),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(subject,style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: Responsive.font(context, 15),color: Colors.black),),
+                    Text("$correctQues of $totalQues correct",style: TextStyle(fontFamily: Fonts.nunito,fontSize: Responsive.font(context, 11),color: Colors.blueGrey),)
+                  ],
+                ),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text(subject,style: TextStyle(fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: Responsive.font(context, 17)),),
-                  Text("$correctQues/$totalQues Correct",style: TextStyle(fontFamily: Fonts.nunito,fontSize: Responsive.font(context, 11),color: const Color.fromRGBO(140, 140, 140, 1),fontWeight: FontWeight.bold),)
+                  Text("$accuracy%",style: TextStyle(color: Colors.black,fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: Responsive.font(context, 22),height: 1.1),),
+                  Text("ACCURACY",style: TextStyle(fontFamily: Fonts.nunito,fontSize: Responsive.font(context, 8),fontWeight: FontWeight.bold,color: Colors.blueGrey,letterSpacing: 0.5),),
+                ],
+              ),
+            ],
+          ),
+        ),
+        // one bar split into correct / wrong / skipped
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: width*0.04),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(Responsive.icon(context, 3)),
+            child: SizedBox(
+              height: height*0.007,
+              child: Row(
+                children: [
+                  if(correctQues > 0) Expanded(flex: correctQues,child: Container(color: Colors.green,)),
+                  if(wrongQues > 0) Expanded(flex: wrongQues,child: Container(color: Colors.red,)),
+                  if(skippedQues > 0 || totalQues == 0) Expanded(flex: skippedQues > 0 ? skippedQues : 1,child: Container(color: const Color.fromRGBO(220, 220, 220, 1),)),
                 ],
               ),
             ),
-
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: width*0.03,vertical: width*0.012),
-              
-              decoration: BoxDecoration(
-                border: Border.all(color: const Color.fromRGBO(76, 175, 80, 0.5),),
-                borderRadius: BorderRadius.circular(width*0.09),
-                color: const Color.fromRGBO(76, 175, 80, 0.06),
-                ),
-              child: Center(child: Text("${(correctQues*100/((correctQues + wrongQues) != 0 ? (correctQues + wrongQues) : 1)).toInt().toString()}%",style: TextStyle(color: Colors.green,fontFamily: Fonts.nunito,fontWeight: FontWeight.bold,fontSize: Responsive.font(context, 12)),)))
-          ],
-        ),
-        SizedBox(height: height*0.01,),
-        SizedBox(
-          width: width*0.8,
-          child: LinearProgressIndicator(
-            backgroundColor: const Color.fromRGBO(220, 220, 220, 0.8),
-            valueColor: const AlwaysStoppedAnimation(Colors.green),
-            value: (correctQues/totalQues),
-            borderRadius: BorderRadius.circular(height*0.01),
-            minHeight: height*0.0125,
-            
           ),
         ),
-        SizedBox(height: height*0.01,),
-        Row(
-          children: [
-            Container(height: height*0.02,width: height*0.02,
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(40),border: Border.all(color: Colors.green)),
-            child: Center(child: Icon(Icons.check,color: Colors.green,size: Responsive.icon(context, 15),weight: 700,)),
-            ),
-            SizedBox(width: width*0.01,),
-            Text("$correctQues Correct",style: TextStyle(color: Colors.green,fontFamily: Fonts.nunito,fontSize: Responsive.font(context, 12),fontWeight: FontWeight.bold),),
-            SizedBox(width: width*0.2,),
-
-            Container(height: 20,width: 20,
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(40),border: Border.all(color: Colors.red)),
-            child: Center(child: Icon(Icons.close,color: Colors.red,size: Responsive.icon(context, 15),)),
-            ),
-            SizedBox(width: width*0.01,),
-            Text("$wrongQues Wrong",style: TextStyle(color: Colors.red,fontFamily: Fonts.nunito,fontSize: Responsive.font(context, 12),fontWeight: FontWeight.bold)),
-          ],
-        )
+        SizedBox(height: height*0.014,),
+        Container(color: const Color.fromRGBO(220, 220, 220, 0.5),height: 1,),
+        SizedBox(
+          height: height*0.055,
+          child: Row(
+            children: [
+              Expanded(child: _count(Colors.green, correctQues, "Correct", context)),
+              Container(color: const Color.fromRGBO(220, 220, 220, 0.5),width: 1,),
+              Expanded(child: _count(Colors.red, wrongQues, "Wrong", context)),
+              Container(color: const Color.fromRGBO(220, 220, 220, 0.5),width: 1,),
+              Expanded(child: _count(Colors.blueGrey, skippedQues, "Skipped", context)),
+            ],
+          ),
+        ),
       ],
     ),
+  );
+}
+
+Widget _count(Color color,int stat,String name,BuildContext context){
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    crossAxisAlignment: CrossAxisAlignment.baseline,
+    textBaseline: TextBaseline.alphabetic,
+    children: [
+      Text(stat.toString(),style: TextStyle(fontFamily: Fonts.outfit,fontWeight: FontWeight.w600,fontSize: Responsive.font(context, 15),color: color),),
+      const SizedBox(width: 5),
+      Text(name,style: TextStyle(fontFamily: Fonts.nunito,fontSize: Responsive.font(context, 10),color: Colors.blueGrey),),
+    ],
   );
 }
